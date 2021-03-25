@@ -1,0 +1,24 @@
+.go-back-back {
+    text-align: start;
+}
+
+.goBack-btn{
+    width: 250px;
+    height: 40px;
+    border-style:none;
+    background-color: #f75757;
+    color: white;
+    font-weight: 600;
+    text-align: start;
+    vertical-align: middle;
+    line-height: 40px;
+    font-size: 16px;
+    background-image: url('../../../img/purple_home_button1.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-bottom: 50px;
+}

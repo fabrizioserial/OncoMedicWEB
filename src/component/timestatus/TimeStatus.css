@@ -1,0 +1,45 @@
+.timestatus-cont-background{
+    position: absolute;
+    width: 200px;
+    height: 100vh;
+    background-color: #9357F7;
+    display: flex;
+    justify-content: center;
+}
+
+.img-timestate{
+    width: 200px;
+    bottom: 0px;
+    position: absolute;
+    left: 0px;
+}
+.timestatus-cont{
+    margin-top: 80px;
+    width: min-content;
+    height: min-content;
+    z-index: 20;
+}
+.timestatus-date{
+    color: white;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: 700;
+    font-size: 80px;
+    text-align: start;
+}
+.timestatus-day{
+    color: white;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: 400;
+    font-size: 25px;
+    text-align: start;
+}
+.timestatus-month{
+    color: white;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: 600;
+    font-size: 25px;
+    text-align: start;
+}

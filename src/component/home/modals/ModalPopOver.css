@@ -1,0 +1,84 @@
+/* MODAL */
+/* Background effect.Hace todo lo de afuera mas oscuro*/
+.modal {
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Overlay effect: translucent background: black w/ partial opacity */
+    z-index: 1; /* Overlay effect: positioned over other containers */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    position: fixed; /* Fix position on the top-left corner*/
+    top: 0;
+    left: 0;
+    overflow: auto; /* Enable scroll if needed */
+    padding-top: 80px; /* Location of the content container */
+    border-style: none;
+}
+/* Modal content */
+.modal-content {
+    background-color: white;
+    width: 450px; /* Width in proportion to its parent container*/
+    max-width: 640px; /* Max width where it stops expanding */
+    height: 400px; /* Height in proportion to its parent container */
+    margin: auto; /* Auto margin according to the element width */
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 20px; /* Optional. Rounds container corners */
+    border-style: none;
+}
+/* Close button */
+.close {
+   color: #aaaaaa;
+   float: right; /* Positioned to the right of the parent container whichever size it is */
+   font-size: 25px;
+   font-weight: bold;
+   border-style: none;
+}
+.close:hover, 
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    border-style: none;
+}
+
+.modal-title {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.add-inside-the-modal{
+    margin-top: 50px; 
+    margin-left: 20px;
+}
+.add-cancer-the-modal{
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+.numero-del-paciente{
+    width: 370px;
+    height: 30px;
+    border-color:#a0a0a0;;
+    border-style: solid;
+    border-radius: 7px;
+    padding: 2px;
+    font-size: 15px;
+    padding-left: 10px;
+    margin-left: 20px;
+}
+
+.agregar-button{
+    background-color:#8A2CE2;
+    width: 200px;
+    height: 50px;
+    margin-top: 70px;
+    margin-left: 185px;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 7px;
+    border-style: none;
+    margin-left: 205px;
+}

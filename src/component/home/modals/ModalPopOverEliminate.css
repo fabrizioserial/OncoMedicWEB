@@ -1,0 +1,84 @@
+/* MODAL */
+/* Background effect.Hace todo lo de afuera mas oscuro*/
+.modal {
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Overlay effect: translucent background: black w/ partial opacity */
+    z-index: 1; /* Overlay effect: positioned over other containers */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    position: fixed; /* Fix position on the top-left corner*/
+    top: 0;
+    left: 0;
+    overflow: auto; /* Enable scroll if needed */
+    padding-top: 80px; /* Location of the content container */
+    border-style: none;
+}
+/* Modal content */
+.modal-content {
+    background-color: white;
+    width: 450px; /* Width in proportion to its parent container*/
+    max-width: 640px; /* Max width where it stops expanding */
+    height: 400px; /* Height in proportion to its parent container */
+    margin: auto; /* Auto margin according to the element width */
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 20px; /* Optional. Rounds container corners */
+    border-style: none;
+}
+/* Close button */
+.close {
+   color: #aaaaaa;
+   float: right; /* Positioned to the right of the parent container whichever size it is */
+   font-size: 25px;
+   font-weight: bold;
+   border-style: none;
+}
+.close:hover, 
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    border-style: none;
+}
+
+.modal-eliminate-title {
+    font-size: 25px;
+    margin-top: 60px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: center;
+
+}
+
+.inside-the-modal{
+    margin-top: 50px;
+    margin-left: 30px;
+}
+.cancer-the-modal{
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.eliminate-numero-del-paciente{
+    width: 354px;
+    height: 30px;
+    border-color:red;
+    border-style: solid;
+    border-radius: 7px;
+    padding: 2px;
+    font-size: 15px;
+    padding-left: 10px;
+    margin-left: 30px;
+}
+
+.agregar-eliminate-button{
+    background-color:red;
+    width: 370px;
+    height: 50px;
+    margin-top: 70px;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    border-style: none;
+    margin-left: 30px;
+}

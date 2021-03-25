@@ -1,0 +1,77 @@
+.purple{
+    width: 350px;
+    height: 90px;
+    border-style:none;
+    background-color: #9357F7;
+    color: white;
+    font-weight: 600;
+    text-align: start;
+    padding-left: 20px;
+    font-size: 16px;
+    background-image: url('../../../img/purple_home_button1.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 50px;
+}
+.purple:hover{
+    background-color: #8845f5;
+}
+.purple p{
+    margin-bottom: 0px;
+    max-width: 200px;
+}
+
+.blue{
+    width: 350px;
+    height: 90px;
+    border-style:none;
+    background-color: #6957F7;
+    color: white;
+    font-weight: 600;
+    text-align: start;
+    padding-left: 20px;
+    font-size: 16px;
+    background-image: url('../../../img/blue_home_button1.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 50px;
+
+}
+.blue:hover{
+    background-color: #604bff;
+}
+.blue p{
+    margin-bottom: 0px;
+    max-width: 200px;
+}
+
+.lightblue{
+    width: 350px;
+    height: 90px;
+    border-style:none;
+    background-color: #5795F7;
+    color: white;
+    font-weight: 600;
+    text-align: start;
+    padding-left: 20px;
+    font-size: 16px;
+    background-image: url('../../../img/lightblue_home_button1.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.lightblue:hover{
+    background-color: #4a8af0;
+}
+.lightblue p{
+    margin-bottom: 0px;
+    max-width: 250px;
+}

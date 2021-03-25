@@ -1,0 +1,18 @@
+.home-cont-background{
+    width: auto;
+    height: 100vh;
+    background-color: white;
+    margin-left: 200px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 30px;
+}
+.home-cont-buttons{
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    
+}
+
