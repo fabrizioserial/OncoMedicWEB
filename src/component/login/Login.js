@@ -21,7 +21,11 @@ export const Login = () => {
                             <p className="text-login-input">Ingresar direccion de email</p>
                             <input className="input-login" placeholder="atleast 8 caracters"></input>
                         </div>  
-                        <button className="btn-login-input" ><Link to="/home" className="">Log in</Link></button>
+                        <Link to="/home" className="">
+                            <button className="btn-login-input" >
+                                Log In
+                            </button>
+                            </Link>
                     </form>
                     
                 </div>
