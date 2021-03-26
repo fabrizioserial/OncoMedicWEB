@@ -30,10 +30,6 @@ export const UserTabHome=()=> {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-
   const handleCloseModal = () => {
     setOpenModal(false);
   };
@@ -87,7 +83,7 @@ export const UserTabHome=()=> {
                                         </Link>
                                         <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
                                         <MenuItem onClick={handleClose}>VER REGISTRO DIARIO</MenuItem>
-                                        <MenuItem className="menu-item-eliminar-profile" onClick={e => handleCloseAndOpenModal}>ELIMINAR</MenuItem>
+                                        <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal}>ELIMINAR</MenuItem>
                                     </Menu>
                                     <ModalPopOverEliminate 
                                         id={number}
