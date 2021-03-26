@@ -4,7 +4,7 @@ import './App.css';
 import { Login } from './component/login/Login';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { TimeStatus } from './component/timestatus/TimeStatus';
-import { UserTabAllUsers } from './component/home/seeAllUsers/UserTabAllUsers';
+import { UserTabAllUsers } from 'src/component/home/seeAllUsers/UserTabAllUsers.js'
 import {CompleteProfile} from './component/home/profile/CompleteProfile'
 import 'fontsource-roboto';
 import { Component } from 'react';

@@ -57,9 +57,6 @@
     background-color: #dddddd;
 }
 
-table tbody tr{
-    border-top: 10px solid #F4F4F4;
-}
 
 .estado-usertab_icon_image{
     height: 20px;
@@ -80,7 +77,7 @@ table tbody tr{
     color: red i !important;
 }
 .estado-usertab-final-button{
-    margin-top:320px;
+    margin-top: 20%;
     margin-left: 5%;
     width: 99.5%;
     height: 30px;

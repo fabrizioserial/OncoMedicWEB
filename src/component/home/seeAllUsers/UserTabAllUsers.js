@@ -4,7 +4,7 @@ import optionIcon from '../../../img/option_icon.png'
 import { UserTabHome } from '../usertabhome/UserTabHome'
 import { ButtonHome } from '../buttonsHome/ButtonHome'
 import { ButtonGoBack } from '../seeAllUsers/ButtonGoBack'
-import { ItemUser } from './ItemUser/ItemUser';
+import { ItemUser } from '../../ItemUser/ItemUser';
 
 export const UserTabAllUsers = () => {
 
@@ -27,7 +27,7 @@ export const UserTabAllUsers = () => {
                     </thead>
                     <tbody>
                         {
-                            i.map(item => <ItemUser />)
+                            i.map(item => <ItemUser type="seeAllUsers" />)
                         }
                     </tbody>
                 </table>
