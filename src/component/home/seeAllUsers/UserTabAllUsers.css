@@ -27,44 +27,6 @@
     color: #9357F7;
     margin-bottom: 10px;
 }
-.usertab-user-image{
-    height: 33px;
-    width: 33px;
-    border-radius: 20px;
-}
-
-.usertab-fila{
-    cursor: pointer;
-    background-color: #e6e6e6;
-    border-radius: 5px;
-    height: 34px;
-    margin: 5px;
-    padding-top: 10px;
-}
-.usertab-fila::after{
-    margin-top: 10px;
-}
-.usertab-user-image-table{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    border-style: none;
-}
-.usertab-options{
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-style: none;
-    background-color: #e6e6e6;
-    width: 32px;
-    border-radius: 50px;
-}
-.usertab-options:hover{
-    background-color: #dddddd;
-}
-
 table tbody tr{
     border-top: 10px solid #F4F4F4;
 }

@@ -27,7 +27,7 @@ export const UserTabAllUsers = () => {
                     </thead>
                     <tbody>
                         {
-                            i.map(item => <ItemUser/>)
+                            i.map(item => <ItemUser />)
                         }
                     </tbody>
                 </table>
