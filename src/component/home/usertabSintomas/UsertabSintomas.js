@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import ModalPopOver from "../modals/ModalPopOver"
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
+import { ItemUser } from '../../ItemUser/ItemUser'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,34 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const UsertabSintomas=()=> {
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [number, setNumber] = React.useState(null);
-  const [openModal, setOpenModal] = React.useState(false);
-
-  const handleClick = (event,number) => {
-    setNumber(number);
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
-
-  function handleClose(){
-    setAnchorEl(null);
-  }
-
-  function handleCloseAndOpenModal(){
-    setOpenModal(true);
-    setAnchorEl(null);
-  }
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const i = [1,2,3,4,5,6]
 
   return (
             <div className="sintoms-usertab-cont-background">
@@ -61,18 +35,9 @@ export const UsertabSintomas=()=> {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="sintoms-usertab-fila">
-                            <td>22/02/21</td>
-                            <td>Fiebre</td>
-                            <td></td>
-                            <td>3</td>
-                        </tr>
-                        <tr className="sintoms-usertab-fila">
-                            <td>22/02/21</td>
-                            <td>Fiebre</td>
-                            <td></td>
-                            <td>3</td>
-                        </tr>
+                        {
+                          i.map(item => <ItemUser type="sintomas"/>)
+                        }
                     </tbody>
                 </table>
                 <button className="sintoms-usertab-final-button">VER TODOS</button>

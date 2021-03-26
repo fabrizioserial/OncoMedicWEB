@@ -24,14 +24,19 @@ export const ItemUser = (props) => {
                 <td><Button className="item-user-options" onClick={props.handleClick}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
             </tr>: 
 
-        props.type=="sintomas"?
+        props.type=="estado"?
             <tr className="estado-usertab-fila">
+                <td>11/2/21</td>
                 <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
                 <td>Feliz</td>
-                <td>11/2/21</td>
                 <td><Button className="item-user-options" onClick={props.handleClick}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
             </tr>:
-        ""
-            
+        props.type=="sintomas"?
+            <tr className="item-user-fila">
+                <td>22/1/22</td> 
+                <td>Fiebre</td>
+                <td></td>
+                <td>3</td>
+            </tr>:""
     )
 }
