@@ -21,3 +21,10 @@
     margin-bottom: 50px;
     font-family: 'Montserrat', sans-serif;
 }
+.go-back-back a{
+    text-decoration: none;
+}
+.go-back-space-icon{
+    margin-right: 10px;
+    margin-left: 5px;
+}

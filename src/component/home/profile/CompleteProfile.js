@@ -1,6 +1,5 @@
 import React from 'react'
 import "../profile/CompleteProfile.css"
-import {UserTabAllUsers} from "../seeAllUsers/UserTabAllUsers"
 import {ButtonGoBack} from "../seeAllUsers/ButtonGoBack"
 import { UsertabEstado } from '../usertabEstado/UsertabEstado'
 import { UsertabSintomas } from '../usertabSintomas/UsertabSintomas'

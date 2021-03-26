@@ -4,7 +4,8 @@ import optionIcon from '../../../img/option_icon.png'
 import { UserTabHome } from '../usertabhome/UserTabHome'
 import { ButtonHome } from '../buttonsHome/ButtonHome'
 import { ButtonGoBack } from '../seeAllUsers/ButtonGoBack'
-import { ItemUser } from './ItemUser/ItemUser';
+import { ItemUser } from '../../ItemUser/ItemUser';
+import { SearchTab } from './../../searchTab/SearchTab';
 
 export const UserTabAllUsers = () => {
 
@@ -15,8 +16,7 @@ export const UserTabAllUsers = () => {
             <ButtonGoBack text="VOLVER AL INICIO" color="purple"/>
 
             <div>
-            <div>
-            </div>
+                <SearchTab/>
             <div className="userall-cont-info-allUsers">
                 <table class="userall-big-table">
                     <thead className="userall-thead-allUsers">
@@ -29,7 +29,7 @@ export const UserTabAllUsers = () => {
                     </thead>
                     <tbody>
                         {
-                            i.map(item => <ItemUser />)
+                            i.map(item => <ItemUser type="seeAllUsers"/>)
                         }
                     </tbody>
                 </table>

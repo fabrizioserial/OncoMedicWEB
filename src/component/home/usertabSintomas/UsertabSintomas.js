@@ -1,5 +1,5 @@
 import React from 'react'
-import '../usertabSintomas/UsertabSintomas.css'
+import './UsertabSintomas.css'
 import optionIcon from '../../../img/option_icon.png'
 import {Menu,MenuItem,Button} from '@material-ui/core'
 import {useState} from 'react-dom'

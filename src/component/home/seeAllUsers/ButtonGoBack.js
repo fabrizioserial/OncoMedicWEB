@@ -1,15 +1,17 @@
 import React from 'react'
 import '../seeAllUsers/ButtonGoBack.css'
-import { Router,Link, Route, Switch } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch,faHome } from '@fortawesome/free-solid-svg-icons'
 
 
 
 export const ButtonGoBack = ({text}) => {
     return(
         <div className="go-back-back">
-            <Link to="/home" >
-                <button className="goBack-btn">{text}
+            <Link to="/home" className="">
+                <button className="goBack-btn"> <FontAwesomeIcon icon={faHome} className="go-back-space-icon" />{text}
                 </button>
             </Link>
         </div>
