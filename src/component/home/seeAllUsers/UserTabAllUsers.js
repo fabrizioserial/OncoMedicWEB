@@ -4,8 +4,11 @@ import optionIcon from '../../../img/option_icon.png'
 import { UserTabHome } from '../usertabhome/UserTabHome'
 import { ButtonHome } from '../buttonsHome/ButtonHome'
 import { ButtonGoBack } from '../seeAllUsers/ButtonGoBack'
+import { ItemUser } from './ItemUser/ItemUser';
 
 export const UserTabAllUsers = () => {
+
+    const i = [1,2,3,4,5,6,7,8,9]
     return(
         <div className="home-cont-background">
 
@@ -23,37 +26,9 @@ export const UserTabAllUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="usertab-fila">
-                            <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
-                            <td>1122334455</td>
-                            <td>Carmen Cardozo</td>
-                            <td><button className="usertab-options"><img className="usertab_icon_image" src={optionIcon}/></button></td>
-                        </tr>
-                        <tr className="usertab-fila">
-                            <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
-                            <td>1122334455</td>
-                            <td>Carmen Cardozo</td>
-                            <td><button className="usertab-options"><img className="usertab_icon_image" src={optionIcon}/></button></td>
-                        </tr>
-                        <tr className="usertab-fila">
-                            <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
-                            <td>1122334455</td>
-                            <td>Carmen Cardozo</td>
-                            <td><button className="usertab-options"><img className="usertab_icon_image" src={optionIcon}/></button></td>
-                        </tr>
-                        <tr className="usertab-fila">
-                            <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
-                            <td>1122334455</td>
-                            <td>Carmen Cardozo</td>
-                            <td><button className="usertab-options"><img className="usertab_icon_image" src={optionIcon}/></button></td>
-                        </tr>
-                        <tr className="usertab-fila">
-                            <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
-                            <td>1122334455</td>
-                            <td>Carmen Cardozo</td>
-                            <td><button className="usertab-options"><img className="usertab_icon_image" src={optionIcon}/></button></td>
-                        </tr>
-                        
+                        {
+                            i.map(item => <ItemUser/>)
+                        }
                     </tbody>
                 </table>
                 </div>
