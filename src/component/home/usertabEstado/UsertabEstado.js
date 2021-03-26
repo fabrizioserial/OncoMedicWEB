@@ -51,15 +51,15 @@ export const UsertabEstado=()=> {
         <table class="estado-table">
             <thead className="estado-usertab-thead">
                 <tr>
-                <th scope="col">ESTADO</th>
-                <th scope="col"></th>
                 <th scope="col">FECHA</th>
+                <th scope="col"></th>
+                <th scope="col">ESTADO</th>
                 <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
             {
-              i.map(item => <ItemUser type="sintomas" handleClick={handleClick} />)
+              i.map(item => <ItemUser type="estado" handleClick={handleClick} />)
             }
               <Menu className="menu-eliminate-1"
                   id={id}
