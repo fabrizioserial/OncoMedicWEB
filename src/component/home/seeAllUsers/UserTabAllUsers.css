@@ -1,4 +1,4 @@
-.usertab-cont-background-allUsers{
+.userall-cont-background-allUsers{
     margin-top: 20px;
     width: 1100px;
     height: auto;
@@ -7,15 +7,23 @@
     display: flex;
     border-radius: 5px;
 }
-.usertab-cont-info-allUsers{
+.userall-big-table{
+    width: inherit;
+    border-spacing:0 10px;
+
+
+}
+.userall-cont-info-allUsers{
     height: auto;
     min-height: 300px;
     width: 1100px;
-    padding: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
     padding-bottom: 20px;
     border-right: 30px solid #9357F7;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    background-color: #F4F4F4;
 }
 .big-table{
     width: 1100px;
@@ -23,15 +31,12 @@
     border-collapse: collapse;
     border-spacing: 0px;
 }
-.usertab-thead{
+.userall-thead{
     color: #9357F7;
     margin-bottom: 10px;
 }
-table tbody tr{
-    border-top: 10px solid #F4F4F4;
-}
 
-.usertab_icon_image{
+.userall_icon_image{
     height: 20px;
     width: 20px;
 }

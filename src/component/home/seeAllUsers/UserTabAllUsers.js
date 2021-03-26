@@ -15,9 +15,11 @@ export const UserTabAllUsers = () => {
             <ButtonGoBack text="VOLVER AL INICIO" color="purple"/>
 
             <div>
-            <div className="usertab-cont-info-allUsers">
-                <table class="big-table">
-                    <thead className="usertab-thead-allUsers">
+            <div>
+            </div>
+            <div className="userall-cont-info-allUsers">
+                <table class="userall-big-table">
+                    <thead className="userall-thead-allUsers">
                         <tr>
                         <th scope="col"></th>
                         <th scope="col">N PACIENTE</th>

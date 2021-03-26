@@ -5,11 +5,11 @@ import { Router,Link, Route, Switch } from 'react-router-dom'
 
 
 
-export const ButtonGoBack = (props) => {
+export const ButtonGoBack = ({text}) => {
     return(
         <div className="go-back-back">
-            <Link to="/home" className="">
-                <button className="goBack-btn">{props.text}
+            <Link to="/home" >
+                <button className="goBack-btn">{text}
                 </button>
             </Link>
         </div>

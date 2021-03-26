@@ -1,12 +1,15 @@
 .item-user-fila{
+    margin-top: 10px !important;
     cursor: pointer;
     background-color: #e6e6e6;
     border-radius: 5px;
     height: 34px;
     margin: 5px;
     padding-top: 10px;
+    border-collapse:separate;
+    border-spacing:0 15px;
 }
-.item-user-fila::after{
+.item-user-fila::before{
     margin-top: 10px;
 }
 .item-user-user-image-table{

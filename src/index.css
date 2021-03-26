@@ -10,9 +10,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  margin-top: 0;
-}
+
 a{
   text-decoration: none;
 }

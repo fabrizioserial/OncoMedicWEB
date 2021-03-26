@@ -6,22 +6,18 @@
     width: 250px;
     height: 40px;
     border-style:none;
-    background-color: #F4F4F4;
-    color: #6b6b6b;
+    background-color: #BE99FD;
+    color: white;
     font-weight: 600;
     text-decoration: none;
     text-align: start;
     vertical-align: middle;
     font-size: 16px;
-    border-width: 3px;
-    border-style: solid;
-    border-color: #E6E6E6;
-    border-radius: 8px;
+    border-radius: 7px;
     cursor: pointer;
     margin-left: 10px;
     display: flex;
     align-items: center;
     margin-bottom: 50px;
     font-family: 'Montserrat', sans-serif;
-
 }
