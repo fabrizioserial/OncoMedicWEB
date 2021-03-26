@@ -16,30 +16,20 @@
     color: #9357F7;
     margin-bottom: 10px;
 }
-.sintoms-usertab-user-image{
-    height: 33px;
-    width: 33px;
-    border-radius: 20px;
-}
 
 .sintoms-usertab-fila{
+    margin-top: 10px;
     cursor: pointer;
     background-color: #e6e6e6;
     border-radius: 5px;
-    height: 34px;
+    height: 40px;
     margin: 5px;
     padding-top: 10px;
 }
 .sintoms-usertab-fila::after{
     margin-top: 10px;
 }
-.sintoms-usertab-user-image-table{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    border-style: none;
-}
+
 .sintoms-usertab-options{
     height: 32px;
     display: flex;

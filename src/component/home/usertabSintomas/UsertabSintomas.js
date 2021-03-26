@@ -55,21 +55,23 @@ export const UsertabSintomas=()=> {
                     <thead className="sintoms-usertab-thead">
                         <tr>
                         <th scope="col">FECHA</th>
-                        <th scope="col">SINTOMAS</th>
+                        <th scope="col">SINTOMA</th>
                         <th scope="col"></th>
                         <th scope="col">GRADO</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr className="sintoms-usertab-fila">
-                            <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
-                            <td>Feliz</td>
-                            <td>11/4/21</td>
+                            <td>22/02/21</td>
+                            <td>Fiebre</td>
+                            <td></td>
+                            <td>3</td>
                         </tr>
                         <tr className="sintoms-usertab-fila">
-                            <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
-                            <td>1122334455</td>
-                            <td>Carmen Cardozo</td>
+                            <td>22/02/21</td>
+                            <td>Fiebre</td>
+                            <td></td>
+                            <td>3</td>
                         </tr>
                     </tbody>
                 </table>

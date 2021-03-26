@@ -9,8 +9,8 @@ import { Router,Link, Route, Switch } from 'react-router-dom'
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import ModalPopOver from "../modals/ModalPopOver"
-import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
+import ModalPopOverVerSintomas from '../modals/ModalPopOverVerSintomas'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,15 +25,10 @@ export const UsertabEstado=()=> {
   const [number, setNumber] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false);
 
-  const handleClick = (event,number) => {
-    setNumber(number);
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-
+  
   const handleCloseModal = () => {
     setOpenModal(false);
   };
@@ -63,13 +58,34 @@ export const UsertabEstado=()=> {
                     <tbody>
                         <tr className="estado-usertab-fila">
                             <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
-                            <td>Feliz</td>
-                            <td>11/4/21</td>
-                        </tr>
-                        <tr className="estado-usertab-fila">
-                            <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
                             <td>1122334455</td>
                             <td>Carmen Cardozo</td>
+                            <td>
+                            <div>
+                                    <Button aria-describedby={id}  onClick={e => handleClick(e)} className="usertab-options"><img className="usertab_icon_image" src={optionIcon}/></Button>
+                                    <Menu className="menu-eliminate-1"
+                                        id={id}
+                                        open={open}
+                                        anchorEl={anchorEl}
+                                        onClose={handleClose}
+                                        anchorOrigin={{
+                                        vertical: 'center',
+                                        horizontal: 'left',
+                                        }}
+                                        transformOrigin={{
+                                        vertical: 'left',
+                                        horizontal: 'left',
+                                        }}>
+                                        <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal}>VER COMPLETO</MenuItem>
+                                        <MenuItem >ELIMINAR</MenuItem>
+                                    </Menu>
+                                    <ModalPopOverVerSintomas 
+                                        id={number}
+                                        displayModal={openModal}
+                                        closeModal={handleCloseModal}
+                                    />
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
