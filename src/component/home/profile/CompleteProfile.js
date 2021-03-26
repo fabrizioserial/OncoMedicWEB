@@ -2,6 +2,8 @@ import React from 'react'
 import "../profile/CompleteProfile.css"
 import {UserTabAllUsers} from "../seeAllUsers/UserTabAllUsers"
 import {ButtonGoBack} from "../seeAllUsers/ButtonGoBack"
+import { UsertabEstado } from '../usertabEstado/UsertabEstado'
+import { UsertabSintomas } from '../usertabSintomas/UsertabSintomas'
 
 export const CompleteProfile = () => {
     return (
@@ -18,8 +20,12 @@ export const CompleteProfile = () => {
                 </div>
             </div>
             <div className="two-squares-complete-profile">
-                <div className="square-div-complete-profile"/>
-                <div className="square2-div-complete-profile"/>
+                <div className="square-div-complete-profile">
+                    <UsertabEstado/>
+                </div>
+                <div className="square2-div-complete-profile">
+                    <UsertabSintomas/>
+                </div>
             </div>
         </div>
     )

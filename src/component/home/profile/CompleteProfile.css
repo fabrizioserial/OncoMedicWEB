@@ -44,7 +44,7 @@
     border-right-style: inset;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    text-align: start;
+    text-align: center;
     background-color: #F4F4F4;
     border-radius: 7px;
 }
@@ -55,7 +55,7 @@
     height: 100%;
     margin-top: 30px;
     width: 47%;
-    text-align: start;
+    text-align: center;
     background-color: #F4F4F4;
     border-right: 2em solid #9357F7;
     border-right-style: inset;
