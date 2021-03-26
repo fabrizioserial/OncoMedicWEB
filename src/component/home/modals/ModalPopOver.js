@@ -10,7 +10,7 @@ const ModalPopOver = (props) => {
      };
      function closeModal(e) {
         e.stopPropagation()
-        props.closeModal()
+        props.closeModal() 
      }
      return (
        <div 
@@ -24,29 +24,29 @@ const ModalPopOver = (props) => {
                  className="close"
                  onClick={ closeModal }>&times;
             </span>
-            <div>
+            <div >
                <p className="modal-title">REGISTRAR NUEVO PACIENTE</p>
-               <ColoredLine color="gray" />
+               <hr className="add-modal-line"/>
             </div>
             <div className="add-inside-the-modal">
                 <p>Numero de paciente</p>
             </div> 
-            <div>
+            <div className="modal-add-input-cont">
                <input className="numero-del-paciente"
                   id="idDelPaciente"
                   placeholder="Introduzca el numero del paciente"
                   variant="outlined"/>
             </div>
-            <div className="add-cancer-the-modal">
+            <div className="add-inside-the-modal">
                 <p>Tipo de cancer</p>
             </div> 
-            <div>
+            <div className="modal-add-input-cont">
                <input className="numero-del-paciente"
                   id="cancerDelPaciente"
                   placeholder="Introduzca el tipo de cancer"
                   variant="outlined"/>
             </div>
-            <div>
+            <div className="add-cont-button">
                <button className="agregar-button">AGREGAR</button>
             </div>
          </div>

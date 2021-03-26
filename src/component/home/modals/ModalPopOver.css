@@ -12,7 +12,7 @@
     overflow: auto; /* Enable scroll if needed */
     padding-top: 80px; /* Location of the content container */
     border-style: none;
-}
+} 
 /* Modal content */
 .modal-content {
     background-color: white;
@@ -21,6 +21,8 @@
     height: 400px; /* Height in proportion to its parent container */
     margin: auto; /* Auto margin according to the element width */
     padding: 10px;
+    display: flex;
+    flex-direction: column;
     border: 1px solid black;
     border-radius: 20px; /* Optional. Rounds container corners */
     border-style: none;
@@ -32,6 +34,11 @@
    font-size: 25px;
    font-weight: bold;
    border-style: none;
+   display: flex;
+   margin-right: 10px;
+   justify-self: end;
+   position: absolute;
+   align-self: flex-end;
 }
 .close:hover, 
 .close:focus {
@@ -49,12 +56,17 @@
 }
 
 .add-inside-the-modal{
-    margin-top: 50px; 
-    margin-left: 20px;
+    margin-top: 45px; 
+    margin-left: 35px;
 }
 .add-cancer-the-modal{
     margin-top: 30px;
     margin-left: 20px;
+}
+.add-modal-line{
+    margin-top: 15px;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
 .numero-del-paciente{
@@ -66,19 +78,28 @@
     padding: 2px;
     font-size: 15px;
     padding-left: 10px;
-    margin-left: 20px;
 }
 
 .agregar-button{
     background-color:#8A2CE2;
     width: 200px;
     height: 50px;
-    margin-top: 70px;
-    margin-left: 185px;
     color: white;
     font-weight: 600;
     font-size: 15px;
     border-radius: 7px;
     border-style: none;
-    margin-left: 205px;
+    cursor: pointer;
+}
+.add-cont-button{
+    display: flex;
+    align-self: flex-end;
+    margin-right: 35px;
+    margin-top: 35px;
+}
+
+.modal-add-input-cont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

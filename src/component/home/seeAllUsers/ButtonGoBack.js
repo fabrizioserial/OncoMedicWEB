@@ -9,8 +9,7 @@ export const ButtonGoBack = (props) => {
     return(
         <div className="go-back-back">
             <Link to="/home" className="">
-                <button className="goBack-btn">
-                    <p>{props.text}</p>
+                <button className="goBack-btn">{props.text}
                 </button>
             </Link>
         </div>

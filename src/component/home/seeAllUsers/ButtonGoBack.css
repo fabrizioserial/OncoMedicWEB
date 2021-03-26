@@ -6,19 +6,22 @@
     width: 250px;
     height: 40px;
     border-style:none;
-    background-color: #f75757;
-    color: white;
+    background-color: #F4F4F4;
+    color: #6b6b6b;
     font-weight: 600;
+    text-decoration: none;
     text-align: start;
     vertical-align: middle;
-    line-height: 40px;
     font-size: 16px;
-    background-image: url('../../../img/purple_home_button1.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: right;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #E6E6E6;
     border-radius: 8px;
     cursor: pointer;
     margin-left: 10px;
+    display: flex;
+    align-items: center;
     margin-bottom: 50px;
+    font-family: 'Montserrat', sans-serif;
+
 }
