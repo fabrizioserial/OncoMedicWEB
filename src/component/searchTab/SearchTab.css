@@ -1,0 +1,26 @@
+.searchtab-cont-cont{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    min-height: 35px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #dbdbdb;
+    margin-bottom: 20px;
+}
+.searchtab-input{
+    width: auto;
+    height: 35px;
+    flex: 3.5;
+    background-color: transparent;
+    font-size: 15px;
+    border-style: none;
+    padding-left: 15px;
+}
+.searchtab-input:focus{
+    outline: none;
+}
+.searchtab-input-icon{
+    flex: 0.1;
+}

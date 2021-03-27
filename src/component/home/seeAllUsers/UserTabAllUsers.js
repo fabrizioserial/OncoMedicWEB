@@ -11,28 +11,28 @@ export const UserTabAllUsers = () => {
 
     const i = [1,2,3,4,5,6,7,8,9]
     return(
-        <div className="home-cont-background">
+        <div className="userall-cont-background">
 
             <ButtonGoBack text="VOLVER AL INICIO" color="purple"/>
 
-            <div>
+            <div className="userall-cont-cont">
                 <SearchTab/>
-            <div className="userall-cont-info-allUsers">
-                <table class="userall-big-table">
-                    <thead className="userall-thead-allUsers">
-                        <tr>
-                        <th scope="col"></th>
-                        <th scope="col">N PACIENTE</th>
-                        <th scope="col">NOMBRE</th>
-                        <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            i.map(item => <ItemUser type="seeAllUsers"/>)
-                        }
-                    </tbody>
-                </table>
+                <div className="userall-cont-info-allUsers">
+                    <table class="userall-big-table">
+                        <thead className="userall-thead-allUsers">
+                            <tr>
+                            <th scope="col"></th>
+                            <th scope="col">N PACIENTE</th>
+                            <th scope="col">NOMBRE</th>
+                            <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                i.map(item => <ItemUser type="seeAllUsers"/>)
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

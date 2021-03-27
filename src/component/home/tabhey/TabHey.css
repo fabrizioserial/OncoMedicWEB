@@ -17,6 +17,9 @@
     justify-content: center;
     
 }
+.tabhey-cont p{
+    margin: 0px;
+}
 .tabhey-cont-name{
     text-align: start !important;
     font-size: 25px;

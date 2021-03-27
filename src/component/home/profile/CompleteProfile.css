@@ -8,7 +8,16 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-
+.profile-cont-background{
+    width: auto;
+    height: 100%;
+    background-color: white;
+    margin-left: 200px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
 .div-text-complete-profile {
     float: left;
     margin-left: 25px;

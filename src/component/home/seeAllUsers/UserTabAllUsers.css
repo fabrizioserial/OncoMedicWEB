@@ -8,15 +8,28 @@
     border-radius: 5px;
 }
 .userall-big-table{
-    width: inherit;
+    width: 100%;
     border-spacing:0 10px;
 
-
+}
+.userall-cont-background{
+    width: auto;
+    height: 100%;
+    background-color: white;
+    margin-left: 200px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
+.userall-cont-cont{
+    width: 100%;
+    max-width: 100%;
 }
 .userall-cont-info-allUsers{
     height: auto;
     min-height: 300px;
-    width: 1100px;
+    width: initial;
     padding-right: 15px;
     padding-left: 15px;
     padding-bottom: 20px;
@@ -35,10 +48,6 @@
     color: #9357F7;
     margin-bottom: 10px;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> eebe354af30a7b0a17a0c899d9b11e5a2c84dd3b
 
 .userall_icon_image{
     height: 20px;

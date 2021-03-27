@@ -6,7 +6,7 @@ import { UsertabSintomas } from '../usertabSintomas/UsertabSintomas'
 
 export const CompleteProfile = () => {
     return (
-        <div className="home-cont-background">
+        <div className="profile-cont-background">
             <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
             <div className="name-div-complete-profile">
                 <img className="complete-profile-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" />
