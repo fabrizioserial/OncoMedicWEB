@@ -40,7 +40,7 @@ export const UsertabSintomas=()=> {
                         }
                     </tbody>
                 </table>
-                <button className="sintoms-usertab-final-button">VER TODOS</button>
+                <button className="menu-finalbutton">VER TODO</button>
             </div>
     )
 }

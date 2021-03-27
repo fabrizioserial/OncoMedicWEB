@@ -37,6 +37,6 @@ export const ItemUser = (props) => {
                 <td>Fiebre</td>
                 <td></td>
                 <td>3</td>
-            </tr>:""
+            </tr>: ""
     )
 }

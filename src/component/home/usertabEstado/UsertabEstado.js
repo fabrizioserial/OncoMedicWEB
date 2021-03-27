@@ -84,7 +84,8 @@ export const UsertabEstado=()=> {
               />
             </tbody>
         </table>
-        <button className="estado-usertab-final-button">VER TODOS</button>
+        <button className="menu-finalbutton">VER TODO</button>
+        
     </div>
   )
 }
