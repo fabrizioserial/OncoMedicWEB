@@ -9,7 +9,7 @@ import { Router,Link, Route, Switch } from 'react-router-dom'
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import ModalPopOverVerSintomas from '../modals/ModalPopOverVerSintomas'
+import ModalPopOverVerRegistroDiario from '../modals/ModalPopOverVerRegistroDiario'
 import {ItemUser} from '../../ItemUser/ItemUser'
 
 
@@ -77,7 +77,7 @@ export const UsertabEstado=()=> {
                   <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal}>VER COMPLETO</MenuItem>
                   <MenuItem >ELIMINAR</MenuItem>
               </Menu>
-              <ModalPopOverVerSintomas 
+              <ModalPopOverVerRegistroDiario 
                   id={number}
                   displayModal={openModal}
                   closeModal={handleCloseModal}

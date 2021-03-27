@@ -54,13 +54,3 @@ const ModalPopOver = (props) => {
      );
 }
 export default ModalPopOver;
-
-const ColoredLine = ({ color }) => (
-   <hr
-       style={{
-           color: color,
-           backgroundColor: color,
-           height: 1
-       }}
-   />
-);
