@@ -15,12 +15,15 @@
     border-radius: 8px;
     cursor: pointer;
     margin-right: 50px;
+    display: flex;
+    align-items: center;
+
 }
 .purple:hover{
     background-color: #8845f5;
 }
 .purple p{
-    margin-bottom: 0px;
+    
     max-width: 200px;
 }
 
@@ -41,13 +44,13 @@
     border-radius: 8px;
     cursor: pointer;
     margin-right: 50px;
-
+    display: flex;
+    align-items: center;
 }
 .blue:hover{
     background-color: #604bff;
 }
 .blue p{
-    margin-bottom: 0px;
     max-width: 200px;
 }
 
@@ -67,11 +70,12 @@
     background-position: right;
     border-radius: 8px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 .lightblue:hover{
     background-color: #4a8af0;
 }
 .lightblue p{
-    margin-bottom: 0px;
     max-width: 250px;
 }
