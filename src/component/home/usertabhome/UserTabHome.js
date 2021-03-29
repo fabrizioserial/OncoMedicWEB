@@ -91,6 +91,7 @@ export const UserTabHome=({margin_left})=> {
                     />     
                 </tbody>
             </table>
+            <button className="usertab-btn-vermas">Ver mas</button>
           </div>
       
     )

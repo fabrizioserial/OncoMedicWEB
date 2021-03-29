@@ -9,6 +9,24 @@
     border-top-right-radius: 9px;
     border-bottom-right-radius: 9px;
 }
+.tabhey-cont-options{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.tabhey-btn-options{
+    height: 35px;
+    width: 35px;
+    border-style: none;
+    cursor: pointer;
+    border-radius: 20px;
+    background-color: #E6E6E6;
+}
+.tabhey-btn-options:hover{
+    background-color: #dddddd;
+}
+
 .tabhey-cont{
     width: auto;
     padding-left: 20px;

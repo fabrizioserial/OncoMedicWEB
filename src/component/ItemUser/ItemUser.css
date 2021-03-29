@@ -3,7 +3,7 @@
     cursor: pointer;
     background-color: #e6e6e6;
     border-radius: 5px;
-    height: 52px;
+    height: 100%;
     margin: 5px;
     padding-top: 10px;
     border-collapse:separate;
@@ -22,7 +22,7 @@
 .item-user-user-image{
     height: 33px;
     width: 33px;
-    border-radius: 20px;
+    border-radius: 20px; 
 }
 .item-user-options{
     height: 32px;

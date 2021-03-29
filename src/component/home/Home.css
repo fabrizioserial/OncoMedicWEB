@@ -13,7 +13,14 @@
     flex-direction: row;
     margin-top: 30px;
     margin-bottom: 30px;
-    flex: 3;
+    flex-wrap: wrap;
+    flex-basis: 33.33%;
+    flex-grow: 0;
+    flex-shrink: 0;
+    
+}
+.home-cont-buttons button{
+
 }
 
 .home-cont-usertabs{

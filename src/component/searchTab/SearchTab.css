@@ -24,3 +24,10 @@
 .searchtab-input-icon{
     flex: 0.1;
 }
+.searchtab-btn-icon{
+    background-color: transparent;
+    border-style: none;
+    height: 100%;
+    cursor: pointer;
+    width: 40px;
+}

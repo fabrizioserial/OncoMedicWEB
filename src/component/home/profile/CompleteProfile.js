@@ -19,12 +19,10 @@ export const CompleteProfile = () => {
                 </div>
             </div>
             <div className="two-squares-complete-profile">
-                <div className="square-div-complete-profile">
-                    <UsertabEstado/>
-                </div>
-                <div className="square2-div-complete-profile">
-                    <UsertabSintomas/>
-                </div>
+                <UsertabEstado flexi={{Flex:1}}/>
+                
+                <UsertabSintomas flexi={{Flex:1}}/>
+                
             </div>
         </div>
     )
