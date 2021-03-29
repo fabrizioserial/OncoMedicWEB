@@ -52,7 +52,7 @@ export const TimeStatus = () => {
                 return "VIE";
             case 6: 
                 return "SAB";
-            case 7: 
+            case 0: 
                 return "DOM";
         }
     }
@@ -96,9 +96,7 @@ export const TimeStatus = () => {
         
         <div className="timestatus-cont-background">
             <div className="timestatus-cont">
-                {
-                    console.log(today)
-                }
+               
                 <p className="timestatus-date">{date}</p>
                 <p className="timestatus-day">{day}</p>
                 <p className="timestatus-month">{month}</p>

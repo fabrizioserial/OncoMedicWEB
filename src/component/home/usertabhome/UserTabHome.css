@@ -1,11 +1,11 @@
 .usertab-cont-background{
-    width: 500px;
+    width: auto;
     height: auto;
     min-height: 300px;
     background-color: #F4F4F4;
     display: flex;
     border-radius: 5px;
-
+    flex: 1;
 }
 .usertab-cont-info{
     height: auto;
@@ -14,11 +14,14 @@
     padding: 15px;
     padding-bottom: 20px;
     border-right: 30px solid #9357F7;
+    background-color: #F4F4F4;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    flex: 1;
 }
-.table{
-    width: 450px;
+
+.usertab-table{
+    width: 100%;
     border: none;
     border-collapse: collapse;
     border-spacing: 0px;

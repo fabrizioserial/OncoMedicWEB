@@ -5,9 +5,17 @@ import { Router,Link, Route, Switch } from 'react-router-dom'
 
 export const ButtonHome = (props) => {
     return(
-            <Link to={props.link}>
-            <button className={props.color} onClick={props.onClick}>
-                <p>{props.text}</p>
-            </button></Link> 
+        props.color == "lightblue" ? 
+            <Link to={props.link} className="btn-home-link" >
+                <button className={props.color} onClick={props.onClick}>
+                    <p>{props.text}</p>
+                </button>
+            </Link> 
+            :
+            <Link to={props.link} className="btn-home-link btn-home-margin" >
+                <button className={props.color} onClick={props.onClick}>
+                    <p>{props.text}</p>
+                </button>
+            </Link>  
     )
 }

@@ -23,7 +23,7 @@ export class Home extends Component {
                 <div className="home-cont-background">
                     
                     <TabHey name={"RICARDO"}/>
-                        
+                         
                         <div className="home-cont-buttons">
                         
                             <ButtonHome text="REGISTRAR NUEVO PACIENTE" color="purple" onClick={this.selectModal }></ButtonHome>
@@ -35,8 +35,10 @@ export class Home extends Component {
                             <ButtonHome text="VER ULTIMOS PACIENTES CON SINTOMAS" color="lightblue" link="seeAllUsers"></ButtonHome>
                         </div>
                         
-                        <div>
+                        <div className="home-cont-usertabs">
+                            <UserTabHome margin_left={{marginRight:"50px"}}/>
                             <UserTabHome/>
+
                         </div>
                 </div>
             )
