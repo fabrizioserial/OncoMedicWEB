@@ -23,7 +23,7 @@ const App = () => {
 
           <BrowserRouter>
 
-          <TimeStatus/>
+            <TimeStatus/>
 
             <Route exact path="/home">
               <Home/>

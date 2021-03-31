@@ -2,6 +2,7 @@ import React from 'react'
 import '../tabhey/TabHey.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog,faBell } from '@fortawesome/free-solid-svg-icons'
+import { Tuerquita } from './Tuerquita'
 
 
 
@@ -13,9 +14,11 @@ export const TabHey = (props) => {
                     <p className="tabhey-cont-name">{props.name}!</p> 
                 </div>
                 <div className="tabhey-cont-options">
-                    <button className="tabhey-btn-options">
-                        <FontAwesomeIcon icon={faCog}/>
-                    </button>
+
+                    <div >
+                       <Tuerquita/>
+                    </div>
+                    
                     <button className="tabhey-btn-options">
                         <FontAwesomeIcon icon={faBell}/>
                     </button>

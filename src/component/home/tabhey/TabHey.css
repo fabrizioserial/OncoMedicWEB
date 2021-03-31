@@ -22,6 +22,9 @@
     cursor: pointer;
     border-radius: 20px;
     background-color: #E6E6E6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .tabhey-btn-options:hover{
     background-color: #dddddd;
