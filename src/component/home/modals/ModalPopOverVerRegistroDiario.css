@@ -2,9 +2,10 @@
     background-color: white;
     width: 550px; /* Width in proportion to its parent container*/
     max-width: 640px; /* Max width where it stops expanding */
-    height: 500px; /* Height in proportion to its parent container */
+    height: auto; /* Height in proportion to its parent container */
     margin: auto; /* Auto margin according to the element width */
     padding: 10px;
+    padding-bottom: 20px !important;
     display: flex;
     flex-direction: column;
     border: 1px solid black;
@@ -16,6 +17,10 @@
 .inside-the-modal-diario{
     text-align: left !important;
     margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     
 }
 
@@ -24,11 +29,10 @@
 }
 
 .modal-diario-table{
-    margin-top: 2%;
-    margin-left: 5%;
+    width: 100%;
+    border-spacing: 0 10px;
     height: 100px;
     width: 90%;
     border: none;
-    border-collapse: collapse;
-    border-spacing: 0px;
+
 }

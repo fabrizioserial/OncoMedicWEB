@@ -36,7 +36,7 @@ const ModalPopOverVerRegistroDiario = (props) => {
                     <tbody>
                         {
                           i.map(item => <ItemUser type="regdiario"/>)
-                        }
+                        } 
                     </tbody>
                 </table>
                </div> 

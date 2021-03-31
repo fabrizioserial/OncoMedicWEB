@@ -28,7 +28,7 @@
     background-color: #8845f5;
 }
 .purple p{
-    
+    font-family: 'Montserrat', sans-serif;
     max-width: 200px;
 }
 
@@ -56,6 +56,7 @@
     background-color: #604bff;
 }
 .blue p{
+    font-family: 'Montserrat', sans-serif;
     max-width: 200px;
 }
 
@@ -83,5 +84,6 @@
     background-color: #4a8af0;
 }
 .lightblue p{
+    font-family: 'Montserrat', sans-serif;
     max-width: 250px;
 }

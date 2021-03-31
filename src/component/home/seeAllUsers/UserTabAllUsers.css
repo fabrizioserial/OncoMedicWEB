@@ -12,6 +12,15 @@
     border-spacing:0 10px;
 
 }
+.userall-btn-load-more{
+    width: 100%;
+    height: 35px;
+    background-color: #c9c9c9;
+    border-style: none;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+
+}
 .userall-cont-background{
     width: auto;
     height: 100%;

@@ -99,6 +99,7 @@ export const UserTabAllUsers = () => {
 
                         </tbody>
                     </table>
+                    <button className="userall-btn-load-more">Cargar mas</button>
                 </div>
             </div>
         </div>
