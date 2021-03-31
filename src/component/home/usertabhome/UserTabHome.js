@@ -3,9 +3,9 @@ import './UserTabHome.css'
 import {Menu,MenuItem,Button} from '@material-ui/core'
 import { Router,Link, Route, Switch } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
-import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
+import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate'
 import {ItemUser} from '../../ItemUser/ItemUser'
-import ModalPopOverVerRegistroDiario from '../modals/ModalPopOverVerRegistroDiario';
+import ModalPopOverVerRegistroDiario from '../../modals/ModalPopOverVerRegistroDiario';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -92,7 +92,7 @@ export const UserTabHome=({margin_left})=> {
                         </Link>
                         <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
                         <MenuItem onClick={handleCloseAndOpenModalDiario}>VER REGISTRO DIARIO</MenuItem>
-                        <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
+                        <MenuItem onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
                     </Menu>
                     <ModalPopOverEliminate
                         id={number} // Numero de paciente, lo settea cunado apretas el boton al lado del nombre

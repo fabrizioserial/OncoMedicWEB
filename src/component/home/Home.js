@@ -1,7 +1,7 @@
 import React from 'react'
 import '../home/Home.css'
 import { ButtonHome } from './buttonsHome/ButtonHome'
-import ModalPopOver from './modals/ModalPopOver'
+import ModalPopOver from '../modals/ModalPopOver'
 import  {UserTabHome}  from './usertabhome/UserTabHome'
 import { Component } from 'react';
 import { TabHey } from './tabhey/TabHey';

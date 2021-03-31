@@ -4,12 +4,12 @@ import optionIcon from '../../../img/option_icon.png'
 import {Menu,MenuItem,Button} from '@material-ui/core'
 import {useState} from 'react-dom'
 import { Component } from 'react';
-import ModalPopOverELiminate from '../modals/ModalPopOverEliminate'
+import ModalPopOverELiminate from '../../modals/ModalPopOverEliminate'
 import { Router,Link, Route, Switch } from 'react-router-dom'
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import ModalPopOverVerRegistroDiario from '../modals/ModalPopOverVerRegistroDiario'
+import ModalPopOverVerRegistroDiario from '../../modals/ModalPopOverVerRegistroDiario'
 import {ItemUser} from '../../ItemUser/ItemUser'
 
 
@@ -51,10 +51,10 @@ export const UsertabEstado=()=> {
         <table class="estado-table">
             <thead className="estado-usertab-thead">
                 <tr>
-                <th scope="col">FECHA</th>
+                <th className="sintoms-th-fecha" scope="col">FECHA</th>
                 <th scope="col"></th>
                 <th scope="col">ESTADO</th>
-                <th scope="col"></th>
+                <th className="estado-th-button" scope="col"></th>
                 </tr>
             </thead>
             <tbody> 

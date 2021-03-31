@@ -28,17 +28,16 @@ export const ItemUser = (props) => {
 
         props.type=="estado"?
             <tr className="estado-usertab-fila">
-                <td>11/2/21</td>
+                <td className="sintomas-fila-fecha">11/2/21</td>
                 <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
                 <td>Feliz</td>
-                <td><Button className="item-user-options" onClick={props.handleClick}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
+                <td className="estado-fila-button"><Button className="item-user-options" onClick={props.handleClick}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
             </tr>:
         props.type=="sintomas"?
-            <tr className="item-user-fila">
-                <td>22/1/22</td> 
-                <td>Fiebre</td>
-                <td></td>
-                <td>3</td>
+            <tr className="sintomas-usertab-fila">
+                <td className="sintomas-fila-fecha">22/1/22</td> 
+                <td className="sintomas-fila-fecha">Fiebre</td>
+                <td className="sintomas-fila-grado">3</td>
             </tr>:
         props.type=="regdiario"?
             <tr className="item-user-fila-regdiario">

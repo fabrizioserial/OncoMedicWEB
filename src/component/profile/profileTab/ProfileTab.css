@@ -1,0 +1,13 @@
+
+.name-div-complete-profile {
+    padding: 15px;
+    height: 180px;
+    text-align: start;
+    background-color: #F4F4F4;
+    border-right: 30px solid #9357F7;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+
+}

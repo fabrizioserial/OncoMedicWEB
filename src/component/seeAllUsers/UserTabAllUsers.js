@@ -1,11 +1,11 @@
 import React from 'react'
-import '../seeAllUsers/UserTabAllUsers.css'
-import optionIcon from '../../../img/option_icon.png'
-import { UserTabHome } from '../usertabhome/UserTabHome'
-import { ButtonHome } from '../buttonsHome/ButtonHome'
-import { ButtonGoBack } from '../seeAllUsers/ButtonGoBack'
-import { ItemUser } from '../../ItemUser/ItemUser';
-import { SearchTab } from './../../searchTab/SearchTab';
+import './UserTabAllUsers.css'
+import optionIcon from '../../img/option_icon.png'
+import { UserTabHome } from '../home/usertabhome/UserTabHome'
+import { ButtonHome } from '../home/buttonsHome/ButtonHome'
+import { ButtonGoBack } from './ButtonGoBack'
+import { ItemUser } from '../ItemUser/ItemUser';
+import { SearchTab } from './searchTab/SearchTab';
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
 import {Menu,MenuItem,Button} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';

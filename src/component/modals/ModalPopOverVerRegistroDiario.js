@@ -1,7 +1,7 @@
 import React from 'react';
 import './ModalPopOverVerRegistroDiario.css'
 import 'fontsource-roboto';
-import {ItemUser} from '../../ItemUser/ItemUser'
+import {ItemUser} from '../ItemUser/ItemUser'
 
 
 const ModalPopOverVerRegistroDiario = (props) => {
