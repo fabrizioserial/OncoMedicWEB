@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import {Home} from '../src/component/home/Home'
 import './App.css';
 import { Login } from './component/login/Login';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Switch } from 'react-router-dom';
 import { TimeStatus } from './component/timestatus/TimeStatus';
 import { UserTabAllUsers } from 'src/component/home/seeAllUsers/UserTabAllUsers.js'
 import {CompleteProfile} from './component/home/profile/CompleteProfile'
@@ -15,13 +15,13 @@ const App = () => {
   return (
     <div className="App">
 
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           <Route exact path="/">
             <Login/>
           </Route> 
 
-          <BrowserRouter>
+          <HashRouter>
 
             <TimeStatus/>
 
@@ -37,9 +37,9 @@ const App = () => {
               <CompleteProfile/>
             </Route>
 
-          </BrowserRouter>
+          </HashRouter>
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
       
     </div>
   );
