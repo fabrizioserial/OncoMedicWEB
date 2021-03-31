@@ -1,17 +1,11 @@
 import React from 'react'
 import './UserTabHome.css'
-import optionIcon from '../../../img/option_icon.png'
 import {Menu,MenuItem,Button} from '@material-ui/core'
-import {useState} from 'react-dom'
-import { Component } from 'react';
-import ModalPopOverELiminate from '../modals/ModalPopOverEliminate'
 import { Router,Link, Route, Switch } from 'react-router-dom'
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import ModalPopOver from "../modals/ModalPopOver"
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
 import {ItemUser} from '../../ItemUser/ItemUser'
+import ModalPopOverVerRegistroDiario from '../modals/ModalPopOverVerRegistroDiario';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,28 +19,44 @@ export const UserTabHome=({margin_left})=> {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [number, setNumber] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false);
+  const [openModalDiario, setOpenModalDiario] = React.useState(false);
   const i = [1,2,3,4,5,6]
 
+  // Menu
   const handleClick = (event,number) => {
     setNumber(number);
     setAnchorEl(event.currentTarget);
   }; 
 
+  function handleClose(){
+    setAnchorEl(null);
+  }
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
+  // Modal eliminar
 
   const handleCloseModal = () => {
     setOpenModal(false);
   };
 
-  function handleClose(){
-    setAnchorEl(null);
-  }
-
   function handleCloseAndOpenModal(){
     setOpenModal(true);
     setAnchorEl(null);
   }
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+
+  // Modal registro diario
+
+  function handleCloseAndOpenModalDiario(){
+    setOpenModalDiario(true);
+    setAnchorEl(null);
+  }
+
+  const handleCloseModalDiario = () => {
+    setOpenModalDiario(false);
+  };
+
 
   return (
       
@@ -81,14 +91,18 @@ export const UserTabHome=({margin_left})=> {
                             <MenuItem onClick={handleClose}>VER PERFIL</MenuItem>
                         </Link>
                         <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
-                        <MenuItem onClick={handleClose}>VER REGISTRO DIARIO</MenuItem>
+                        <MenuItem onClick={handleCloseAndOpenModalDiario}>VER REGISTRO DIARIO</MenuItem>
                         <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
                     </Menu>
                     <ModalPopOverEliminate
                         id={number} // Numero de paciente, lo settea cunado apretas el boton al lado del nombre
                         displayModal={openModal}
                         closeModal={handleCloseModal}
-                    />     
+                    />
+                    <ModalPopOverVerRegistroDiario
+                        displayModal={openModalDiario}
+                        closeModal={handleCloseModalDiario}
+                    />
                 </tbody>
             </table>
           </div>
