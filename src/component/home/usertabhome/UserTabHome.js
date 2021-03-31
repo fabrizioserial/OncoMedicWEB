@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import './UserTabHome.css'
 import {Menu,MenuItem,Button} from '@material-ui/core'
 import { Router,Link, Route, Switch } from 'react-router-dom'
@@ -14,13 +14,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UserTabHome=({margin_left})=> {
+export const UserTabHome=({margin_left,userlist})=> {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [number, setNumber] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false);
   const [openModalDiario, setOpenModalDiario] = React.useState(false);
   const i = [1,2,3,4,5,6]
+  const [list,setList] =useState(userlist)
 
   // Menu
   const handleClick = (event,number) => {
@@ -57,9 +58,12 @@ export const UserTabHome=({margin_left})=> {
     setOpenModalDiario(false);
   };
 
+  useEffect(()=>{
+    console.log("AAAAA",userlist)
+    setList(userlist)
+  },[list])
 
   return (
-      
           <div className="usertab-cont-info" style={margin_left&&margin_left}>
             <table class="usertab-table">
                 <thead className="usertab-thead">
@@ -72,7 +76,7 @@ export const UserTabHome=({margin_left})=> {
                 </thead>
                 <tbody>
                     {
-                        i.map(item => <ItemUser type="home" handleClick={handleClick} />)
+                       userlist && list.map((item,index) => <ItemUser user={item} key={index} type="home" handleClick={handleClick} />)
                     }
                     <Menu className="menu-eliminate-1"
                         id={id}
@@ -105,8 +109,7 @@ export const UserTabHome=({margin_left})=> {
                     />
                 </tbody>
             </table>
-            <button className="usertab-btn-vermas">Ver mas</button>
-          </div>
-      
+            {userlist && <button className="usertab-btn-vermas">Ver mas</button>}
+          </div>   
     )
 }

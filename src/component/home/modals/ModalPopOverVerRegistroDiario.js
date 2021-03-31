@@ -35,7 +35,7 @@ const ModalPopOverVerRegistroDiario = (props) => {
                   <table class="modal-diario-table">
                     <tbody>
                         {
-                          i.map(item => <ItemUser type="regdiario"/>)
+                          i.map((item,index)=> <ItemUser key={index} type="regdiario"/>)
                         } 
                     </tbody>
                 </table>

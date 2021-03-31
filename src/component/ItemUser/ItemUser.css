@@ -12,6 +12,15 @@
 .item-user-fila::before{
     margin-top: 10px;
 }
+.item-user-config{
+    width: 40px;
+}
+.item-status-active{
+    color:rgb(72, 243, 95)
+}
+.item-status-inactive{
+    color:rgb(243, 72, 72)
+}
 .item-user-user-image-table{
     display: flex;
     justify-content: center;

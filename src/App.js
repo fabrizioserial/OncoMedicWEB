@@ -37,6 +37,10 @@ const App = () => {
               <CompleteProfile/>
             </Route>
 
+            <Route exact path="/profile/:id">
+              <CompleteProfile/>
+            </Route>
+
           </HashRouter>
         </Switch>
       </HashRouter>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import '../seeAllUsers/UserTabAllUsers.css'
 import optionIcon from '../../../img/option_icon.png'
 import { UserTabHome } from '../usertabhome/UserTabHome'
@@ -10,6 +10,7 @@ import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
 import {Menu,MenuItem,Button} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { Router,Link, Route, Switch } from 'react-router-dom'
+import {getFirestore} from '../../../firebase'
 
 
 
@@ -25,6 +26,7 @@ export const UserTabAllUsers = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [number, setNumber] = React.useState(null);
     const [openModal, setOpenModal] = React.useState(false);
+    const [userList,setUserList] = useState([])
   
     const handleClick = (event,number) => {
       setNumber(number);
@@ -50,6 +52,26 @@ export const UserTabAllUsers = () => {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
+    useEffect(()=>{
+        console.log("DB READING")
+        
+         const db = getFirestore()
+        const itemCollection = db.collection("users")
+
+        const usersActive = itemCollection.where("status","!=","Pendiente")
+        usersActive.get().then((querySnapshot)=>{
+            let activeuser = querySnapshot.docs.map(doc =>{
+                return(
+                    {
+                        id:doc.id,...doc.data()
+                    }
+                )
+            })
+            setUserList(activeuser)
+        })
+
+    },[])
+
     return(
         <div className="userall-cont-background">
 
@@ -64,12 +86,14 @@ export const UserTabAllUsers = () => {
                             <th scope="col"></th>
                             <th scope="col">N PACIENTE</th>
                             <th scope="col">NOMBRE</th>
+                            <th scope="col">TIPO DE CANCER</th>
+                            <th scope="col">ESTADO</th>
                             <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                i.map(item => <ItemUser type="seeAllUsers" handleClick={handleClick} />)
+                                userList.length > 0 && userList.map((item,key) => <ItemUser key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
                             }
                             <Menu className="menu-see-all-users"
                                 id={id}
@@ -99,7 +123,7 @@ export const UserTabAllUsers = () => {
 
                         </tbody>
                     </table>
-                    <button className="userall-btn-load-more">Cargar mas</button>
+                    {userList&& <button className="userall-btn-load-more">Cargar mas</button>}
                 </div>
             </div>
         </div>
