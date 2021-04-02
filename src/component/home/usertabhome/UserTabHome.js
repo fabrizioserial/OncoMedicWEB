@@ -114,6 +114,7 @@ export const UserTabHome=({margin_left})=> {
                         closeModal={handleCloseModal}
                     />
                     <ModalPopOverVerRegistroDiario
+                        type="diario"
                         displayModal={openModalDiario}
                         closeModal={handleCloseModalDiario}
                     />

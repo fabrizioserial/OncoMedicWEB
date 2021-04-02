@@ -35,9 +35,16 @@ const ModalPopOverVerRegistroDiario = (props) => {
                </div>
                <div className="inside-the-modal-diario">
                   <p className="paciente-of-modal">Paciente:_____________</p>
-                  <div>
-                     <UsertabEstado/>
-                  </div>
+                  {props.type=="diario"? (
+                     <div>
+                        <UsertabEstado type="regDiario"/>
+                     </div>
+                  ):(
+                     <div>
+                        <UsertabEstado  type="regDia"/>
+                     </div>
+                  )
+                  }
                </div> 
          </div>
       </div>

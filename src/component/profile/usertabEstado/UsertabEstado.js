@@ -57,12 +57,11 @@ export const UsertabEstado=(props)=> {
                 <th className="estado-th-button" scope="col"></th>
                 </tr>
             </thead>
-            <tbody> 
-            {
-              i.map(item => <ItemUser type="estado" handleClick={handleClick} />)
-            }
             {props.type=="profile"? (
-              <div>
+              <tbody> 
+                {
+                i.map(item => <ItemUser type="estado" handleClick={handleClick} />)
+                }
                 <Menu className="menu-eliminate-1"
                     id={id}
                     open={open}
@@ -84,12 +83,27 @@ export const UsertabEstado=(props)=> {
                     displayModal={openModal}
                     closeModal={handleCloseModal}
                 />
-              </div>
-            ): ""
-            }
             </tbody>
+            ): 
+            props.type=="regDiario"? (
+            <tbody>
+              {
+                i.map(item => <ItemUser type="regDiario" handleClick={handleClick} />)
+              }
+            </tbody>
+            ):(
+              <tbody>
+              {
+                i.map(item => <ItemUser type="regDia" handleClick={handleClick} />)
+              }
+            </tbody>
+            )
+            }
         </table>
-        <button className="menu-finalbutton">VER TODO</button>
+        {props.type=="regDia"? (""):(
+          <button className="menu-finalbutton">VER TODO</button>
+          )
+        }
         
     </div>
   )
