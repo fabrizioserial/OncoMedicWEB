@@ -11,9 +11,12 @@ export const CompleteProfile = () => {
             <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
             <ProfileTab/>
             <div className="two-squares-complete-profile">
-                <UsertabEstado flexi={{Flex:1}}/>
-                <UsertabSintomas flexi={{Flex:1}}/>
-                
+                <div  className="estado-usertab-cont-background">
+                    <UsertabEstado flexi={{Flex:1}}/>
+                </div>
+                <div className="sintoms-usertab-cont-background">
+                    <UsertabSintomas flexi={{Flex:1}}/>
+                </div>  
             </div>
         </div>
     )

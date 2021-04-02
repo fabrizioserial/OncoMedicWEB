@@ -24,7 +24,7 @@ export const UsertabSintomas=()=> {
   const i = [1,2,3,4,5,6]
 
   return (
-            <div className="sintoms-usertab-cont-background">
+            <div>
                 <table class="sintoms-table">
                     <thead className="sintoms-usertab-thead">
                         <tr>

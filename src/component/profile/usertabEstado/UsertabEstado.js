@@ -47,7 +47,7 @@ export const UsertabEstado=()=> {
   const id = open ? 'simple-popover' : undefined;
 
   return (
-    <div className="estado-usertab-cont-background">
+    <div>
         <table class="estado-table">
             <thead className="estado-usertab-thead">
                 <tr>

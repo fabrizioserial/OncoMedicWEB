@@ -1,7 +1,8 @@
 import React from 'react';
 import './ModalPopOverVerRegistroDiario.css'
 import 'fontsource-roboto';
-import {ItemUser} from '../ItemUser/ItemUser'
+import { UserTabHome } from '../home/usertabhome/UserTabHome';
+
 
 
 const ModalPopOverVerRegistroDiario = (props) => {
@@ -32,13 +33,9 @@ const ModalPopOverVerRegistroDiario = (props) => {
                </div>
                <div className="inside-the-modal-diario">
                   <p className="paciente-of-modal">Paciente:_____________</p>
-                  <table class="modal-diario-table">
-                    <tbody>
-                        {
-                          i.map(item => <ItemUser type="regdiario"/>)
-                        } 
-                    </tbody>
-                </table>
+                  <div>
+                     <UserTabHome/>
+                  </div>
                </div> 
          </div>
       </div>

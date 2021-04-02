@@ -1,8 +1,8 @@
 import React from 'react'
-import {Menu,MenuItem,Button} from '@material-ui/core'
-import { Router,Link, Route, Switch,Redirect } from 'react-router-dom'
+import {Menu,MenuItem} from '@material-ui/core'
+import { Link,} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog,faBell } from '@fortawesome/free-solid-svg-icons'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 import '../tuerquita/Tuerquita.css'
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
 
