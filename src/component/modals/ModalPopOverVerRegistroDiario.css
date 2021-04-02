@@ -16,16 +16,15 @@
 
 .inside-the-modal-diario{
     text-align: left !important;
-    margin-top: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    padding: 7%;
     
 }
 
 .paciente-of-modal{
-    margin-left: 5%;
+    margin-top: -2%;
 }
 
 .modal-diario-table{

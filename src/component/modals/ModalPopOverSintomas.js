@@ -1,13 +1,10 @@
 import React from 'react';
-import './ModalPopOverVerRegistroDiario.css'
 import 'fontsource-roboto';
-import { UserTabHome } from '../home/usertabhome/UserTabHome';
-import { UsertabEstado } from '../profile/usertabEstado/UsertabEstado';
-import { Tuerquita } from '../tuerquita/Tuerquita';
+import { UsertabSintomas } from '../profile/usertabSintomas/UsertabSintomas';
 
 
 
-const ModalPopOverVerRegistroDiario = (props) => {
+const ModalPopOverSintomas = (props) => {
       const i = [1,2,3,4,5,6]
      
      const divStyle = { 
@@ -30,18 +27,18 @@ const ModalPopOverVerRegistroDiario = (props) => {
                   onClick={ closeModal }>&times;
                </span>
                <div>
-                  <p className="modal-title">REGISTRO DIARIO</p>
+                  <p className="modal-title">SINTOMAS PRESENTADOS</p>
                   <hr className="add-modal-line"/>
                </div>
                <div className="inside-the-modal-diario">
                   <p className="paciente-of-modal">Paciente:_____________</p>
                   <div>
-                     <UsertabEstado/>
+                     <UsertabSintomas/>
                   </div>
                </div> 
          </div>
       </div>
      );
 }
-export default ModalPopOverVerRegistroDiario;
+export default ModalPopOverSintomas;
 

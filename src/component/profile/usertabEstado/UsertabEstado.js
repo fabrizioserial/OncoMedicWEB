@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UsertabEstado=()=> {
+export const UsertabEstado=(props)=> {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [number, setNumber] = React.useState(null);
@@ -61,27 +61,32 @@ export const UsertabEstado=()=> {
             {
               i.map(item => <ItemUser type="estado" handleClick={handleClick} />)
             }
-              <Menu className="menu-eliminate-1"
-                  id={id}
-                  open={open}
-                  anchorEl={anchorEl}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                  vertical: 'center',
-                  horizontal: 'left',
-                  }}
-                  transformOrigin={{
-                  vertical: 'left',
-                  horizontal: 'left',
-                  }}>
-                  <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal}>VER COMPLETO</MenuItem>
-                  <MenuItem >ELIMINAR</MenuItem>
-              </Menu>
-              <ModalPopOverVerRegistroDiario 
-                  id={number}
-                  displayModal={openModal}
-                  closeModal={handleCloseModal}
-              />
+            {props.type=="profile"? (
+              <div>
+                <Menu className="menu-eliminate-1"
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                    vertical: 'center',
+                    horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                    vertical: 'left',
+                    horizontal: 'left',
+                    }}>
+                    <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal}>VER COMPLETO</MenuItem>
+                    <MenuItem >ELIMINAR</MenuItem>
+                </Menu>
+                <ModalPopOverVerRegistroDiario 
+                    id={number}
+                    displayModal={openModal}
+                    closeModal={handleCloseModal}
+                />
+              </div>
+            ): ""
+            }
             </tbody>
         </table>
         <button className="menu-finalbutton">VER TODO</button>

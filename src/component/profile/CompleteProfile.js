@@ -12,7 +12,7 @@ export const CompleteProfile = () => {
             <ProfileTab/>
             <div className="two-squares-complete-profile">
                 <div  className="estado-usertab-cont-background">
-                    <UsertabEstado flexi={{Flex:1}}/>
+                    <UsertabEstado type="profile" flexi={{Flex:1}}/>
                 </div>
                 <div className="sintoms-usertab-cont-background">
                     <UsertabSintomas flexi={{Flex:1}}/>
