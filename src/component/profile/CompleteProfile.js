@@ -1,8 +1,8 @@
 import React from 'react'
 import "../profile/CompleteProfile.css"
 import {ButtonGoBack} from "../seeAllUsers/ButtonGoBack"
-import { UsertabEstado } from '../usertabEstado/UsertabEstado.js'
-import { UsertabSintomas } from '../usertabSintomas/UsertabSintomas'
+import { UsertabEstado } from '../profile/usertabEstado/UsertabEstado'
+import { UsertabSintomas } from '../profile/usertabSintomas/UsertabSintomas'
 import ProfileTab from './profileTab/ProfileTab'
 
 export const CompleteProfile = () => {

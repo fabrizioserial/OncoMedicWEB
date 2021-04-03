@@ -1,4 +1,5 @@
 .sintoms-usertab-cont-background{
+    margin-left: 50px;
     width: 100%;
     min-height: 300px;
     background-color: #F4F4F4;
@@ -71,8 +72,14 @@
     color: red i !important;
 }
 .sintoms-usertab-final-button{
- 
     width: 100%;
     height: 30px;
     border: 0ch;
+}
+.sintoms-th-grado{
+    text-align:center;
+    width: 20%;
+}
+.sintoms-th-fecha{
+    padding-left: 5%;
 }

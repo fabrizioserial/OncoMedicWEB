@@ -1,7 +1,10 @@
 import React from 'react';
 import './ModalPopOverVerRegistroDiario.css'
 import 'fontsource-roboto';
-import {ItemUser} from '../../ItemUser/ItemUser'
+import { UserTabHome } from '../home/usertabhome/UserTabHome';
+import { UsertabEstado } from '../profile/usertabEstado/UsertabEstado';
+import { Tuerquita } from '../tuerquita/Tuerquita';
+
 
 
 const ModalPopOverVerRegistroDiario = (props) => {

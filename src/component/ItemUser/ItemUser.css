@@ -1,3 +1,4 @@
+/* See all users */
 .item-user-fila{
     margin-top: 10px !important;
     cursor: pointer;
@@ -52,12 +53,31 @@
     width: 20px;
 }
 
-.modal-diario-fila{
+/* Home */
+
+.usertab-fila{
     cursor: pointer;
     background-color: #e6e6e6;
     border-radius: 5px;
-    height: 50px;
+    height: 34px;
+    margin: 5px;
     padding-top: 10px;
+}
+.usertab-fila::after{
+    margin-top: 10px;
+}
+.usertab-user-image{
+    height: 33px;
+    width: 33px;
+    border-radius: 20px;
+}
+
+.usertab-user-image-table{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-style: none;
 }
 
 .item-user-fila-regdiario{
@@ -71,6 +91,41 @@
     border-collapse:separate;
     border-spacing:0 15px;
 }
+
+/* Estado */
+
 .smile-icon{
     margin-left: 30px;
+}
+
+.estado-usertab-fila{
+    cursor: pointer;
+    background-color: #e6e6e6;
+    border-radius: 5px;
+    height: 34px;
+    margin: 5px;
+    padding-top: 10px;
+}
+.estado-usertab-fila::after{
+    margin-top: 10px;
+}
+.estado-fila-button{
+}
+/* Sintomas */
+.sintomas-usertab-fila{
+    cursor: pointer;
+    background-color: #e6e6e6;
+    border-radius: 5px;
+    height: 43px;
+    margin: 5px;
+    padding-top: 10px;
+}
+.sintomas-fila-fecha{
+    padding-left: 5%;
+}
+.sintomas-fila-grado{
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }

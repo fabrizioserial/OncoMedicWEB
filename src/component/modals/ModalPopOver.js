@@ -1,5 +1,5 @@
 import React from 'react';
-import '../modals/ModalPopOver.css'
+import './ModalPopOver.css'
 import 'fontsource-roboto';
 
 
