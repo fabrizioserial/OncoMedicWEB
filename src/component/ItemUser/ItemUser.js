@@ -4,6 +4,7 @@ import optionIcon from 'src/img/option_icon.png'
 import {Menu,MenuItem,Button} from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLaughBeam } from '@fortawesome/free-solid-svg-icons'
+import MouseOverPopover from '../mouseOverPopover/MouseOverPopover'
 
 
 
@@ -33,12 +34,14 @@ export const ItemUser = (props) => {
                 <td>Feliz</td>
                 <td className="estado-fila-button"><Button className="item-user-options" onClick={props.handleClick}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
             </tr>:
+
         props.type=="sintomas"?
             <tr className="sintomas-usertab-fila">
                 <td className="sintomas-fila-fecha">22/1/22</td> 
                 <td className="sintomas-fila-fecha">Fiebre</td>
-                <td className="sintomas-fila-grado">3</td>
+                <td className="sintomas-fila-grado"><MouseOverPopover name={3} descrip="mas de 40 grados"/></td>
             </tr>:
+
         props.type=="regDia"?
             <tr className="item-user-fila-regdiario">
                 <td> <FontAwesomeIcon icon={faLaughBeam} className="smile-icon" size="2x"/></td>
