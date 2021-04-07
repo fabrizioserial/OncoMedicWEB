@@ -7,6 +7,7 @@ import { Component } from 'react';
 import { TabHey } from './tabhey/TabHey';
 import {getFirestore} from '../../firebase'
 import { connect } from 'react-redux'
+import { UserTabLastSymptoms } from './userTabLastSymptoms/UserTabLastSymptoms'
 
 
 
@@ -16,6 +17,7 @@ const Home = ({medicData}) =>{
 
     const [medic,setMedic] = useState(medicData)
     const [userList,setUserList] = useState([])
+    const [symptomsList,setSymptomsList] = useState([])
     const [modal,setModal] = useState(false)
     const [images,setImageList] =useState([])
 
@@ -52,6 +54,18 @@ const Home = ({medicData}) =>{
             setImageList(avatars)
             console.log(avatars)
         })
+
+        const itemCollectionSymptoms = db.collection("symptoms")
+
+        itemCollectionSymptoms.onSnapshot((querySnapshot) => {
+            let symptomslista = querySnapshot.docs.map(doc => {
+                    return(
+                        {id:doc.id,...doc.data()}
+                        )
+                    }
+                )
+            setSymptomsList(symptomslista)
+        })
     },[medicData])
 
     useEffect(()=>{
@@ -75,7 +89,7 @@ const Home = ({medicData}) =>{
                             closeModal={selectModal}/>
                     <div className="home-cont-usertabs">
                         {(userList.length > 0 && images.length > 0) && <UserTabHome userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
-                        {(userList.length > 0 && images.length > 0) && <UserTabHome userlist={userList.filter(item=>item.status==="Activo")} images={images}/>}
+                        {(userList.length > 0 && images.length > 0) && <UserTabLastSymptoms symptomsList={symptomsList}/>}
                         
                     </div>
             </div>
