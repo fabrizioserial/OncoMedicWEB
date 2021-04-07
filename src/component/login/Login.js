@@ -5,8 +5,10 @@ import { Link,NavLink } from 'react-router-dom'
 import {getFirestore} from '../../firebase'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux'
+import {setMedicUserAction} from '../../reduxStore/actions/loginAction'
 
-export const Login = () => {
+const Login = ({setMedicUserAction}) => {
 
     const [name,setName] = useState("")
     const [password,setPassword] =useState("")
@@ -22,10 +24,9 @@ export const Login = () => {
             let usermedic = querySnapshot.docs.map(doc => {
               return doc.data().name == name&& doc.data().password == password ? doc.data() : null
             })
-            setMedic(usermedic)
             setLoad(false)
+            usermedic && setMedicUserAction({name:usermedic[0].name,email:usermedic[0].email})
             usermedic && handleClick()
-
         }).catch(e=>{
             setLoad(false)
         })
@@ -85,3 +86,9 @@ export const Login = () => {
         </div>
     )
 }
+
+const mapDispatchToProps = {
+    setMedicUserAction
+}
+
+export default connect(null,mapDispatchToProps)(Login)
