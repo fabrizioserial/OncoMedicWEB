@@ -25,7 +25,7 @@ const Home = ({medicData}) =>{
     useEffect(()=>{
         console.log("DB READING")
         const db = getFirestore()
-        const itemCollection = db.collection("users").where("medic","==",medicData.id)
+        const itemCollection = db.collection("users")
         
         itemCollection.onSnapshot((querySnapshot) => {
             
@@ -85,7 +85,7 @@ const Home = ({medicData}) =>{
 
 const mapStateToProps = (state) => {
     return {
-        medicData: state.user_date
+        medicData: state.user_data
     }
 }
 

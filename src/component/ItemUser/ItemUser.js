@@ -43,11 +43,10 @@ export const ItemUser = ({handleClick,type,user,image}) => {
                 <td><Button className="item-user-options" onClick={handleClick}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
             </tr>:
         type=="sintomas"?
-            <tr className="item-user-fila">
-                <td>22/1/22</td> 
-                <td>Fiebre</td>
-                <td></td>
-                <td>3</td>
+            <tr className="sintomas-usertab-fila">
+                <td className="sintomas-fila-fecha">22/1/22</td> 
+                <td className="sintomas-fila-fecha">Fiebre</td>
+                <td className="sintomas-fila-grado"><MouseOverPopover name={3} descrip="mas de 40 grados"/></td>
             </tr>:
         type=="regdiario"?
             <tr className="item-user-fila-regdiario">
