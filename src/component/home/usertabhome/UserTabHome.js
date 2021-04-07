@@ -62,14 +62,6 @@ export const UserTabHome=({margin_left,userlist,images})=> {
     setOpenModalDiario(false);
   };
 
-  useEffect(()=>{
-    setList(userlist)
-    setImageList(images)
-    console.log("image are ",imageslist)
-    console.log("users are ",list)
-
-
-  },[list,imageslist])
     // Modal sintomas
 
     function handleCloseAndOpenModalSintomas(){
@@ -80,6 +72,15 @@ export const UserTabHome=({margin_left,userlist,images})=> {
     const handleCloseModalSintomas = () => {
       setOpenModalSintomas(false);
     };
+
+    useEffect(()=>{
+      setList(userlist)
+      setImageList(images)
+      console.log("image are ",imageslist)
+      console.log("users are ",list)
+  
+  
+    },[list,imageslist])
   
 
 
