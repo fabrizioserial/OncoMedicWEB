@@ -32,9 +32,6 @@ export const ItemUser = ({handleClick,type,user,image}) => {
                 <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src={imgs&&imgs.url} /></th>
                 <td>{user.id}</td>
                 <td>{user.name}</td>
-                {
-                    console.log("La imagenosa es:" ,image)
-                }
                 <td  className="item-user-config"><Button className="item-user-options" onClick={handleClick}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
             </tr>: 
 

@@ -27,8 +27,7 @@ const Home = ({medicData}) =>{
         console.log("DB READING")
         
          const db = getFirestore()
-        const itemCollection = db.collection("users")
-        
+        const itemCollection = db.collection("users").where("medic","==",medicData.id)
         itemCollection.get().then((querySnapshot) => {
             
             let userlista = querySnapshot.docs.map(doc => {
@@ -53,7 +52,7 @@ const Home = ({medicData}) =>{
             setImageList(avatars)
             console.log(avatars)
         })
-    },[])
+    },[medicData])
 
     useEffect(()=>{
     },[userList,images,medic])

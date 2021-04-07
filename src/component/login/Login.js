@@ -22,10 +22,13 @@ const Login = ({setMedicUserAction}) => {
 
         itemCollection.get().then((querySnapshot)=>{
             let usermedic = querySnapshot.docs.map(doc => {
-              return doc.data().name == name&& doc.data().password == password ? doc.data() : null
+              return doc.data().name == name && doc.data().password == password ? ({id:doc.id,...doc.data()})
+                : null
             })
+            console.log(usermedic)
+            
             setLoad(false)
-            usermedic && setMedicUserAction({name:usermedic[0].name,email:usermedic[0].email})
+            usermedic && setMedicUserAction({id:usermedic[0].id,name:usermedic[0].name,email:usermedic[0].email})
             usermedic && handleClick()
         }).catch(e=>{
             setLoad(false)

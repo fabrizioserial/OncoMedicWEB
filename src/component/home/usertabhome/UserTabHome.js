@@ -85,7 +85,7 @@ export const UserTabHome=({margin_left,userlist,images})=> {
                 </thead>
                 <tbody>
                     {
-                       (userlist && imageslist) && list.map((item,index) => <ItemUser user={item} image={imageslist.find(element =>element.id==item.id)} key={index}  type="home" handleClick={handleClick} />)
+                       (userlist && imageslist) && list.map((item,index) => <ItemUser user={item} image={imageslist.find(element =>element.id==item.avatar)} key={index}  type="home" handleClick={handleClick} />)
                     }
                     <Menu className="menu-eliminate-1"
                         id={id}
@@ -100,9 +100,8 @@ export const UserTabHome=({margin_left,userlist,images})=> {
                         vertical: 'left',
                         horizontal: 'left',
                         }}>
-                        <Link to="/profile" className="menu-item-profile">
-                            <MenuItem onClick={handleClose}>VER PERFIL</MenuItem>
-                        </Link>
+
+                        <MenuItem onClick={handleClose}>VER PERFIL</MenuItem>
                         <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
                         <MenuItem onClick={handleCloseAndOpenModalDiario}>VER REGISTRO DIARIO</MenuItem>
                         <MenuItem onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>

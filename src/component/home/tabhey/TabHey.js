@@ -10,7 +10,7 @@ import { CustomMenuItem } from '../../customMenuItem/CustomMenuItem'
 
 
 
-export const TabHey = (props) => {
+export const TabHey = ({name,users}) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -29,7 +29,7 @@ export const TabHey = (props) => {
             <div className="tabhey-cont-background">
                 <div className="tabhey-cont">
                     <p className="tabhey-cont-bd">Buen dia,</p>
-                    <p className="tabhey-cont-name">{props.name}!</p> 
+                    <p className="tabhey-cont-name">{name}!</p> 
                 </div>
                 <div className="tabhey-cont-options">
 

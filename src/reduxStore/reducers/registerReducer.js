@@ -1,9 +1,9 @@
 import {SET_MEDIC_USER} from '../actions/loginAction.js'
 
 const default_user ={
-    name:"",
-    email:"",
-    id:""
+    name:"Miguel Rizzo",
+    email:"aa@aa.com",
+    id:"123456"
 }
 
 const user_data = (state=default_user , action) =>{
