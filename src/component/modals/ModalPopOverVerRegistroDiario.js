@@ -4,6 +4,8 @@ import 'fontsource-roboto';
 import { UserTabHome } from '../home/usertabhome/UserTabHome';
 import { UsertabEstado } from '../profile/usertabEstado/UsertabEstado';
 import { Tuerquita } from '../tuerquita/Tuerquita';
+import { ItemUser } from './../ItemUser/ItemUser';
+
 
 
 

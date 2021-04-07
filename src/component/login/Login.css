@@ -87,3 +87,27 @@
     color: white;
     font-weight: 500;
 }
+
+.login-cont-loading{
+    width: 100vw;
+    height: 100vh;
+    z-index: 50;
+    position: absolute;
+    background-color: #4b4b4b4f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-loading{
+    width: 100px;
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 0px;
+    height: 100px;
+    background-color: white;
+    position: absolute;
+    z-index: 55;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

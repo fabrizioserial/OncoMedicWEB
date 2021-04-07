@@ -18,7 +18,7 @@
     background-color: white;
     width: 450px; /* Width in proportion to its parent container*/
     max-width: 640px; /* Max width where it stops expanding */
-    height: 400px; /* Height in proportion to its parent container */
+    height: 500px; /* Height in proportion to its parent container */
     margin: auto; /* Auto margin according to the element width */
     padding: 10px;
     display: flex;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useState, useEffect} from 'react'
 import './ItemUser.css'
 import optionIcon from 'src/img/option_icon.png'
 import {Menu,MenuItem,Button} from '@material-ui/core'
@@ -7,7 +7,12 @@ import { faLaughBeam,faCircle } from '@fortawesome/free-solid-svg-icons'
 
 
 
-export const ItemUser = ({handleClick,type,user}) => {
+export const ItemUser = ({handleClick,type,user,image}) => {
+    const [imgs,setImgs] = useState(image)
+
+    useEffect(() => {
+    }, [imgs])
+
     return (
 
         type=="seeAllUsers"?
@@ -16,15 +21,19 @@ export const ItemUser = ({handleClick,type,user}) => {
                 <td>{user.id}</td> 
                 <td>{user.name}</td>
                 <td>{user.cancer}</td>
+               
                 <td>{user.status== "Activo" ? <FontAwesomeIcon icon={faCircle} className="item-status-active" size="lg"/> : <FontAwesomeIcon icon={faCircle} className="item-status-inactive" size="lg"/>}</td>
                 <td className="item-user-config"><button className="item-user-options" onClick={handleClick}><img className="usertab_icon_image" src={optionIcon}/></button></td>
             </tr>: 
 
         type=="home"?
             <tr className="usertab-fila">
-                <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
+                <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src={imgs&&imgs.url} /></th>
                 <td>{user.id}</td>
                 <td>{user.name}</td>
+                {
+                    console.log("La imagenosa es:" ,image)
+                }
                 <td  className="item-user-config"><Button className="item-user-options" onClick={handleClick}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
             </tr>: 
 
@@ -49,7 +58,7 @@ export const ItemUser = ({handleClick,type,user}) => {
                 <td></td>
                 <td>1</td>
             </tr> : 
-        props.type=="regDiario"?
+        type=="regDiario"?
             <tr className="estado-usertab-fila">
             <td className="sintomas-fila-fecha">11/2/21</td>
             <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>

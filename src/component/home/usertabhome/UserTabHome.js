@@ -7,6 +7,7 @@ import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate'
 import {ItemUser} from '../../ItemUser/ItemUser'
 import ModalPopOverVerRegistroDiario from '../../modals/ModalPopOverVerRegistroDiario';
 import ModalPopOverSintomas from  '../../modals/ModalPopOverSintomas'
+import {getFirestore} from '../../../firebase'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UserTabHome=({margin_left,userlist})=> {
+export const UserTabHome=({margin_left,userlist,images})=> {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [number, setNumber] = React.useState(null);
@@ -24,6 +25,7 @@ export const UserTabHome=({margin_left,userlist})=> {
   const [openModalSintomas, setOpenModalSintomas] = React.useState(false);
   const i = [1,2,3,4,5,6]
   const [list,setList] =useState(userlist)
+  const [imageslist,setImageList] = useState(images)
 
   // Menu
   const handleClick = (event,number) => {
@@ -61,9 +63,13 @@ export const UserTabHome=({margin_left,userlist})=> {
   };
 
   useEffect(()=>{
-    console.log("AAAAA",userlist)
     setList(userlist)
-  },[list])
+    setImageList(images)
+    console.log("image are ",imageslist)
+    console.log("users are ",list)
+
+
+  },[list,imageslist])
     // Modal sintomas
 
     function handleCloseAndOpenModalSintomas(){
@@ -90,7 +96,7 @@ export const UserTabHome=({margin_left,userlist})=> {
                 </thead>
                 <tbody>
                     {
-                       userlist && list.map((item,index) => <ItemUser user={item} key={index} type="home" handleClick={handleClick} />)
+                       (userlist && imageslist) && list.map((item,index) => <ItemUser user={item} image={imageslist.find(element =>element.id==item.id)} key={index}  type="home" handleClick={handleClick} />)
                     }
                     <Menu className="menu-eliminate-1"
                         id={id}

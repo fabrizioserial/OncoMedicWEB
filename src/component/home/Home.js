@@ -13,6 +13,8 @@ export const Home = () =>{
 
     const [userList,setUserList] = useState([])
     const [modal,setModal] = useState(false)
+    const [images,setImageList] =useState([])
+
     const selectModal = (info) => {
        setModal(!modal) 
     }
@@ -33,11 +35,25 @@ export const Home = () =>{
                 )
             setUserList(userlista)
         })
+
+        const itemCollectionAvatar = db.collection("avatars")
+        
+        itemCollectionAvatar.get().then((querySnapshot) => {
+            
+            let avatars = querySnapshot.docs.map(doc => {
+                    return(
+                        {...doc.data()}
+                        )
+                    }
+                )
+            setImageList(avatars)
+            console.log(avatars)
+        })
     },[])
 
     useEffect(()=>{
-        console.log(userList)
-    },[userList])
+      
+    },[userList,images])
 
     return(
             <div className="home-cont-background">
@@ -51,8 +67,8 @@ export const Home = () =>{
                             displayModal={modal}
                             closeModal={selectModal}/>
                     <div className="home-cont-usertabs">
-                        {userList.length > 0 && <UserTabHome userlist={userList?userList : []} margin_left={{marginRight:"50px"}}/>}
-                        <UserTabHome/>
+                        {(userList.length > 0 && images.length > 0) && <UserTabHome userlist={userList} images={images} margin_left={{marginRight:"50px"}}/>}
+                        
                     </div>
             </div>
         )

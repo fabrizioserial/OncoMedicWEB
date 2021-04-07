@@ -10,7 +10,7 @@ import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
 import {Menu,MenuItem,Button} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { Router,Link, Route, Switch } from 'react-router-dom'
-import {getFirestore} from '../../../firebase'
+import {getFirestore} from '../../firebase'
 
 
 

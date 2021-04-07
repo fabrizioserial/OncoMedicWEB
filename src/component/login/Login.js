@@ -1,11 +1,60 @@
-import React from 'react'
+import React,{useState,useEffect,useCallback} from 'react'
 import '../login/Login.css'
 import medical_ilustrator from '../../img/medical_ilustration.png'
-import { Link } from 'react-router-dom'
+import { Link,NavLink } from 'react-router-dom'
+import {getFirestore} from '../../firebase'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { useHistory } from 'react-router-dom';
 
 export const Login = () => {
+
+    const [name,setName] = useState("")
+    const [password,setPassword] =useState("")
+    const [medic,setMedic] = useState({})
+    const [loading,setLoad] = useState(false)
+
+    const checkUser = () =>{
+        const db = getFirestore()
+        const itemCollection = db.collection("medic")
+        setLoad(true)
+
+        itemCollection.get().then((querySnapshot)=>{
+            let usermedic = querySnapshot.docs.map(doc => {
+              return doc.data().name == name&& doc.data().password == password ? doc.data() : null
+            })
+            setMedic(usermedic)
+            setLoad(false)
+            usermedic && handleClick()
+
+        }).catch(e=>{
+            setLoad(false)
+        })
+    }
+
+    const history = useHistory();
+    const handleClick = () => history.push('/home');
+
+
+    useEffect(() => {
+        console.log(medic);
+    }, [medic])
+
+    useEffect(()=>{
+
+    },[loading])
+
+    useEffect(() => {
+        console.log("name: ",name)
+        console.log("password: ",password)
+    }, [name,password])
+
     return(
         <div className="cont-login-container">
+            {
+                loading && <div className="login-cont-loading">
+                    <div className="login-loading"><CircularProgress color="#9357F7"/></div>
+                </div>
+            }
             <div className="cont-login-backlogin">
                 <div className="cont-login-cont-ev">
                     <div className="login-text-cont">
@@ -15,17 +64,16 @@ export const Login = () => {
                     <form>
                         <div>
                             <p className="text-login-input">Ingresar direccion de email</p>
-                            <input className="input-login" placeholder="name@example.com"></input>
+                            <input className="input-login" onChange={e => setName(e.target.value)} placeholder="name@example.com"></input>
                         </div>
                         <div style={{marginTop:"40px"}}>
                             <p className="text-login-input">Ingresar direccion de email</p>
-                            <input className="input-login" placeholder="atleast 8 caracters"></input>
+                            <input className="input-login" onChange={e => setPassword(e.target.value)} placeholder="atleast 8 caracters"></input>
                         </div>  
-                        <Link to="/home" className="">
-                            <button className="btn-login-input" >
-                                Log In
-                            </button>
-                            </Link>
+                        <button className="btn-login-input" onClick={()=>checkUser()}>
+                            Log In
+                        </button>
+                            
                     </form>
                     
                 </div>
