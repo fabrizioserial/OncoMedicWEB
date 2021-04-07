@@ -24,8 +24,7 @@ const Home = ({medicData}) =>{
 
     useEffect(()=>{
         console.log("DB READING")
-        
-         const db = getFirestore()
+        const db = getFirestore()
         const itemCollection = db.collection("users")
         
         itemCollection.get().then((querySnapshot) => {
@@ -64,7 +63,7 @@ const Home = ({medicData}) =>{
 
     return(
             <div className="home-cont-background">
-                <TabHey name={medic&&medic.name}/>
+                <TabHey name={medic&&medic.name} userlist={userList.filter(item=>item.status==="Pendiente")}/>
                     <div className="home-cont-buttons">
                         <ButtonHome text="REGISTRAR NUEVO PACIENTE" color="purple" onClick={selectModal }></ButtonHome>
                         <ButtonHome text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>

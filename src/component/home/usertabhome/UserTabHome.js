@@ -22,7 +22,6 @@ export const UserTabHome=({margin_left,userlist,images})=> {
   const [number, setNumber] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false);
   const [openModalDiario, setOpenModalDiario] = React.useState(false);
-  const [openModalSintomas, setOpenModalSintomas] = React.useState(false);
   const i = [1,2,3,4,5,6]
   const [list,setList] =useState(userlist)
   const [imageslist,setImageList] = useState(images)
@@ -62,26 +61,15 @@ export const UserTabHome=({margin_left,userlist,images})=> {
     setOpenModalDiario(false);
   };
 
-    // Modal sintomas
+  useEffect(()=>{
+    setList(userlist)
+    setImageList(images)
+    console.log("image are ",imageslist)
+    console.log("users are ",list)
 
-    function handleCloseAndOpenModalSintomas(){
-      setOpenModalSintomas(true);
-      setAnchorEl(null);
-    }
-  
-    const handleCloseModalSintomas = () => {
-      setOpenModalSintomas(false);
-    };
 
-    useEffect(()=>{
-      setList(userlist)
-      setImageList(images)
-      console.log("image are ",imageslist)
-      console.log("users are ",list)
-  
-  
-    },[list,imageslist])
-  
+  },[list,imageslist])
+
 
 
   return (
@@ -115,7 +103,7 @@ export const UserTabHome=({margin_left,userlist,images})=> {
                         <Link to="/profile" className="menu-item-profile">
                             <MenuItem onClick={handleClose}>VER PERFIL</MenuItem>
                         </Link>
-                        <MenuItem onClick={handleCloseAndOpenModalSintomas}>VER SINTOMAS</MenuItem>
+                        <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
                         <MenuItem onClick={handleCloseAndOpenModalDiario}>VER REGISTRO DIARIO</MenuItem>
                         <MenuItem onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
                     </Menu>
@@ -125,13 +113,9 @@ export const UserTabHome=({margin_left,userlist,images})=> {
                         closeModal={handleCloseModal}
                     />
                     <ModalPopOverVerRegistroDiario
-                        type="diario"
+                        çtype="diario"
                         displayModal={openModalDiario}
                         closeModal={handleCloseModalDiario}
-                    />
-                    <ModalPopOverSintomas
-                        displayModal={openModalSintomas}
-                        closeModal={handleCloseModalSintomas}
                     />
                 </tbody>
             </table>

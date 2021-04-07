@@ -20,7 +20,7 @@ const ModalPopOver = (props) => {
       const pushToDatabase = () =>{
          setDisabled("disabled")
          const db = getFirestore()
-         db.collection("medic").limit(6).doc({id}).set({
+         db.collection("medic").doc({id}).set({
             name:name,
             email:email,
             password:password

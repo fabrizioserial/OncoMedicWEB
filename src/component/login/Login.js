@@ -32,6 +32,46 @@ const Login = ({setMedicUserAction}) => {
         })
     }
 
+
+    const pushToDatabase = () =>{
+        const db = getFirestore()
+        db.collection("users").add({
+            name:"Fabri",
+            email:"aaa@",
+            gender:"",
+            birth:"",
+            medic:"",
+            place:"",
+            etnia:"",
+            smoke:{
+                smoke:false,
+                time:"",
+                qnt:"",
+            },
+            dbt:{
+                dbt:false,
+                med:""
+            },
+            med:{
+                hip:false,
+                epoc:false,
+                acv:false,
+                inf:false
+            },
+            avatar:"1",
+            status:"Activo"
+        }).then(()=>{
+        }).catch((e)=>{
+        });
+        const date = new Date()
+        db.collection('symptoms').add({
+            id:"123",
+            symptom:"fiebre",
+            grade:"4",
+            date:date
+        })
+     }
+
     const history = useHistory();
     const handleClick = () => history.push('/home');
 
@@ -74,6 +114,7 @@ const Login = ({setMedicUserAction}) => {
                         <button className="btn-login-input" onClick={()=>checkUser()}>
                             Log In
                         </button>
+                        <button onClick={pushToDatabase}/>
                             
                     </form>
                     
