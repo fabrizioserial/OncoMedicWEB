@@ -10,7 +10,11 @@ import { CustomMenuItem } from '../../customMenuItem/CustomMenuItem'
 
 
 
+<<<<<<< HEAD
 export const TabHey = ({name,users}) => {
+=======
+export const TabHey = ({name,userlist}) => {
+>>>>>>> 2149c788f8864138913553372ddb7cb1dae3c389
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -56,13 +60,12 @@ export const TabHey = ({name,users}) => {
                             horizontal: 'right',
                             }}
                             PaperProps={{
-                            style: { width: '300px',marginTop: '2px' },
+                            style: { width: '400px',marginTop: '2px' },
                             }}
                         >
-                            <CustomMenuItem name="Serial, Fabrizio" id="666" onClick={handleClose}/>
-
-
-
+                        {
+                            (userlist) && userlist.map((item,index) => <CustomMenuItem name={item.name}  id={item.id}/>)
+                        }
                         </Menu>
                 </div>
             </div>
