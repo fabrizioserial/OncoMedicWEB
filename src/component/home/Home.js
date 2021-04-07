@@ -12,6 +12,7 @@ import { connect } from 'react-redux'
 
 
 const Home = ({medicData}) =>{
+    console.log(medicData)
 
     const [medic,setMedic] = useState(medicData)
     const [userList,setUserList] = useState([])
@@ -23,10 +24,10 @@ const Home = ({medicData}) =>{
     }
 
     useEffect(()=>{
+        
         console.log("DB READING")
         const db = getFirestore()
-        const itemCollection = db.collection("users")
-        
+        const itemCollection = db.collection("users").where("medic","==",medicData.id)
         itemCollection.onSnapshot((querySnapshot) => {
             
             let userlista = querySnapshot.docs.map(doc => {
@@ -74,8 +75,7 @@ const Home = ({medicData}) =>{
                             closeModal={selectModal}/>
                     <div className="home-cont-usertabs">
                         {(userList.length > 0 && images.length > 0) && <UserTabHome userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
-                        {(userList.length > 0 && images.length > 0) && <UserTabHome userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
-
+                        {(userList.length > 0 && images.length > 0) && <UserTabHome userlist={userList.filter(item=>item.status==="Activo")} images={images}/>}
                         
                     </div>
             </div>
