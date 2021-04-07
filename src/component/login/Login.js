@@ -43,7 +43,7 @@ const Login = ({setMedicUserAction}) => {
             email:"aaa@",
             gender:"",
             birth:"",
-            medic:"",
+            medic:"123456",
             place:"",
             etnia:"",
             smoke:{

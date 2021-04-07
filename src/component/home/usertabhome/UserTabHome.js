@@ -100,7 +100,6 @@ export const UserTabHome=({margin_left,userlist,images})=> {
                         vertical: 'left',
                         horizontal: 'left',
                         }}>
-
                         <MenuItem onClick={handleClose}>VER PERFIL</MenuItem>
                         <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
                         <MenuItem onClick={handleCloseAndOpenModalDiario}>VER REGISTRO DIARIO</MenuItem>
