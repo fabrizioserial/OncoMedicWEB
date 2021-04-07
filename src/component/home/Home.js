@@ -12,6 +12,7 @@ import { connect } from 'react-redux'
 
 
 const Home = ({medicData}) =>{
+    console.log(medicData)
 
     const [medic,setMedic] = useState(medicData)
     const [userList,setUserList] = useState([])
@@ -58,8 +59,9 @@ const Home = ({medicData}) =>{
     },[userList,images,medic])
 
     useEffect(()=>{
-      console.log("medico es ",medic)
-      setMedic(medicData)
+        setMedic(medicData)
+        console.log("medico es ",medic)
+
     },[medicData])
 
     return(
@@ -85,7 +87,7 @@ const Home = ({medicData}) =>{
 
 const mapStateToProps = (state) => {
     return {
-        medicData: state.user_date
+        medicData: state.user_data
     }
 }
 
