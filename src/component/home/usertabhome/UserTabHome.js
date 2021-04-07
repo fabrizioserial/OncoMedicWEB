@@ -1,13 +1,10 @@
 import React,{useState,useEffect} from 'react'
 import './UserTabHome.css'
-import {Menu,MenuItem,Button} from '@material-ui/core'
-import { Router,Link, Route, Switch } from 'react-router-dom'
+import {Menu,MenuItem} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate'
 import {ItemUser} from '../../ItemUser/ItemUser'
-import ModalPopOverVerRegistroDiario from '../../modals/ModalPopOverVerRegistroDiario';
-import ModalPopOverSintomas from  '../../modals/ModalPopOverSintomas'
-import {getFirestore} from '../../../firebase'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,8 +20,6 @@ export const UserTabHome=({margin_left,userlist,images})=> {
   const [openModal, setOpenModal] = React.useState(false);
   const [openModalDiario, setOpenModalDiario] = React.useState(false);
   const i = [1,2,3,4,5,6]
-  const [list,setList] =useState(userlist)
-  const [imageslist,setImageList] = useState(images)
 
   // Menu
   const handleClick = (event,number) => {
@@ -61,15 +56,6 @@ export const UserTabHome=({margin_left,userlist,images})=> {
     setOpenModalDiario(false);
   };
 
-  useEffect(()=>{
-    setList(userlist)
-    setImageList(images)
-    console.log("image are ",imageslist)
-    console.log("users are ",list)
-
-
-  },[list,imageslist])
-
 
 
   return (
@@ -85,7 +71,7 @@ export const UserTabHome=({margin_left,userlist,images})=> {
                 </thead>
                 <tbody>
                     {
-                       (userlist && imageslist) && list.map((item,index) => <ItemUser user={item} image={imageslist.find(element =>element.id==item.avatar)} key={index}  type="home" handleClick={handleClick} />)
+                       (userlist && images) && userlist.map((item,index) => <ItemUser user={item} image={images.find(element =>element.id==item.avatar)} key={index}  type="home" handleClick={handleClick} />)
                     }
                     <Menu className="menu-eliminate-1"
                         id={id}
@@ -111,11 +97,7 @@ export const UserTabHome=({margin_left,userlist,images})=> {
                         displayModal={openModal}
                         closeModal={handleCloseModal}
                     />
-                    <ModalPopOverVerRegistroDiario
-                        çtype="diario"
-                        displayModal={openModalDiario}
-                        closeModal={handleCloseModalDiario}
-                    />
+
                 </tbody>
             </table>
             {userlist && <button className="usertab-btn-vermas">Ver mas</button>}
