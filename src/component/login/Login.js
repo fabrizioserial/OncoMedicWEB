@@ -62,7 +62,7 @@ const Login = ({setMedicUserAction}) => {
                 inf:false
             },
             avatar:"1",
-            status:"Activo"
+            status:"Pendiente"
         }).then(()=>{
         }).catch((e)=>{
         });

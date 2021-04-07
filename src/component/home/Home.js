@@ -24,16 +24,10 @@ const Home = ({medicData}) =>{
 
     useEffect(()=>{
         console.log("DB READING")
-<<<<<<< HEAD
-        
-         const db = getFirestore()
-        const itemCollection = db.collection("users").where("medic","==",medicData.id)
-=======
         const db = getFirestore()
-        const itemCollection = db.collection("users")
+        const itemCollection = db.collection("users").where("medic","==",medicData.id)
         
->>>>>>> 2149c788f8864138913553372ddb7cb1dae3c389
-        itemCollection.get().then((querySnapshot) => {
+        itemCollection.onSnapshot((querySnapshot) => {
             
             let userlista = querySnapshot.docs.map(doc => {
                     return(
@@ -79,8 +73,9 @@ const Home = ({medicData}) =>{
                             displayModal={modal}
                             closeModal={selectModal}/>
                     <div className="home-cont-usertabs">
-                        {(userList.length > 0 && images.length > 0) && <UserTabHome userlist={userList} images={images} margin_left={{marginRight:"50px"}}/>}
-                        {(userList.length > 0 && images.length > 0) && <UserTabHome userlist={userList} images={images}/>}
+                        {(userList.length > 0 && images.length > 0) && <UserTabHome userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
+                        {(userList.length > 0 && images.length > 0) && <UserTabHome userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
+
                         
                     </div>
             </div>

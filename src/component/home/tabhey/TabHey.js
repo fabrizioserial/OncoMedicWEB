@@ -10,11 +10,7 @@ import { CustomMenuItem } from '../../customMenuItem/CustomMenuItem'
 
 
 
-<<<<<<< HEAD
-export const TabHey = ({name,users}) => {
-=======
 export const TabHey = ({name,userlist}) => {
->>>>>>> 2149c788f8864138913553372ddb7cb1dae3c389
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -64,7 +60,11 @@ export const TabHey = ({name,userlist}) => {
                             }}
                         >
                         {
-                            (userlist) && userlist.map((item,index) => <CustomMenuItem name={item.name}  id={item.id}/>)
+                            userlist.length>0 ? (
+                                userlist.map((item,index) => <CustomMenuItem name={item.name}  id={item.id}/>)
+                            ) : (
+                                <CustomMenuItem type="finished">No hay mas usuarios para aceptar</CustomMenuItem>
+                            )
                         }
                         </Menu>
                 </div>

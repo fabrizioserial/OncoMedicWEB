@@ -15,6 +15,7 @@ import {Provider} from 'react-redux'
 
 
 const App = () => {
+  console.log(store.getState())
   return (
     <Provider store={store}>
       <div className="App">
