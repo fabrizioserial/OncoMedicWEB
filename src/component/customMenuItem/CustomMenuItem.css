@@ -1,0 +1,32 @@
+.custom-menu-div{
+    padding-left: 5% !important;
+    padding-top: 0% !important;
+    padding-right: 2% !important;
+    padding-bottom: 0% !important;
+    margin-right: 0% !important;
+}
+.custom-menu-td1{
+    width: 210px;
+}
+.custom-menu-id{
+    margin-top: 0;
+}
+.custom-menu-text{
+    margin-bottom: 3%;
+}
+.custom-menu-tr{
+    margin: 5px;
+    padding-top: 10px;
+}
+.custom-menu-td2{
+    cursor: pointer;
+}
+.custom-menu-iconCheck{
+    margin-right: 20px;
+}
+.custom-menu-iconCheck:hover{
+    color: green;
+}
+.custom-menu-iconTimes:hover{
+    color: red;
+}
