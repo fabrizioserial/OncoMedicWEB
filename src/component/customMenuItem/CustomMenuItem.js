@@ -35,6 +35,16 @@ export const CustomMenuItem = ({name,id,type}) => {
         })
     }
 
+    const handleEliminate = () =>{
+        const db = getFirestore()
+        db.collection("users").doc(`${user.id}`).delete().then(() => {
+          console.log("Document successfully deleted!");
+        })
+        setOpenModal(false);
+    
+      }
+    
+
     return (
         
         <div>
@@ -60,8 +70,10 @@ export const CustomMenuItem = ({name,id,type}) => {
                         </tbody>
                     </table>
                     <ModalPopOverEliminate
+                            id={id}
                             displayModal={openModal}
                             closeModal={handleCloseModal}
+                            handleEliminate={handleEliminate}
                         />
                 </div>
             )

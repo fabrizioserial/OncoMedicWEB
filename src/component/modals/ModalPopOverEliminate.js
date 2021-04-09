@@ -1,17 +1,32 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './ModalPopOverEliminate.css'
 import 'fontsource-roboto';
+import { Alert } from '@material-ui/lab';
+
 
 
 const ModalPopOverEliminate = (props) => {
+   const [title, setTitle] = React.useState(null)
+   const [errorMessage, setErrorMessage] = React.useState("");
      
      const divStyle = { 
           display: props.displayModal ? 'block' : 'none'
      };
      function closeModal(e) {
         e.stopPropagation()
+        setErrorMessage("")
+        setTitle("")
         props.closeModal()
      }
+
+     function handleIf(){
+         {title===props.id ? props.handleEliminate():idNotCorrect()}
+     }
+
+     const idNotCorrect = () => {
+         setErrorMessage("Id del paciente incorrecto")
+     }
+
      return (
        <div 
          className="modal"
@@ -33,15 +48,22 @@ const ModalPopOverEliminate = (props) => {
             </div> 
             <div>
                <input className="eliminate-numero-del-paciente"
+                  onChange={event => setTitle(event.target.value)}
+                  value={title}
                   type="text"
                   autocomplete="off"
                   id="idDelPaciente"
                   placeholder="Introduzca el numero del paciente para confirmar"
                   variant="outlined"/>
             </div>
-            <div>
-               <button className="agregar-eliminate-button">ELIMINAR</button>
+            
+            <div className="modalopoovereliminate-error">
+               {errorMessage && <div> {errorMessage} </div>}
             </div>
+            <div>
+               <button onClick={handleIf} className="agregar-eliminate-button">ELIMINAR</button>   
+            </div>
+            
          </div>
       </div>
      );
