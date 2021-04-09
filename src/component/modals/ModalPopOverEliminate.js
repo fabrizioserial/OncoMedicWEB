@@ -20,12 +20,17 @@ const ModalPopOverEliminate = (props) => {
      }
 
      function handleIf(){
-         {title===props.id ? props.handleEliminate():idNotCorrect()}
+         {title===props.id ? idCorrect():idNotCorrect()}
      }
 
      const idNotCorrect = () => {
          setErrorMessage("Id del paciente incorrecto")
      }
+
+     function idCorrect(){
+         setTitle("")
+         props.handleEliminate()
+      }
 
      return (
        <div 

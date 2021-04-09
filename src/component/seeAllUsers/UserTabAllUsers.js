@@ -11,6 +11,7 @@ import {Menu,MenuItem,Button} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { Router,Link, Route, Switch } from 'react-router-dom'
 import {getFirestore} from '../../firebase'
+import { ButtonRefresh } from './ButtonRefresh'
 
 
 
@@ -47,6 +48,30 @@ export const UserTabAllUsers = () => {
       setAnchorEl(null);
     }
 
+    const handleSearch = (e,title) => {
+        title === "" ? handleRefresh() :
+        title = title.toUpperCase()
+        setUserList(userList.filter((item=>item.id.toUpperCase().includes(title)||
+                                    item.name.toUpperCase().includes(title))))
+    }
+
+    const handleRefresh=()=>{
+        const db = getFirestore()
+        const itemCollection = db.collection("users")
+
+        const usersActive = itemCollection.where("status","!=","Pendiente")
+        usersActive.get().then((querySnapshot)=>{
+            let activeuser = querySnapshot.docs.map(doc =>{
+                return(
+                    {
+                        id:doc.id,...doc.data()
+                    }
+                )
+            })
+            setUserList(activeuser)
+        })
+    }
+
     const i = [1,2,3,4,5,6,7,8,9]
 
     const open = Boolean(anchorEl);
@@ -75,10 +100,13 @@ export const UserTabAllUsers = () => {
     return(
         <div className="userall-cont-background">
 
-            <ButtonGoBack text="VOLVER AL INICIO" color="purple"/>
+            <div className="userall-head">
+                <ButtonGoBack text="VOLVER AL INICIO" color="purple"/>
+                <ButtonRefresh handleClick={handleRefresh} text="VOLVER AL INICIO" color="purple"/>
+            </div>
 
             <div className="userall-cont-cont">
-                <SearchTab/>
+                <SearchTab handleClick={handleSearch}/>
                 <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
                         <thead className="userall-thead-allUsers">

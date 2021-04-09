@@ -1,0 +1,23 @@
+.div-refresh-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.refresh-btn{
+    height: 40px;
+    border-style:none;
+    background-color: #BE99FD;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: start;
+    vertical-align: middle;
+    font-size: 16px;
+    border-radius: 7px;
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    font-family: 'Montserrat', sans-serif;
+}

@@ -107,7 +107,7 @@ const Home = ({medicData}) =>{
             <div className="home-cont-background">
                 <TabHey name={medic&&medic.name} userlist={userList.filter(item=>item.status==="Pendiente")}/>
                     <div className="home-cont-buttons">
-                        <ButtonHome text="REGISTRAR NUEVO PACIENTE" color="purple" onClick={selectModal }></ButtonHome>
+                        <ButtonHome text="REGISTRAR NUEVO MEDICO" color="purple" onClick={selectModal }></ButtonHome>
                         <ButtonHome text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>
                         <ButtonHome text="VER ULTIMOS PACIENTES CON SINTOMAS" color="lightblue" link="seeAllUsers"></ButtonHome>
                     </div>
@@ -115,8 +115,8 @@ const Home = ({medicData}) =>{
                             displayModal={modal}
                             closeModal={selectModal}/>
                     <div className="home-cont-usertabs">
-                        {(userList.length > 0 && images.length > 0) && <UserTabHome userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
-                        {(userList.length > 0 && images.length > 0) && <UserTabLastSymptoms symptomsList={symptomsList2}/>}
+                        {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabHome userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
+                        {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabLastSymptoms symptomsList={symptomsList2}/>}
                         
                     </div>
             </div>

@@ -16,6 +16,9 @@
 .item-user-config{
     width: 40px;
 }
+.item-user-options:focus{
+    outline: none;
+}
 .item-status-active{
     color:rgb(72, 243, 95)
 }
