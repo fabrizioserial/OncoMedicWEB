@@ -39,6 +39,7 @@ const Login = ({setMedicUserAction}) => {
     const pushToDatabase = () =>{
         const db = getFirestore()
         db.collection("users").add({
+            medic:"123456",
             name:"Fabri",
             email:"aaa@",
             gender:"",

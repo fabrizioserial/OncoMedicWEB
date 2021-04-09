@@ -44,7 +44,7 @@ export const ItemUser = ({handleClick,handleButtonClick,type,user,image,symptom}
                     <th onClick={()=>switchToProfle()} scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src={imgs&&imgs.url} /></th>
                     <td onClick={()=>switchToProfle()}>{user.id}</td>
                     <td onClick={()=>switchToProfle()}>{user.name}</td>
-                    <td  className="item-user-config"><Button className="item-user-options" onClick={handleClick}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
+                    <td  className="item-user-config"><Button className="item-user-options" onClick={(e)=>handleClick(e,user)}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
                 </tr>
 
             : 

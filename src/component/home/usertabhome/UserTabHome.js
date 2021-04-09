@@ -5,6 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate'
 import {ItemUser} from '../../ItemUser/ItemUser'
 import { useHistory } from 'react-router-dom';
+import { Alert } from '@material-ui/lab';
+import {getFirestore} from '../../../firebase'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -16,14 +19,14 @@ const useStyles = makeStyles((theme) => ({
 export const UserTabHome=({margin_left,userlist,images})=> {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [number, setNumber] = React.useState(null);
+  const [user, setUser] = React.useState('');
   const [openModal, setOpenModal] = React.useState(false);
   const [openModalDiario, setOpenModalDiario] = React.useState(false);
   const i = [1,2,3,4,5,6]
 
   // Menu
-  const handleClick = (event,number) => {
-    setNumber(number);
+  const handleClick = (event,item) => {
+    setUser(item)
     setAnchorEl(event.currentTarget);
   }; 
 
@@ -55,6 +58,17 @@ export const UserTabHome=({margin_left,userlist,images})=> {
   const handleCloseModalDiario = () => {
     setOpenModalDiario(false);
   };
+
+  // Eliminar usuario
+
+  const handleEliminate = () =>{
+    const db = getFirestore()
+    db.collection("users").doc(`${user.id}`).delete().then(() => {
+      console.log("Document successfully deleted!");
+    })
+    setOpenModal(false);
+
+  }
 
 
 
@@ -96,9 +110,10 @@ export const UserTabHome=({margin_left,userlist,images})=> {
                         <MenuItem onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
                     </Menu>
                     <ModalPopOverEliminate
-                        id={number} // Numero de paciente, lo settea cunado apretas el boton al lado del nombre
+                        id={user.id} // Numero de paciente, lo settea cunado apretas el boton al lado del nombre
                         displayModal={openModal}
                         closeModal={handleCloseModal}
+                        handleEliminate={handleEliminate}
                     />
 
                 </tbody>
