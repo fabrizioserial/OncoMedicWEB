@@ -33,6 +33,8 @@ const ModalPopOverEliminate = (props) => {
             </div> 
             <div>
                <input className="eliminate-numero-del-paciente"
+                  type="text"
+                  autocomplete="off"
                   id="idDelPaciente"
                   placeholder="Introduzca el numero del paciente para confirmar"
                   variant="outlined"/>
