@@ -3,6 +3,7 @@ import {Menu,MenuItem} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate'
 import {ItemUser} from '../../ItemUser/ItemUser'
+import './UserTabLastSymptoms.css'
 
 
 
@@ -62,7 +63,7 @@ export const UserTabLastSymptoms=({symptomsList})=> {
             <table class="usertab-table">
                 <thead className="usertab-thead">
                     <tr>
-                    <th scope="col"></th>
+                    <th className="usertab-first-col-empty" scope="col"></th>
                     <th scope="col">N PACIENTE</th>
                     <th scope="col">SINTOMA</th>
                     <th scope="col">GRADO</th>
@@ -72,30 +73,6 @@ export const UserTabLastSymptoms=({symptomsList})=> {
                     {
                        (symptomsList) && symptomsList.map((item,index) => <ItemUser  symptom={item} key={index}  type="sympts" handleClick={handleClick} />)
                     }
-                    <Menu className="menu-eliminate-1"
-                        id={id}
-                        open={open}
-                        anchorEl={anchorEl}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                        vertical: 'center',
-                        horizontal: 'left',
-                        }}
-                        transformOrigin={{
-                        vertical: 'left',
-                        horizontal: 'left',
-                        }}>
-
-                        <MenuItem onClick={handleClose}>VER PERFIL</MenuItem>
-                        <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
-                        <MenuItem onClick={handleCloseAndOpenModalDiario}>VER REGISTRO DIARIO</MenuItem>
-                        <MenuItem onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
-                    </Menu>
-                    <ModalPopOverEliminate
-                        id={number} // Numero de paciente, lo settea cunado apretas el boton al lado del nombre
-                        displayModal={openModal}
-                        closeModal={handleCloseModal}
-                    />
                 </tbody>
             </table>
             {symptomsList && <button className="usertab-btn-vermas">Ver mas</button>}

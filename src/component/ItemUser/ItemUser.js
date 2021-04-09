@@ -64,7 +64,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom}) => {
             </tr>: 
         type=="sympts"?
                 <tr className="usertab-fila">
-                    <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src={imgs&&imgs.url} /></th>
+                    <td></td>
                     <td>{symptom.id}</td>
                     <td>{symptom.symptom}</td>
                     <td>{symptom.grade}</td>

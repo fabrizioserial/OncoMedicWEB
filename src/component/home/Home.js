@@ -116,7 +116,11 @@ const Home = ({medicData}) =>{
                             closeModal={selectModal}/>
                     <div className="home-cont-usertabs">
                         {(userList.length > 0 && images.length > 0) && <UserTabHome userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
+<<<<<<< HEAD
                         {(userList.length > 0 && images.length > 0) && <UserTabLastSymptoms symptomsList={symptomsList2}/>}
+=======
+                        {(userList.length > 0 && images.length > 0) && <UserTabLastSymptoms userlist={userList} symptomsList={symptomsList}/>}
+>>>>>>> b94c2504033005d13adda5bd591069fab8c71826
                         
                     </div>
             </div>
