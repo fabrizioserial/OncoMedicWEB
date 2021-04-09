@@ -89,7 +89,7 @@ const Home = ({medicData}) =>{
                             closeModal={selectModal}/>
                     <div className="home-cont-usertabs">
                         {(userList.length > 0 && images.length > 0) && <UserTabHome userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
-                        {(userList.length > 0 && images.length > 0) && <UserTabLastSymptoms symptomsList={symptomsList}/>}
+                        {(userList.length > 0 && images.length > 0) && <UserTabLastSymptoms userlist={userList} symptomsList={symptomsList}/>}
                         
                     </div>
             </div>
