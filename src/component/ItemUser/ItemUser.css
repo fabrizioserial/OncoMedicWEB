@@ -41,7 +41,6 @@
     align-items: center;
     border-style: none;
     background-color: #e6e6e6;
-    width: 32px;
     border-radius: 50px;
 }
 .item-user-options:hover{
@@ -59,7 +58,7 @@
     cursor: pointer;
     background-color: #e6e6e6;
     border-radius: 5px;
-    height: 34px;
+    height: 40px;
     margin: 5px;
     padding-top: 10px;
 }
@@ -108,8 +107,6 @@
 }
 .estado-usertab-fila::after{
     margin-top: 10px;
-}
-.estado-fila-button{
 }
 /* Sintomas */
 .sintomas-usertab-fila{

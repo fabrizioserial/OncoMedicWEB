@@ -66,7 +66,7 @@
     box-sizing: border-box;
 }
 .input-login:focus{
-    border-radius: 3px;
+    outline: none;
 }
 .btn-login-input{
     margin-top: 50px;
@@ -81,6 +81,9 @@
 
 .btn-login-input:hover{
     background-color: #8146e0;
+}
+.btn-login-input:focus{
+    outline: none;
 }
 .btn-login-input a{
     text-decoration-line: none;

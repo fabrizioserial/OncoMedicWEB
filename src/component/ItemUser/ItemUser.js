@@ -8,7 +8,7 @@ import MouseOverPopover from '../mouseOverPopover/MouseOverPopover'
 
 
 
-export const ItemUser = ({handleClick,type,user,image,symptom}) => {
+export const ItemUser = ({handleClick,handleButtonClick,type,user,image,symptom}) => {
     const [imgs,setImgs] = useState(image)
 
     useEffect(() => {
@@ -64,10 +64,12 @@ export const ItemUser = ({handleClick,type,user,image,symptom}) => {
             </tr>: 
         type=="sympts"?
                 <tr className="usertab-fila">
-                    <td></td>
-                    <td>{symptom.id}</td>
-                    <td>{symptom.symptom}</td>
-                    <td>{symptom.grade}</td>
+                    <td onClick={handleClick}></td>
+                    <td onClick={handleClick}>24/1/2021</td>
+                    <td onClick={handleClick}>{symptom.id}</td>
+                    <td onClick={handleClick}>{symptom.symptom}</td>
+                    <td onClick={handleClick} className="usertab-first-col-grado">{symptom.grade}</td>
+                    <td className="item-user-config"><Button onClick={handleButtonClick} className="item-user-options"><img className="usertab_icon_image" src={optionIcon} /></Button></td>
                 </tr>: ""
     )
 }
