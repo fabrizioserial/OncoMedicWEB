@@ -37,13 +37,10 @@ const App = () => {
                 <UserTabAllUsers/>
               </Route>
 
-              <Route exact path="/profile">
-                <CompleteProfile/>
-              </Route>
-
               <Route exact path="/profile/:id">
                 <CompleteProfile/>
               </Route>
+
 
             </HashRouter>
           </Switch>

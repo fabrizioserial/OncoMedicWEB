@@ -9,6 +9,20 @@
     padding-top: 30px;
     padding-bottom: 50px;
 }
+.profile-cont-background1{
+    width: auto;
+    height: 100%;
+    background-color: white;
+    margin-left: 200px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .square-div-complete-profile {
     margin-top: 30px;
 
