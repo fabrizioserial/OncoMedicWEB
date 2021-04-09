@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UsertabSintomas=()=> {
+export const UsertabSintomas=({sympstoms})=> {
   const i = [1,2,3,4,5,6]
 
   return (
@@ -35,7 +35,7 @@ export const UsertabSintomas=()=> {
                     </thead>
                     <tbody>
                         {
-                          i.map(item => <ItemUser type="sintomas"/>)
+                          sympstoms.map(item => <ItemUser symptom={item} type="sintomas"/>)
                         }
                     </tbody>
                 </table>

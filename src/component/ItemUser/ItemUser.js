@@ -5,6 +5,8 @@ import {Menu,MenuItem,Button} from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLaughBeam,faCircle } from '@fortawesome/free-solid-svg-icons'
 import MouseOverPopover from '../mouseOverPopover/MouseOverPopover'
+import {Link} from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -13,6 +15,11 @@ export const ItemUser = ({handleClick,type,user,image,symptom}) => {
 
     useEffect(() => {
     }, [imgs])
+
+
+    const history = useHistory();
+    const switchToProfle = () => history.push(`/profile/${user.id}`);
+
 
     return (
 
@@ -28,12 +35,14 @@ export const ItemUser = ({handleClick,type,user,image,symptom}) => {
             </tr>: 
 
         type=="home"?
-            <tr className="usertab-fila">
-                <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src={imgs&&imgs.url} /></th>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td  className="item-user-config"><Button className="item-user-options" onClick={handleClick}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
-            </tr>: 
+                <tr className="usertab-fila" >
+                    <th onClick={()=>switchToProfle()} scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src={imgs&&imgs.url} /></th>
+                    <td onClick={()=>switchToProfle()}>{user.id}</td>
+                    <td onClick={()=>switchToProfle()}>{user.name}</td>
+                    <td  className="item-user-config"><Button className="item-user-options" onClick={handleClick}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
+                </tr>
+
+            : 
 
         type=="estado"?
             <tr className="estado-usertab-fila">
@@ -44,9 +53,10 @@ export const ItemUser = ({handleClick,type,user,image,symptom}) => {
             </tr>:
         type=="sintomas"?
             <tr className="sintomas-usertab-fila">
-                <td className="sintomas-fila-fecha">22/1/22</td> 
-                <td className="sintomas-fila-fecha">Fiebre</td>
-                <td className="sintomas-fila-grado"><MouseOverPopover name={3} descrip="mas de 40 grados"/></td>
+               
+                
+                <td className="sintomas-fila-fecha">{symptom.symptom}</td>
+                <td className="sintomas-fila-grado"><MouseOverPopover name={symptom.grade} descrip="mas de 40 grados"/></td>
             </tr>:
         type=="regdiario"?
             <tr className="item-user-fila-regdiario">
