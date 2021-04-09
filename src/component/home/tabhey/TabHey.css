@@ -30,6 +30,9 @@
 .tabhey-btn-options:hover{
     background-color: #dddddd;
 }
+.tabhey-btn-options:focus{
+    outline: none;
+}
 .tabhey-btn-options:hover .custom-menu-iconCheck{
     color: green;
 }
