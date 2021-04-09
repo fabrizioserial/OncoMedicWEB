@@ -54,7 +54,7 @@ export const Tuerquita = (props) => {
                             horizontal: 'right',
                         }}>
                         
-                        {props.style=="home"? (
+                        {props.style==="home"? (
                             <Link  className="tuerquita-link-to-home" to="/">
                                 <MenuItem >Log out</MenuItem>
                             </Link>

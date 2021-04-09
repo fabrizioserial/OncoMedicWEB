@@ -43,7 +43,7 @@ const Login = ({setMedicUserAction}) => {
             email:"aaa@",
             gender:"",
             birth:"",
-            medic:"123456",
+            medic:"",
             place:"",
             etnia:"",
             smoke:{
@@ -68,7 +68,7 @@ const Login = ({setMedicUserAction}) => {
         });
         const date = new Date()
         db.collection('symptoms').add({
-            id:"123",
+            id:"",
             symptom:"fiebre",
             grade:"4",
             date:date

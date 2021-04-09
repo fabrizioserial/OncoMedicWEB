@@ -56,7 +56,7 @@ export const TabHey = ({name,userlist}) => {
                             horizontal: 'right',
                             }}
                             PaperProps={{
-                            style: { width: '400px',marginTop: '2px' },
+                            style: { width: '450px',marginTop: '2px' },
                             }}
                         >
                         {

@@ -1,5 +1,4 @@
 import React,{useState,useEffect} from 'react'
-import './UserTabHome.css'
 import {Menu,MenuItem} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate'
@@ -13,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UserTabHome=({margin_left,userlist,images})=> {
+export const UserTabLastSymptoms=({symptomsList})=> {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [number, setNumber] = React.useState(null);
@@ -59,19 +58,19 @@ export const UserTabHome=({margin_left,userlist,images})=> {
 
 
   return (
-          <div className="usertab-cont-info" style={margin_left&&margin_left}>
+          <div className="usertab-cont-info" >
             <table class="usertab-table">
                 <thead className="usertab-thead">
                     <tr>
                     <th scope="col"></th>
                     <th scope="col">N PACIENTE</th>
-                    <th scope="col">NOMBRE</th>
-                    <th scope="col"></th>
+                    <th scope="col">SINTOMA</th>
+                    <th scope="col">GRADO</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                       (userlist && images) && userlist.map((item,index) => <ItemUser user={item} image={images.find(element =>element.id==item.avatar)} key={index}  type="home" handleClick={handleClick} />)
+                       (symptomsList) && symptomsList.map((item,index) => <ItemUser  symptom={item} key={index}  type="sympts" handleClick={handleClick} />)
                     }
                     <Menu className="menu-eliminate-1"
                         id={id}
@@ -86,6 +85,7 @@ export const UserTabHome=({margin_left,userlist,images})=> {
                         vertical: 'left',
                         horizontal: 'left',
                         }}>
+
                         <MenuItem onClick={handleClose}>VER PERFIL</MenuItem>
                         <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
                         <MenuItem onClick={handleCloseAndOpenModalDiario}>VER REGISTRO DIARIO</MenuItem>
@@ -96,10 +96,9 @@ export const UserTabHome=({margin_left,userlist,images})=> {
                         displayModal={openModal}
                         closeModal={handleCloseModal}
                     />
-
                 </tbody>
             </table>
-            {userlist && <button className="usertab-btn-vermas">Ver mas</button>}
+            {symptomsList && <button className="usertab-btn-vermas">Ver mas</button>}
           </div>   
     )
 }

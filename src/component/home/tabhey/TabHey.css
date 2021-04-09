@@ -16,6 +16,7 @@
     justify-content: space-between;
 }
 .tabhey-btn-options{
+    margin-right: 10px;
     height: 35px;
     width: 35px;
     border-style: none;
@@ -29,6 +30,13 @@
 .tabhey-btn-options:hover{
     background-color: #dddddd;
 }
+.tabhey-btn-options:hover .custom-menu-iconCheck{
+    color: green;
+}
+.tabhey-btn-options:hover .custom-menu-iconTimes{
+    color: red;
+}
+
 
 .tabhey-cont{
     width: 90%;
