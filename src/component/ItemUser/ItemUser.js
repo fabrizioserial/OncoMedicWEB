@@ -12,9 +12,14 @@ import { useHistory } from 'react-router-dom';
 
 export const ItemUser = ({handleClick,handleButtonClick,type,user,image,symptom}) => {
     const [imgs,setImgs] = useState(image)
+    const [date,setDate] = useState("")
 
     useEffect(() => {
     }, [imgs])
+
+    useEffect(()=>{
+        symptom && setDate(new Date(symptom.date.seconds))
+    },[symptom])
 
 
     const history = useHistory();
@@ -53,8 +58,9 @@ export const ItemUser = ({handleClick,handleButtonClick,type,user,image,symptom}
             </tr>:
         type=="sintomas"?
             <tr className="sintomas-usertab-fila">
-               
-                
+                {
+                   date &&  <td className="sintomas-fila-fecha">{`${date.getDay()}/${date.getMonth()}/${date.getYear()}`}</td> 
+                }
                 <td className="sintomas-fila-fecha">{symptom.symptom}</td>
                 <td className="sintomas-fila-grado"><MouseOverPopover name={symptom.grade} descrip="mas de 40 grados"/></td>
             </tr>:

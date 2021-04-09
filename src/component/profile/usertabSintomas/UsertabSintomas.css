@@ -82,3 +82,14 @@
 .sintoms-th-fecha{
     padding-left: 5%;
 }
+.sintoms-img-error-cont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 444px;
+    flex-direction: column;
+}
+.sintoms-img-error{
+    margin-bottom: 30px;
+    height: 150px;
+}

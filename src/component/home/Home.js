@@ -107,7 +107,7 @@ const Home = ({medicData}) =>{
             <div className="home-cont-background">
                 <TabHey name={medic&&medic.name} userlist={userList.filter(item=>item.status==="Pendiente")}/>
                     <div className="home-cont-buttons">
-                        <ButtonHome text="REGISTRAR NUEVO PACIENTE" color="purple" onClick={selectModal }></ButtonHome>
+                        <ButtonHome text="REGISTRAR NUEVO MÉDICO" color="purple" onClick={selectModal }></ButtonHome>
                         <ButtonHome text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>
                         <ButtonHome text="VER ULTIMOS PACIENTES CON SINTOMAS" color="lightblue" link="seeAllUsers"></ButtonHome>
                     </div>
