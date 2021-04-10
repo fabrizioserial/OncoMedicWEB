@@ -109,7 +109,7 @@ const Home = ({medicData}) =>{
                     <div className="home-cont-buttons">
                         <ButtonHome text="REGISTRAR NUEVO MEDICO" color="purple" onClick={selectModal }></ButtonHome>
                         <ButtonHome text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>
-                        <ButtonHome text="VER ULTIMOS PACIENTES CON SINTOMAS" color="lightblue" link="seeAllUsers"></ButtonHome>
+                        <ButtonHome text="VER ULTIMOS PACIENTES CON SINTOMAS" color="lightblue" link="seeSymptoms"></ButtonHome>
                     </div>
                         <ModalPopOver 
                             displayModal={modal}

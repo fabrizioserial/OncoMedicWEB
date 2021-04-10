@@ -21,6 +21,8 @@ export const ItemUser = ({handleClick,handleButtonClick,type,user,image,symptom}
 
 
     return (
+        
+        
 
         type=="seeAllUsers"?
             <tr className="item-user-fila">
@@ -42,7 +44,6 @@ export const ItemUser = ({handleClick,handleButtonClick,type,user,image,symptom}
                 </tr>
 
             : 
-
         type=="estado"?
             <tr className="estado-usertab-fila">
                 <td className="sintomas-fila-fecha">11/2/21</td>
@@ -52,8 +53,7 @@ export const ItemUser = ({handleClick,handleButtonClick,type,user,image,symptom}
             </tr>:
         type=="sintomas"?
             <tr className="sintomas-usertab-fila">
-               
-                
+                <td className="sintomas-fila-fecha">11/2/21</td>
                 <td className="sintomas-fila-fecha">{symptom.symptom}</td>
                 <td className="sintomas-fila-grado"><MouseOverPopover name={symptom.grade} descrip="mas de 40 grados"/></td>
             </tr>:
@@ -79,7 +79,16 @@ export const ItemUser = ({handleClick,handleButtonClick,type,user,image,symptom}
                     <td onClick={handleClick}>{symptom.symptom}</td>
                     <td onClick={handleClick} className="usertab-first-col-grado">{symptom.grade}</td>
                     <td className="item-user-config"><Button onClick={handleButtonClick} className="item-user-options"><img className="usertab_icon_image" src={optionIcon} /></Button></td>
-                </tr>: ""
+                </tr>:
+        type=="seeSymptoms"?
+        <tr className="usertab-fila">
+            <td onClick={handleClick}></td>
+            <td onClick={handleClick}>24/1/2021</td>
+            <td onClick={handleClick}><img className="usertab-user-image" src={imgs&&imgs.url} /></td>
+            <td onClick={handleClick}>{symptom.id}</td>
+            <td onClick={handleClick}>{symptom.symptom}</td>
+            <td className="usertab-first-col-grado"><MouseOverPopover name={symptom.grade} descrip="mas de 40 grados"/></td>
+        </tr>: ""
     )
 }
   

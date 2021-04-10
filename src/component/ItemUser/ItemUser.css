@@ -68,6 +68,12 @@
 .usertab-fila::after{
     margin-top: 10px;
 }
+.seeSympts-fila-fecha{
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .usertab-user-image{
     height: 33px;
     width: 33px;

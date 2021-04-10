@@ -10,6 +10,7 @@ import 'fontsource-roboto';
 import { Component } from 'react';
 import store from './reduxStore/store';
 import {Provider} from 'react-redux'
+import PatientSymptoms from './component/patientSymptoms/PatientSymptoms';
 
 
 
@@ -35,6 +36,10 @@ const App = () => {
 
               <Route exact path="/seeAllUsers">
                 <UserTabAllUsers/>
+              </Route>
+
+              <Route exact path="/seeSymptoms">
+                <PatientSymptoms/>
               </Route>
 
               <Route exact path="/profile/:id">
