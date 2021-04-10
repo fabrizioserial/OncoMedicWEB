@@ -97,8 +97,8 @@ const PatientSymptoms = ({medicData}) =>{
     const handleSearch = (e,title) => {
         title === "" ? handleRefresh() :
         title = title.toUpperCase()
-        setUserList(userList.filter((item=>item.id.toUpperCase().includes(title)||
-                                    item.name.toUpperCase().includes(title))))
+        setSymptomsList2(symptomsList2.filter((item=>item.id.toUpperCase().includes(title)||
+                                    item.symptom.toUpperCase().includes(title))))
     }
 
     const handleRefresh=()=>{
