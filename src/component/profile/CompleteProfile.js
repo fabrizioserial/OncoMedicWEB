@@ -13,6 +13,8 @@ export const CompleteProfile = () => {
     const [userid, setUserId] = useState(id)
     const [user,setUser] = useState({})
     const [symptomsList, setSymptomsList]= useState([])
+    const [image, setImage] = useState("")
+
 
     useEffect(()=>{
 
@@ -38,15 +40,32 @@ export const CompleteProfile = () => {
 
     useEffect(()=>{
         console.log("user: ",user)
+        
+        if(id){
+            console.log("DB READING")
+            const db = getFirestore()
+            console.log(user.avatar)        
+            const itemCollection = db.collection("avatars").doc(user.avatar)
+            itemCollection.get().then((querySnapshot) => {
+                let imgFound =querySnapshot.data()
+                console.log(imgFound)
+                setImage(imgFound)
+            })
+
+        }
     },[user])
+
+    useEffect(()=>{
+
+    },[image])
 
     return (
         <div>
         {
-        (user && user.name)? 
+        (user && user.name && image)? 
         <div className="profile-cont-background">
             <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
-            <ProfileTab user={user}/>
+            <ProfileTab image={image} user={user}/>
             <div className="two-squares-complete-profile">
                 <div  className="estado-usertab-cont-background">
                     <UsertabEstado type="profile" flexi={{Flex:1}}/>

@@ -24,8 +24,12 @@ export const UsertabSintomas=({sympstoms})=> {
   const i = [1,2,3,4,5,6]
 
   return (
-            <div>
-                <table class="sintoms-table">
+            <React.Fragment>
+                {
+                sympstoms.length > 0 ?
+                (
+                  <div>
+                   <table class="sintoms-table">
                     <thead className="sintoms-usertab-thead">
                         <tr>
                         <th className="sintoms-th-fecha" scope="col">FECHA</th>
@@ -38,8 +42,16 @@ export const UsertabSintomas=({sympstoms})=> {
                           sympstoms.map(item => <ItemUser symptom={item} type="sintomas"/>)
                         }
                     </tbody>
-                </table>
-                <button className="menu-finalbutton">VER TODO</button>
-            </div>
+                  </table>,
+                  <button className="menu-finalbutton">VER TODO</button>
+                </div>
+                )
+                :
+                <div className="sintoms-img-error-cont">
+                  <img className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                  <p>No se encontró registro de sintomas</p>
+                </div>
+                }
+            </React.Fragment>
     )
 }

@@ -4,6 +4,7 @@ import {Menu,MenuItem} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate'
 import {ItemUser} from '../../ItemUser/ItemUser'
+import { useHistory } from 'react-router-dom';
 import { Alert } from '@material-ui/lab';
 import {getFirestore} from '../../../firebase'
 
@@ -71,6 +72,10 @@ export const UserTabHome=({margin_left,userlist,images})=> {
 
 
 
+    const history = useHistory();
+    const switchToAllUsers = () => history.push(`/seeAllUsers/`);
+
+
   return (
           <div className="usertab-cont-info" style={margin_left&&margin_left}>
             <table class="usertab-table">
@@ -84,7 +89,7 @@ export const UserTabHome=({margin_left,userlist,images})=> {
                 </thead>
                 <tbody>
                     {
-                       (userlist && images) && userlist.map((item,index) => <ItemUser user={item} image={images.find(element =>element.id==item.avatar)} key={index}  type="home" handleClick={handleClick} />)
+                       (userlist && images) && userlist.map((item,index) => index < 9 &&  <ItemUser user={item} image={images.find(element =>element.id==item.avatar)} key={index}  type="home" handleClick={handleClick} />)
                     }
                     <Menu className="menu-eliminate-1"
                         id={id}
@@ -113,7 +118,7 @@ export const UserTabHome=({margin_left,userlist,images})=> {
 
                 </tbody>
             </table>
-            {userlist && <button className="usertab-btn-vermas">Ver mas</button>}
+            {userlist && <button onClick={()=>switchToAllUsers()} className="usertab-btn-vermas">Ver mas</button>}
           </div>   
     )
 }
