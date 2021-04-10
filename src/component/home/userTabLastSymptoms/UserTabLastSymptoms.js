@@ -16,8 +16,9 @@ const useStyles = makeStyles((theme) => ({
 
 export const UserTabLastSymptoms=({symptomsList})=> {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [number, setNumber] = React.useState(1);
   const [openModal, setOpenModal] = React.useState(false);
+  const [symptom, setSymptom] = React.useState('');
+
   const i = [1,2,3,4,5,6]
 
   // Menu
@@ -32,16 +33,16 @@ export const UserTabLastSymptoms=({symptomsList})=> {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
-  // Modal eliminar
+  // Modal ver completo
 
   const handleCloseModal = () => {
     setOpenModal(false);
   };
 
-  function handleCloseAndOpenModal(){
-    setAnchorEl(null);
+  const handleCloseAndOpenModal = (event,item) => {
+    setSymptom(item)
     setOpenModal(true);
-  }
+  }; 
 
 
   return (
@@ -80,7 +81,10 @@ export const UserTabLastSymptoms=({symptomsList})=> {
                   </Menu>
 
                 <ModalPopOverSintoma
-                  number={number}
+                  id={symptom.id}
+                  name={symptom.name}
+                  symptom={symptom.symptom}
+                  grade={symptom.grade}
                   displayModal={openModal}
                   closeModal={handleCloseModal}
                 />

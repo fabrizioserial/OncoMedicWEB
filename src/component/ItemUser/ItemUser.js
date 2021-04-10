@@ -81,11 +81,11 @@ export const ItemUser = ({handleClick,handleButtonClick,type,user,image,symptom}
             </tr>: 
         type=="sympts"?
                 <tr className="usertab-fila">
-                    <td onClick={handleClick}></td>
-                    <td onClick={handleClick}>24/1/2021</td>
-                    <td onClick={handleClick}>{symptom.id}</td>
-                    <td onClick={handleClick}>{symptom.symptom}</td>
-                    <td onClick={handleClick} className="usertab-first-col-grado">{symptom.grade}</td>
+                    <td onClick={(e)=>handleClick(e,symptom)}></td>
+                    <td onClick={(e)=>handleClick(e,symptom)}>24/1/2021</td>
+                    <td onClick={(e)=>handleClick(e,symptom)}>{symptom.id}</td>
+                    <td onClick={(e)=>handleClick(e,symptom)}>{symptom.symptom}</td>
+                    <td onClick={(e)=>handleClick(e,symptom)} className="usertab-first-col-grado">{symptom.grade}</td>
                     <td className="item-user-config"><Button onClick={handleButtonClick} className="item-user-options"><img className="usertab_icon_image" src={optionIcon} /></Button></td>
                 </tr>:
         type=="seeSymptoms"?

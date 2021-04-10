@@ -80,7 +80,7 @@ const Home = ({medicData}) =>{
  
             let avatars = querySnapshot.docs.map(doc => {
                     return(
-                        lista = [...lista,{name:item.id,...doc.data()}]
+                        lista = [...lista,{name:item.name,...doc.data()}]
                         )
                     }
                 )

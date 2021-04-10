@@ -31,19 +31,20 @@ const ModalPopOverSintoma = (props) => {
                <hr className="add-modal-line"/>
             </div>
             <div className="add-inside-the-modal">
-                <p>Nombre y apellido</p>
+                <p>Nombre y apellido:</p>
+                <p>{props.name}</p>
             </div> 
             <div className="add-inside-the-modal">
-                <p>{props.number}</p>
+                <p>ID:</p>
+                <p>{props.id}</p>
             </div> 
             <div className="add-inside-the-modal">
-                <p>ID</p>
+                <p>Sintoma:</p>
+                <p>{props.symptom}</p>
             </div> 
             <div className="add-inside-the-modal">
-                <p>Email</p>
-            </div> 
-            <div className="add-inside-the-modal">
-                <p>Contraseña</p>
+                <p>Grado:</p>
+                <p>{props.grade}</p>
             </div>
          </div>
       </div>
