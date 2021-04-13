@@ -22,7 +22,8 @@ export const UserTabLastSymptoms=({symptomsList})=> {
   const i = [1,2,3,4,5,6]
 
   // Menu
-  const handleClick = (event,number) => {
+  const handleClick = (event,item) => {
+    setSymptom(item)
     setAnchorEl(event.currentTarget);
   }; 
 
@@ -31,7 +32,6 @@ export const UserTabLastSymptoms=({symptomsList})=> {
   }
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
 
   // Modal ver completo
 
@@ -40,8 +40,9 @@ export const UserTabLastSymptoms=({symptomsList})=> {
   };
 
   const handleCloseAndOpenModal = (event,item) => {
-    setSymptom(item)
-    setOpenModal(true);
+    {item!=undefined && setSymptom(item);}
+    setOpenModal(true)
+    setAnchorEl(null);
   }; 
 
 
@@ -64,7 +65,6 @@ export const UserTabLastSymptoms=({symptomsList})=> {
                     }
                 </tbody>
                 <Menu className="menu-eliminate-1"
-                  id={id}
                   open={open}
                   anchorEl={anchorEl}
                   onClose={handleClose}

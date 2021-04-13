@@ -80,12 +80,10 @@ const Home = ({medicData}) =>{
  
             let avatars = querySnapshot.docs.map(doc => {
                     return(
-                        lista = [...lista,{name:item.name,...doc.data()}]
+                        lista = [...lista,{name:item.name,id:item.id,...doc.data()}]
                         )
                     }
                 )
-            
-
             console.log("los sintoms ",lista)
             setSymptomsList2(lista)
         })) 
