@@ -61,6 +61,7 @@ export const UserTabHome=({margin_left,userlist,images})=> {
 
   const handleCloseModalDiario = () => {
     setOpenModalDiario(false);
+    setOpenModalDiario(false);
   };
 
   // Eliminar usuario

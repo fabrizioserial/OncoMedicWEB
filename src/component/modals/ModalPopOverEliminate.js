@@ -29,6 +29,7 @@ const ModalPopOverEliminate = (props) => {
 
      function idCorrect(){
          setTitle("")
+         setErrorMessage("")
          props.handleEliminate()
       }
 

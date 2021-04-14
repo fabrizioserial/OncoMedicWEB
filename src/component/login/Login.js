@@ -39,14 +39,14 @@ const Login = ({setMedicUserAction}) => {
     const pushToDatabase = () =>{
         const db = getFirestore()
         db.collection("users").add({
-            medic:"123456",
             name:"Fabri",
             email:"aaa@",
             gender:"",
             birth:"",
-            medic:"",
+            medic:"123456",
             place:"",
             etnia:"",
+            cancer: "",
             smoke:{
                 smoke:false,
                 time:"",
@@ -69,7 +69,7 @@ const Login = ({setMedicUserAction}) => {
         });
         const date = new Date()
         db.collection('symptoms').add({
-            id:"",
+            id:"DrleMt4ynfecs9OHnyr8",
             symptom:"fiebre",
             grade:"4",
             date:date

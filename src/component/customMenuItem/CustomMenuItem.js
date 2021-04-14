@@ -5,12 +5,31 @@ import { faCheck,faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {getFirestore} from '../../firebase'
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
+import ModalPopOverAsignCancer from '../modals/ModalPopOverAsignCancer'
 
 export const CustomMenuItem = ({name,id,type}) => {
 
     const [user,setUser] = useState(id)
     const [openModal, setOpenModal] = React.useState(false);
+    const [openModalCancer, setOpenModalCancer] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
+
+
+    useEffect(() => {
+        const db = getFirestore()
+        const thisUser = db.collection("users").doc(`${id}`)
+        setUser(thisUser)
+    }, [id])
+
+
+    const updateUser = (cancerType) => {
+        user.update({
+            status:"Activo",
+            cancer: cancerType
+        })
+        handleCloseModalCancer()
+    }
+
 
     // Modal eliminar
 
@@ -22,18 +41,15 @@ export const CustomMenuItem = ({name,id,type}) => {
         setOpenModal(true);
     }
 
-    useEffect(() => {
-        const db = getFirestore()
-        const thisUser = db.collection("users").doc(`${id}`)
-        setUser(thisUser)
-    }, [id])
-
+    // Modal introducir cancer
 
     const handleCheckClick = () => {
-        user.update({
-            status:"Activo"
-        })
+        setOpenModalCancer(true);
     }
+
+    const handleCloseModalCancer = () => {
+        setOpenModalCancer(false);
+    };
 
     const handleEliminate = () =>{
         const db = getFirestore()
@@ -41,8 +57,7 @@ export const CustomMenuItem = ({name,id,type}) => {
           console.log("Document successfully deleted!");
         })
         setOpenModal(false);
-    
-      }
+    }
     
 
     return (
@@ -60,7 +75,6 @@ export const CustomMenuItem = ({name,id,type}) => {
                                     <p className="custom-menu-id">Id:{id}</p>
                                 </td>
                                 <td >
-                                    
                                         <p className="custom-menu-td2">
                                             <button className="tabhey-btn-options" onClick={handleCheckClick}><FontAwesomeIcon className="custom-menu-iconCheck" icon={faCheck}  /></button>
                                             <button className="tabhey-btn-options" onClick={handleTimesClick} ><FontAwesomeIcon className="custom-menu-iconTimes" icon={faTimes}  /></button>
@@ -70,11 +84,18 @@ export const CustomMenuItem = ({name,id,type}) => {
                         </tbody>
                     </table>
                     <ModalPopOverEliminate
-                            id={id}
-                            displayModal={openModal}
-                            closeModal={handleCloseModal}
-                            handleEliminate={handleEliminate}
-                        />
+                        id={id}
+                        displayModal={openModal}
+                        closeModal={handleCloseModal}
+                        handleEliminate={handleEliminate}
+                    />
+                    <ModalPopOverAsignCancer
+                        name={name}
+                        id={id}
+                        displayModal={openModalCancer}
+                        closeModal={handleCloseModalCancer}
+                        updateUser = {updateUser}
+                    />
                 </div>
             )
             }

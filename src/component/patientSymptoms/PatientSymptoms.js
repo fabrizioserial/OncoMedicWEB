@@ -140,7 +140,6 @@ const PatientSymptoms = ({medicData}) =>{
 
     return(
         <div className="userall-cont-background">
-
             <div className="userall-head">
                 <ButtonGoBack text="VOLVER AL INICIO" color="purple"/>
                 <ButtonRefresh handleClick={handleRefresh} text="VOLVER AL INICIO" color="purple"/>
