@@ -2,14 +2,25 @@
     width: 5%;
 }
 .patientsymptoms-th-fecha{
-    width: 25%;
+    width: 17.5%;
 }
 .patientsymptoms-th-avatar{
-    width:15%;
+    width:22.5%;
 }
 .patientsymptoms-th-patient{
-    width:30%;
+    width:25%;
 }
 .patientsymptoms-th-symptom{
-    width:30%;
+    width:22.5%;
+}
+.mouse-over-descr{
+    cursor: pointer;
+    font: 16px 'Montserrat' !important;
+    border: none;
+    background: none;
+    width: 100%;
+}
+.userall-thead-sympts{
+    color: #9357F7;
+    margin-bottom: 10px;
 }

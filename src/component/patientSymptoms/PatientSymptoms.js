@@ -67,17 +67,16 @@ const PatientSymptoms = ({medicData}) =>{
     const cleanSym = () =>{
         const db = getFirestore()
         const itemCollectionSymptoms = db.collection("symptoms")
+
         var lista = []
         userList.map(item=> item.status == "Activo" && itemCollectionSymptoms.where("id","==",item.id).get().then((querySnapshot) => {
  
             let avatars = querySnapshot.docs.map(doc => {
                     return(
-                        lista = [...lista,{name:item.id,...doc.data()}]
+                        lista = [...lista,{name:item.id,desc:item.desc,...doc.data()}]
                         )
                     }
                 )
-            
-
             console.log("los sintoms ",lista)
             setSymptomsList2(lista)
         })) 
@@ -98,7 +97,8 @@ const PatientSymptoms = ({medicData}) =>{
         title === "" ? handleRefresh() :
         title = title.toUpperCase()
         setSymptomsList2(symptomsList2.filter((item=>item.id.toUpperCase().includes(title)||
-                                    item.symptom.toUpperCase().includes(title))))
+                                    item.symptom.toUpperCase().includes(title)||
+                                    item.desc.toUpperCase().includes(title))))
     }
 
     const handleRefresh=()=>{
@@ -149,20 +149,19 @@ const PatientSymptoms = ({medicData}) =>{
                 <SearchTab handleClick={handleSearch}/>
                 <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
-                        <thead className="userall-thead-allUsers">
+                        <thead className="userall-thead-sympts">
                             <tr>
                             <th className="patientsymptoms-th-empty" scope="col"></th>
                             <th className="patientsymptoms-th-fecha" scope="col">FECHA</th>
-                            <th className="patientsymptoms-th-avatar" scope="col"></th>
                             <th className="patientsymptoms-th-patient" scope="col">PACIENTE</th>
                             <th className="patientsymptoms-th-symptom" scope="col">SINTOMA</th>
-                            <th scope="col">GRADO</th>
-                           
+                            <th className="patientsymptoms-th-grade" scope="col">GRADO</th>
+                            <th className="patientsymptoms-th-empty" scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                symptomsList2.length > 0 && symptomsList2.map((item,key) => <ItemUser image={images.find(element =>element.id==item.avatar)} key={key} symptom={item} type="seeSymptoms"/>)
+                                symptomsList2.length > 0 && symptomsList2.map((item,key) => <ItemUser  key={key} symptom={item} type="seeSymptoms"/>)
                             }
                         </tbody>
                     </table>

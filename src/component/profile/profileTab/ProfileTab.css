@@ -1,7 +1,7 @@
 
 .name-div-complete-profile {
     padding: 15px;
-    height: 180px;
+    height: auto;
     text-align: start;
     background-color: #F4F4F4;
     border-right: 30px solid #9357F7;
@@ -27,6 +27,7 @@
     margin-left: 25px;
 }
 .complete-profile-user-image{
+    max-height: 169px;
     float: left;
     max-width: 100%;
     height: 100%;
@@ -34,17 +35,33 @@
     border-radius: 100px;
 }
 
+
 .id-complete-profile {
     font-size: 12px;
-    margin-top: 5px;
     color: #3f3f3f;
     border: none;
 }
-.id-complete-profile-cancer{
-    margin-top: 0px;
+.id-complete-profile-items{
+    margin-top: -5px;
     font-size: 12px;
     color: #3f3f3f;
     border: none;
+}
+.id-complete-profile-less{
+    margin-top: -5px;
+    font-size: 12px;
+    color: #3f3f3f;
+    border: none;
+    cursor: pointer;
+
+}
+.id-complete-profile-more{
+    margin-top: 45px;
+    font-size: 12px;
+    color: #3f3f3f;
+    border: none;
+    cursor: pointer;
+
 }
 .id-complete-profile:disabled{
     background-color: #F4F4F4;

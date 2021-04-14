@@ -135,3 +135,9 @@
     align-items: center;
     display: flex;
 }
+.usertab-sympts-col-grado{
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

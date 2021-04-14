@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 
 
 
-export const ItemUser = ({handleClick,handleButtonClick,type,user,image,symptom}) => {
+export const ItemUser = ({handleClick,type,user,image,symptom}) => {
     const [imgs,setImgs] = useState(image)
     const [date,setDate] = useState("")
 
@@ -21,14 +21,10 @@ export const ItemUser = ({handleClick,handleButtonClick,type,user,image,symptom}
         symptom && setDate(new Date(symptom.date.seconds))
     },[symptom])
 
-
     const history = useHistory();
     const switchToProfle = () => history.push(`/profile/${user.id}`);
 
-
     return (
-        
-        
 
         type=="seeAllUsers"?
             <tr className="item-user-fila">
@@ -85,16 +81,20 @@ export const ItemUser = ({handleClick,handleButtonClick,type,user,image,symptom}
                     <td onClick={(e)=>handleClick(e,symptom)}>24/1/2021</td>
                     <td onClick={(e)=>handleClick(e,symptom)}>{symptom.id}</td>
                     <td onClick={(e)=>handleClick(e,symptom)}>{symptom.symptom}</td>
-                    <td onClick={(e)=>handleClick(e,symptom)} className="usertab-first-col-grado">{symptom.grade}</td>
+                    <td onClick={(e)=>handleClick(e,symptom)} className="usertab-sympts-col-grado">{symptom.grade}</td>
                 </tr>:
         type=="seeSymptoms"?
         <tr className="usertab-fila">
             <td onClick={handleClick}></td>
             <td onClick={handleClick}>24/1/2021</td>
-            <td onClick={handleClick}><img className="usertab-user-image" src={imgs&&imgs.url} /></td>
             <td onClick={handleClick}>{symptom.id}</td>
             <td onClick={handleClick}>{symptom.symptom}</td>
-            <td className="usertab-first-col-grado"><MouseOverPopover name={symptom.grade} descrip="mas de 40 grados"/></td>
+            {symptom.desc.length<18 ? (
+                <td className="usertab-first-col-grado"><MouseOverPopover name={symptom.desc} descrip={`Grado ${symptom.grade}`}/></td>
+            ):(
+                <td className="usertab-first-col-grado"><MouseOverPopover name={symptom.desc} descrip={`Grado ${symptom.grade}: ${symptom.desc}`}/></td> 
+            )}
+            <td onClick={handleClick}></td>
         </tr>: ""
     )
 }

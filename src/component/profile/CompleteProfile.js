@@ -10,7 +10,6 @@ import {getFirestore} from '../../firebase'
 export const CompleteProfile = () => {
 
     const {id} = useParams()
-    const [userid, setUserId] = useState(id)
     const [user,setUser] = useState({})
     const [symptomsList, setSymptomsList]= useState([])
     const [image, setImage] = useState("")
