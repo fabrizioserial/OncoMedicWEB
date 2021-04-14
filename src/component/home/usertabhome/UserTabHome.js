@@ -34,6 +34,10 @@ export const UserTabHome=({margin_left,userlist,images})=> {
     setAnchorEl(null);
   }
 
+  function handleCloseAndNavigate(){
+    history.push(`/profile/${user.id}`);
+  }
+
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
@@ -104,7 +108,7 @@ export const UserTabHome=({margin_left,userlist,images})=> {
                         vertical: 'left',
                         horizontal: 'left',
                         }}>
-                        <MenuItem onClick={handleClose}>VER PERFIL</MenuItem>
+                        <MenuItem onClick={handleCloseAndNavigate}>VER PERFIL</MenuItem>
                         <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
                         <MenuItem onClick={handleCloseAndOpenModalDiario}>VER REGISTRO DIARIO</MenuItem>
                         <MenuItem onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
