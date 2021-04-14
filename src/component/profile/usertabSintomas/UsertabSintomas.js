@@ -42,7 +42,7 @@ export const UsertabSintomas=({sympstoms})=> {
                           sympstoms.map(item => <ItemUser symptom={item} type="sintomas"/>)
                         }
                     </tbody>
-                  </table>,
+                  </table>
                   <button className="menu-finalbutton">VER TODO</button>
                 </div>
                 )

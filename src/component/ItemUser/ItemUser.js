@@ -13,13 +13,10 @@ import { useHistory } from 'react-router-dom';
 export const ItemUser = ({handleClick,type,user,image,symptom}) => {
     const [imgs,setImgs] = useState(image)
     const [date,setDate] = useState("")
+    const [formattedTimestamp,setFormattedTimestamp] = useState("")
 
     useEffect(() => {
     }, [imgs])
-
-    useEffect(()=>{
-        symptom && setDate(new Date(symptom.date.seconds))
-    },[symptom])
 
     const history = useHistory();
     const switchToProfle = () => history.push(`/profile/${user.id}`);
@@ -55,11 +52,11 @@ export const ItemUser = ({handleClick,type,user,image,symptom}) => {
             </tr>:
         type=="sintomas"?
             <tr className="sintomas-usertab-fila">
-                {
-                   date &&  <td className="sintomas-fila-fecha">{`${date.getDay()}/${date.getMonth()}/${date.getYear()}`}</td> 
+                {  
+                   symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> 
                 }
                 <td className="sintomas-fila-fecha">{symptom.symptom}</td>
-                <td className="sintomas-fila-grado"><MouseOverPopover name={symptom.grade} descrip="mas de 40 grados"/></td>
+                <td className="sintomas-fila-grado"><MouseOverPopover name={symptom.grade} descrip={symptom.desc}/></td>
             </tr>:
         type=="regdiario"?
             <tr className="item-user-fila-regdiario">
@@ -77,8 +74,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom}) => {
             </tr>: 
         type=="sympts"?
                 <tr className="usertab-fila">
-                    <td onClick={(e)=>handleClick(e,symptom)}></td>
-                    <td onClick={(e)=>handleClick(e,symptom)}>24/1/2021</td>
+                    {symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
                     <td onClick={(e)=>handleClick(e,symptom)}>{symptom.id}</td>
                     <td onClick={(e)=>handleClick(e,symptom)}>{symptom.symptom}</td>
                     <td onClick={(e)=>handleClick(e,symptom)} className="usertab-sympts-col-grado">{symptom.grade}</td>
@@ -86,7 +82,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom}) => {
         type=="seeSymptoms"?
         <tr className="usertab-fila">
             <td onClick={handleClick}></td>
-            <td onClick={handleClick}>24/1/2021</td>
+            {symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
             <td onClick={handleClick}>{symptom.id}</td>
             <td onClick={handleClick}>{symptom.symptom}</td>
             {symptom.desc.length<18 ? (
