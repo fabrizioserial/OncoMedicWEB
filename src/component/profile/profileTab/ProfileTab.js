@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 export default function ProfileTab({user,image}) {
     const [state, setState] = useState(false);
     const [name, setName] = useState(user.name);
-    const [cancerType, setCancerType] = useState(user.cancerType);
+    const [cancer, setCancer] = useState(user.cancer);
 
 
     const handleEdit = () => {
@@ -23,7 +23,7 @@ export default function ProfileTab({user,image}) {
         const thisUser = db.collection("users").doc(`${user.id}`)
         thisUser.update({
             name: name,
-            //cancerType: cancerType
+            cancer: cancer
         })
     }; 
 
@@ -42,7 +42,7 @@ export default function ProfileTab({user,image}) {
                 <div className="text-complete-profile">
                     <p  className="id-complete-profile" type="text">{user.id}</p>
                     <p><input onChange={(e) => setName(e.target.value)} className="name-complete-profile" type="text" disabled={!state} defaultValue={name}/></p>
-                    <p onChange={(e) => setCancerType(e.target.value)} className="id-complete-profile-cancer">Tipo de cancer: <input className="id-complete-profile" type="text" disabled={!state} defaultValue={cancerType}/></p>
+                    <p onChange={(e) => setCancer(e.target.value)} className="id-complete-profile-cancer">Tipo de cancer: <input className="id-complete-profile" type="text" disabled={!state} defaultValue={cancer}/></p>
                     <p className="id-complete-profile">Fuma: {user.fuma? "Si":"No"}</p>
                     <p className="id-complete-profile">Diabetes: {user.diabetes? "Si":"No"}</p>
                 </div>
