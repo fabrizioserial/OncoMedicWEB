@@ -1,8 +1,6 @@
 import React,{useEffect,useState} from 'react'
+import { useHistory } from 'react-router-dom';
 import './UserTabAllUsers.css'
-import optionIcon from '../../img/option_icon.png'
-import { UserTabHome } from '../home/usertabhome/UserTabHome'
-import { ButtonHome } from '../home/buttonsHome/ButtonHome'
 import { ButtonGoBack } from './ButtonGoBack'
 import { ItemUser } from '../ItemUser/ItemUser';
 import { SearchTab } from './searchTab/SearchTab';
@@ -28,12 +26,15 @@ export const UserTabAllUsers = () => {
     const [number, setNumber] = React.useState(null);
     const [openModal, setOpenModal] = React.useState(false);
     const [userList,setUserList] = useState([])
+    const [user, setUser] = React.useState('');
+
+    const history = useHistory();
+    const switchToProfle = () => history.push(`/profile/${user.id}`);
   
-    const handleClick = (event,number) => {
-      setNumber(number);
-      setAnchorEl(event.currentTarget);
+    const handleClick = (event,item) => {
+        setUser(item)
+        setAnchorEl(event.currentTarget);
     }; 
-  
   
     const handleCloseModal = () => {
       setOpenModal(false);
@@ -71,6 +72,18 @@ export const UserTabAllUsers = () => {
             setUserList(activeuser)
         })
     }
+    // Eliminar
+
+
+  const handleEliminate = () =>{
+    const db = getFirestore()
+    db.collection("users").doc(`${user.id}`).delete().then(() => {
+      console.log("Document successfully deleted!");
+    })
+    setOpenModal(false);
+
+  }
+
 
     const i = [1,2,3,4,5,6,7,8,9]
 
@@ -136,17 +149,17 @@ export const UserTabAllUsers = () => {
                                 vertical: 'left',
                                 horizontal: 'left',
                                 }}>
-                                <Link to="/profile" className="menu-item-profile">
-                                    <MenuItem onClick={handleClose}>VER PERFIL</MenuItem>
-                                </Link>
+                                
+                                <MenuItem onClick={()=>switchToProfle()}>VER PERFIL</MenuItem>
                                 <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
                                 <MenuItem onClick={handleClose}>VER REGISTRO DIARIO</MenuItem>
                                 <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
                             </Menu>
                             <ModalPopOverEliminate
-                                id={number} // Numero de paciente, lo settea cunado apretas el boton al lado del nombre
+                                id={user.id} // Numero de paciente, lo settea cunado apretas el boton al lado del nombre
                                 displayModal={openModal}
                                 closeModal={handleCloseModal}
+                                handleEliminate={handleEliminate}
                             />     
 
                         </tbody>

@@ -12,8 +12,6 @@ import { useHistory } from 'react-router-dom';
 
 export const ItemUser = ({handleClick,type,user,image,symptom}) => {
     const [imgs,setImgs] = useState(image)
-    const [date,setDate] = useState("")
-    const [formattedTimestamp,setFormattedTimestamp] = useState("")
 
     useEffect(() => {
     }, [imgs])
@@ -31,7 +29,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom}) => {
                 <td>{user.cancer}</td>
                
                 <td>{user.status== "Activo" ? <FontAwesomeIcon icon={faCircle} className="item-status-active" size="lg"/> : <FontAwesomeIcon icon={faCircle} className="item-status-inactive" size="lg"/>}</td>
-                <td className="item-user-config"><button className="item-user-options" onClick={handleClick}><img className="usertab_icon_image" src={optionIcon}/></button></td>
+                <td className="item-user-config"><button className="item-user-options" onClick={(e)=>handleClick(e,user)}><img className="usertab_icon_image" src={optionIcon}/></button></td>
             </tr>: 
 
         type=="home"?
@@ -62,16 +60,9 @@ export const ItemUser = ({handleClick,type,user,image,symptom}) => {
             <tr className="item-user-fila-regdiario">
                 <td> <FontAwesomeIcon icon={faLaughBeam} className="smile-icon" size="2x"/></td>
                 <td>Estado de animo</td>
-                <td></td>
+                <td>1</td>
                 <td>1</td>
             </tr> : 
-        type=="regDiario"?
-            <tr className="estado-usertab-fila">
-            <td className="sintomas-fila-fecha">11/2/21</td>
-            <th scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
-            <td>Feliz</td>
-            <td></td>
-            </tr>: 
         type=="sympts"?
                 <tr className="usertab-fila">
                     {symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
@@ -82,7 +73,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom}) => {
         type=="seeSymptoms"?
         <tr className="usertab-fila">
             <td onClick={handleClick}></td>
-            {symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
+            {symptom.date &&  <td>{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
             <td onClick={handleClick}>{symptom.id}</td>
             <td onClick={handleClick}>{symptom.symptom}</td>
             {symptom.desc.length<18 ? (

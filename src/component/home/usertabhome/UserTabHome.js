@@ -7,6 +7,7 @@ import {ItemUser} from '../../ItemUser/ItemUser'
 import { useHistory } from 'react-router-dom';
 import { Alert } from '@material-ui/lab';
 import {getFirestore} from '../../../firebase'
+import ModalPopOverVerRegistroDiario from '../../modals/ModalPopOverVerRegistroDiario';
 
 
 
@@ -59,10 +60,9 @@ export const UserTabHome=({margin_left,userlist,images})=> {
     setAnchorEl(null);
   }
 
-  const handleCloseModalDiario = () => {
+  function handleCloseDiario(){
     setOpenModalDiario(false);
-    setOpenModalDiario(false);
-  };
+  }
 
   // Eliminar usuario
 
@@ -74,8 +74,6 @@ export const UserTabHome=({margin_left,userlist,images})=> {
     setOpenModal(false);
 
   }
-
-
 
     const history = useHistory();
     const switchToAllUsers = () => history.push(`/seeAllUsers/`);
@@ -119,6 +117,10 @@ export const UserTabHome=({margin_left,userlist,images})=> {
                         displayModal={openModal}
                         closeModal={handleCloseModal}
                         handleEliminate={handleEliminate}
+                    />
+                    <ModalPopOverVerRegistroDiario
+                      displayModal={openModalDiario}
+                      closeModal={handleCloseDiario}
                     />
 
                 </tbody>

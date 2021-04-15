@@ -89,6 +89,7 @@
 }
 
 .item-user-fila-regdiario{
+    width: 100%;
     margin-top: 10px !important;
     cursor: pointer;
     background-color: #e6e6e6;
@@ -127,7 +128,7 @@
     padding-top: 10px;
 }
 .sintomas-fila-fecha{
-    padding-left: 5%;
+    padding-left: 4%;
 }
 .sintomas-fila-grado{
     height: 100%;
