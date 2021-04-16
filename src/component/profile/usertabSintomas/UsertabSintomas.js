@@ -1,8 +1,7 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import './UsertabSintomas.css'
 import optionIcon from '../../../img/option_icon.png'
 import {Menu,MenuItem,Button} from '@material-ui/core'
-import {useState} from 'react-dom'
 import { Component } from 'react';
 import ModalPopOverELiminate from '../../modals/ModalPopOverEliminate'
 import { Router,Link, Route, Switch } from 'react-router-dom'
@@ -20,8 +19,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UsertabSintomas=({sympstoms})=> {
+export const UsertabSintomas=({sympstoms,descs})=> {
   const i = [1,2,3,4,5,6]
+  const [sympInfo,setSympInfo] = useState(descs)
+
+  useEffect(()=>{
+      setSympInfo(descs)
+  },[sympInfo,descs])
 
   return (
             <React.Fragment>
@@ -39,11 +43,11 @@ export const UsertabSintomas=({sympstoms})=> {
                     </thead>
                     <tbody>
                         {
-                          sympstoms.map(item => <ItemUser symptom={item} type="sintomas"/>)
+                          sympstoms.map(item => <ItemUser desc={sympInfo.find(element => element.label == item.symptom)} symptom={item} type="sintomas"/>)
                         }
                     </tbody>
                   </table>
-                  <button className="menu-finalbutton">VER TODO</button>
+                  {sympstoms.length > 6 && <button className="menu-finalbutton">VER TODO</button>}
                 </div>
                 )
                 :

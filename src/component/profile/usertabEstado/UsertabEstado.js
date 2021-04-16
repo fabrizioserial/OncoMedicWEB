@@ -111,10 +111,10 @@ export const UsertabEstado=({type,idProp})=> {
             )
             }
         </table>
-        {type=="regDia"? (""):(
+        {/* {type=="regDia"? (""):(
           <button className="menu-finalbutton">VER TODO</button>
           )
-        }
+        } */}
         
     </div>
   )

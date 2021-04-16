@@ -13,6 +13,7 @@ export const CompleteProfile = () => {
     const [user,setUser] = useState({})
     const [symptomsList, setSymptomsList]= useState([])
     const [image, setImage] = useState("")
+    const [symInfo,setSympInfo] = useState([])
 
 
     useEffect(()=>{
@@ -52,16 +53,28 @@ export const CompleteProfile = () => {
                 setImage(imgFound)
             })
 
+            const itemCollectionSymp = db.collection("mainSymptoms")
+            itemCollectionSymp.onSnapshot((querySnapshot) => {
+            
+            let sympList = querySnapshot.docs.map(doc => {
+                    return(
+                        {id:doc.id,...doc.data()}
+                        )
+                    }
+                )
+            setSympInfo(sympList)
+        })
+
         }
     },[user])
 
     useEffect(()=>{
 
-    },[image])
+    },[image,symInfo])
 
     return (
         <div>
-        {
+        { 
         (user && user.name && image)? 
         <div className="profile-cont-background">
             <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
@@ -71,7 +84,7 @@ export const CompleteProfile = () => {
                     <UsertabEstado idProp={user.id} type="profile" flexi={{Flex:1}}/>
                 </div>
                 <div className="sintoms-usertab-cont-background">
-                    <UsertabSintomas sympstoms={symptomsList} flexi={{Flex:1}}/>
+                    <UsertabSintomas sympstoms={symptomsList} descs={symInfo} flexi={{Flex:1}}/>
                 </div>  
             </div>
         </div>

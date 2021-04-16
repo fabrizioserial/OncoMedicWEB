@@ -3,10 +3,12 @@ import './ItemUser.css'
 import optionIcon from 'src/img/option_icon.png'
 import {Menu,MenuItem,Button} from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLaughBeam,faCircle,faSadTear,faFrown,faMeh,faSmile } from '@fortawesome/free-solid-svg-icons'
+import {faLaughBeam,faSadTear,faFrown,faMeh,faSmile } from '@fortawesome/free-regular-svg-icons'
+import {faLaughBeam2,faCircle, faCrutch,faDrumstickBite,faRunning,faTint,faUsers} from '@fortawesome/free-solid-svg-icons'
 import MouseOverPopover from '../mouseOverPopover/MouseOverPopover'
 import {Link} from 'react-router-dom'
 import { useHistory } from 'react-router-dom';
+import {getFirestore} from '../../firebase'
 
 
 
@@ -14,6 +16,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
     const [imgs,setImgs] = useState(image)
     const [descripcion,setDescripcion] = useState("")
     const [regdiario,setRegDiario] = useState()
+    const [sintomasInfo,setSintomasInfo] = useState()
 
     useEffect(() => {
     }, [imgs])
@@ -33,6 +36,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
 
     },daily)
 
+
     useEffect(()=>{},[mood,sad,run,hungry,hid,social])
 
     useEffect(()=>{
@@ -44,15 +48,15 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
 
     const returnEmoji = (mood)=>{
         if(mood == 10){
-            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faLaughBeam}  size="2x"/></th>
+            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faLaughBeam}  className="emote-size"/></th>
         }else if(mood>=7){
-            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSmile}  size="2x"/></th>
+            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSmile}  className="emote-size"/></th>
         }else if(mood>=4){
-            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faMeh}  size="2x"/></th>
+            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faMeh}  className="emote-size"/></th>
         }else if(mood>=2){
-            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faFrown}  size="2x"/></th>
+            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faFrown}  className="emote-size"/></th>
         }else{
-            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSadTear}  size="2x"/></th>
+            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSadTear}  className="emote-size"/></th>
         }
     }
     const returnEmote = (mood)=>{
@@ -93,7 +97,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
             : 
         type=="estado"?
             <tr className="estado-usertab-fila">
-                <td className="sintomas-fila-fecha">11/2/21</td>
+                <td className="regdiario-fila-fecha">{regdiario && Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(regdiario.date.toDate())}</td>
                 {
                     regdiario && returnEmoji(regdiario.mood)
                 }
@@ -109,44 +113,44 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                    symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> 
                 }
                 <td className="sintomas-fila-fecha">{symptom.symptom}</td>
-                <td className="sintomas-fila-grado"><MouseOverPopover name={symptom.grade} descrip={symptom.desc}/></td>
+                {<td className="sintomas-fila-grado"><MouseOverPopover name={symptom.grade} descrip={descripcion.label}/></td>}
             </tr>:
         type=="regdiarioMood"?
             <tr className="item-user-fila-regdiario">
-                <td> <FontAwesomeIcon icon={faLaughBeam} className="smile-icon" size="2x"/></td>
+                <td className="emote-regdiario"> <FontAwesomeIcon icon={faLaughBeam} className="smile-icon" className="emote-size"/></td>
                 <td>Estado de animo</td>
-                <td>{mood}</td>
+                <td className="value-regdiario">{mood}</td>
             </tr> : 
             type=="regdiarioSad"?
             <tr className="item-user-fila-regdiario">
-                <td> <FontAwesomeIcon icon={faLaughBeam} className="smile-icon" size="2x"/></td>
+                <td className="emote-regdiario"> <FontAwesomeIcon icon={faCrutch} className="smile-icon" className="emote-size"/></td>
                 <td>Dolor</td>
-                <td>{sad}</td>
+                <td className="value-regdiario">{sad}</td>
             </tr> : 
             type=="regdiarioRun"?
             <tr className="item-user-fila-regdiario">
-                <td> <FontAwesomeIcon icon={faLaughBeam} className="smile-icon" size="2x"/></td>
+                <td className="emote-regdiario"> <FontAwesomeIcon icon={faRunning} className="smile-icon" className="emote-size"/></td>
                 <td>Actividad Fisica</td>
-                <td>{run}</td>
+                <td  className="value-regdiario">{run}</td>
 
             </tr> : 
             type=="regdiarioHungry"?
             <tr className="item-user-fila-regdiario">
-                <td> <FontAwesomeIcon icon={faLaughBeam} className="smile-icon" size="2x"/></td>
+                <td className="emote-regdiario"> <FontAwesomeIcon icon={faDrumstickBite} className="smile-icon" className="emote-size"/></td>
                 <td>Hambre</td>
-                <td>{hungry}</td>
+                <td className="value-regdiario">{hungry}</td>
             </tr> : 
             type=="regdiarioSocial"?
             <tr className="item-user-fila-regdiario">
-                <td> <FontAwesomeIcon icon={faLaughBeam} className="smile-icon" size="2x"/></td>
+                <td className="emote-regdiario"> <FontAwesomeIcon icon={faUsers} className="smile-icon" className="emote-size"/></td>
                 <td>Actividad Social</td>
-                <td>{social}</td>
+                <td className="value-regdiario">{social}</td>
             </tr> : 
             type=="regdiarioHid"?
             <tr className="item-user-fila-regdiario">
-                <td> <FontAwesomeIcon icon={faLaughBeam} className="smile-icon" size="2x"/></td>
+                <td className="emote-regdiario"> <FontAwesomeIcon icon={faTint} className="smile-icon" className="emote-size"/></td>
                 <td>Hidratación</td>
-                <td>{hid}</td>
+                <td  className="value-regdiario">{hid}</td>
             </tr> : 
         type=="sympts"?
                 <tr className="usertab-fila">

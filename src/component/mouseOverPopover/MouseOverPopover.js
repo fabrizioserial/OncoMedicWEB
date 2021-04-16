@@ -29,7 +29,7 @@ export default function MouseOverPopover(props) {
   const open = Boolean(anchorEl);
 
   return (
-    <div>
+    <React.Fragment>
       <input
         className="mouse-over-descr"
         aria-owns={open ? 'mouse-over-popover' : undefined}
@@ -59,6 +59,6 @@ export default function MouseOverPopover(props) {
       >
         <p>{props.descrip}</p>
       </Popover>
-    </div>
+    </React.Fragment>
   );
 }
