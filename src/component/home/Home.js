@@ -55,7 +55,7 @@ const Home = ({medicData}) =>{
             console.log(avatars)
         })
 
-        const itemCollectionSymptoms = db.collection("symptoms")
+        const itemCollectionSymptoms = db.collection("symptoms").orderBy("date")
 
         itemCollectionSymptoms.onSnapshot((querySnapshot) => {
             let symptomslista = querySnapshot.docs.map(doc => doc.data())
@@ -85,7 +85,16 @@ const Home = ({medicData}) =>{
                     }
                 )
             console.log("los sintoms ",lista)
-            setSymptomsList2(lista)
+            setSymptomsList2(lista.sort(function (a, b) {
+                                            if (b.date > a.date) {
+                                                return 1;
+                                            }
+                                            if (b.date < a.date) {
+                                                return -1;
+                                            }
+                                            // a must be equal to b
+                                            return 0;
+                                            }))
         })) 
 
 

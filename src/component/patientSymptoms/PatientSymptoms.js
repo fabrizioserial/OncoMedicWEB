@@ -15,7 +15,10 @@ const PatientSymptoms = ({medicData}) =>{
     const [userList,setUserList] = useState([])
     const [symptomsList,setSymptomsList] = useState([])
     const [symptomsList2,setSymptomsList2] = useState([])
+    const [symptomsOrigin,setSymptomsListOrigin] = useState([])
+
     const [images,setImageList] =useState([])
+    const [sympInfo,setSympInfo] = useState([])
 
     useEffect(()=>{
         
@@ -31,6 +34,18 @@ const PatientSymptoms = ({medicData}) =>{
                     }
                 )
             setUserList(userlista)
+        })
+
+        const itemCollectionSymp = db.collection("mainSymptoms")
+        itemCollectionSymp.onSnapshot((querySnapshot) => {
+            
+            let sympList = querySnapshot.docs.map(doc => {
+                    return(
+                        {id:doc.id,...doc.data()}
+                        )
+                    }
+                )
+            setSympInfo(sympList)
         })
 
         const itemCollectionAvatar = db.collection("avatars")
@@ -60,7 +75,6 @@ const PatientSymptoms = ({medicData}) =>{
     },[userList,images,medic])
 
     useEffect(()=>{
-      console.log("medico es ",medic)
       setMedic(medicData)
     },[medicData])
 
@@ -78,7 +92,27 @@ const PatientSymptoms = ({medicData}) =>{
                     }
                 )
             console.log("los sintoms ",lista)
-            setSymptomsList2(lista)
+            setSymptomsList2(lista.sort(function (a, b) {
+                                            if (b.date > a.date) {
+                                                return 1;
+                                            }
+                                            if (b.date < a.date) {
+                                                return -1;
+                                            }
+                                            // a must be equal to b
+                                            return 0;
+                                            }))
+            setSymptomsListOrigin(lista.sort(function (a, b) {
+                                            if (b.date > a.date) {
+                                                return 1;
+                                            }
+                                            if (b.date < a.date) {
+                                                return -1;
+                                            }
+                                            // a must be equal to b
+                                            return 0;
+                                            }))
+
         })) 
 
 
@@ -86,6 +120,7 @@ const PatientSymptoms = ({medicData}) =>{
 
     useEffect(()=>{
         console.log("se actualizo",symptomsList2)
+        
     },[symptomsList2])
 
     useEffect(()=>{
@@ -96,9 +131,15 @@ const PatientSymptoms = ({medicData}) =>{
     const handleSearch = (e,title) => {
         title === "" ? handleRefresh() :
         title = title.toUpperCase()
-        setSymptomsList2(symptomsList2.filter((item=>item.id.toUpperCase().includes(title)||
-                                    item.symptom.toUpperCase().includes(title)||
-                                    item.desc.toUpperCase().includes(title))))
+        setSymptomsList2(symptomsOrigin.filter((item=>item.id.toUpperCase().includes(title)||
+                                    item.symptom.toUpperCase().includes(title) || filterDate(item.date,title,item)
+                                    )))
+    }
+
+    const filterDate = (date,title,item) =>{
+        if (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(date.toDate())== title){
+            return item
+        }
     }
 
     const handleRefresh=()=>{
@@ -161,7 +202,7 @@ const PatientSymptoms = ({medicData}) =>{
                         </thead>
                         <tbody>
                             {
-                                symptomsList2.length > 0 && symptomsList2.map((item,key) => <ItemUser  key={key} symptom={item} type="seeSymptoms"/>)
+                                symptomsList2.length > 0 && symptomsList2.map((item,key) => <ItemUser  key={key} symptom={item} desc={sympInfo.find(element => element.label == item.symptom)} type="seeSymptoms"/>)
                             }
                         </tbody>
                     </table>

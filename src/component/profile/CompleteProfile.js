@@ -40,11 +40,12 @@ export const CompleteProfile = () => {
     useEffect(()=>{
         console.log("user: ",user)
         
-        if(id){
+        if(id && user.avatar){
             console.log("DB READING")
             const db = getFirestore()
-            console.log(user.avatar)        
-            const itemCollection = db.collection("avatars").doc(user.avatar)
+            let stringAvatar = user.avatar
+            console.log(user.avatar.toString())
+            const itemCollection = db.collection("avatars").doc(stringAvatar.toString())
             itemCollection.get().then((querySnapshot) => {
                 let imgFound =querySnapshot.data()
                 console.log(imgFound)
@@ -67,7 +68,7 @@ export const CompleteProfile = () => {
             <ProfileTab image={image} user={user}/>
             <div className="two-squares-complete-profile">
                 <div  className="estado-usertab-cont-background">
-                    <UsertabEstado type="profile" flexi={{Flex:1}}/>
+                    <UsertabEstado idProp={user.id} type="profile" flexi={{Flex:1}}/>
                 </div>
                 <div className="sintoms-usertab-cont-background">
                     <UsertabSintomas sympstoms={symptomsList} flexi={{Flex:1}}/>

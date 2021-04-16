@@ -60,7 +60,7 @@ export const TabHey = ({name,userlist}) => {
                             }}
                         >
                         {
-                            userlist.length>0 ? (
+                            (userlist.length>0) ? (
                                 userlist.map((item,index) => <CustomMenuItem name={item.name}  id={item.id}/>)
                             ) : (
                                 <CustomMenuItem type="finished">No hay mas usuarios para aceptar</CustomMenuItem>
