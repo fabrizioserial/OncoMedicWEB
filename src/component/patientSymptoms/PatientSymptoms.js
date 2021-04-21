@@ -87,7 +87,7 @@ const PatientSymptoms = ({medicData}) =>{
  
             let avatars = querySnapshot.docs.map(doc => {
                     return(
-                        lista = [...lista,{name:item.id,desc:item.desc,...doc.data()}]
+                        lista = [...lista,{name:item.name,desc:item.desc,...doc.data()}]
                         )
                     }
                 )
@@ -131,7 +131,7 @@ const PatientSymptoms = ({medicData}) =>{
     const handleSearch = (e,title) => {
         title === "" ? handleRefresh() :
         title = title.toUpperCase()
-        setSymptomsList2(symptomsOrigin.filter((item=>item.id.toUpperCase().includes(title)||
+        setSymptomsList2(symptomsOrigin.filter((item=>item.name.toUpperCase().includes(title)||
                                     item.symptom.toUpperCase().includes(title) || filterDate(item.date,title,item)
                                     )))
     }
@@ -197,6 +197,7 @@ const PatientSymptoms = ({medicData}) =>{
                             <th className="patientsymptoms-th-patient" scope="col">PACIENTE</th>
                             <th className="patientsymptoms-th-symptom" scope="col">SINTOMA</th>
                             <th className="patientsymptoms-th-grade" scope="col">GRADO</th>
+                            <th className="patientsymptoms-th-grade" scope="col">RESPUESTA</th>
                             <th className="patientsymptoms-th-empty" scope="col"></th>
                             </tr>
                         </thead>

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import 'fontsource-roboto';
 import './ModalPopOverAsignCancer.css'
 import { Alert } from '@material-ui/lab';
@@ -6,8 +6,8 @@ import { Alert } from '@material-ui/lab';
 
 
 const ModalPopOverAsignCancer = (props) => {
-   const [title, setTitle] = React.useState("")
-   const [cancer, setCancer] = React.useState("")
+   const [title, setTitle] = useState("")
+   const [cancer, setCancer] = useState(null)
      
    const divStyle = { 
          display: props.displayModal ? 'block' : 'none'
@@ -16,11 +16,10 @@ const ModalPopOverAsignCancer = (props) => {
       e.stopPropagation()
       props.closeModal()
    }
+
    const handleAceptar = () => {
-      setCancer(title)
-      setTitle("")
       props.updateUser(cancer)
-      
+      setCancer("")
    }
 
    return (
@@ -45,9 +44,9 @@ const ModalPopOverAsignCancer = (props) => {
          </div> 
          <div>
             <input className="eliminate-numero-del-paciente"
-               onChange={event => setTitle(event.target.value)}
+               onChange={event => setCancer(event.target.value)}
                type="text"
-               value={title}
+               value={cancer}
                autocomplete="off"
                id="idDelPaciente"
                placeholder="Introduzca el tipo de cancer del paciente:"

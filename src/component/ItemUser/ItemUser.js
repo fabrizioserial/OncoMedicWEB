@@ -19,7 +19,8 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
     const [sintomasInfo,setSintomasInfo] = useState()
 
     useEffect(() => {
-    }, [imgs])
+        setImgs(image)
+    }, [image])
 
     useEffect(()=>{
         if(desc && symptom){
@@ -77,11 +78,10 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
 
         type=="seeAllUsers"?
             <tr className="item-user-fila">
-                <th scope="row" className="item-user-user-image-table"><img className="item-user-user-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRyv9Dkf8Wusb0uForhlXoz090E0Xgt_1OQ&usqp=CAU" /></th>
+                <th scope="row" className="item-user-user-image-table"><img className="usertab-user-image" src={imgs&&imgs.url} /></th>
                 <td>{user.id}</td> 
                 <td>{user.name}</td>
                 <td>{user.cancer}</td>
-               
                 <td>{user.status== "Activo" ? <FontAwesomeIcon icon={faCircle} className="item-status-active" size="lg"/> : <FontAwesomeIcon icon={faCircle} className="item-status-inactive" size="lg"/>}</td>
                 <td className="item-user-config"><button className="item-user-options" onClick={(e)=>handleClick(e,user)}><img className="usertab_icon_image" src={optionIcon}/></button></td>
             </tr>: 
@@ -163,7 +163,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
         <tr className="usertab-fila">
             <td onClick={handleClick}></td>
             {symptom.date &&  <td>{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
-            <td onClick={handleClick}>{symptom.id}</td>
+            <td onClick={handleClick}>{symptom.name}</td>
             <td onClick={handleClick}>{symptom.symptom}</td>
             { descripcion && 
                 (descripcion.label.length<18   ? (
@@ -172,6 +172,14 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                     <td className="usertab-first-col-grado"><MouseOverPopover name={descripcion.label} descrip={`Grado ${symptom.grade}: ${descripcion.label}`}/></td> 
                 ))
             }
+            { symptom.grade>2 ?
+                (
+                    <td onClick={handleClick}>Urgencia</td>
+                ):(
+                    <td onClick={handleClick}>Ver respuesta</td>
+                )
+            }
+            
             <td onClick={handleClick}></td>
         </tr>: ""
     )

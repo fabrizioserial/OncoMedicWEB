@@ -3,7 +3,8 @@ import {SET_MEDIC_USER} from '../actions/loginAction.js'
 const default_user ={
     name:"Miguel Rizzo",
     email:"aa@aa.com",
-    id:"123456"
+    id:"123456",
+    admin:"true"
 }
 
 const user_data = (state=default_user , action) =>{
@@ -12,7 +13,8 @@ const user_data = (state=default_user , action) =>{
             return{
                 name : action.payload.name,
                 email: action.payload.email,
-                id: action.payload.id
+                id: action.payload.id,
+                admin: action.payload.admin
             }
         }
         

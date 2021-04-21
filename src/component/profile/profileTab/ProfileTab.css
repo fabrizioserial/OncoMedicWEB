@@ -1,7 +1,6 @@
-
 .name-div-complete-profile {
     padding: 15px;
-    height: auto;
+    height: fit-content;
     text-align: start;
     background-color: #F4F4F4;
     border-right: 30px solid #9357F7;
@@ -18,6 +17,7 @@
 }
 
 .div-complete-profile {
+    height: 100%;
     float: left;
     margin-left: 25px;
     display: flex;

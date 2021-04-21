@@ -7,7 +7,6 @@ import { SearchTab } from './searchTab/SearchTab';
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
 import {Menu,MenuItem,Button} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
-import { Router,Link, Route, Switch } from 'react-router-dom'
 import {getFirestore} from '../../firebase'
 import { ButtonRefresh } from './ButtonRefresh'
 
@@ -21,11 +20,10 @@ const useStyles = makeStyles((theme) => ({
 
 export const UserTabAllUsers = () => {
 
-    const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [number, setNumber] = React.useState(null);
     const [openModal, setOpenModal] = React.useState(false);
     const [userList,setUserList] = useState([])
+    const [images,setImageList] =useState([])
     const [user, setUser] = React.useState('');
 
     const history = useHistory();
@@ -71,6 +69,21 @@ export const UserTabAllUsers = () => {
             })
             setUserList(activeuser)
         })
+
+
+        const itemCollectionAvatar = db.collection("avatars")
+        
+        itemCollectionAvatar.get().then((querySnapshot) => {
+            
+            let avatars = querySnapshot.docs.map(doc => {
+                    return(
+                        {...doc.data()}
+                        )
+                    }
+                )
+            setImageList(avatars)
+            console.log(avatars)
+        })
     }
     // Eliminar
 
@@ -80,6 +93,7 @@ export const UserTabAllUsers = () => {
     db.collection("users").doc(`${user.id}`).delete().then(() => {
       console.log("Document successfully deleted!");
     })
+    handleRefresh()
     setOpenModal(false);
 
   }
@@ -108,6 +122,21 @@ export const UserTabAllUsers = () => {
             setUserList(activeuser)
         })
 
+
+        const itemCollectionAvatar = db.collection("avatars")
+        
+        itemCollectionAvatar.get().then((querySnapshot) => {
+            
+            let avatars = querySnapshot.docs.map(doc => {
+                    return(
+                        {...doc.data()}
+                        )
+                    }
+                )
+            setImageList(avatars)
+            console.log(avatars)
+        })
+
     },[])
 
     return(
@@ -134,7 +163,7 @@ export const UserTabAllUsers = () => {
                         </thead>
                         <tbody>
                             {
-                                userList.length > 0 && userList.map((item,key) => <ItemUser key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
+                                (userList.length > 0) && userList.map((item,key) => <ItemUser image={images.find(element =>element.id==item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
                             }
                             <Menu className="menu-see-all-users"
                                 id={id}

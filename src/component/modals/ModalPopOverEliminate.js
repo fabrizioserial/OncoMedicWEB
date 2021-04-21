@@ -6,15 +6,15 @@ import { Alert } from '@material-ui/lab';
 
 
 const ModalPopOverEliminate = (props) => {
-   const [title, setTitle] = React.useState(null)
-   const [errorMessage, setErrorMessage] = React.useState("");
+   const [title, setTitle] = useState(null)
+   const [errorMessage, setErrorMessage] = useState(false);
      
      const divStyle = { 
           display: props.displayModal ? 'block' : 'none'
      };
      function closeModal(e) {
         e.stopPropagation()
-        setErrorMessage("")
+        setErrorMessage(false)
         setTitle("")
         props.closeModal()
      }
@@ -24,7 +24,7 @@ const ModalPopOverEliminate = (props) => {
      }
 
      const idNotCorrect = () => {
-         setErrorMessage("Id del paciente incorrecto")
+         setErrorMessage(true)
      }
 
      function idCorrect(){
@@ -52,8 +52,8 @@ const ModalPopOverEliminate = (props) => {
             <div className="inside-the-modal">
                 <p>Numero del paciente: {props.id}</p>
             </div> 
-            <div>
-               <input className="eliminate-numero-del-paciente"
+            <div className="modal-add-input-cont">
+               <input className={errorMessage? "numero-del-paciente error" :"numero-del-paciente"}
                   onChange={event => setTitle(event.target.value)}
                   value={title}
                   type="text"
@@ -62,10 +62,7 @@ const ModalPopOverEliminate = (props) => {
                   placeholder="Introduzca el numero del paciente para confirmar"
                   variant="outlined"/>
             </div>
-            
-            <div className="modalopoovereliminate-error">
-               {errorMessage && <div> {errorMessage} </div>}
-            </div>
+            <p className="modal-add-input-cont-error">{errorMessage ? "Id incorrecto":""}</p>
             <div>
                <button onClick={handleIf} className="agregar-eliminate-button">ELIMINAR</button>   
             </div>

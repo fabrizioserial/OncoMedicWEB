@@ -8,6 +8,8 @@ import { TabHey } from './tabhey/TabHey';
 import {getFirestore} from '../../firebase'
 import { connect } from 'react-redux'
 import { UserTabLastSymptoms } from './userTabLastSymptoms/UserTabLastSymptoms'
+import { MySnackbar } from '../mySnackBar/MySnackbar'
+
 
 
 
@@ -20,10 +22,27 @@ const Home = ({medicData}) =>{
     const [symptomsList2,setSymptomsList2] = useState([])
     const [modal,setModal] = useState(false)
     const [images,setImageList] =useState([])
+    const [openSnackBar,setOpenSnackBar] = useState(false)
+    const [textSnack,setTextSnack] = useState("")
 
     const selectModal = (info) => {
-       setModal(!modal) 
+       setModal(!modal)
+       handleCloseSnackBar()
     }
+
+    const handleOpensnackBar = (title) =>{
+        setTextSnack(title)
+        setOpenSnackBar(!openSnackBar)
+    }
+
+    const handleCloseSnackBar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenSnackBar(false);
+        };
+
 
     useEffect(()=>{
         
@@ -112,20 +131,27 @@ const Home = ({medicData}) =>{
 
     return(
             <div className="home-cont-background">
-                <TabHey name={medic&&medic.name} userlist={userList.filter(item=>item.status==="Pendiente")}/>
+                <TabHey handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")}  name={medic&&medic.name} userlist={userList.filter(item=>item.status==="Pendiente")}/>
                     <div className="home-cont-buttons">
-                        <ButtonHome text="REGISTRAR NUEVO MÉDICO" color="purple" onClick={selectModal }></ButtonHome>
+                        {medic.admin&&<ButtonHome text="REGISTRAR NUEVO MÉDICO" color="purple" onClick={selectModal }></ButtonHome>}
                         <ButtonHome text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>
                         <ButtonHome text="VER ULTIMOS PACIENTES CON SINTOMAS" color="lightblue" link="seeSymptoms"></ButtonHome>
                     </div>
                         <ModalPopOver 
+                            handleOpensnackBar={()=>handleOpensnackBar("Medico creado con exito!")}
                             displayModal={modal}
                             closeModal={selectModal}/>
                     <div className="home-cont-usertabs">
-                        {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabHome userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
+                        {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabHome handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
                         {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabLastSymptoms symptomsList={symptomsList2}/>}
                         
                     </div>
+                    <MySnackbar
+                        severity="success"
+                        message={textSnack}
+                        openSnackBar={openSnackBar}
+                        handleCloseSnackBar={handleCloseSnackBar}
+                    />
             </div>
         )
     

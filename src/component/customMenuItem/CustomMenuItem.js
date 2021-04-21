@@ -7,7 +7,7 @@ import {getFirestore} from '../../firebase'
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
 import ModalPopOverAsignCancer from '../modals/ModalPopOverAsignCancer'
 
-export const CustomMenuItem = ({name,id,type}) => {
+export const CustomMenuItem = ({name,id,type,handleEl}) => {
 
     const [user,setUser] = useState(id)
     const [openModal, setOpenModal] = React.useState(false);
@@ -17,12 +17,14 @@ export const CustomMenuItem = ({name,id,type}) => {
 
     useEffect(() => {
         const db = getFirestore()
+        console.log({id})
         const thisUser = db.collection("users").doc(`${id}`)
         setUser(thisUser)
     }, [id])
 
 
     const updateUser = (cancerType) => {
+        console.log(cancerType)
         user.update({
             status:"Activo",
             cancer: cancerType
@@ -52,6 +54,7 @@ export const CustomMenuItem = ({name,id,type}) => {
     };
 
     const handleEliminate = () =>{
+        handleEl()
         const db = getFirestore()
         db.collection("users").doc(`${user.id}`).delete().then(() => {
           console.log("Document successfully deleted!");

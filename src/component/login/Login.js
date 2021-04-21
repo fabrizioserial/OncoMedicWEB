@@ -24,28 +24,26 @@ const Login = ({setMedicUserAction}) => {
             const db = getFirestore()
             const itemCollection = db.collection("medic")
             setLoad(true)
+
             itemCollection.get().then((querySnapshot)=>{
                 let usermedic = querySnapshot.docs.map(doc => {
                     if(doc.data().name == name){
                         if(doc.data().password == password){
-                            return ({id:doc.id,...doc.data()})
+                            console.log(doc.id,doc.data().name,doc.data().email)
+                            setMedicUserAction({id:doc.id,name:doc.data().name,email:doc.data().email,admin:doc.data().admin})
+                            handleClick()
+                            return
                         }else{
                             setError("password")
-                            return null
                         }
                     }else{
-                        setError("name")
-                        return null
+
                     }
                
                 })
-                console.log(usermedic)
-                
+                console.log("Medico:",medic)
+            
                 setLoad(false)
-                if(usermedic){
-                    setMedicUserAction({id:usermedic[0].id,name:usermedic[0].name,email:usermedic[0].email})
-                    handleClick()
-                }
 
             }).catch(e=>{
                 setLoad(false)

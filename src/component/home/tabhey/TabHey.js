@@ -10,7 +10,7 @@ import { CustomMenuItem } from '../../customMenuItem/CustomMenuItem'
 
 
 
-export const TabHey = ({name,userlist}) => {
+export const TabHey = ({name,userlist,handleEl}) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -40,8 +40,6 @@ export const TabHey = ({name,userlist}) => {
                     <button aria-describedby={id} className="tabhey-btn-options" onClick={handleClick}>
                         <FontAwesomeIcon icon={faBell}/>
                     </button>
-
-                        
                         <Menu className="menu-1"
                             id={id}
                             open={open}
@@ -61,7 +59,8 @@ export const TabHey = ({name,userlist}) => {
                         >
                         {
                             (userlist.length>0) ? (
-                                userlist.map((item,index) => <CustomMenuItem name={item.name}  id={item.id}/>)
+                                console.log(userlist),
+                                userlist.map((item,index) => <CustomMenuItem handleEl={handleEl} name={item.name}  id={item.id}/>)
                             ) : (
                                 <CustomMenuItem type="finished">No hay mas usuarios para aceptar</CustomMenuItem>
                             )

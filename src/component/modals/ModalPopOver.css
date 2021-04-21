@@ -14,11 +14,11 @@
     border-style: none;
 } 
 /* Modal content */
-.modal-content {
+.modal-content-new-medic {
     background-color: white;
     width: 450px; /* Width in proportion to its parent container*/
     max-width: 650px; /* Max width where it stops expanding */
-    height: 530px; /* Height in proportion to its parent container */
+    height:; /* Height in proportion to its parent container */
     margin: auto; /* Auto margin according to the element width */
     padding: 10px;
     display: flex;
@@ -88,6 +88,12 @@
     font-size: 15px;
     padding-left: 10px;
 }
+.numero-del-paciente.error{
+    border-color: red !important;
+}
+.error-not-valid{
+    color: red;
+}
 
 .agregar-button{
     background-color:#8A2CE2;
@@ -105,10 +111,18 @@
     align-self: flex-end;
     margin-right: 35px;
     margin-top: 30px;
+    margin-bottom: 3%;
 }
 
 .modal-add-input-cont{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.modal-add-input-cont-error{
+    margin-top: 1%;
+    color: red;
+    margin-left: 35px;
+    font-size: 0.7rem;
+    margin-bottom: 0;
 }

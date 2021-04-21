@@ -1,17 +1,17 @@
 .patientsymptoms-th-empty{
-    width: 5%;
+    width: 3%;
 }
 .patientsymptoms-th-fecha{
     width: 17.5%;
 }
-.patientsymptoms-th-avatar{
-    width:22.5%;
-}
 .patientsymptoms-th-patient{
-    width:25%;
+    width:20%;
 }
 .patientsymptoms-th-symptom{
-    width:22.5%;
+    width:20%;
+}
+.patientsymptoms-th-grade{
+    width:20%;
 }
 .mouse-over-descr{
     cursor: pointer;

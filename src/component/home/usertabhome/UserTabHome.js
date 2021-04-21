@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UserTabHome=({margin_left,userlist,images})=> {
+export const UserTabHome=({margin_left,userlist,images,handleEl})=> {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [user, setUser] = React.useState('');
@@ -71,8 +71,8 @@ export const UserTabHome=({margin_left,userlist,images})=> {
     db.collection("users").doc(`${user.id}`).delete().then(() => {
       console.log("Document successfully deleted!");
     })
-    setOpenModal(false);
-
+    setOpenModal(false);  
+    handleEl()
   }
 
     const history = useHistory();

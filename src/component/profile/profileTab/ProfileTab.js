@@ -13,9 +13,11 @@ export default function ProfileTab({user,image}) {
     const [seeMore, setSeeMore] = useState(false);
     const [name, setName] = useState(user.name);
     const [cancer, setCancer] = useState(user.cancer);
+
     const contentProps = useSpring({
-        height: seeMore ? "300px":"180px"
+        height: seeMore ? "100%":"50%"
     })
+
     const textProps = useSpring({
         opacity: seeMore? "1":"0"
     })

@@ -2,25 +2,52 @@ import React,{useState,useEffect} from 'react';
 import './ModalPopOver.css'
 import 'fontsource-roboto';
 import {getFirestore} from '../../firebase'
-
+import { ToastProvider,useToasts } from 'react-toast-notifications'
+import { Snackbar } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 
 const ModalPopOver = (props) => {
       const [name,setName] = useState("")
       const [email,setEmail] = useState("")
       const [password,setPassword] = useState("")
       const [id,setID] = useState("")
-
-      const [disabled,setDisabled] = useState("")
-
+      const [disabled,setDisabled] = useState(false)
+      const [errorEmail,setErrorEmail] = useState(false)
+      const [errorName,setErrorName] = useState(false)
+      const [errorPass,setErrorPass] = useState(false)
+      const [errorId,setErrorId] = useState(false)
      
-      const verifyInformation = () =>{
-         name.length > 0 && email.length >0 && password.length > 0 && id.length >0 && pushToDatabase() 
+      const resetValues=()=>{
+         setName("")
+         setPassword("")
+         setID("")
+         setEmail("")
+         resetErrors()
       }
+
+
+      const resetErrors=()=>{
+         setErrorName(false)
+         setErrorPass(false)
+         setErrorId(false)
+         setErrorEmail(false)
+      }
+
+      const verifyInformation = () =>{
+         if(name.length > 0 && email.length >0 && password.length > 0 && id.length >0){
+            pushToDatabase()}
+            else{
+               name.length <=0  && (setErrorName(true))
+               email.length <=0 && (setErrorEmail(true))
+               password.length <=0 && (setErrorPass(true))
+               id.length <=0 && (setErrorId(true))
+            }
+      } 
 
       const pushToDatabase = () =>{
          setDisabled("disabled")
          const db = getFirestore()
-         db.collection("medic").doc({id}).set({
+         db.collection("medic").doc(id).set({
             name:name,
             email:email,
             password:password
@@ -29,19 +56,25 @@ const ModalPopOver = (props) => {
          }).catch((e)=>{
             setDisabled("")  
          });
+         resetValues();
+         props.closeModal() 
+         props.handleOpensnackBar();
       }
 
      const divStyle = { 
-          display: props.displayModal ? 'block' : 'none'
+         display: props.displayModal ? 'block' : 'none'
      };
+
+
      function closeModal(e) {
-        e.stopPropagation()
-        props.closeModal() 
+         resetValues()
+         e.stopPropagation()
+         props.closeModal() 
      }
      return (
        <div className="modal" onClick={ closeModal } style={divStyle} >
           <div 
-            className="modal-content"
+            className="modal-content-new-medic"
             onClick={ e => e.stopPropagation() } >
             <span 
                  className="close"
@@ -55,48 +88,56 @@ const ModalPopOver = (props) => {
                 <p>Nombre y apellido</p>
             </div> 
             <div className="modal-add-input-cont">
-               <input className="numero-del-paciente"
+            <input className={errorId ? "numero-del-paciente error" :"numero-del-paciente"}
+                  value={name}
                   id="nameDoctor"
                   placeholder="Introduzca nombre y apellido"
                   onChange={e => setName(e.target.value)}
                   disabled={disabled}
                   variant="outlined"/>
             </div>
+            <p className="modal-add-input-cont-error">{errorName ? "Introduzca un email valido":""}</p>
             <div className="add-inside-the-modal">
                 <p>ID</p>
             </div> 
             <div className="modal-add-input-cont">
-               <input className="numero-del-paciente"
+            <input className={errorId ? "numero-del-paciente error" :"numero-del-paciente"}
+                  value={id}
                   id="idDoctor"
                   placeholder="Introduzca ID del medico"
                   onChange={e => setID(e.target.value)}
                   disabled={disabled}
                   variant="outlined"/>
             </div>
+            <p className="modal-add-input-cont-error">{errorId ? "Introduzca un email valido":""}</p>
             <div className="add-inside-the-modal">
                 <p>Email</p>
             </div> 
             <div className="modal-add-input-cont">
-               <input className="numero-del-paciente"
+               <input className={errorEmail ? "numero-del-paciente error" :"numero-del-paciente"} 
+                  value={email}
                   id="mailDoctor"
-                  placeholder="Introduzca email"
+                  placeholder="Introduzca email" 
                   onChange={e => setEmail(e.target.value)}
                   disabled={disabled}
                   variant="outlined"/>
-            </div>
+            </div>               
+            <p className="modal-add-input-cont-error">{errorEmail ? "Introduzca un email valido":""}</p>
             <div className="add-inside-the-modal">
                 <p>Contraseña</p>
             </div> 
             <div className="modal-add-input-cont">
-               <input className="numero-del-paciente"
+               <input className={errorPass ? "numero-del-paciente error" :"numero-del-paciente"}
+                  value={password}
                   id="passDoctor"
                   placeholder="Introduzca contraseña"
                   onChange={e => setPassword(e.target.value)}
                   disabled={disabled}
                   variant="outlined"/>
             </div>
+            <p className="modal-add-input-cont-error">{errorPass ? "Introduzca un email valido":""}</p>
             <div className="add-cont-button">
-               <button className="agregar-button" onClick ={()=>verifyInformation()}>AGREGAR</button>
+            <button className="agregar-button" onClick ={verifyInformation}>Agregar</button>
             </div>
          </div>
       </div>

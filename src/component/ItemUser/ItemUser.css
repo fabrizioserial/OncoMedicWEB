@@ -162,5 +162,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: inherit;
+    height: 100%;
 }
