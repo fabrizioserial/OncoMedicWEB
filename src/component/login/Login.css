@@ -68,6 +68,21 @@
 .input-login:focus{
     outline: none;
 }
+.input-login-error{
+    width: 300px;
+    height: 35px;
+    color: #2B2B2B;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: red;
+    padding-right: 5px;
+    padding-left: 5px;
+    vertical-align: initial;
+    box-sizing: border-box;
+}
+.input-login-error{
+    outline: none;
+}
 .btn-login-input{
     margin-top: 50px;
     width: 300px;
@@ -113,4 +128,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.input-error{
+    color: red;
+    margin-top: 5px;
+    font-size: 13px;
 }

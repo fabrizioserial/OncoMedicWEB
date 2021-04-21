@@ -39,10 +39,7 @@ const ModalPopOver = (props) => {
         props.closeModal() 
      }
      return (
-       <div 
-         className="modal"
-         onClick={ closeModal }
-         style={divStyle} >
+       <div className="modal" onClick={ closeModal } style={divStyle} >
           <div 
             className="modal-content"
             onClick={ e => e.stopPropagation() } >

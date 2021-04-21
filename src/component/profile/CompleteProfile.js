@@ -6,6 +6,8 @@ import { UsertabSintomas } from '../profile/usertabSintomas/UsertabSintomas'
 import ProfileTab from './profileTab/ProfileTab'
 import {useParams} from 'react-router-dom'
 import {getFirestore} from '../../firebase'
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 export const CompleteProfile = () => {
 
@@ -14,11 +16,15 @@ export const CompleteProfile = () => {
     const [symptomsList, setSymptomsList]= useState([])
     const [image, setImage] = useState("")
     const [symInfo,setSympInfo] = useState([])
+    const [load,setLoad] = useState(true)
+    const [userNotFound,setUserNotFound] = useState(false)
+  
 
 
     useEffect(()=>{
 
         if(id){
+            setUserNotFound(false)
             console.log("DB READING")
             console.log("id ",id)
             const db = getFirestore()
@@ -27,6 +33,11 @@ export const CompleteProfile = () => {
             itemCollection.get().then((querySnapshot) => {
                 let userFound ={id:querySnapshot.id,...querySnapshot.data()}
                 setUser(userFound)
+                setLoad(false)
+                console.log("El usuario encontrado es: ",userFound)
+                if(userFound.name == null){
+                    setUserNotFound(true)
+                }
             })
 
             const symptoms = db.collection("symptoms").where("id","==", id)
@@ -73,8 +84,12 @@ export const CompleteProfile = () => {
     },[image,symInfo])
 
     return (
-        <div>
+        <React.Fragment>
         { 
+        load ? 
+        <div className="login-cont-loading">
+                    <div className="login-loading"><CircularProgress color="#9357F7"/></div>
+        </div>:
         (user && user.name && image)? 
         <div className="profile-cont-background">
             <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
@@ -88,13 +103,13 @@ export const CompleteProfile = () => {
                 </div>  
             </div>
         </div>
-        :
+        : userNotFound &&
         <div className="profile-cont-background1">
             <img className={{width:"200px"}} src="https://www.initcoms.com/wp-content/uploads/2020/07/404-error-not-found-1.png" />
         </div>
         }
         
-        </div>
+        </React.Fragment>
         
     )
 }

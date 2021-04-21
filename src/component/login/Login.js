@@ -14,28 +14,52 @@ const Login = ({setMedicUserAction}) => {
     const [password,setPassword] =useState("")
     const [medic,setMedic] = useState({})
     const [loading,setLoad] = useState(false)
+    const [ename,setEName] = useState(false)
+    const [epass,setEPass] = useState(false)
 
     const checkUser = () =>{
-        const db = getFirestore()
-        const itemCollection = db.collection("medic")
-        setLoad(true)
+        if(name.length > 0 && password.length >0){
+            setEName(false)
+            setEPass(false)
+            const db = getFirestore()
+            const itemCollection = db.collection("medic")
+            setLoad(true)
+            itemCollection.get().then((querySnapshot)=>{
+                let usermedic = querySnapshot.docs.map(doc => {
+                    if(doc.data().name == name){
+                        if(doc.data().password == password){
+                            return ({id:doc.id,...doc.data()})
+                        }else{
+                            setError("password")
+                            return null
+                        }
+                    }else{
+                        setError("name")
+                        return null
+                    }
+               
+                })
+                console.log(usermedic)
+                
+                setLoad(false)
+                if(usermedic){
+                    setMedicUserAction({id:usermedic[0].id,name:usermedic[0].name,email:usermedic[0].email})
+                    handleClick()
+                }
 
-        itemCollection.get().then((querySnapshot)=>{
-            let usermedic = querySnapshot.docs.map(doc => {
-              return doc.data().name == name && doc.data().password == password ? ({id:doc.id,...doc.data()})
-                : null
+            }).catch(e=>{
+                setLoad(false)
             })
-            console.log(usermedic)
-            
-            setLoad(false)
-            usermedic && setMedicUserAction({id:usermedic[0].id,name:usermedic[0].name,email:usermedic[0].email})
-            usermedic && handleClick()
-        }).catch(e=>{
-            setLoad(false)
-        })
+        }
+        
+    }
+
+    const setError = (type) =>{
+        type == "name" ? setEName(true):setEPass(true)
     }
 
 
+/*
     const pushToDatabase = () =>{
         const db = getFirestore()
         db.collection("users").add({
@@ -76,7 +100,8 @@ const Login = ({setMedicUserAction}) => {
             date:date
         })
      }
-
+*/
+    
     const history = useHistory();
     const handleClick = () => history.push('/home');
 
@@ -85,9 +110,7 @@ const Login = ({setMedicUserAction}) => {
         console.log(medic);
     }, [medic])
 
-    useEffect(()=>{
 
-    },[loading])
 
     useEffect(() => {
         console.log("name: ",name)
@@ -110,16 +133,19 @@ const Login = ({setMedicUserAction}) => {
                     <form>
                         <div>
                             <p className="text-login-input">Ingresar direccion de email</p>
-                            <input className="input-login" onChange={e => setName(e.target.value)} placeholder="name@example.com"></input>
+                            <input className={ename ? "input-login-error" :"input-login"} onChange={e => setName(e.target.value)} placeholder="name@example.com"></input>
+                            {ename && <p className="input-error">Introduzca email valido</p>}
                         </div>
                         <div style={{marginTop:"40px"}}>
                             <p className="text-login-input">Ingresar direccion de email</p>
-                            <input className="input-login" onChange={e => setPassword(e.target.value)} placeholder="atleast 8 caracters"></input>
+                            <input className={epass || ename ? "input-login-error" :"input-login"}  onChange={e => setPassword(e.target.value)} placeholder="atleast 8 caracters"></input>
+                            {(epass || ename) && <p className="input-error">Introduzca constraseña valida</p>}
                         </div>  
                         <button className="btn-login-input" onClick={()=>checkUser()}>
                             Log In
                         </button>
-                        <button onClick={pushToDatabase}/>
+                        {//<button onClick={pushToDatabase}/>
+                        }
                             
                     </form>
                     
