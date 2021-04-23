@@ -11,13 +11,14 @@ import ModalPopOverVerRegistroDiario from '../../modals/ModalPopOverVerRegistroD
 
 
 
+
 const useStyles = makeStyles((theme) => ({
   typography: {
     padding: theme.spacing(2),
   },
 }));
 
-export const UserTabHome=({margin_left,userlist,images,handleEl})=> {
+export const UserTabHome=({margin_left,userlist,images,handleEl,handleLoad})=> {
   var today = new Date()
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -27,6 +28,7 @@ export const UserTabHome=({margin_left,userlist,images,handleEl})=> {
   const i = [1,2,3,4,5,6]
   const [regDiarios,setRegDiario] = useState([])
   const [regunique,setUniqReg] = useState()
+
 
   // Menu
   const handleClick = (event,item) => {
@@ -97,7 +99,16 @@ export const UserTabHome=({margin_left,userlist,images,handleEl})=> {
             setUniqReg(found) 
             
         })
-      setOpenModalDiario(true);
+        
+        handleOpenDiario()
+  }
+
+  const handleOpenDiario = () => {
+    handleLoad(true)
+    setTimeout(function () {
+        handleLoad(false)
+        setOpenModalDiario(true);
+  }, 500);
   }
 
     const history = useHistory();
@@ -143,9 +154,9 @@ export const UserTabHome=({margin_left,userlist,images,handleEl})=> {
                         closeModal={handleCloseModal}
                         handleEliminate={handleEliminate}
                     />
-                    <ModalPopOverVerRegistroDiario
+                    <ModalPopOverVerRegistroDiario  
                       name={user.name}
-                      id={regunique && regunique}
+                      id={regunique}
                       displayModal={openModalDiario}
                       closeModal={handleCloseDiario}
                     />

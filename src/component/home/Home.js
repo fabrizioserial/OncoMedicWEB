@@ -9,7 +9,7 @@ import {getFirestore} from '../../firebase'
 import { connect } from 'react-redux'
 import { UserTabLastSymptoms } from './userTabLastSymptoms/UserTabLastSymptoms'
 import { MySnackbar } from '../mySnackBar/MySnackbar'
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
@@ -24,6 +24,7 @@ const Home = ({medicData}) =>{
     const [images,setImageList] =useState([])
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [textSnack,setTextSnack] = useState("")
+    const [loading,setLoad] = useState(false)
 
     const selectModal = (info) => {
        setModal(!modal)
@@ -127,10 +128,17 @@ const Home = ({medicData}) =>{
         cleanSym()
     },[symptomsList,userList])
 
+    const handleLoad = (bool) =>{
+        setLoad(bool)
+    } 
 
 
     return(
             <div className="home-cont-background">
+                {(loading) && <div className="home-circ-progress">
+                    <div className="login-loading"><CircularProgress  color="#9357F7"/></div>
+                </div>
+               }
                 <TabHey 
                     handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")}  
                     handleAc={()=>handleOpensnackBar("Usuario creado con exito!")}  
@@ -145,7 +153,7 @@ const Home = ({medicData}) =>{
                             displayModal={modal}
                             closeModal={selectModal}/>
                     <div className="home-cont-usertabs">
-                        {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabHome handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
+                        {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
                         {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabLastSymptoms symptomsList={symptomsList2}/>}
                         
                     </div>

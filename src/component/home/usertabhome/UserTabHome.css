@@ -9,7 +9,6 @@
 }
 .usertab-cont-info{
     height: auto;
-    
     width: 450px;
     padding: 15px;
     padding-bottom: 20px;
@@ -56,3 +55,4 @@
 .menu-item-eliminar-profile {
     color: red i !important;
 }
+

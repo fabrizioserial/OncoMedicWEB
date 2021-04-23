@@ -5,7 +5,7 @@ import { UserTabHome } from '../home/usertabhome/UserTabHome';
 import { UsertabEstado } from '../profile/usertabEstado/UsertabEstado';
 import { Tuerquita } from '../tuerquita/Tuerquita';
 import { ItemUser } from './../ItemUser/ItemUser';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
@@ -22,6 +22,7 @@ const ModalPopOverVerRegistroDiario = (props) => {
      }
 
      useEffect(()=>{
+         {console.log(props.loading)}
         console.log("el estado de registro: ",props.id)
         setRegDiario(props.id)
      },[props.id])
@@ -31,7 +32,11 @@ const ModalPopOverVerRegistroDiario = (props) => {
          className="modal"
          onClick={ closeModal }
          style={divStyle} >
-            <div 
+            <div
+               {...(props.loading) && <div className="login-cont-loading">
+                    <div className="login-loading"><CircularProgress color="#9357F7"/></div>
+                </div>
+               }
                className="modal-content-diario"
                onClick={ e => e.stopPropagation() } >
                <span 
