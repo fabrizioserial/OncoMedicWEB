@@ -45,7 +45,7 @@ const ModalPopOverVerRegistroDiario = (props) => {
                <div className="inside-the-modal-diario">
                   <p className="paciente-of-modal">Paciente: {props.name}</p>
                   <table class="modal-diario-table">
-                   { regdiario &&  <tbody>
+                   { regdiario ?  <tbody>
                           <ItemUser  mood={regdiario.mood} type="regdiarioMood"/>
                           <ItemUser  sad={regdiario.sad} type="regdiarioSad"/>
                           <ItemUser  hungry={regdiario.hungry} type="regdiarioHungry"/>
@@ -53,7 +53,8 @@ const ModalPopOverVerRegistroDiario = (props) => {
                           <ItemUser  hid={regdiario.hid} type="regdiarioHid"/>
                           <ItemUser  social={regdiario.social} type="regdiarioSocial"/>
 
-                    </tbody>}
+                    </tbody>:
+                     <h1>El paciente no ha hecho el registro diario hoy</h1>}
                 </table>
                </div> 
          </div>

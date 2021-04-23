@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
 export const UsertabEstado=({type,idProp,user})=> {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [number, setNumber] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false); 
   const i = [1,2,3,4,5,6]
   const [regDiarios,setRegDiario] = useState([])
