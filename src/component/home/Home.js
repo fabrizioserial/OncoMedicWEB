@@ -71,7 +71,7 @@ const Home = ({medicData}) =>{
                     }
                 )
             setImageList(avatars)
-            console.log(avatars)
+            console.log("hola ",avatars)
         })
 
         const itemCollectionSymptoms = db.collection("symptoms").orderBy("date")
