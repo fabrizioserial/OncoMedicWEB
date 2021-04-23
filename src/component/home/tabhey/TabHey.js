@@ -10,7 +10,7 @@ import { CustomMenuItem } from '../../customMenuItem/CustomMenuItem'
 
 
 
-export const TabHey = ({name,userlist,handleEl}) => {
+export const TabHey = ({name,userlist,handleEl,handleAc}) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -60,7 +60,7 @@ export const TabHey = ({name,userlist,handleEl}) => {
                         {
                             (userlist.length>0) ? (
                                 console.log(userlist),
-                                userlist.map((item,index) => <CustomMenuItem handleEl={handleEl} name={item.name}  id={item.id}/>)
+                                userlist.map((item,index) => <CustomMenuItem handleAc={handleAc} handleEl={handleEl} name={item.name}  id={item.id}/>)
                             ) : (
                                 <CustomMenuItem type="finished">No hay mas usuarios para aceptar</CustomMenuItem>
                             )

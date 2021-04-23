@@ -43,7 +43,7 @@ const ModalPopOverVerRegistroDiario = (props) => {
                   <hr className="add-modal-line"/>
                </div>
                <div className="inside-the-modal-diario">
-                  <p className="paciente-of-modal">Paciente:_____________</p>
+                  <p className="paciente-of-modal">Paciente: {props.name}</p>
                   <table class="modal-diario-table">
                    { regdiario &&  <tbody>
                           <ItemUser  mood={regdiario.mood} type="regdiarioMood"/>

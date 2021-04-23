@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import {useSpring,animated} from 'react-spring'
 
 
-export default function ProfileTab({user,image}) {
+export default function ProfileTab({user,image,handleSnackBar}) {
     const [state, setState] = useState(false);
     const [seeMore, setSeeMore] = useState(false);
     const [name, setName] = useState(user.name);
@@ -38,6 +38,7 @@ export default function ProfileTab({user,image}) {
     }; 
 
     const handleEliminado = () => {
+        handleSnackBar()
         switchToHome()
     }
 

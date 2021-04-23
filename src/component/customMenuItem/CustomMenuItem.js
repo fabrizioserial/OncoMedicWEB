@@ -7,7 +7,7 @@ import {getFirestore} from '../../firebase'
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
 import ModalPopOverAsignCancer from '../modals/ModalPopOverAsignCancer'
 
-export const CustomMenuItem = ({name,id,type,handleEl}) => {
+export const CustomMenuItem = ({name,id,type,handleEl,handleAc}) => {
 
     const [user,setUser] = useState(id)
     const [openModal, setOpenModal] = React.useState(false);
@@ -51,6 +51,7 @@ export const CustomMenuItem = ({name,id,type,handleEl}) => {
 
     const handleCloseModalCancer = () => {
         setOpenModalCancer(false);
+        handleAc()
     };
 
     const handleEliminate = () =>{

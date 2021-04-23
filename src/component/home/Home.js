@@ -41,7 +41,7 @@ const Home = ({medicData}) =>{
         }
 
         setOpenSnackBar(false);
-        };
+    };
 
 
     useEffect(()=>{
@@ -131,7 +131,10 @@ const Home = ({medicData}) =>{
 
     return(
             <div className="home-cont-background">
-                <TabHey handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")}  name={medic&&medic.name} userlist={userList.filter(item=>item.status==="Pendiente")}/>
+                <TabHey 
+                    handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")}  
+                    handleAc={()=>handleOpensnackBar("Usuario creado con exito!")}  
+                    name={medic&&medic.name} userlist={userList.filter(item=>item.status==="Pendiente")}/>
                     <div className="home-cont-buttons">
                         {medic.admin&&<ButtonHome text="REGISTRAR NUEVO MÉDICO" color="purple" onClick={selectModal }></ButtonHome>}
                         <ButtonHome text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>

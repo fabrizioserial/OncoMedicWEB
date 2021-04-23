@@ -9,7 +9,6 @@ const app = firebase.initializeApp({
     storageBucket: "oncologia-austral.appspot.com",
     messagingSenderId: "497357435658",
     appId: "1:497357435658:web:e04ca1161344c718fc40f3"
-
 })
 
 export function getFirebase() {

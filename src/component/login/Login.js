@@ -56,8 +56,6 @@ const Login = ({setMedicUserAction}) => {
         type == "name" ? setEName(true):setEPass(true)
     }
 
-
-/*
     const pushToDatabase = () =>{
         const db = getFirestore()
         db.collection("users").add({
@@ -98,7 +96,6 @@ const Login = ({setMedicUserAction}) => {
             date:date
         })
      }
-*/
     
     const history = useHistory();
     const handleClick = () => history.push('/home');
@@ -125,7 +122,7 @@ const Login = ({setMedicUserAction}) => {
             <div className="cont-login-backlogin">
                 <div className="cont-login-cont-ev">
                     <div className="login-text-cont">
-                        <p className="text-login-login">Log In</p>
+                        <p onClick={pushToDatabase} className="text-login-login">Log In</p>
                         <p className="text-login-punto">.</p>
                     </div>
                     <form>

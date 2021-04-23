@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UsertabEstado=({type,idProp})=> {
+export const UsertabEstado=({type,idProp,user})=> {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [number, setNumber] = React.useState(null);
@@ -103,6 +103,7 @@ export const UsertabEstado=({type,idProp})=> {
                     <MenuItem >ELIMINAR</MenuItem>
                 </Menu>
                 <ModalPopOverVerRegistroDiario 
+                    name={user.name}
                     id={regunique && regunique}
                     displayModal={openModal}
                     closeModal={handleCloseModal}

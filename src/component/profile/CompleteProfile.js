@@ -7,6 +7,7 @@ import ProfileTab from './profileTab/ProfileTab'
 import {useParams} from 'react-router-dom'
 import {getFirestore} from '../../firebase'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { MySnackbar } from '../mySnackBar/MySnackbar'
 
 
 export const CompleteProfile = () => {
@@ -18,7 +19,21 @@ export const CompleteProfile = () => {
     const [symInfo,setSympInfo] = useState([])
     const [load,setLoad] = useState(true)
     const [userNotFound,setUserNotFound] = useState(false)
+    const [openSnackBar,setOpenSnackBar] = useState(false)
   
+
+
+    const handleOpensnackBar = () =>{
+        setOpenSnackBar(!openSnackBar)
+    }
+
+    const handleCloseSnackBar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenSnackBar(false);
+    };
 
 
     useEffect(()=>{
@@ -93,10 +108,10 @@ export const CompleteProfile = () => {
         (user && user.name && image)? 
         <div className="profile-cont-background">
             <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
-            <ProfileTab image={image} user={user}/>
+            <ProfileTab handleSnackBar={handleOpensnackBar} image={image} user={user}/>
             <div className="two-squares-complete-profile">
                 <div  className="estado-usertab-cont-background">
-                    <UsertabEstado idProp={user.id} type="profile" flexi={{Flex:1}}/>
+                    <UsertabEstado user={user} idProp={user.id} type="profile" flexi={{Flex:1}}/>
                 </div>
                 <div className="sintoms-usertab-cont-background">
                     <UsertabSintomas sympstoms={symptomsList} descs={symInfo} flexi={{Flex:1}}/>
@@ -108,6 +123,12 @@ export const CompleteProfile = () => {
             <img className={{width:"200px"}} src="https://www.initcoms.com/wp-content/uploads/2020/07/404-error-not-found-1.png" />
         </div>
         }
+        <MySnackbar
+            severity="success"
+            message="Usuario eliminado con exito!"
+            openSnackBar={openSnackBar}
+            handleCloseSnackBar={handleCloseSnackBar}
+        />
         
         </React.Fragment>
         

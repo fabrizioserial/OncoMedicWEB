@@ -9,6 +9,7 @@ import {Menu,MenuItem,Button} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import {getFirestore} from '../../firebase'
 import { ButtonRefresh } from './ButtonRefresh'
+import { MySnackbar } from '../mySnackBar/MySnackbar';
 
 
 
@@ -24,7 +25,8 @@ export const UserTabAllUsers = () => {
     const [openModal, setOpenModal] = React.useState(false);
     const [userList,setUserList] = useState([])
     const [images,setImageList] =useState([])
-    const [user, setUser] = React.useState('');
+    const [user, setUser] = React.useState("");
+    const [openSnackBar,setOpenSnackBar] = useState(false)
 
     const history = useHistory();
     const switchToProfle = () => history.push(`/profile/${user.id}`);
@@ -46,6 +48,22 @@ export const UserTabAllUsers = () => {
       setOpenModal(true);
       setAnchorEl(null);
     }
+
+    // Snack bar
+
+    const handleOpensnackBar = () =>{
+        setOpenSnackBar(!openSnackBar)
+    }
+
+    const handleCloseSnackBar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenSnackBar(false);
+    };
+
+
 
     const handleSearch = (e,title) => {
         title === "" ? handleRefresh() :
@@ -95,7 +113,7 @@ export const UserTabAllUsers = () => {
     })
     handleRefresh()
     setOpenModal(false);
-
+    handleOpensnackBar()
   }
 
 
@@ -195,6 +213,12 @@ export const UserTabAllUsers = () => {
                     </table>
                     {userList&& <button className="userall-btn-load-more">Cargar mas</button>}
                 </div>
+                <MySnackbar
+                        severity="success"
+                        message="Usuario eliminado con exito!"
+                        openSnackBar={openSnackBar}
+                        handleCloseSnackBar={handleCloseSnackBar}
+                />
             </div>
         </div>
     )
