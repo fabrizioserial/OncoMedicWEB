@@ -7,6 +7,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux'
 import {setMedicUserAction} from '../../reduxStore/actions/loginAction'
+import {faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Login = ({setMedicUserAction}) => {
 
@@ -16,6 +18,7 @@ const Login = ({setMedicUserAction}) => {
     const [loading,setLoad] = useState(false)
     const [ename,setEName] = useState(false)
     const [epass,setEPass] = useState(false)
+    const [passwordShown, setPasswordShown] = useState(false);
 
     const checkUser = () =>{
         if(name.length > 0 && password.length >0){
@@ -96,6 +99,10 @@ const Login = ({setMedicUserAction}) => {
             date:date
         })
      }
+
+     const togglePasswordVisiblity = () => {
+        setPasswordShown(passwordShown ? false : true);
+      };
     
     const history = useHistory();
     const handleClick = () => history.push('/home');
@@ -132,8 +139,11 @@ const Login = ({setMedicUserAction}) => {
                             {ename && <p className="input-error">Introduzca email valido</p>}
                         </div>
                         <div style={{marginTop:"40px"}}>
-                            <p className="text-login-input">Ingresar direccion de email</p>
-                            <input className={epass || ename ? "input-login-error" :"input-login"}  onChange={e => setPassword(e.target.value)} placeholder="atleast 8 caracters"></input>
+                            <p className="text-login-input">Ingresar constraseña</p>
+                            <div className={epass || ename ? "input-login error" :"input-login"}>
+                                <input type={passwordShown ? "text" : "password"} className="input-place" onChange={e => setPassword(e.target.value)} placeholder="atleast 8 caracters"></input>
+                                <FontAwesomeIcon onClick={togglePasswordVisiblity} icon={passwordShown ? faEye:faEyeSlash}/>
+                            </div>
                             {(epass || ename) && <p className="input-error">Introduzca constraseña valida</p>}
                         </div>  
                         <button className="btn-login-input" onClick={()=>checkUser()}>

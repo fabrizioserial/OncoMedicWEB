@@ -5,7 +5,7 @@ import { UserTabHome } from '../home/usertabhome/UserTabHome';
 import { UsertabEstado } from '../profile/usertabEstado/UsertabEstado';
 import { Tuerquita } from '../tuerquita/Tuerquita';
 import { ItemUser } from './../ItemUser/ItemUser';
-import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 
 
@@ -33,10 +33,6 @@ const ModalPopOverVerRegistroDiario = (props) => {
          onClick={ closeModal }
          style={divStyle} >
             <div
-               {...(props.loading) && <div className="login-cont-loading">
-                    <div className="login-loading"><CircularProgress color="#9357F7"/></div>
-                </div>
-               }
                className="modal-content-diario"
                onClick={ e => e.stopPropagation() } >
                <span 
@@ -59,7 +55,7 @@ const ModalPopOverVerRegistroDiario = (props) => {
                           <ItemUser  social={regdiario.social} type="regdiarioSocial"/>
 
                     </tbody>:
-                     <h1>El paciente no ha hecho el registro diario hoy</h1>}
+                     <h1 className="modaldiario-paciente-sin-registros">El paciente no ha hecho el registro diario hoy</h1>}
                 </table>
                </div> 
          </div>

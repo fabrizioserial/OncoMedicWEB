@@ -55,10 +55,14 @@
     margin-bottom: 5px;
 }
 .input-login{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 300px;
     height: 35px;
-    color: #2B2B2B;
+    color: #767676;
     border-radius: 3px;
+    border-width: 2px;
     border-style: solid;
     padding-right: 5px;
     padding-left: 5px;
@@ -68,17 +72,16 @@
 .input-login:focus{
     outline: none;
 }
-.input-login-error{
-    width: 300px;
-    height: 35px;
-    color: #2B2B2B;
-    border-radius: 3px;
-    border-style: solid;
+.input-login .error{
     border-color: red;
-    padding-right: 5px;
-    padding-left: 5px;
-    vertical-align: initial;
-    box-sizing: border-box;
+}
+.input-place{
+    color: #767676;
+    border: none;
+    width: 100%;
+}
+.input-place:focus{
+    outline: none;
 }
 .input-login-error{
     outline: none;
