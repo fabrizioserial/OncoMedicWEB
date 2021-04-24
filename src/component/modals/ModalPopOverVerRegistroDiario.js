@@ -45,6 +45,7 @@ const ModalPopOverVerRegistroDiario = (props) => {
                </div>
                <div className="inside-the-modal-diario">
                   <p className="paciente-of-modal">Paciente: {props.name}</p>
+                  <p className="paciente-of-modal">Fecha: {regdiario && Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(regdiario.date.toDate())}</p>
                   <table class="modal-diario-table">
                    { regdiario ?  <tbody>
                           <ItemUser  mood={regdiario.mood} type="regdiarioMood"/>

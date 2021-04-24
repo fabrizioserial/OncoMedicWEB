@@ -34,6 +34,11 @@ export const UsertabEstado=({type,idProp,user})=> {
     setAnchorEl(event.currentTarget);
   };
 
+  const handletotalClick  = (event,item) => {
+    setUniqReg(item)
+    setOpenModal(true);
+  }
+
   useEffect(()=>{
     console.log("modal a ",regunique)
   },[regunique])
@@ -83,7 +88,7 @@ export const UsertabEstado=({type,idProp,user})=> {
             {type=="profile" && (
               <tbody> 
                 {
-                regDiarios && regDiarios.map(item => <ItemUser type="estado" daily={item} handleClick={handleClick} />)
+                regDiarios && regDiarios.map(item => <ItemUser handletotalClick={handletotalClick} type="estado" daily={item} handleClick={handleClick} />)
                 }
                 <Menu className="menu-eliminate-1"
                     id={id}

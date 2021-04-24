@@ -12,7 +12,7 @@ import {getFirestore} from '../../firebase'
 
 
 
-export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sad,run,social,hid,hungry}) => {
+export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sad,run,social,hid,hungry,handletotalClick}) => {
     const [imgs,setImgs] = useState(image)
     const [descripcion,setDescripcion] = useState("")
     const [regdiario,setRegDiario] = useState()
@@ -51,9 +51,9 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
         if(mood == 10){
             return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faLaughBeam}  className="emote-size"/></th>
         }else if(mood>=7){
-            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSmile}  className="emote-size"/></th>
+            return <th  scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSmile}  className="emote-size"/></th>
         }else if(mood>=4){
-            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faMeh}  className="emote-size"/></th>
+            return <th  scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faMeh}  className="emote-size"/></th>
         }else if(mood>=2){
             return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faFrown}  className="emote-size"/></th>
         }else{
@@ -96,13 +96,13 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
 
             : 
         type=="estado"?
-            <tr className="estado-usertab-fila">
-                <td className="regdiario-fila-fecha">{regdiario && Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(regdiario.date.toDate())}</td>
+            <tr  className="estado-usertab-fila">
+                <td onClick={(e)=>handletotalClick(e,regdiario)} className="regdiario-fila-fecha">{regdiario && Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(regdiario.date.toDate())}</td>
                 {
-                    regdiario && returnEmoji(regdiario.mood)
+                    regdiario && <td onClick={(e)=>handletotalClick(e,regdiario)} >{returnEmoji(regdiario.mood) }</td>
                 }
                 {
-                    regdiario && <td>{returnEmote(regdiario.mood)}</td>
+                    regdiario && <td onClick={(e)=>handletotalClick(e,regdiario)} >{returnEmote(regdiario.mood)}</td>
                 }
 
                 <td><Button className="item-user-options" onClick={(e)=>handleClick(e,regdiario)}><img className="usertab_icon_image" src={optionIcon} /></Button></td>

@@ -34,11 +34,14 @@ const ModalPopOver = (props) => {
       }
 
       const verifyInformation = () =>{
-         if(name.length > 0 && email.length >0 && password.length > 0 && id.length >0){
+         const arroba = "@"
+         
+         if(name.length > 0 && email.length >0 && password.length > 0 && id.length >0 && email.includes(arroba)){
             pushToDatabase()}
             else{
                name.length <=0  && (setErrorName(true))
                email.length <=0 && (setErrorEmail(true))
+               !email.includes(arroba) && (setErrorEmail(true))
                password.length <=0 && (setErrorPass(true))
                id.length <=0 && (setErrorId(true))
             }
