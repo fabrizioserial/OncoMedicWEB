@@ -34,7 +34,11 @@
     margin-left: 5px;
     border-radius: 100px;
 }
-
+@media screen and (max-width: 900px) {
+    .complete-profile-user-image {
+        max-height: 20% !important;
+    }
+}
 
 .id-complete-profile {
     font-size: 12px;
@@ -75,6 +79,7 @@
     font-weight: 600;
     font-family: "Montserrat"!important;
     color: black;
+    width: 80%;
 }
 
 .name-complete-profile:disabled{

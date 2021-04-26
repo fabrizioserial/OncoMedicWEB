@@ -10,6 +10,11 @@
     flex-direction: column;
     justify-content: space-between;
 }
+@media screen and (max-width: 1150px) {
+    .estado-usertab-cont-background{
+        width: 90%;
+    }
+}
 .estado-table{
     width: 100%;
     border: none;

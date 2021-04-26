@@ -4,3 +4,8 @@
 .ultimos-sin-th-fecha{
     padding-left: 4%;
 }
+@media screen and (max-width: 1250px) {
+    .usertab-cont-info.second{
+        margin-top: 3%;
+    }
+}

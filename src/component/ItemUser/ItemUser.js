@@ -97,7 +97,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
             : 
         type=="estado"?
             <tr  className="estado-usertab-fila">
-                <td onClick={(e)=>handletotalClick(e,regdiario)} className="regdiario-fila-fecha">{regdiario && Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(regdiario.date.toDate())}</td>
+                <td onClick={(e)=>handletotalClick(e,regdiario)} className="regdiario-fila-fecha">{regdiario && Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(regdiario.date.toDate())}</td>
                 {
                     regdiario && <td onClick={(e)=>handletotalClick(e,regdiario)} >{returnEmoji(regdiario.mood) }</td>
                 }
@@ -110,7 +110,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
         type=="sintomas"?
             <tr className="sintomas-usertab-fila">
                 {  
-                   symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> 
+                   symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> 
                 }
                 <td className="sintomas-fila-fecha">{symptom.symptom}</td>
                 {<td className="sintomas-fila-grado"><MouseOverPopover name={symptom.grade} descrip={descripcion.label}/></td>}
@@ -154,7 +154,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
             </tr> : 
         type=="sympts"?
                 <tr className="usertab-fila">
-                    {symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
+                    {symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
                     <td onClick={(e)=>handleClick(e,symptom)}>{symptom.id}</td>
                     <td onClick={(e)=>handleClick(e,symptom)}>{symptom.symptom}</td>
                     <td onClick={(e)=>handleClick(e,symptom)} className="usertab-sympts-col-grado">{symptom.grade}</td>

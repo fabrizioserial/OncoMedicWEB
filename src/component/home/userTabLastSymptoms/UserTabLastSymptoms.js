@@ -47,7 +47,7 @@ export const UserTabLastSymptoms=({symptomsList})=> {
 
 
   return (
-          <div className="usertab-cont-info" >
+          <div className="usertab-cont-info second" >
             <table class="usertab-table">
                 <thead className="usertab-thead">
                     <tr>

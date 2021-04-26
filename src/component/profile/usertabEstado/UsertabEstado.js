@@ -107,6 +107,7 @@ export const UsertabEstado=({type,idProp,user})=> {
                     <MenuItem >ELIMINAR</MenuItem>
                 </Menu>
                 <ModalPopOverVerRegistroDiario 
+                    Date = {regunique.date.toDate()}
                     name={user.name}
                     id={regunique && regunique}
                     displayModal={openModal}

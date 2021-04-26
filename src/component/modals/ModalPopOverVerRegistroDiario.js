@@ -12,6 +12,7 @@ import { ItemUser } from './../ItemUser/ItemUser';
 const ModalPopOverVerRegistroDiario = (props) => {
       const i = [1,2,3,4,5,6]
       const [regdiario,setRegDiario] = useState()
+
      
      const divStyle = { 
           display: props.displayModal ? 'block' : 'none'
@@ -45,23 +46,31 @@ const ModalPopOverVerRegistroDiario = (props) => {
                </div>
                <div className="inside-the-modal-diario">
                   <p className="paciente-of-modal">Paciente: {props.name}</p>
-                  <p className="paciente-of-modal">Fecha: {regdiario && Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(regdiario.date.toDate())}</p>
+                  <p className="paciente-of-modal">Fecha: {Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(props.Date)}</p>
+                  { regdiario ?  
                   <table class="modal-diario-table">
-                   { regdiario ?  <tbody>
-                          <ItemUser  mood={regdiario.mood} type="regdiarioMood"/>
-                          <ItemUser  sad={regdiario.sad} type="regdiarioSad"/>
-                          <ItemUser  hungry={regdiario.hungry} type="regdiarioHungry"/>
-                          <ItemUser  run={regdiario.run} type="regdiarioRun"/>
-                          <ItemUser  hid={regdiario.hid} type="regdiarioHid"/>
-                          <ItemUser  social={regdiario.social} type="regdiarioSocial"/>
+                     <tbody>
+                           <ItemUser  mood={regdiario.mood} type="regdiarioMood"/>
+                           <ItemUser  sad={regdiario.sad} type="regdiarioSad"/>
+                           <ItemUser  hungry={regdiario.hungry} type="regdiarioHungry"/>
+                           <ItemUser  run={regdiario.run} type="regdiarioRun"/>
+                           <ItemUser  hid={regdiario.hid} type="regdiarioHid"/>
+                           <ItemUser  social={regdiario.social} type="regdiarioSocial"/>
 
-                    </tbody>:
-                     <h1 className="modaldiario-paciente-sin-registros">El paciente no ha hecho el registro diario hoy</h1>}
-                </table>
+                     </tbody>
+                 </table>:
+                    <div className="modal-error">
+                        <img className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                        <p>El usuario no ha hecho su registro diario todavia</p>
+                     </div>
+                  }
                </div> 
          </div>
       </div>
      );
+}
+ModalPopOverVerRegistroDiario.defaultProps = {
+   Date: new Date()
 }
 export default ModalPopOverVerRegistroDiario;
 

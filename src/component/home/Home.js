@@ -154,7 +154,7 @@ const Home = ({medicData}) =>{
                             closeModal={selectModal}/>
                     <div className="home-cont-usertabs">
                         {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
-                        {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabLastSymptoms symptomsList={symptomsList2}/>}
+                        {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabLastSymptoms className="usersympts-second" symptomsList={symptomsList2}/>}
                         
                     </div>
                     <MySnackbar
