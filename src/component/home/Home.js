@@ -134,7 +134,7 @@ const Home = ({medicData}) =>{
     }
 
     useEffect(()=>{
-        console.log("se actualizo",symptomsList2)
+        console.log("se actualizoo",symptomsList2)
     },[symptomsList2])
 
     useEffect(()=>{
