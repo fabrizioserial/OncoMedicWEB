@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {getFirestore} from '../../firebase'
 import { ButtonRefresh } from './ButtonRefresh'
 import { MySnackbar } from '../mySnackBar/MySnackbar';
-
+import { connect } from 'react-redux'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,8 +19,9 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export const UserTabAllUsers = () => {
+const UserTabAllUsers = ({medicData}) => {
 
+    const [medic,setMedic] = useState(medicData)
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [openModal, setOpenModal] = React.useState(false);
     const [userList,setUserList] = useState([])
@@ -69,22 +70,23 @@ export const UserTabAllUsers = () => {
         title === "" ? handleRefresh() :
         title = title.toUpperCase()
         setUserList(userList.filter((item=>item.id.toUpperCase().includes(title)||
-                                    item.name.toUpperCase().includes(title))))
+                                    item.name.toUpperCase().includes(title)||
+                                    item.cancer.toUpperCase().includes(title))))
     }
 
     const handleRefresh=()=>{
         const db = getFirestore()
         const itemCollection = db.collection("users")
-
-        const usersActive = itemCollection.where("status","!=","Pendiente")
+        var usersActive = itemCollection.where("status","==","Activo").where("medic","==",medicData.id)
         usersActive.get().then((querySnapshot)=>{
             let activeuser = querySnapshot.docs.map(doc =>{
-                return(
-                    {
-                        id:doc.id,...doc.data()
-                    }
-                )
-            })
+                    return(
+                        {
+                            id:doc.id,...doc.data()
+                        }
+                    )
+                }
+            )
             setUserList(activeuser)
         })
 
@@ -123,12 +125,10 @@ export const UserTabAllUsers = () => {
     const id = open ? 'simple-popover' : undefined;
 
     useEffect(()=>{
+        console.log("Medico:", medicData.id)
         console.log("DB READING")
-        
-         const db = getFirestore()
-        const itemCollection = db.collection("users")
-
-        const usersActive = itemCollection.where("status","!=","Pendiente")
+        const db = getFirestore()
+        const usersActive = db.collection('users').where("status","==","Activo").where("medic","==",medicData.id)
         usersActive.get().then((querySnapshot)=>{
             let activeuser = querySnapshot.docs.map(doc =>{
                 return(
@@ -155,7 +155,12 @@ export const UserTabAllUsers = () => {
             console.log(avatars)
         })
 
-    },[])
+    },[medicData])
+
+    useEffect(()=>{
+        console.log("medico es ",medic)
+        setMedic(medicData)
+      },[medicData])
 
     return(
         <div className="userall-cont-background">
@@ -223,3 +228,12 @@ export const UserTabAllUsers = () => {
         </div>
     )
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        medicData: state.user_data
+    }
+}
+
+export default connect(mapStateToProps)(UserTabAllUsers)
