@@ -7,6 +7,8 @@ import {getFirestore} from '../../firebase'
 import { connect } from 'react-redux'
 import { ButtonRefresh } from '../seeAllUsers/ButtonRefresh'
 import { SearchTab } from '../seeAllUsers/searchTab/SearchTab';
+import { MySnackbar } from '../mySnackBar/MySnackbar';
+
 
 
 const PatientSymptoms = ({medicData}) =>{
@@ -16,9 +18,11 @@ const PatientSymptoms = ({medicData}) =>{
     const [symptomsList,setSymptomsList] = useState([])
     const [symptomsList2,setSymptomsList2] = useState([])
     const [symptomsOrigin,setSymptomsListOrigin] = useState([])
-
     const [images,setImageList] =useState([])
     const [sympInfo,setSympInfo] = useState([])
+    const [openSnackBar,setOpenSnackBar] = useState(false)
+    const [severity,setSeverity] = useState("")
+    const [message,setMessage] = useState("")
 
     useEffect(()=>{
         
@@ -127,7 +131,7 @@ const PatientSymptoms = ({medicData}) =>{
         cleanSym()
     },[symptomsList,userList])
 
-
+{/*
     const handleSearch = (e,title) => {
         title === "" ? handleRefresh() :
         title = title.toUpperCase()
@@ -135,6 +139,38 @@ const PatientSymptoms = ({medicData}) =>{
                                     item.symptom.toUpperCase().includes(title) ||
                                     item.symptom.toUpperCase().includes(title) || filterDate(item.date,title,item)
                                     )))
+}*/}
+
+    const handleWarnBar = () => {
+        setSeverity("error")
+        setMessage("Por favor seleccione una categoria")
+        setOpenSnackBar(!openSnackBar)
+    }
+    const handleCloseSnackBar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenSnackBar(false);
+    };
+
+    function handleSearch(e,title,selected,date2){
+        title === "" && handleRefresh()
+        switch (selected){
+            case "FECHA":
+                return setSymptomsList2(symptomsList2.filter((item=>
+                    (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(item.date.toDate())) >= (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(title))
+                    && (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(item.date.toDate())) <= (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(date2)))));
+            case "PACIENTE":
+                console.log(title)
+                return setSymptomsList2(symptomsList2.filter((item=>item.name.toUpperCase().includes(title.toUpperCase()))));   
+            case "SINTOMA":
+                return setSymptomsList2(symptomsList2.filter((item=>item.symptom.toUpperCase().includes(title.toUpperCase()))));  
+            case "GRADO":
+                return setSymptomsList2(symptomsList2.filter((item=>item.grade.toUpperCase().includes(title.toUpperCase()))));  
+            default:
+                return handleWarnBar() 
+        }
     }
 
     const filterDate = (date,title,item) =>{
@@ -188,7 +224,7 @@ const PatientSymptoms = ({medicData}) =>{
             </div>
 
             <div className="userall-cont-cont">
-                <SearchTab handleClick={handleSearch}/>
+                <SearchTab categories={["FECHA","PACIENTE","SINTOMA","GRADO"]} handleClick={handleSearch}/>
                 <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
                         <thead className="userall-thead-sympts">
@@ -210,6 +246,12 @@ const PatientSymptoms = ({medicData}) =>{
                     </table>
                     {userList&& <button className="userall-btn-load-more">Cargar mas</button>}
                 </div>
+                <MySnackbar
+                        severity={severity}
+                        message={message}
+                        openSnackBar={openSnackBar}
+                        handleCloseSnackBar={handleCloseSnackBar}
+                />
             </div>
         </div>
     )

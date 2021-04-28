@@ -28,6 +28,8 @@ const UserTabAllUsers = ({medicData}) => {
     const [images,setImageList] =useState([])
     const [user, setUser] = React.useState("");
     const [openSnackBar,setOpenSnackBar] = useState(false)
+    const [severity,setSeverity] = useState("")
+    const [message,setMessage] = useState("")
 
     const history = useHistory();
     const switchToProfle = () => history.push(`/profile/${user.id}`);
@@ -53,6 +55,8 @@ const UserTabAllUsers = ({medicData}) => {
     // Snack bar
 
     const handleOpensnackBar = () =>{
+        setSeverity("success")
+        setMessage("Usuario eliminado con exito!")
         setOpenSnackBar(!openSnackBar)
     }
 
@@ -64,14 +68,27 @@ const UserTabAllUsers = ({medicData}) => {
         setOpenSnackBar(false);
     };
 
+    const handleWarnBar = () => {
+        setSeverity("error")
+        setMessage("Por favor seleccione una categoria")
+        setOpenSnackBar(!openSnackBar)
+    }
 
 
-    const handleSearch = (e,title) => {
+    const handleSearch = (e,title,selected) => {
         title === "" ? handleRefresh() :
         title = title.toUpperCase()
-        setUserList(userList.filter((item=>item.id.toUpperCase().includes(title)||
-                                    item.name.toUpperCase().includes(title)||
-                                    item.cancer.toUpperCase().includes(title))))
+        switch (selected){
+            case "N PACIENTE":
+                {console.log(userList)}
+                return setUserList(userList.filter((item=>item.id.toUpperCase().includes(title))));
+            case "NOMBRE":
+                return setUserList(userList.filter((item=>item.name.toUpperCase().includes(title))));   
+            case "TIPO DE CANCER":
+                return setUserList(userList.filter((item=>item.cancer.toUpperCase().includes(title))));  
+            default:
+                return handleWarnBar() 
+        }
     }
 
     const handleRefresh=()=>{
@@ -171,7 +188,7 @@ const UserTabAllUsers = ({medicData}) => {
             </div>
 
             <div className="userall-cont-cont">
-                <SearchTab handleClick={handleSearch}/>
+                <SearchTab categories={["N PACIENTE","NOMBRE","TIPO DE CANCER"]} handleClick={handleSearch}/>
                 <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
                         <thead className="userall-thead-allUsers">
@@ -219,8 +236,8 @@ const UserTabAllUsers = ({medicData}) => {
                     {userList&& <button className="userall-btn-load-more">Cargar mas</button>}
                 </div>
                 <MySnackbar
-                        severity="success"
-                        message="Usuario eliminado con exito!"
+                        severity={severity}
+                        message={message}
                         openSnackBar={openSnackBar}
                         handleCloseSnackBar={handleCloseSnackBar}
                 />

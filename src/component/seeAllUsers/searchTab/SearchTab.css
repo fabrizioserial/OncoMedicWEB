@@ -1,5 +1,8 @@
+.searchtab-back{
+    display: flex;
+}
 .searchtab-cont-cont{
-    width: 100%;
+    cursor: pointer;
     display: flex;
     align-items: center;
     height: 100%;
@@ -8,6 +11,22 @@
     border-style: solid;
     border-color: #dbdbdb;
     margin-bottom: 20px;
+}
+.searchtab-cont-cont.one{
+    width: 90%;
+}
+.searchtab-cont-cont.two{
+    width: 100%;
+    color: gray;
+    font: 400 13.3333px Arial;
+    padding-left: 1%;
+    height: 35px;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    margin-left: 1%;
+    width: 9%;
 }
 .searchtab-input{
     width: auto;
@@ -22,7 +41,7 @@
     outline: none;
 }
 .searchtab-input-icon{
-    flex: 0.1;
+    margin-right: 0.5vw;
 }
 .searchtab-btn-icon{
     background-color: transparent;
@@ -30,4 +49,12 @@
     height: 100%;
     cursor: pointer;
     width: 40px;
+}
+.searchtab-date-input{
+    padding-left: 1%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    color: gray;
+    font: 400 13.3333px Arial;
 }

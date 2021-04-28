@@ -11,47 +11,48 @@ import { Component } from 'react';
 import store from './reduxStore/store';
 import {Provider} from 'react-redux'
 import PatientSymptoms from './component/patientSymptoms/PatientSymptoms';
-
-
-
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 const App = () => {
   console.log(store.getState())
   return (
     <Provider store={store}>
-      <div className="App">
-        <HashRouter>
-          <Switch>
-            <Route exact path="/">
-              <Login/>
-            </Route> 
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <div className="App">
+          <HashRouter>
+            <Switch>
+              <Route exact path="/">
+                <Login/>
+              </Route> 
 
-            <HashRouter>
+              <HashRouter>
 
-              <TimeStatus/>
+                <TimeStatus/>
 
-              <Route exact path="/home">
-                <Home/>
-              </Route>
+                <Route exact path="/home">
+                  <Home/>
+                </Route>
 
-              <Route exact path="/seeAllUsers">
-                <UserTabAllUsers/>
-              </Route>
+                <Route exact path="/seeAllUsers">
+                  <UserTabAllUsers/>
+                </Route>
 
-              <Route exact path="/seeSymptoms">
-                <PatientSymptoms/>
-              </Route>
+                <Route exact path="/seeSymptoms">
+                  <PatientSymptoms/>
+                </Route>
 
-              <Route exact path="/profile/:id">
-                <CompleteProfile/>
-              </Route>
+                <Route exact path="/profile/:id">
+                  <CompleteProfile/>
+                </Route>
 
 
-            </HashRouter>
-          </Switch>
-        </HashRouter>
-        
-      </div>
+              </HashRouter>
+            </Switch>
+          </HashRouter>
+          
+        </div>
+      </MuiPickersUtilsProvider>
     </Provider>
   );
 }
