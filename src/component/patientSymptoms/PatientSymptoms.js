@@ -132,6 +132,7 @@ const PatientSymptoms = ({medicData}) =>{
         title === "" ? handleRefresh() :
         title = title.toUpperCase()
         setSymptomsList2(symptomsOrigin.filter((item=>item.name.toUpperCase().includes(title)||
+                                    item.symptom.toUpperCase().includes(title) ||
                                     item.symptom.toUpperCase().includes(title) || filterDate(item.date,title,item)
                                     )))
     }

@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState,useLayoutEffect} from 'react'
 import '../home/Home.css'
 import { ButtonHome } from './buttonsHome/ButtonHome'
 import ModalPopOver from '../modals/ModalPopOver'
@@ -10,9 +10,7 @@ import { connect } from 'react-redux'
 import { UserTabLastSymptoms } from './userTabLastSymptoms/UserTabLastSymptoms'
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-
-
+import sorry from '../../img/sorry-removebg-preview.png'
 
 const Home = ({medicData}) =>{
 
@@ -25,6 +23,21 @@ const Home = ({medicData}) =>{
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [textSnack,setTextSnack] = useState("")
     const [loading,setLoad] = useState(false)
+    const [width, height] = useWindowSize();
+
+    function useWindowSize() {
+        const [size, setSize] = useState([0, 0]);
+        useLayoutEffect(() => {
+            function updateSize() {
+            setSize([window.innerWidth, window.innerHeight]);
+            }
+            window.addEventListener('resize', updateSize);
+            updateSize();
+            return () => window.removeEventListener('resize', updateSize);
+        }, []);
+        return size;
+    }
+
 
     const selectModal = (info) => {
        setModal(!modal)
@@ -88,7 +101,7 @@ const Home = ({medicData}) =>{
     },[userList,images,medic])
 
     useEffect(()=>{
-      console.log("medico es ",medic)
+      console.log("medico home es ",medic)
       setMedic(medicData)
     },[medicData])
 
@@ -133,12 +146,14 @@ const Home = ({medicData}) =>{
     } 
 
 
-    return(
-            <div className="home-cont-background">
+    return( 
+        <div className="home-cont-background">
+            {width>910 ?
+            <>
                 {(loading) && <div className="home-circ-progress">
                     <div className="login-loading"><CircularProgress  color="#9357F7"/></div>
                 </div>
-               }
+                }
                 <TabHey 
                     handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")}  
                     handleAc={()=>handleOpensnackBar("Usuario creado con exito!")}  
@@ -163,9 +178,15 @@ const Home = ({medicData}) =>{
                         openSnackBar={openSnackBar}
                         handleCloseSnackBar={handleCloseSnackBar}
                     />
-            </div>
-        )
-    
+                </>
+                :   
+                <>
+               <h1>Estamos trabajando para usar la web en celulares, por ahora solo se puede usar desde la computadora!</h1>
+               <img src={sorry}/>
+               </>
+            }
+        </div>
+    )
 } 
 
 const mapStateToProps = (state) => {
