@@ -10,17 +10,14 @@ const ModalPopOver = (props) => {
       const [name,setName] = useState("")
       const [email,setEmail] = useState("")
       const [password,setPassword] = useState("")
-      const [id,setID] = useState("")
       const [disabled,setDisabled] = useState(false)
       const [errorEmail,setErrorEmail] = useState(false)
       const [errorName,setErrorName] = useState(false)
       const [errorPass,setErrorPass] = useState(false)
-      const [errorId,setErrorId] = useState(false)
      
       const resetValues=()=>{
          setName("")
          setPassword("")
-         setID("")
          setEmail("")
          resetErrors()
       }
@@ -29,28 +26,27 @@ const ModalPopOver = (props) => {
       const resetErrors=()=>{
          setErrorName(false)
          setErrorPass(false)
-         setErrorId(false)
          setErrorEmail(false)
       }
 
       const verifyInformation = () =>{
          const arroba = "@"
          
-         if(name.length > 0 && email.length >0 && password.length > 0 && id.length >0 && email.includes(arroba)){
-            pushToDatabase()}
-            else{
-               name.length <=0  && (setErrorName(true))
-               email.length <=0 && (setErrorEmail(true))
-               !email.includes(arroba) && (setErrorEmail(true))
-               password.length <=0 && (setErrorPass(true))
-               id.length <=0 && (setErrorId(true))
-            }
+         if(name.length > 0 && email.length >0 && password.length > 0  && email.includes(arroba)){
+            pushToDatabase()
+         }
+         else{
+            name.length <=0  && (setErrorName(true))
+            email.length <=0 && (setErrorEmail(true))
+            !email.includes(arroba) && (setErrorEmail(true))
+            password.length <=0 && (setErrorPass(true))
+         }
       } 
 
       const pushToDatabase = () =>{
          setDisabled("disabled")
          const db = getFirestore()
-         db.collection("medic").doc(id).set({
+         db.collection("medic").add({
             name:name,
             email:email,
             password:password
@@ -91,7 +87,7 @@ const ModalPopOver = (props) => {
                 <p>Nombre y apellido</p>
             </div> 
             <div className="modal-add-input-cont">
-            <input className={errorId ? "numero-del-paciente error" :"numero-del-paciente"}
+            <input className={"numero-del-paciente error"}
                   value={name}
                   id="nameDoctor"
                   placeholder="Introduzca nombre y apellido"
@@ -100,19 +96,6 @@ const ModalPopOver = (props) => {
                   variant="outlined"/>
             </div>
             <p className="modal-add-input-cont-error">{errorName ? "Introduzca un email valido":""}</p>
-            <div className="add-inside-the-modal">
-                <p>ID</p>
-            </div> 
-            <div className="modal-add-input-cont">
-            <input className={errorId ? "numero-del-paciente error" :"numero-del-paciente"}
-                  value={id}
-                  id="idDoctor"
-                  placeholder="Introduzca ID del medico"
-                  onChange={e => setID(e.target.value)}
-                  disabled={disabled}
-                  variant="outlined"/>
-            </div>
-            <p className="modal-add-input-cont-error">{errorId ? "Introduzca un email valido":""}</p>
             <div className="add-inside-the-modal">
                 <p>Email</p>
             </div> 
