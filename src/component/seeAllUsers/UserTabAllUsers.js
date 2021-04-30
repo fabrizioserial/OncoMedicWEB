@@ -65,13 +65,13 @@ export const UserTabAllUsers = () => {
 
 
 
-    const handleSearch = (e,title) => {
+const handleSearch = (e,title) => {
         title === "" ? handleRefresh() :
         title = title.toUpperCase()
         setUserList(userList.filter((item=>item.id.toUpperCase().includes(title)||
-                                    item.name.toUpperCase().includes(title))))
+                                    item.name.toUpperCase().includes(title)||
+                                    item.cancer.toUpperCase().includes(title))))
     }
-
     const handleRefresh=()=>{
         const db = getFirestore()
         const itemCollection = db.collection("users")

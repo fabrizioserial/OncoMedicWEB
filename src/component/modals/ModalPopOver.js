@@ -101,19 +101,6 @@ const ModalPopOver = (props) => {
             </div>
             <p className="modal-add-input-cont-error">{errorName ? "Introduzca un email valido":""}</p>
             <div className="add-inside-the-modal">
-                <p>ID</p>
-            </div> 
-            <div className="modal-add-input-cont">
-            <input className={errorId ? "numero-del-paciente error" :"numero-del-paciente"}
-                  value={id}
-                  id="idDoctor"
-                  placeholder="Introduzca ID del medico"
-                  onChange={e => setID(e.target.value)}
-                  disabled={disabled}
-                  variant="outlined"/>
-            </div>
-            <p className="modal-add-input-cont-error">{errorId ? "Introduzca un email valido":""}</p>
-            <div className="add-inside-the-modal">
                 <p>Email</p>
             </div> 
             <div className="modal-add-input-cont">
