@@ -40,7 +40,7 @@ export const SearchTab = ({handleClick,categories}) => {
         <div className="searchtab-back">
         <div className="searchtab-cont-cont one">
             {selected != "FECHA" ?
-            <>
+            <React.Fragment>
             <input
                 onKeyPress={(e) => e.key === 'Enter' && handleClick(e,title,selected,date2)}   
                 placeholder="Buscar por Nombre, Apellido, DNI, ID paciente" 
@@ -48,7 +48,7 @@ export const SearchTab = ({handleClick,categories}) => {
                 onChange={event => setTitle(event.target.value)}
                 value={title}
                 />
-            </>:
+            </React.Fragment>:
                 <div className="searchtab-date-input">
                     <a >Desde:</a>
                     <MyDatePicker handleDate={handleDate}/>
