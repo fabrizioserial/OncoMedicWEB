@@ -20,4 +20,16 @@
     align-items: center;
     margin-bottom: 25px;
     font-family: 'Montserrat', sans-serif;
+
 }
+.button-refresh-icon{
+    margin-right: 5px;
+    margin-left: 5px;
+    transform: rotate(0deg);
+    transition: transform 0.5s linear;
+}
+.button-refresh-icon.open{
+    transform: rotate(360deg);
+    transition: transform 0.5s linear;
+  }
+  
