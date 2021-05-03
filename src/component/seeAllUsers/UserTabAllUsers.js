@@ -75,11 +75,7 @@ const UserTabAllUsers = ({medicData}) => {
     }
 
 
-<<<<<<< HEAD
-const handleSearch = (e,title) => {
-=======
     const handleSearch = (e,title,selected) => {
->>>>>>> filter-by-type
         title === "" ? handleRefresh() :
         title = title.toUpperCase()
         switch (selected){
