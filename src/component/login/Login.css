@@ -34,7 +34,7 @@
 }
 .text-login-punto{
     font-weight: 600;
-    color: #9357F7;
+    color: var(--primary);
     font-size: 40px;
     text-align: start;
 }
@@ -91,7 +91,7 @@
     width: 300px;
     height: 35px;
     border-radius: 4px;
-    background-color: #9357F7;
+    background-color: var(--primary);
     color: white;
     border-style: none;
     cursor: pointer;

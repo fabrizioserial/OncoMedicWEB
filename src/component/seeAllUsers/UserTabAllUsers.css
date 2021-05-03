@@ -50,7 +50,7 @@
     padding-right: 15px;
     padding-left: 15px;
     padding-bottom: 20px;
-    border-right: 30px solid #9357F7;
+    border-right: 30px solid var(--primary);
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     background-color: #F4F4F4;
@@ -62,7 +62,7 @@
     border-spacing: 0px;
 }
 .userall-thead{
-    color: #9357F7;
+    color: var(--primary);
     margin-bottom: 10px;
 }
 

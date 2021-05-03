@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-import './PatientSymptoms.css'
+import './SeeAllDiaryRegs.css'
 import { ButtonGoBack } from '../seeAllUsers/ButtonGoBack'
 import { ItemUser } from '../ItemUser/ItemUser';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,7 +11,7 @@ import { MySnackbar } from '../mySnackBar/MySnackbar';
 
 
 
-const PatientSymptoms = ({medicData}) =>{
+const SeeAllDiaryRegs = ({medicData}) =>{
 
     const [medic,setMedic] = useState(medicData)
     const [userList,setUserList] = useState([])
@@ -38,39 +38,6 @@ const PatientSymptoms = ({medicData}) =>{
                     }
                 )
             setUserList(userlista)
-        })
-
-        const itemCollectionSymp = db.collection("mainSymptoms")
-        itemCollectionSymp.onSnapshot((querySnapshot) => {
-            
-            let sympList = querySnapshot.docs.map(doc => {
-                    return(
-                        {id:doc.id,...doc.data()}
-                        )
-                    }
-                )
-            setSympInfo(sympList)
-        })
-
-        const itemCollectionAvatar = db.collection("avatars")
-        
-        itemCollectionAvatar.get().then((querySnapshot) => {
-            
-            let avatars = querySnapshot.docs.map(doc => {
-                    return(
-                        {...doc.data()}
-                        )
-                    }
-                )
-            setImageList(avatars)
-            console.log(avatars)
-        })
-
-        const itemCollectionSymptoms = db.collection("symptoms")
-
-        itemCollectionSymptoms.onSnapshot((querySnapshot) => {
-            let symptomslista = querySnapshot.docs.map(doc => doc.data())
-            setSymptomsList(symptomslista)
         })
     },[medicData])
 
@@ -263,4 +230,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(PatientSymptoms)
+export default connect(mapStateToProps)(SeeAllDiaryRegs)

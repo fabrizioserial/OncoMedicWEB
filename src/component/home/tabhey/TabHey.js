@@ -2,11 +2,9 @@ import React from 'react'
 import '../tabhey/TabHey.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell } from '@fortawesome/free-solid-svg-icons'
-import { Tuerquita } from '../../tuerquita/Tuerquita.js'
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import { CustomMenuItem } from '../../customMenuItem/CustomMenuItem'
+import { OptionsMenu } from '../../optionsMenu/OptionsMenu';
 
 
 
@@ -34,7 +32,7 @@ export const TabHey = ({name,userlist,handleEl,handleAc}) => {
                 <div className="tabhey-cont-options">
 
                     <div >
-                       <Tuerquita style="home"/>
+                       <OptionsMenu style="home"/>
                     </div>
                     
                     <button aria-describedby={id} className="tabhey-btn-options" onClick={handleClick}>

@@ -1,15 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import './ModalPopOverVerRegistroDiario.css'
+import './ModalPopOverSeeDiaryReg.css'
 import 'fontsource-roboto';
-import { UserTabHome } from '../home/usertabhome/UserTabHome';
-import { UsertabEstado } from '../profile/usertabEstado/UsertabEstado';
-import { Tuerquita } from '../tuerquita/Tuerquita';
-import { ItemUser } from './../ItemUser/ItemUser';
+import { ItemUser } from '../ItemUser/ItemUser';
 
 
 
 
-const ModalPopOverVerRegistroDiario = (props) => {
+const ModalPopOverSeeDiaryReg = (props) => {
       const i = [1,2,3,4,5,6]
       const [regdiario,setRegDiario] = useState()
 
@@ -69,8 +66,8 @@ const ModalPopOverVerRegistroDiario = (props) => {
       </div>
      );
 }
-ModalPopOverVerRegistroDiario.defaultProps = {
+ModalPopOverSeeDiaryReg.defaultProps = {
    Date: new Date()
 }
-export default ModalPopOverVerRegistroDiario;
+export default ModalPopOverSeeDiaryReg;
 

@@ -13,6 +13,8 @@ import {Provider} from 'react-redux'
 import PatientSymptoms from './component/patientSymptoms/PatientSymptoms';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import seeAllDiaryRegs from './component/seeAllDiaryRegs/SeeAllDiaryRegs';
+import SeeAllDiaryRegs from './component/seeAllDiaryRegs/SeeAllDiaryRegs';
 
 const App = () => {
   console.log(store.getState())
@@ -44,6 +46,10 @@ const App = () => {
 
                 <Route exact path="/profile/:id">
                   <CompleteProfile/>
+                </Route>
+
+                <Route exact path="/seeAllDiaryRegs">
+                  <SeeAllDiaryRegs/>
                 </Route>
 
 

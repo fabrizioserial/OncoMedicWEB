@@ -3,13 +3,13 @@ import {Menu,MenuItem} from '@material-ui/core'
 import { Link,} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
-import '../tuerquita/Tuerquita.css'
+import '../optionsMenu/OptionsMenu.css'
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
 import { UserTabAllUsers } from '../seeAllUsers/UserTabAllUsers'
 import {getFirestore} from '../../firebase'
 
 
-export const Tuerquita = (props) => {
+export const OptionsMenu = (props) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [openModal, setOpenModal] = React.useState(false);
 

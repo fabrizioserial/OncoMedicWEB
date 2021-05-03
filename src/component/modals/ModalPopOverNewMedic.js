@@ -1,12 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import './ModalPopOver.css'
+import './ModalPopOverNewMedic.css'
 import 'fontsource-roboto';
 import {getFirestore} from '../../firebase'
 import { ToastProvider,useToasts } from 'react-toast-notifications'
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
-const ModalPopOver = (props) => {
+const ModalPopOverNewMedic = (props) => {
       const [name,setName] = useState("")
       const [email,setEmail] = useState("")
       const [password,setPassword] = useState("")
@@ -146,4 +146,4 @@ const ModalPopOver = (props) => {
       </div>
      );
 }
-export default ModalPopOver;
+export default ModalPopOverNewMedic;

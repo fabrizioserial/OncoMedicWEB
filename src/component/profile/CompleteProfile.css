@@ -28,7 +28,7 @@
 
     height: 100%;
     width: 47%;
-    border-right: 2em solid #9357F7;
+    border-right: 2em solid var(--primary);
     border-right-style: inset;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -45,7 +45,7 @@
     width: 47%;
     text-align: center;
     background-color: #F4F4F4;
-    border-right: 2em solid #9357F7;
+    border-right: 2em solid var(--primary);
     border-right-style: inset;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;

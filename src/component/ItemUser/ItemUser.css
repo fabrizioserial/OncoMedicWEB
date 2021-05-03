@@ -118,8 +118,8 @@
 .estado-usertab-fila::after{
     margin-top: 10px;
 }
-/* Sintomas */
-.sintomas-usertab-fila{
+/* symptoms */
+.symptoms-usertab-fila{
     cursor: pointer;
     background-color: #e6e6e6;
     border-radius: 5px;
@@ -127,14 +127,14 @@
     margin: 5px;
     padding-top: 10px;
 }
-.sintomas-fila-fecha{
+.symptoms-fila-fecha{
     padding-left: 4%;
 }
 .regdiario-fila-fecha{
     padding-left: 4%;
     width: 105px;
 }
-.sintomas-fila-grado{
+.symptoms-fila-grado{
     height: inherit;
     justify-content: center;
     align-items: center;

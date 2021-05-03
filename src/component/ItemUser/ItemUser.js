@@ -16,7 +16,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
     const [imgs,setImgs] = useState(image)
     const [descripcion,setDescripcion] = useState("")
     const [regdiario,setRegDiario] = useState()
-    const [sintomasInfo,setSintomasInfo] = useState()
+    const [symptomsInfo,setsymptomsInfo] = useState()
 
     useEffect(() => {
         setImgs(image)
@@ -24,7 +24,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
 
     useEffect(()=>{
         if(desc && symptom){
-            const listOfGrades = desc.gravity.find(element => element.value == symptom.grade)
+            const listOfGrades = desc.gravity.find(element => element.value===symptom.grade)
             setDescripcion(listOfGrades)
         }
     },[desc])
@@ -48,7 +48,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
     const switchToProfle = () => history.push(`/profile/${user.id}`);
 
     const returnEmoji = (mood)=>{
-        if(mood == 10){
+        if(mood===10){
             return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faLaughBeam}  className="emote-size"/></th>
         }else if(mood>=7){
             return <th  scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSmile}  className="emote-size"/></th>
@@ -61,7 +61,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
         }
     }
     const returnEmote = (mood)=>{
-        if(mood == 10){
+        if(mood===10){
             return "Feliz"
         }else if(mood>=7){
             return "Bien"
@@ -107,13 +107,13 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
 
                 <td><Button className="item-user-options" onClick={(e)=>handleClick(e,regdiario)}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
             </tr>:
-        type=="sintomas"?
-            <tr className="sintomas-usertab-fila">
+        type=="symptoms"?
+            <tr className="symptoms-usertab-fila">
                 {  
-                   symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> 
+                   symptom.date &&  <td className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> 
                 }
-                <td className="sintomas-fila-fecha">{symptom.symptom}</td>
-                {<td className="sintomas-fila-grado"><MouseOverPopover name={symptom.grade} descrip={descripcion.label}/></td>}
+                <td className="symptoms-fila-fecha">{symptom.symptom}</td>
+                {<td className="symptoms-fila-grado"><MouseOverPopover name={symptom.grade} descrip={descripcion.label}/></td>}
             </tr>:
         type=="regdiarioMood"?
             <tr className="item-user-fila-regdiario">
@@ -154,7 +154,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
             </tr> : 
         type=="sympts"?
                 <tr className="usertab-fila">
-                    {symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
+                    {symptom.date &&  <td className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
                     <td onClick={(e)=>handleClick(e,symptom)}>{symptom.id}</td>
                     <td onClick={(e)=>handleClick(e,symptom)}>{symptom.symptom}</td>
                     <td onClick={(e)=>handleClick(e,symptom)} className="usertab-sympts-col-grado">{symptom.grade}</td>

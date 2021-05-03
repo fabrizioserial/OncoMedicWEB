@@ -30,8 +30,8 @@ const Login = ({setMedicUserAction}) => {
 
             itemCollection.get().then((querySnapshot)=>{
                 let usermedic = querySnapshot.docs.map(doc => {
-                    if(doc.data().name == name){
-                        if(doc.data().password == password){
+                    if(doc.data().name===name){
+                        if(doc.data().password===password){
                             console.log(doc.id,doc.data().name,doc.data().email)
                             setMedicUserAction({id:doc.id,name:doc.data().name,email:doc.data().email,admin:doc.data().admin})
                             handleClick()
@@ -56,7 +56,7 @@ const Login = ({setMedicUserAction}) => {
     }
 
     const setError = (type) =>{
-        type == "name" ? setEName(true):setEPass(true)
+        type==="name" ? setEName(true):setEPass(true)
     }
 
     const pushToDatabase = () =>{
@@ -123,7 +123,7 @@ const Login = ({setMedicUserAction}) => {
         <div className="cont-login-container">
             {
                 loading && <div className="login-cont-loading">
-                    <div className="login-loading"><CircularProgress color="#9357F7"/></div>
+                    <div className="login-loading"><CircularProgress color="var(--primary)"/></div>
                 </div>
             }
             <div className="cont-login-backlogin">

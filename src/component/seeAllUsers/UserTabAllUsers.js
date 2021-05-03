@@ -220,7 +220,7 @@ const UserTabAllUsers = ({medicData}) => {
                                 }}>
                                 
                                 <MenuItem onClick={()=>switchToProfle()}>VER PERFIL</MenuItem>
-                                <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
+                                <MenuItem onClick={handleClose}>VER symptoms</MenuItem>
                                 <MenuItem onClick={handleClose}>VER REGISTRO DIARIO</MenuItem>
                                 <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
                             </Menu>
