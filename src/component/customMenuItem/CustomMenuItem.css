@@ -5,8 +5,11 @@
     padding-bottom: 0% !important;
     margin-right: 0% !important;
 }
+.custom-menu-finished{
+    padding-left: 5%;
+}
 .custom-menu-td1{
-    width: 210px;
+    width: 360px;
 }
 .custom-menu-id{
     margin-top: 0;
@@ -20,13 +23,8 @@
 }
 .custom-menu-td2{
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.custom-menu-iconCheck{
-    margin-right: 20px;
-}
-.custom-menu-iconCheck:hover{
-    color: green;
-}
-.custom-menu-iconTimes:hover{
-    color: red;
-}
+

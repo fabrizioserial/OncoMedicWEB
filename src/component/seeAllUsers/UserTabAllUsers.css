@@ -31,13 +31,21 @@
     padding-top: 30px;
     padding-bottom: 50px;
 }
+.userall-head{
+    flex:2;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+}
+.refresh-btn{
+    align-self: flex-end;
+}
 .userall-cont-cont{
     width: 100%;
     max-width: 100%;
 }
 .userall-cont-info-allUsers{
     height: auto;
-    min-height: 300px;
     width: initial;
     padding-right: 15px;
     padding-left: 15px;

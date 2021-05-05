@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import '../tuerquita/Tuerquita.css'
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
+import { UserTabAllUsers } from '../seeAllUsers/UserTabAllUsers'
+import {getFirestore} from '../../firebase'
 
 
 export const Tuerquita = (props) => {
@@ -32,6 +34,18 @@ export const Tuerquita = (props) => {
         setAnchorEl(null);
     }
 
+    // ELiminar
+
+    const handleEliminate = () =>{
+        const db = getFirestore()
+        db.collection("users").doc(`${props.id}`).delete().then(() => {
+        console.log("Document successfully deleted!");
+        })
+        setOpenModal(false);
+        props.handleEliminado()
+    }
+
+
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
@@ -54,20 +68,22 @@ export const Tuerquita = (props) => {
                             horizontal: 'right',
                         }}>
                         
-                        {props.style=="home"? (
+                        {props.style==="home"? (
                             <Link  className="tuerquita-link-to-home" to="/">
                                 <MenuItem >Log out</MenuItem>
                             </Link>
                         ) : (
                             <div>
                                     <MenuItem onClick={props.handleEdit}>Editar</MenuItem>
-                                    <MenuItem onClick={handleCloseAndOpenModal} >Eliminar</MenuItem>
+                                    <MenuItem onClick={handleCloseAndOpenModal}  >Eliminar</MenuItem>
                             </div>
                         )}
             </Menu> 
             <ModalPopOverEliminate
+                id={props.id}
                 displayModal={openModal}
                 closeModal={handleCloseModal}
+                handleEliminate={handleEliminate}
             />          
         </div>
     )

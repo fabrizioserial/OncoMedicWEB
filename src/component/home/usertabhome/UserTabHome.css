@@ -9,8 +9,7 @@
 }
 .usertab-cont-info{
     height: auto;
-    min-height: 300px;
-    width: 450px;
+    width: 100%;
     padding: 15px;
     padding-bottom: 20px;
     border-right: 30px solid #9357F7;
@@ -24,6 +23,7 @@
     height: 35px;
     border-style: none;
     background-color: #d6d6d6;
+    cursor: pointer;
     font-family: 'Montserrat', sans-serif;
 
 }
@@ -55,3 +55,4 @@
 .menu-item-eliminar-profile {
     color: red i !important;
 }
+

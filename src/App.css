@@ -1,6 +1,10 @@
 .App {
   margin-top: 0px;
   text-align: left;
+  outline: none;
+}
+.App:focus{
+  outline: none;
 }
 
 .App-logo {

@@ -2,6 +2,8 @@ import React from 'react';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import './MouseOverPopover.css'
+import { blue } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
   popover: {
@@ -27,15 +29,15 @@ export default function MouseOverPopover(props) {
   const open = Boolean(anchorEl);
 
   return (
-    <div>
-      <Typography
+    <React.Fragment>
+      <input
+        className="mouse-over-descr"
         aria-owns={open ? 'mouse-over-popover' : undefined}
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
-      >
-        {props.name}
-      </Typography>
+        value ={props.name}
+      />
       <Popover
         id="mouse-over-popover"
         className={classes.popover}
@@ -55,8 +57,8 @@ export default function MouseOverPopover(props) {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Typography>{props.descrip}</Typography>
+        <p>{props.descrip}</p>
       </Popover>
-    </div>
+    </React.Fragment>
   );
 }

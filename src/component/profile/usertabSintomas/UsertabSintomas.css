@@ -1,5 +1,4 @@
 .sintoms-usertab-cont-background{
-    margin-left: 50px;
     width: 100%;
     min-height: 300px;
     background-color: #F4F4F4;
@@ -11,8 +10,21 @@
     flex-direction: column;
     justify-content: space-between;
 }
-.sintoms-table{
 
+@media screen and (max-width: 1150px) {
+    .sintoms-usertab-cont-background {
+        width: 90%;
+         margin-top: 5%;
+    }
+}
+
+@media screen and (min-width: 1150px) {
+    .sintoms-usertab-cont-background{
+        margin-left: 50px;
+    }
+}
+
+.sintoms-table{
     height: 100px;
     width: 100%;
     border: none;
@@ -77,9 +89,19 @@
     border: 0ch;
 }
 .sintoms-th-grado{
-    text-align:center;
     width: 20%;
 }
 .sintoms-th-fecha{
     padding-left: 5%;
+}
+.sintoms-img-error-cont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 444px;
+    flex-direction: column;
+}
+.sintoms-img-error{
+    margin-bottom: 30px;
+    height: 150px;
 }

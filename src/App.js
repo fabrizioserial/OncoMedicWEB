@@ -1,47 +1,59 @@
 import logo from './logo.svg';
-import {Home} from '../src/component/home/Home'
+import Home from '../src/component/home/Home'
 import './App.css';
-import { Login } from './component/login/Login';
+import Login  from './component/login/Login';
 import { BrowserRouter, HashRouter, Route, Switch } from 'react-router-dom';
 import { TimeStatus } from './component/timestatus/TimeStatus';
-import { UserTabAllUsers } from './component/seeAllUsers/UserTabAllUsers'
+import UserTabAllUsers from './component/seeAllUsers/UserTabAllUsers'
 import {CompleteProfile} from './component/profile/CompleteProfile.js'
 import 'fontsource-roboto';
 import { Component } from 'react';
-
-
+import store from './reduxStore/store';
+import {Provider} from 'react-redux'
+import PatientSymptoms from './component/patientSymptoms/PatientSymptoms';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 const App = () => {
+  console.log(store.getState())
   return (
-    <div className="App">
-
-      <HashRouter>
-        <Switch>
-          <Route exact path="/">
-            <Login/>
-          </Route> 
-
+    <Provider store={store}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <div className="App">
           <HashRouter>
+            <Switch>
+              <Route exact path="/">
+                <Login/>
+              </Route> 
 
-            <TimeStatus/>
+              <HashRouter>
 
-            <Route exact path="/home">
-              <Home/>
-            </Route>
+                <TimeStatus/>
 
-            <Route exact path="/seeAllUsers">
-              <UserTabAllUsers/>
-            </Route>
+                <Route exact path="/home">
+                  <Home/>
+                </Route>
 
-            <Route exact path="/profile">
-              <CompleteProfile/>
-            </Route>
+                <Route exact path="/seeAllUsers">
+                  <UserTabAllUsers/>
+                </Route>
 
+                <Route exact path="/seeSymptoms">
+                  <PatientSymptoms/>
+                </Route>
+
+                <Route exact path="/profile/:id">
+                  <CompleteProfile/>
+                </Route>
+
+
+              </HashRouter>
+            </Switch>
           </HashRouter>
-        </Switch>
-      </HashRouter>
-      
-    </div>
+          
+        </div>
+      </MuiPickersUtilsProvider>
+    </Provider>
   );
 }
 

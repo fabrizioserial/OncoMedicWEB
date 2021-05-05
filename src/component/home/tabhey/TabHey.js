@@ -10,7 +10,7 @@ import { CustomMenuItem } from '../../customMenuItem/CustomMenuItem'
 
 
 
-export const TabHey = (props) => {
+export const TabHey = ({name,userlist,handleEl,handleAc}) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -29,7 +29,7 @@ export const TabHey = (props) => {
             <div className="tabhey-cont-background">
                 <div className="tabhey-cont">
                     <p className="tabhey-cont-bd">Buen dia,</p>
-                    <p className="tabhey-cont-name">{props.name}!</p> 
+                    <p className="tabhey-cont-name">{name}!</p> 
                 </div>
                 <div className="tabhey-cont-options">
 
@@ -40,8 +40,6 @@ export const TabHey = (props) => {
                     <button aria-describedby={id} className="tabhey-btn-options" onClick={handleClick}>
                         <FontAwesomeIcon icon={faBell}/>
                     </button>
-
-                        
                         <Menu className="menu-1"
                             id={id}
                             open={open}
@@ -56,13 +54,17 @@ export const TabHey = (props) => {
                             horizontal: 'right',
                             }}
                             PaperProps={{
-                            style: { width: '300px',marginTop: '2px' },
+                            style: { width: '450px',marginTop: '2px' },
                             }}
                         >
-                            <CustomMenuItem name="Serial, Fabrizio" id="666" onClick={handleClose}/>
-
-
-
+                        {
+                            (userlist.length>0) ? (
+                                console.log(userlist),
+                                userlist.map((item,index) => <CustomMenuItem handleAc={handleAc} handleEl={handleEl} name={item.name}  id={item.id}/>)
+                            ) : (
+                                <CustomMenuItem type="finished">No hay mas usuarios para aceptar</CustomMenuItem>
+                            )
+                        }
                         </Menu>
                 </div>
             </div>

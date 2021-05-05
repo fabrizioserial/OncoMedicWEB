@@ -19,12 +19,33 @@
     flex-shrink: 0;
     
 }
-.home-cont-buttons button{
 
+@media screen and (max-width: 1250px) {
+    .home-cont-usertabs {
+         flex: 1;
+         width: 93%;
+    }
 }
 
-.home-cont-usertabs{
-    flex:2;
-    width: auto;
+@media screen and (min-width: 1250px) {
+    .home-cont-usertabs{
+        flex:2;
+        width: auto;
+        display: flex;
+        padding-bottom: 40px;
+    }
+}
+
+.home-circ-progress{
+    padding: 0% !important;
+    background-color: #4b4b4b4f;
+    position: absolute; 
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 200vh;
+    height: 100vh;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }

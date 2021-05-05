@@ -1,8 +1,8 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import './UsertabEstado.css'
 import optionIcon from '../../../img/option_icon.png'
 import {Menu,MenuItem,Button} from '@material-ui/core'
-import {useState} from 'react-dom'
+import {useState} from 'react'
 import { Component } from 'react';
 import ModalPopOverELiminate from '../../modals/ModalPopOverEliminate'
 import { Router,Link, Route, Switch } from 'react-router-dom'
@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import ModalPopOverVerRegistroDiario from '../../modals/ModalPopOverVerRegistroDiario'
 import {ItemUser} from '../../ItemUser/ItemUser'
+import {getFirestore} from '../../../firebase'
 
 
 
@@ -20,16 +21,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UsertabEstado=(props)=> {
+export const UsertabEstado=({type,idProp,user})=> {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [number, setNumber] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false); 
   const i = [1,2,3,4,5,6]
+  const [regDiarios,setRegDiario] = useState([])
+  const [regunique,setUniqReg] = useState()
 
-  const handleClick = (event) => {
+  const handleClick = (event,item) => {
+    setUniqReg(item)
     setAnchorEl(event.currentTarget);
   };
+
+  const handletotalClick  = (event,item) => {
+    setUniqReg(item)
+    setOpenModal(true);
+  }
+
+  useEffect(()=>{
+    console.log("modal a ",regunique)
+  },[regunique])
   
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -46,6 +58,22 @@ export const UsertabEstado=(props)=> {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  useEffect(()=>{
+    console.log("DB READING")
+        const db = getFirestore()
+        const itemCollection = db.collection("diaryReg").where("id","==",idProp)
+        itemCollection.onSnapshot((querySnapshot) => {
+            
+            let regList = querySnapshot.docs.map(doc => {
+                    return(
+                        {id:doc.id,...doc.data()}
+                        )
+                    }
+                )
+            setRegDiario(regList)
+        })
+  },[idProp])
+
   return (
     <div>
         <table class="estado-table">
@@ -57,10 +85,10 @@ export const UsertabEstado=(props)=> {
                 <th className="estado-th-button" scope="col"></th>
                 </tr>
             </thead>
-            {props.type=="profile"? (
+            {type=="profile" && (
               <tbody> 
                 {
-                i.map(item => <ItemUser type="estado" handleClick={handleClick} />)
+                regDiarios && regDiarios.map(item => <ItemUser handletotalClick={handletotalClick} type="estado" daily={item} handleClick={handleClick} />)
                 }
                 <Menu className="menu-eliminate-1"
                     id={id}
@@ -79,31 +107,20 @@ export const UsertabEstado=(props)=> {
                     <MenuItem >ELIMINAR</MenuItem>
                 </Menu>
                 <ModalPopOverVerRegistroDiario 
-                    id={number}
+                    Date = {regunique && regunique.date.toDate()}
+                    name={user.name}
+                    id={regunique && regunique}
                     displayModal={openModal}
                     closeModal={handleCloseModal}
                 />
             </tbody>
-            ): 
-            props.type=="regDiario"? (
-            <tbody>
-              {
-                i.map(item => <ItemUser type="regDiario" handleClick={handleClick} />)
-              }
-            </tbody>
-            ):(
-              <tbody>
-              {
-                i.map(item => <ItemUser type="regDia" handleClick={handleClick} />)
-              }
-            </tbody>
             )
             }
         </table>
-        {props.type=="regDia"? (""):(
+        {/* {type=="regDia"? (""):(
           <button className="menu-finalbutton">VER TODO</button>
           )
-        }
+        } */}
         
     </div>
   )

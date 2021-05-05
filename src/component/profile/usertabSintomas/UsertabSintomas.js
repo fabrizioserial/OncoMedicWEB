@@ -1,8 +1,7 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import './UsertabSintomas.css'
 import optionIcon from '../../../img/option_icon.png'
 import {Menu,MenuItem,Button} from '@material-ui/core'
-import {useState} from 'react-dom'
 import { Component } from 'react';
 import ModalPopOverELiminate from '../../modals/ModalPopOverEliminate'
 import { Router,Link, Route, Switch } from 'react-router-dom'
@@ -20,12 +19,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UsertabSintomas=()=> {
+export const UsertabSintomas=({sympstoms,descs})=> {
   const i = [1,2,3,4,5,6]
+  const [sympInfo,setSympInfo] = useState(descs)
+
+  useEffect(()=>{
+      setSympInfo(descs)
+  },[sympInfo,descs])
 
   return (
-            <div>
-                <table class="sintoms-table">
+            <React.Fragment>
+                {
+                sympstoms.length > 0 ?
+                (
+                  <div>
+                   <table class="sintoms-table">
                     <thead className="sintoms-usertab-thead">
                         <tr>
                         <th className="sintoms-th-fecha" scope="col">FECHA</th>
@@ -35,11 +43,19 @@ export const UsertabSintomas=()=> {
                     </thead>
                     <tbody>
                         {
-                          i.map(item => <ItemUser type="sintomas"/>)
+                          sympstoms.map(item => <ItemUser desc={sympInfo.find(element => element.label == item.symptom)} symptom={item} type="sintomas"/>)
                         }
                     </tbody>
-                </table>
-                <button className="menu-finalbutton">VER TODO</button>
-            </div>
+                  </table>
+                  {sympstoms.length > 6 && <button className="menu-finalbutton">VER TODO</button>}
+                </div>
+                )
+                :
+                <div className="sintoms-img-error-cont">
+                  <img className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                  <p>No se encontró registro de sintomas</p>
+                </div>
+                }
+            </React.Fragment>
     )
 }

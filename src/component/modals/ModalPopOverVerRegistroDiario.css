@@ -2,7 +2,7 @@
     background-color: white;
     width: 550px; /* Width in proportion to its parent container*/
     max-width: 640px; /* Max width where it stops expanding */
-    height: 550px; /* Height in proportion to its parent container */
+    height: 570px; /* Height in proportion to its parent container */
     margin: auto; /* Auto margin according to the element width */
     padding: 10px;
     padding-bottom: 20px !important;
@@ -31,7 +31,16 @@
     width: 100%;
     border-spacing: 0 10px;
     height: 100px;
-    width: 90%;
     border: none;
-
+}
+.modaldiario-paciente-sin-registros{
+    
+}
+.modal-error{
+    width: 100%;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }

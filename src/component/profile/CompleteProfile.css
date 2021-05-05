@@ -9,6 +9,20 @@
     padding-top: 30px;
     padding-bottom: 50px;
 }
+.profile-cont-background1{
+    width: auto;
+    height: 100%;
+    background-color: white;
+    margin-left: 200px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .square-div-complete-profile {
     margin-top: 30px;
 
@@ -38,10 +52,19 @@
     border-radius: 7px;
 }
 
-.two-squares-complete-profile{
-    height: 100%;
-    width: 100%;
-    flex: 2;
-    display: flex;
-    margin-top: 50px;
+@media screen and (max-width: 1150px) {
+    .two-squares-complete-profile {
+         flex: 1;
+         margin-top: 50px;
+    }
+}
+
+@media screen and (min-width: 1150px) {
+    .two-squares-complete-profile{
+        height: 100%;
+        width: 100%;
+        flex: 2;
+        display: flex;
+        margin-top: 50px;
+    }
 }
