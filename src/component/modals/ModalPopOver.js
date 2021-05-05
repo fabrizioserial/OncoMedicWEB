@@ -87,7 +87,7 @@ const ModalPopOver = (props) => {
                 <p>Nombre y apellido</p>
             </div> 
             <div className="modal-add-input-cont">
-            <input className={"numero-del-paciente error"}
+            <input className={errorName ? "numero-del-paciente error" :"numero-del-paciente"}
                   value={name}
                   id="nameDoctor"
                   placeholder="Introduzca nombre y apellido"

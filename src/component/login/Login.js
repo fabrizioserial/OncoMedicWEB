@@ -16,47 +16,57 @@ const Login = ({setMedicUserAction}) => {
     const [password,setPassword] =useState("")
     const [medic,setMedic] = useState({})
     const [loading,setLoad] = useState(false)
-    const [ename,setEName] = useState(false)
-    const [epass,setEPass] = useState(false)
+    const [errorComplete,setEComplete] = useState(false)
+    const [errorInvalid,setEInvalid] = useState(false)
     const [passwordShown, setPasswordShown] = useState(false);
 
     const checkUser = () =>{
         if(name.length > 0 && password.length >0){
-            setEName(false)
-            setEPass(false)
+            setEComplete(false)
+            setEInvalid(false)
             const db = getFirestore()
             const itemCollection = db.collection("medic")
             setLoad(true)
 
             itemCollection.get().then((querySnapshot)=>{
+                let name2 = ""
                 let usermedic = querySnapshot.docs.map(doc => {
+                    
                     if(doc.data().name == name){
                         if(doc.data().password == password){
+                            console.log('se Encontro')
                             console.log(doc.id,doc.data().name,doc.data().email)
+                            name2 = doc.data().name
                             setMedicUserAction({id:doc.id,name:doc.data().name,email:doc.data().email,admin:doc.data().admin})
                             handleClick()
                             return
                         }else{
-                            setError("password")
+                            setError("error no data")
                         }
                     }else{
-
+                        
                     }
+                    
                
                 })
                 console.log("Medico:",medic)
+                if(name2 === ""){
+                    setError("error2")
+                }
             
                 setLoad(false)
 
             }).catch(e=>{
                 setLoad(false)
             })
+        }else if(name.length == 0 || password.length == 0){
+            setError("error")
         }
         
     }
 
     const setError = (type) =>{
-        type == "name" ? setEName(true):setEPass(true)
+        type == "error" ? setEComplete(true):setEInvalid(true)
     }
 
     const pushToDatabase = () =>{
@@ -135,18 +145,18 @@ const Login = ({setMedicUserAction}) => {
                     <form>
                         <div>
                             <p className="text-login-input">Ingresar direccion de email</p>
-                            <input className={ename ? "input-login-error" :"input-login"} onChange={e => setName(e.target.value)} placeholder="name@example.com"></input>
-                            {ename && <p className="input-error">Introduzca email valido</p>}
+                            <input type="email" className={(errorComplete || errorInvalid)  ? "input-login error" :"input-login normal"} onChange={e => setName(e.target.value)} placeholder="name@example.com"></input>
                         </div>
                         <div style={{marginTop:"40px"}}>
                             <p className="text-login-input">Ingresar constraseña</p>
-                            <div className={epass || ename ? "input-login error" :"input-login"}>
+                            <div className={(errorComplete || errorInvalid) ? "input-login error" :"input-login normal"}>
                                 <input type={passwordShown ? "text" : "password"} className="input-place" onChange={e => setPassword(e.target.value)} placeholder="atleast 8 caracters"></input>
                                 <FontAwesomeIcon onClick={togglePasswordVisiblity} icon={passwordShown ? faEye:faEyeSlash}/>
                             </div>
-                            {(epass || ename) && <p className="input-error">Introduzca constraseña valida</p>}
                         </div>  
-                        <button className="btn-login-input" onClick={()=>checkUser()}>
+                            {errorComplete ? <p className="input-error-text">Complete los campos</p> : 
+                            errorInvalid && <p className="input-error-text">Introduzca datos validos</p>}
+                        <button className={errorComplete || errorInvalid ? "btn-login-input active":"btn-login-input inactive"} onClick={()=>checkUser()}>
                             Log In
                         </button>
                         {//<button onClick={pushToDatabase}/>

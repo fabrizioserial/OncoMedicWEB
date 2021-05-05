@@ -54,6 +54,9 @@
     text-align: start;
     margin-bottom: 5px;
 }
+.normal{
+    border-color: #dddddd;
+}
 .input-login{
     display: flex;
     justify-content: space-between;
@@ -61,7 +64,6 @@
     width: 300px;
     height: 35px;
     color: #767676;
-    border-color: #dddddd;
     border-radius: 3px;
     border-width: 2px;
     border-style: solid;
@@ -73,8 +75,14 @@
 .input-login:focus{
     outline: none;
 }
-.input-login .error{
-    border-color: red;
+.input-error-text{
+    font-size: 14px;
+    margin-bottom: 0px;
+    margin-top: 17px;
+    color: #F63A39;
+}
+.error{
+    border-color: #F63A39 !important; 
 }
 .input-place{
     color: #767676;
@@ -87,8 +95,14 @@
 .input-login-error{
     outline: none;
 }
-.btn-login-input{
+.inactive{
     margin-top: 50px;
+}
+.active{
+    margin-top: 20px;
+}
+.btn-login-input{
+
     width: 300px;
     height: 35px;
     border-radius: 4px;
