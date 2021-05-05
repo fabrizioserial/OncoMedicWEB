@@ -2,7 +2,6 @@ import React,{useEffect,useState} from 'react'
 import './PatientSymptoms.css'
 import { ButtonGoBack } from '../seeAllUsers/ButtonGoBack'
 import { ItemUser } from '../ItemUser/ItemUser';
-import { makeStyles } from '@material-ui/core/styles';
 import {getFirestore} from '../../firebase'
 import { connect } from 'react-redux'
 import { ButtonRefresh } from '../seeAllUsers/ButtonRefresh'
@@ -23,6 +22,8 @@ const PatientSymptoms = ({medicData}) =>{
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [severity,setSeverity] = useState("")
     const [message,setMessage] = useState("")
+    const [endDate,setEndDate] = useState(new Date())
+    const [startDate,setStartDate] = useState(new Date())
 
     useEffect(()=>{
         
@@ -89,7 +90,7 @@ const PatientSymptoms = ({medicData}) =>{
         var lista = []
         userList.map(item=> item.status==="Activo" && itemCollectionSymptoms.where("id","==",item.id).get().then((querySnapshot) => {
  
-            let avatars = querySnapshot.docs.map(doc => {
+            querySnapshot.docs.map(doc => {
                     return(
                         lista = [...lista,{name:item.name,desc:item.desc,...doc.data()}]
                         )
@@ -129,17 +130,8 @@ const PatientSymptoms = ({medicData}) =>{
 
     useEffect(()=>{
         cleanSym()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[symptomsList,userList])
-
-{/*
-    const handleSearch = (e,title) => {
-        title === "" ? handleRefresh() :
-        title = title.toUpperCase()
-        setSymptomsList2(symptomsOrigin.filter((item=>item.name.toUpperCase().includes(title)||
-                                    item.symptom.toUpperCase().includes(title) ||
-                                    item.symptom.toUpperCase().includes(title) || filterDate(item.date,title,item)
-                                    )))
-}*/}
 
     const handleWarnBar = () => {
         setSeverity("error")
@@ -150,17 +142,19 @@ const PatientSymptoms = ({medicData}) =>{
         if (reason === 'clickaway') {
             return;
         }
-
         setOpenSnackBar(false);
     };
 
-    function handleSearch(e,title,selected,date2){
-        title === "" && handleRefresh()
+
+    function handleSearch(e,title,selected,dateStart,dateEnd){
+        (title === "" && selected!=="FECHA") && handleRefresh()
+        console.log("fecha1",dateStart)
+        console.log("fecha2",dateEnd)
         switch (selected){
             case "FECHA":
                 return setSymptomsList2(symptomsList2.filter((item=>
-                    (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(item.date.toDate())) >= (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(title))
-                    && (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(item.date.toDate())) <= (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(date2)))));
+                    item.date.toDate() >= (dateStart)
+                    && item.date.toDate() <= (dateEnd))));
             case "PACIENTE":
                 console.log(title)
                 return setSymptomsList2(symptomsList2.filter((item=>item.name.toUpperCase().includes(title.toUpperCase()))));   
@@ -174,7 +168,7 @@ const PatientSymptoms = ({medicData}) =>{
     }
 
     const filterDate = (date,title,item) =>{
-        if (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(date.toDate())== title){
+        if (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(date.toDate()) == title){
             return item
         }
     }
