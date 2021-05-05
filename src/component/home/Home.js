@@ -1,7 +1,7 @@
 import React,{useEffect,useState,useLayoutEffect} from 'react'
 import '../home/Home.css'
 import { ButtonHome } from './buttonsHome/ButtonHome'
-import ModalPopOver from '../modals/ModalPopOver'
+import ModalPopOverNewMedic from '../modals/ModalPopOverNewMedic'
 import  {UserTabHome}  from './usertabhome/UserTabHome'
 import { Component } from 'react';
 import { TabHey } from './tabhey/TabHey';
@@ -109,7 +109,7 @@ const Home = ({medicData}) =>{
         const db = getFirestore()
         const itemCollectionSymptoms = db.collection("symptoms")
         var lista = []
-        userList.map(item=> item.status == "Activo" && itemCollectionSymptoms.where("id","==",item.id).get().then((querySnapshot) => {
+        userList.map(item=> item.status==="Activo" && itemCollectionSymptoms.where("id","==",item.id).get().then((querySnapshot) => {
  
             let avatars = querySnapshot.docs.map(doc => {
                     return(
@@ -151,7 +151,7 @@ const Home = ({medicData}) =>{
             {width>910 ?
             <>
                 {(loading) && <div className="home-circ-progress">
-                    <div className="login-loading"><CircularProgress  color="#9357F7"/></div>
+                    <div className="login-loading"><CircularProgress  color="var(--primary)"/></div>
                 </div>
                 }
                 <TabHey 
@@ -161,9 +161,9 @@ const Home = ({medicData}) =>{
                     <div className="home-cont-buttons">
                         {medic.admin&&<ButtonHome text="REGISTRAR NUEVO MÉDICO" color="purple" onClick={selectModal }></ButtonHome>}
                         <ButtonHome text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>
-                        <ButtonHome text="VER ULTIMOS PACIENTES CON SINTOMAS" color="lightblue" link="seeSymptoms"></ButtonHome>
+                        <ButtonHome text="VER ULTIMOS PACIENTES CON symptoms" color="lightblue" link="seeSymptoms"></ButtonHome>
                     </div>
-                        <ModalPopOver 
+                        <ModalPopOverNewMedic 
                             handleOpensnackBar={()=>handleOpensnackBar("Medico creado con exito!")}
                             displayModal={modal}
                             closeModal={selectModal}/>

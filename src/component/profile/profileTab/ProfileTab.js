@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import "../profileTab/ProfileTab.css"
-import { Tuerquita } from '../../tuerquita/Tuerquita'
+import { OptionsMenu } from '../../optionsMenu/OptionsMenu'
 import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate';import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck,faChevronUp,faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import {getFirestore} from '../../../firebase'
@@ -84,7 +84,7 @@ export default function ProfileTab({user,image,handleSnackBar}) {
             <div className="tabhey-cont-options">
                 {!state? (
                     <div >
-                       <Tuerquita id={user.id} style="profile" handleEdit={handleEdit} handleEliminado={handleEliminado}/>
+                       <OptionsMenu id={user.id} style="profile" handleEdit={handleEdit} handleEliminado={handleEliminado}/>
                     </div>
                 ):(
                     <div onClick={handleEditAndPush} className="tabhey-btn-options">

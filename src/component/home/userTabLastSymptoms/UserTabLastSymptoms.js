@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate'
 import {ItemUser} from '../../ItemUser/ItemUser'
 import './UserTabLastSymptoms.css'
-import ModalPopOverSintoma from '../../modals/ModalPopOverSintoma';
+import ModalPopOverSymptom from '../../modals/ModalPopOverSymptom';
 
 
 
@@ -78,7 +78,7 @@ export const UserTabLastSymptoms=({symptomsList})=> {
                   <MenuItem onClick={handleClose}>ELIMINAR</MenuItem>
                   </Menu>
 
-                <ModalPopOverSintoma
+                <ModalPopOverSymptom
                   id={symptom.id}
                   name={symptom.name}
                   symptom={symptom.symptom}

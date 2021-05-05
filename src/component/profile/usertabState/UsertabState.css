@@ -2,7 +2,7 @@
     width: 100%;
     min-height: 300px;
     background-color: #F4F4F4;
-    border-right: 30px solid #9357F7;
+    border-right: 30px solid var(--primary);
     border-top-right-radius: 9px;
     border-bottom-right-radius: 9px;
     padding: 25px;
@@ -21,7 +21,7 @@
     border-spacing:0 10px;
 }
 .estado-usertab-thead{
-    color: #9357F7;
+    color: var(--primary);
     margin-bottom: 10px;
 } 
 .estado-usertab-user-image{
@@ -81,6 +81,7 @@
     border: 0ch;
 }
 .menu-finalbutton{
+    cursor: pointer;
     background-color:#D6D6D6;
     border-style: none;
     height: 35px;

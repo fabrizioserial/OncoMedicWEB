@@ -7,7 +7,7 @@ import {ItemUser} from '../../ItemUser/ItemUser'
 import { useHistory } from 'react-router-dom';
 import { Alert } from '@material-ui/lab';
 import {getFirestore} from '../../../firebase'
-import ModalPopOverVerRegistroDiario from '../../modals/ModalPopOverVerRegistroDiario';
+import ModalPopOverSeeDiaryReg from '../../modals/ModalPopOverSeeDiaryReg';
 
 
 
@@ -94,7 +94,7 @@ export const UserTabHome=({margin_left,userlist,images,handleEl,handleLoad})=> {
             var found = regList.find(function (element) {
               var fecha = Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(element.date.toDate())
               var hoy = Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(today)
-              return  fecha == (hoy);
+              return  fecha===(hoy);
             });
             setUniqReg(found) 
             
@@ -144,7 +144,7 @@ export const UserTabHome=({margin_left,userlist,images,handleEl,handleLoad})=> {
                         horizontal: 'left',
                         }}>
                         <MenuItem onClick={handleCloseAndNavigate}>VER PERFIL</MenuItem>
-                        <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
+                        <MenuItem onClick={handleClose}>VER symptoms</MenuItem>
                         <MenuItem onClick={findRegDiarios}>VER REGISTRO DIARIO</MenuItem>
                         <MenuItem onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
                     </Menu>
@@ -154,7 +154,7 @@ export const UserTabHome=({margin_left,userlist,images,handleEl,handleLoad})=> {
                         closeModal={handleCloseModal}
                         handleEliminate={handleEliminate}
                     />
-                    <ModalPopOverVerRegistroDiario  
+                    <ModalPopOverSeeDiaryReg  
                       name={user.name}
                       id={regunique}
                       displayModal={openModalDiario}

@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react'
-import './UsertabEstado.css'
+import './UsertabState.css'
 import optionIcon from '../../../img/option_icon.png'
 import {Menu,MenuItem,Button} from '@material-ui/core'
 import {useState} from 'react'
@@ -9,7 +9,7 @@ import { Router,Link, Route, Switch } from 'react-router-dom'
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import ModalPopOverVerRegistroDiario from '../../modals/ModalPopOverVerRegistroDiario'
+import ModalPopOverSeeDiaryReg from '../../modals/ModalPopOverSeeDiaryReg'
 import {ItemUser} from '../../ItemUser/ItemUser'
 import {getFirestore} from '../../../firebase'
 
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UsertabEstado=({type,idProp,user})=> {
+export const UsertabState=({type,idProp,user})=> {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false); 
@@ -106,7 +106,7 @@ export const UsertabEstado=({type,idProp,user})=> {
                     <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal}>VER COMPLETO</MenuItem>
                     <MenuItem >ELIMINAR</MenuItem>
                 </Menu>
-                <ModalPopOverVerRegistroDiario 
+                <ModalPopOverSeeDiaryReg 
                     Date = {regunique && regunique.date.toDate()}
                     name={user.name}
                     id={regunique && regunique}
@@ -117,11 +117,10 @@ export const UsertabEstado=({type,idProp,user})=> {
             )
             }
         </table>
-        {/* {type=="regDia"? (""):(
-          <button className="menu-finalbutton">VER TODO</button>
-          )
-        } */}
-        
+        <div>
+          {regDiarios.length > 3 && <Link to="/seeAllDiaryRegs"><button className="menu-finalbutton">VER TODO</button></Link>}
+        </div>
     </div>
+
   )
 }
