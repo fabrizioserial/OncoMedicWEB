@@ -1,12 +1,10 @@
-import React,{useEffect, useState} from 'react';
+import React,{useState} from 'react';
 import 'fontsource-roboto';
 import './ModalPopOverAsignCancer.css'
-import { Alert } from '@material-ui/lab';
 
 
 
 const ModalPopOverAsignCancer = (props) => {
-   const [title, setTitle] = useState("")
    const [cancer, setCancer] = useState(null)
      
    const divStyle = { 

@@ -1,31 +1,15 @@
 import React,{useEffect} from 'react'
 import './UsertabState.css'
-import optionIcon from '../../../img/option_icon.png'
-import {Menu,MenuItem,Button} from '@material-ui/core'
+import {Menu,MenuItem} from '@material-ui/core'
 import {useState} from 'react'
-import { Component } from 'react';
-import ModalPopOverELiminate from '../../modals/ModalPopOverEliminate'
-import { Router,Link, Route, Switch } from 'react-router-dom'
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {useHistory } from 'react-router-dom'
 import ModalPopOverSeeDiaryReg from '../../modals/ModalPopOverSeeDiaryReg'
 import {ItemUser} from '../../ItemUser/ItemUser'
 import {getFirestore} from '../../../firebase'
 
-
-
-const useStyles = makeStyles((theme) => ({
-  typography: {
-    padding: theme.spacing(2),
-  },
-}));
-
 export const UsertabState=({type,idProp,user})=> {
-  const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false); 
-  const i = [1,2,3,4,5,6]
   const [regDiarios,setRegDiario] = useState([])
   const [regunique,setUniqReg] = useState()
 
@@ -38,10 +22,6 @@ export const UsertabState=({type,idProp,user})=> {
     setUniqReg(item)
     setOpenModal(true);
   }
-
-  useEffect(()=>{
-    console.log("modal a ",regunique)
-  },[regunique])
   
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -55,13 +35,19 @@ export const UsertabState=({type,idProp,user})=> {
     setOpenModal(true);
     setAnchorEl(null);
   }
+
+  const history = useHistory()
+  function handleCloseAndNavigate(){
+    history.push(`/seeAllDiaryRegs/${user.id}`);
+  }
+
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
   useEffect(()=>{
-    console.log("DB READING")
+    
         const db = getFirestore()
-        const itemCollection = db.collection("diaryReg").where("id","==",idProp)
+        const itemCollection = db.collection("diaryReg").where("id","==",idProp).limit(6)
         itemCollection.onSnapshot((querySnapshot) => {
             
             let regList = querySnapshot.docs.map(doc => {
@@ -76,6 +62,8 @@ export const UsertabState=({type,idProp,user})=> {
 
   return (
     <div>
+      {regDiarios.length>0 ? (
+        <>
         <table class="estado-table">
             <thead className="estado-usertab-thead">
                 <tr>
@@ -85,7 +73,7 @@ export const UsertabState=({type,idProp,user})=> {
                 <th className="estado-th-button" scope="col"></th>
                 </tr>
             </thead>
-            {type=="profile" && (
+            {type === "profile" && 
               <tbody> 
                 {
                 regDiarios && regDiarios.map(item => <ItemUser handletotalClick={handletotalClick} type="estado" daily={item} handleClick={handleClick} />)
@@ -114,12 +102,18 @@ export const UsertabState=({type,idProp,user})=> {
                     closeModal={handleCloseModal}
                 />
             </tbody>
-            )
             }
         </table>
         <div>
-          {regDiarios.length > 3 && <Link to="/seeAllDiaryRegs"><button className="menu-finalbutton">VER TODO</button></Link>}
+          {regDiarios.length >= 6 && <button onClick={handleCloseAndNavigate} className="menu-finalbutton">VER TODO</button>}
         </div>
+        </>
+      ):(
+        <div className="sintoms-img-error-cont">
+          <img alt="" className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+          <p>No se encontraron registros diarios</p>
+        </div>
+      )}
     </div>
 
   )

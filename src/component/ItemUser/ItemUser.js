@@ -29,7 +29,6 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
 
     useEffect(()=>{
         if(daily){
-        console.log("reg diario: ",daily)
         setRegDiario(daily)
         } 
 
@@ -37,10 +36,6 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
 
 
     useEffect(()=>{},[mood,sad,run,hungry,hid,social])
-
-    useEffect(()=>{
-        console.log("decripcion: ",descripcion)
-    },[descripcion])
 
     const history = useHistory();
     const switchToProfle = () => history.push(`/profile/${user.id}`);
@@ -153,7 +148,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
         type==="sympts"?
                 <tr className="usertab-fila">
                     {symptom.date &&  <td className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
-                    <td onClick={(e)=>handleClick(e,symptom)}>{symptom.id}</td>
+                    <td style={{paddingLeft: "2%"}} onClick={(e)=>handleClick(e,symptom)}>{symptom.id}</td>
                     <td onClick={(e)=>handleClick(e,symptom)}>{symptom.symptom}</td>
                     <td onClick={(e)=>handleClick(e,symptom)} className="usertab-sympts-col-grado">{symptom.grade}</td>
                 </tr>:

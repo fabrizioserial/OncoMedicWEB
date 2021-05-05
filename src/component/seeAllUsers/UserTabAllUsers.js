@@ -5,19 +5,11 @@ import { ButtonGoBack } from './ButtonGoBack'
 import { ItemUser } from '../ItemUser/ItemUser';
 import { SearchTab } from './searchTab/SearchTab';
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
-import {Menu,MenuItem,Button} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
+import {Menu,MenuItem} from '@material-ui/core'
 import {getFirestore} from '../../firebase'
 import { ButtonRefresh } from './ButtonRefresh'
 import { MySnackbar } from '../mySnackBar/MySnackbar';
 import { connect } from 'react-redux'
-
-
-const useStyles = makeStyles((theme) => ({
-    typography: {
-      padding: theme.spacing(2),
-    },
-  }));
 
 const UserTabAllUsers = ({medicData}) => {
 
@@ -80,7 +72,6 @@ const UserTabAllUsers = ({medicData}) => {
         title = title.toUpperCase()
         switch (selected){
             case "N PACIENTE":
-                {console.log(userList)}
                 return setUserList(userList.filter((item=>item.id.toUpperCase().includes(title))));
             case "NOMBRE":
                 return setUserList(userList.filter((item=>item.name.toUpperCase().includes(title))));   
@@ -118,7 +109,6 @@ const UserTabAllUsers = ({medicData}) => {
                     }
                 )
             setImageList(avatars)
-            console.log(avatars)
         })
     }
     // Eliminar
@@ -126,23 +116,14 @@ const UserTabAllUsers = ({medicData}) => {
 
   const handleEliminate = () =>{
     const db = getFirestore()
-    db.collection("users").doc(`${user.id}`).delete().then(() => {
-      console.log("Document successfully deleted!");
-    })
     handleRefresh()
     setOpenModal(false);
     handleOpensnackBar()
   }
-
-
-    const i = [1,2,3,4,5,6,7,8,9]
-
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
     useEffect(()=>{
-        console.log("Medico:", medicData.id)
-        console.log("DB READING")
         const db = getFirestore()
         const usersActive = db.collection('users').where("status","==","Activo").where("medic","==",medicData.id)
         usersActive.get().then((querySnapshot)=>{
@@ -168,15 +149,13 @@ const UserTabAllUsers = ({medicData}) => {
                     }
                 )
             setImageList(avatars)
-            console.log(avatars)
         })
 
     },[medicData])
 
     useEffect(()=>{
-        console.log("medico es ",medic)
         setMedic(medicData)
-      },[medicData])
+      },[medicData, setMedic])
 
     return(
         <div className="userall-cont-background">
@@ -202,7 +181,7 @@ const UserTabAllUsers = ({medicData}) => {
                         </thead>
                         <tbody>
                             {
-                                (userList.length > 0) && userList.map((item,key) => <ItemUser image={images.find(element =>element.id==item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
+                                (userList.length > 0) && userList.map((item,key) => <ItemUser image={images.find(element =>element.id===item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
                             }
                             <Menu className="menu-see-all-users"
                                 id={id}

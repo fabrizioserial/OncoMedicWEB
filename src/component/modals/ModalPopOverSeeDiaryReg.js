@@ -7,7 +7,6 @@ import { ItemUser } from '../ItemUser/ItemUser';
 
 
 const ModalPopOverSeeDiaryReg = (props) => {
-      const i = [1,2,3,4,5,6]
       const [regdiario,setRegDiario] = useState()
 
      
@@ -20,8 +19,6 @@ const ModalPopOverSeeDiaryReg = (props) => {
      }
 
      useEffect(()=>{
-         {console.log(props.loading)}
-        console.log("el estado de registro: ",props.id)
         setRegDiario(props.id)
      },[props.id])
 
@@ -42,7 +39,6 @@ const ModalPopOverSeeDiaryReg = (props) => {
                   <hr className="add-modal-line"/>
                </div>
                <div className="inside-the-modal-diario">
-                  <p className="paciente-of-modal">Paciente: {props.name}</p>
                   <p className="paciente-of-modal">Fecha: {Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(props.Date)}</p>
                   { regdiario ?  
                   <table class="modal-diario-table">
@@ -57,7 +53,7 @@ const ModalPopOverSeeDiaryReg = (props) => {
                      </tbody>
                  </table>:
                     <div className="modal-error">
-                        <img className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                        <img alt="" className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
                         <p>El usuario no ha hecho su registro diario todavia</p>
                      </div>
                   }

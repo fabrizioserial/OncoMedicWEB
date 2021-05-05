@@ -1,7 +1,6 @@
-import React,{useState,useEffect,useCallback} from 'react'
+import React,{useState,useEffect} from 'react'
 import '../login/Login.css'
 import medical_ilustrator from '../../img/medical_ilustration.png'
-import { Link,NavLink } from 'react-router-dom'
 import {getFirestore} from '../../firebase'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
@@ -14,7 +13,7 @@ const Login = ({setMedicUserAction}) => {
 
     const [name,setName] = useState("")
     const [password,setPassword] =useState("")
-    const [medic,setMedic] = useState({})
+    const [medic] = useState({})
     const [loading,setLoad] = useState(false)
     const [errorComplete,setEComplete] = useState(false)
     const [errorInvalid,setEInvalid] = useState(false)
@@ -30,43 +29,37 @@ const Login = ({setMedicUserAction}) => {
 
             itemCollection.get().then((querySnapshot)=>{
                 let name2 = ""
-                let usermedic = querySnapshot.docs.map(doc => {
+                querySnapshot.docs.map(doc => {
                     
-                    if(doc.data().name == name){
-                        if(doc.data().password == password){
-                            console.log('se Encontro')
-                            console.log(doc.id,doc.data().name,doc.data().email)
+                    if(doc.data().name === name){
+                        if(doc.data().password === password){
                             name2 = doc.data().name
                             setMedicUserAction({id:doc.id,name:doc.data().name,email:doc.data().email,admin:doc.data().admin})
                             handleClick()
-                            return
+                            return 0;
                         }else{
                             setError("error no data")
                         }
-                    }else{
-                        
                     }
-                    
-               
+                    return 0;
                 })
-                console.log("Medico:",medic)
                 if(name2 === ""){
                     setError("error2")
                 }
-            
                 setLoad(false)
+                return 0;
 
             }).catch(e=>{
                 setLoad(false)
             })
-        }else if(name.length == 0 || password.length == 0){
+        }else if(name.length === 0 || password.length === 0){
             setError("error")
         }
         
     }
 
     const setError = (type) =>{
-        type == "error" ? setEComplete(true):setEInvalid(true)
+        type === "error" ? setEComplete(true):setEInvalid(true)
     }
 
     const pushToDatabase = () =>{
@@ -117,18 +110,6 @@ const Login = ({setMedicUserAction}) => {
     const history = useHistory();
     const handleClick = () => history.push('/home');
 
-
-    useEffect(() => {
-        console.log(medic);
-    }, [medic])
-
-
-
-    useEffect(() => {
-        console.log("name: ",name)
-        console.log("password: ",password)
-    }, [name,password])
-
     return(
         <div className="cont-login-container">
             {
@@ -168,7 +149,7 @@ const Login = ({setMedicUserAction}) => {
 
             </div>
             <div className="cont-login-ilustrator">
-                <img src={medical_ilustrator} className="img-login-ilustrator"/>
+                <img alt="" src={medical_ilustrator} className="img-login-ilustrator"/>
             </div>
         </div>
     )

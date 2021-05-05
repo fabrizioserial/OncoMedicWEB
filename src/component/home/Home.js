@@ -59,9 +59,8 @@ const Home = ({medicData}) =>{
 
     useEffect(()=>{
         
-        console.log("DB READING")
         const db = getFirestore()
-        const itemCollection = db.collection("users").where("medic","==",medicData.id)
+        const itemCollection = db.collection("users").where("medic","==",medicData.id).limit(6)
         itemCollection.onSnapshot((querySnapshot) => {
             
             let userlista = querySnapshot.docs.map(doc => {
@@ -84,10 +83,9 @@ const Home = ({medicData}) =>{
                     }
                 )
             setImageList(avatars)
-            console.log("hola ",avatars)
         })
 
-        const itemCollectionSymptoms = db.collection("symptoms").orderBy("date")
+        const itemCollectionSymptoms = db.collection("symptoms").orderBy("date").limit(6);
 
         itemCollectionSymptoms.onSnapshot((querySnapshot) => {
             let symptomslista = querySnapshot.docs.map(doc => doc.data())
@@ -104,7 +102,7 @@ const Home = ({medicData}) =>{
 
     const cleanSym = () =>{
         const db = getFirestore()
-        const itemCollectionSymptoms = db.collection("symptoms")
+        const itemCollectionSymptoms = db.collection("symptoms").limit(4)
         var lista = []
         userList.map(item=> item.status==="Activo" && itemCollectionSymptoms.where("id","==",item.id).get().then((querySnapshot) => {
  
@@ -114,7 +112,6 @@ const Home = ({medicData}) =>{
                         )
                     }
                 )
-            console.log("los sintoms ",lista)
             setSymptomsList2(lista.sort(function (a, b) {
                                             if (b.date > a.date) {
                                                 return 1;
@@ -129,10 +126,6 @@ const Home = ({medicData}) =>{
 
 
     }
-
-    useEffect(()=>{
-        console.log("se actualizo",symptomsList2)
-    },[symptomsList2])
 
     useEffect(()=>{
         cleanSym()
@@ -166,8 +159,8 @@ const Home = ({medicData}) =>{
                             displayModal={modal}
                             closeModal={selectModal}/>
                     <div className="home-cont-usertabs">
-                        {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
-                        {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabLastSymptoms className="usersympts-second" symptomsList={symptomsList2}/>}
+                        <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>
+                        <UserTabLastSymptoms className="usersympts-second" symptomsList={symptomsList2}/>
                         
                     </div>
                     <MySnackbar

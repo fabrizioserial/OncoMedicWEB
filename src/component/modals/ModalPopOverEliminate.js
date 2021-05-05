@@ -1,7 +1,6 @@
 import React,{useState} from 'react';
 import './ModalPopOverEliminate.css'
 import 'fontsource-roboto';
-import { Alert } from '@material-ui/lab';
 
 
 
@@ -20,7 +19,7 @@ const ModalPopOverEliminate = (props) => {
      }
 
      function handleIf(){
-         {title===props.id ? idCorrect():idNotCorrect()}
+         title===props.id ? idCorrect():idNotCorrect()
      }
 
      const idNotCorrect = () => {

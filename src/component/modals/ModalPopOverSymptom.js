@@ -1,11 +1,9 @@
-import React,{useState,useEffect} from 'react';
+import React from 'react';
 import './ModalPopOverSymptom.css'
 import 'fontsource-roboto';
-import {getFirestore} from '../../firebase'
 
 
 const ModalPopOverSymptom = (props) => {
-      const [disabled,setDisabled] = useState("")
 
      const divStyle = { 
           display: props.displayModal ? 'block' : 'none'

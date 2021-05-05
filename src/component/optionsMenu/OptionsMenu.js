@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Menu,MenuItem} from '@material-ui/core'
 import { Link,} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,8 +9,8 @@ import {getFirestore} from '../../firebase'
 
 
 export const OptionsMenu = (props) => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [openModal, setOpenModal] = React.useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
 
     // Menu
 
@@ -37,9 +37,6 @@ export const OptionsMenu = (props) => {
 
     const handleEliminate = () =>{
         const db = getFirestore()
-        db.collection("users").doc(`${props.id}`).delete().then(() => {
-        console.log("Document successfully deleted!");
-        })
         setOpenModal(false);
         props.handleEliminado()
     }

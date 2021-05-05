@@ -1,8 +1,8 @@
 import React,{useState} from 'react'
 import './SearchTab.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch,faHome, faChevronDown, fas } from '@fortawesome/free-solid-svg-icons'
-import { Menu, MenuItem } from '@material-ui/core'
+import { faSearch, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { Menu } from '@material-ui/core'
 import { Picker } from './picker/Picker'
 import MyDatePicker from '../../datePicker/MyDatePicker'
 
@@ -28,12 +28,10 @@ export const SearchTab = ({handleClick,categories}) => {
 
     const handleDate = (date) =>{
         setDateStart(date)
-        console.log("fechaHola",dateStart)
     }
 
     const handledateEnd = (date) =>{
         setDateEnd(date)
-        console.log("fechaHola",dateEnd)
     }
 
     const open = Boolean(anchorEl);
@@ -53,9 +51,9 @@ export const SearchTab = ({handleClick,categories}) => {
                 />
             </React.Fragment>:
                 <div className="searchtab-date-input">
-                    <a >Desde:</a>
+                    <p >Desde:</p>
                     <MyDatePicker handleDate={handleDate}/>
-                    <a style={{marginLeft: "2%"}} >Hasta:</a>
+                    <p style={{marginLeft: "2%"}} >Hasta:</p>
                     <MyDatePicker handleDate={handledateEnd}/>
                 </div>
             }

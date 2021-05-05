@@ -16,7 +16,6 @@ const PatientSymptoms = ({medicData}) =>{
     const [userList,setUserList] = useState([])
     const [symptomsList,setSymptomsList] = useState([])
     const [symptomsList2,setSymptomsList2] = useState([])
-    const [symptomsOrigin,setSymptomsListOrigin] = useState([])
     const [images,setImageList] =useState([])
     const [sympInfo,setSympInfo] = useState([])
     const [openSnackBar,setOpenSnackBar] = useState(false)
@@ -24,8 +23,7 @@ const PatientSymptoms = ({medicData}) =>{
     const [message,setMessage] = useState("")
 
     useEffect(()=>{
-        
-        console.log("DB READING")
+
         const db = getFirestore()
         const itemCollection = db.collection("users").where("medic","==",medicData.id)
         itemCollection.onSnapshot((querySnapshot) => {
@@ -62,7 +60,6 @@ const PatientSymptoms = ({medicData}) =>{
                     }
                 )
             setImageList(avatars)
-            console.log(avatars)
         })
 
         const itemCollectionSymptoms = db.collection("symptoms")
@@ -72,10 +69,6 @@ const PatientSymptoms = ({medicData}) =>{
             setSymptomsList(symptomslista)
         })
     },[medicData])
-
-    useEffect(()=>{
-        console.log("se actualizo la lista")
-    },[userList,images,medic])
 
     useEffect(()=>{
       setMedic(medicData)
@@ -94,7 +87,6 @@ const PatientSymptoms = ({medicData}) =>{
                         )
                     }
                 )
-            console.log("los sintoms ",lista)
             setSymptomsList2(lista.sort(function (a, b) {
                                             if (b.date > a.date) {
                                                 return 1;
@@ -105,27 +97,10 @@ const PatientSymptoms = ({medicData}) =>{
                                             // a must be equal to b
                                             return 0;
                                             }))
-            setSymptomsListOrigin(lista.sort(function (a, b) {
-                                            if (b.date > a.date) {
-                                                return 1;
-                                            }
-                                            if (b.date < a.date) {
-                                                return -1;
-                                            }
-                                            // a must be equal to b
-                                            return 0;
-                                            }))
-
         })) 
 
 
     }
-
-    useEffect(()=>{
-        console.log("se actualizo",symptomsList2)
-        
-    },[symptomsList2])
-
     useEffect(()=>{
         cleanSym()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -152,7 +127,6 @@ const PatientSymptoms = ({medicData}) =>{
                     item.date.toDate() >= (dateStart)
                     && item.date.toDate() <= (dateEnd))));
             case "PACIENTE":
-                console.log(title)
                 return setSymptomsList2(symptomsList2.filter((item=>item.name.toUpperCase().includes(title.toUpperCase()))));   
             case "SINTOMA":
                 return setSymptomsList2(symptomsList2.filter((item=>item.symptom.toUpperCase().includes(title.toUpperCase()))));  
@@ -161,12 +135,6 @@ const PatientSymptoms = ({medicData}) =>{
                 return setSymptomsList2(symptomsList2.filter((item=>item.grade==(title))));  
             default:
                 return handleWarnBar() 
-        }
-    }
-
-    const filterDate = (date,title,item) =>{
-        if (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(date.toDate()) === title){
-            return item
         }
     }
 
@@ -188,7 +156,7 @@ const PatientSymptoms = ({medicData}) =>{
     }
 
     useEffect(()=>{
-        console.log("DB READING")
+        
         
          const db = getFirestore()
         const itemCollection = db.collection("users")

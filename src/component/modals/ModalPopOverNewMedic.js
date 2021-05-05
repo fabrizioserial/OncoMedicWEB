@@ -1,10 +1,7 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState} from 'react';
 import './ModalPopOverNewMedic.css'
 import 'fontsource-roboto';
 import {getFirestore} from '../../firebase'
-import { ToastProvider,useToasts } from 'react-toast-notifications'
-import { Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 
 const ModalPopOverNewMedic = (props) => {
       const [name,setName] = useState("")

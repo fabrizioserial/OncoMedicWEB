@@ -20,9 +20,8 @@ export const CompleteProfile = () => {
     const [load,setLoad] = useState(true)
     const [userNotFound,setUserNotFound] = useState(false)
     const [openSnackBar,setOpenSnackBar] = useState(false)
+    const [open,setOpen] = useState(true)
   
-
-
     const handleOpensnackBar = () =>{
         setOpenSnackBar(!openSnackBar)
     }
@@ -40,8 +39,7 @@ export const CompleteProfile = () => {
 
         if(id){
             setUserNotFound(false)
-            console.log("DB READING")
-            console.log("id ",id)
+            
             const db = getFirestore()
             const itemCollection = db.collection("users").doc(id)
             
@@ -49,13 +47,12 @@ export const CompleteProfile = () => {
                 let userFound ={id:querySnapshot.id,...querySnapshot.data()}
                 setUser(userFound)
                 setLoad(false)
-                console.log("El usuario encontrado es: ",userFound)
                 if(userFound.name===null){
                     setUserNotFound(true)
                 }
             })
 
-            const symptoms = db.collection("symptoms").where("id","==", id)
+            db.collection("symptoms").where("id","==", id).limit(6)
             .onSnapshot((querySnapshot) => {
                 let symptomslista = querySnapshot.docs.map(doc => doc.data())
                 setSymptomsList(symptomslista)
@@ -65,17 +62,14 @@ export const CompleteProfile = () => {
     },[id])
 
     useEffect(()=>{
-        console.log("user: ",user)
         
         if(id && user.avatar){
-            console.log("DB READING")
+            
             const db = getFirestore()
             let stringAvatar = user.avatar
-            console.log(user.avatar.toString())
             const itemCollection = db.collection("avatars").doc(stringAvatar.toString())
             itemCollection.get().then((querySnapshot) => {
                 let imgFound =querySnapshot.data()
-                console.log(imgFound)
                 setImage(imgFound)
             })
 
@@ -92,7 +86,7 @@ export const CompleteProfile = () => {
         })
 
         }
-    },[user])
+    },[id, user])
 
     useEffect(()=>{
 
@@ -108,7 +102,7 @@ export const CompleteProfile = () => {
         (user && user.name && image)? 
         <div className="profile-cont-background">
             <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
-            <ProfileTab handleSnackBar={handleOpensnackBar} image={image} user={user}/>
+            <ProfileTab handleClick={()=>setOpen(!open)} handleSnackBar={handleOpensnackBar} image={image} user={user}/>
             <div className="two-squares-complete-profile">
                 <div  className="estado-usertab-cont-background">
                     <UsertabState user={user} idProp={user.id} type="profile" flexi={{Flex:1}}/>
@@ -120,7 +114,7 @@ export const CompleteProfile = () => {
         </div>
         : userNotFound &&
         <div className="profile-cont-background1">
-            <img className={{width:"200px"}} src="https://www.initcoms.com/wp-content/uploads/2020/07/404-error-not-found-1.png" />
+            <img alt="" className={{width:"200px"}} src="https://www.initcoms.com/wp-content/uploads/2020/07/404-error-not-found-1.png" />
         </div>
         }
         <MySnackbar

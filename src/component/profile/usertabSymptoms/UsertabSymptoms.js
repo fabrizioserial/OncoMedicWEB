@@ -1,22 +1,19 @@
 import React,{useEffect,useState} from 'react'
 import './UsertabSymptoms.css'
-import { makeStyles } from '@material-ui/core/styles';
 import { ItemUser } from '../../ItemUser/ItemUser'
-
-
-const useStyles = makeStyles((theme) => ({
-  typography: {
-    padding: theme.spacing(2),
-  },
-}));
+import { useHistory } from 'react-router'
 
 export const UsertabSymptoms=({sympstoms,descs})=> {
-  const i = [1,2,3,4,5,6]
   const [sympInfo,setSympInfo] = useState(descs)
 
   useEffect(()=>{
       setSympInfo(descs)
   },[sympInfo,descs])
+
+  const history = useHistory()
+  function handleCloseAndNavigate(){
+    
+  }
 
   return (
             <React.Fragment>
@@ -38,13 +35,13 @@ export const UsertabSymptoms=({sympstoms,descs})=> {
                         }
                     </tbody>
                   </table>
-                  {sympstoms.length > 6 && <button className="menu-finalbutton">VER TODO</button>}
+                  {sympstoms.length >= 6 && <button onClick={handleCloseAndNavigate} className="menu-finalbutton">VER TODO</button>}
                 </div>
                 )
                 :
                 <div className="sintoms-img-error-cont">
-                  <img className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
-                  <p>No se encontró registro de symptoms</p>
+                  <img alt="" className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                  <p>No se encontró registro de sintomas</p>
                 </div>
                 }
             </React.Fragment>

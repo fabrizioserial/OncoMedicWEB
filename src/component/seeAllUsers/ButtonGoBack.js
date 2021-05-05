@@ -3,7 +3,7 @@ import './ButtonGoBack.css'
 import { Link } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch,faHome } from '@fortawesome/free-solid-svg-icons'
+import { faHome } from '@fortawesome/free-solid-svg-icons'
 
 
 

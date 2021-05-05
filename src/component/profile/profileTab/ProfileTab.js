@@ -1,11 +1,12 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState} from 'react'
 import "../profileTab/ProfileTab.css"
 import { OptionsMenu } from '../../optionsMenu/OptionsMenu'
-import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate';import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck,faChevronUp,faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import {getFirestore} from '../../../firebase'
 import { useHistory } from 'react-router-dom';
-import {useSpring,animated} from 'react-spring'
+import {useSpring} from 'react-spring'
+import Expand from 'react-expand-animated';
 
 
 export default function ProfileTab({user,image,handleSnackBar}) {
@@ -13,17 +14,13 @@ export default function ProfileTab({user,image,handleSnackBar}) {
     const [seeMore, setSeeMore] = useState(false);
     const [name, setName] = useState(user.name);
     const [cancer, setCancer] = useState(user.cancer);
+    const transitions = ["height", "opacity", "background"];
 
     const contentProps = useSpring({
         height: seeMore ? "100%":"50%"
     })
 
-    const textProps = useSpring({
-        opacity: seeMore? "1":"0"
-    })
-
     const handleEdit = () => {
-        console.log(state)
         setState(!state)
     }; 
 
@@ -46,16 +43,19 @@ export default function ProfileTab({user,image,handleSnackBar}) {
     const switchToHome = () => history.push(`/home`);
 
     return (
-        <animated.div className="name-div-complete-profile" style={contentProps}>
+        <div className="name-div-complete-profile" style={contentProps}>
             <div className="div-complete-profile">
-                <img className="complete-profile-user-image" src={image.url} />
+                <img alt="" className="complete-profile-user-image" src={image.url} />
 
                 <div className="text-complete-profile">
-                    <p  className="id-complete-profile" type="text">{user.id}</p>
-                    <p><input onChange={(e) => setName(e.target.value)} className="name-complete-profile" type="text" disabled={!state} defaultValue={name}/></p>
+                    <p  className="id-complete-profile" type="text">{state && "Id: "}{user.id}</p>
+                    <p className="name-complete-profile">{state && "Nombre: "}<input className="name-complete-profile" onChange={(e) => setName(e.target.value)} type="text" disabled={!state} defaultValue={name}/></p>
                     <p onChange={(e) => setCancer(e.target.value)} className="id-complete-profile-items">Tipo de cancer: <input className="id-complete-profile" type="text" disabled={!state} defaultValue={cancer}/></p>
-                { seeMore ?
-                    <animated.div style={textProps}>
+                    <Expand className="expand-profile-tab"
+                        open={seeMore}
+                        duration={1000}
+                        transitions={transitions}
+                        >
                         <p className="id-complete-profile-items">Fecha de nacimiento: {user.birth}</p>
                         <p className="id-complete-profile-items">Fuma: {user.smoke.smoke? "Si":"No"}</p>
                         {user.smoke.smoke && seeMore ?
@@ -74,17 +74,15 @@ export default function ProfileTab({user,image,handleSnackBar}) {
                             <p className="id-complete-profile-items">ACV: {user.med.acv? "Si":"No"}</p>
                             <p className="id-complete-profile-items">Infarto: {user.med.inf? "Si":"No"}</p>
                             <p className="id-complete-profile-items">Hipertension: {user.med.hip? "Si":"No"}</p>
-                            <p onClick={()=>setSeeMore(!seeMore)} className="id-complete-profile-less" style={{marginTop:"20px"}}>VER MENOS  <FontAwesomeIcon icon={faChevronUp}/></p>
-                    </animated.div>:
-                            <p onClick={()=>setSeeMore(!seeMore)} className="id-complete-profile-more">VER MAS  <FontAwesomeIcon icon={faChevronDown}/></p>
-                    }
+                    </Expand>
+                            { !state && <p onClick={()=>setSeeMore(!seeMore)} className="id-complete-profile-more">{!seeMore ? "VER MAS":"VER MENOS"}  <FontAwesomeIcon icon={!seeMore ? faChevronDown:faChevronUp}/></p>}
                 </div>
             </div>
 
             <div className="tabhey-cont-options">
                 {!state? (
                     <div >
-                       <OptionsMenu id={user.id} style="profile" handleEdit={handleEdit} handleEliminado={handleEliminado}/>
+                       <OptionsMenu id={user.id} handleEdit={handleEdit} handleEliminado={handleEliminado}/>
                     </div>
                 ):(
                     <div onClick={handleEditAndPush} className="tabhey-btn-options">
@@ -93,6 +91,6 @@ export default function ProfileTab({user,image,handleSnackBar}) {
                 )
                 }
             </div>
-        </animated.div>
+        </div>
     )
 }
