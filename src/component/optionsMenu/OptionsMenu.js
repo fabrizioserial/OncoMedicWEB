@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import '../optionsMenu/OptionsMenu.css'
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
-import { UserTabAllUsers } from '../seeAllUsers/UserTabAllUsers'
 import {getFirestore} from '../../firebase'
 
 
@@ -54,7 +53,7 @@ export const OptionsMenu = (props) => {
             <div onClick={handleClick} className="tabhey-btn-options">
                <FontAwesomeIcon icon={faCog} className="button-log-out" />
             </div>
-             <Menu className={`menu-eliminate-tuerquita-${props.style}`}
+             <Menu className={`menu-eliminate-tuerquita-${props.type}`}
                         id={id}
                         open={open}
                         anchorEl={anchorEl}
@@ -68,7 +67,7 @@ export const OptionsMenu = (props) => {
                             horizontal: 'right',
                         }}>
                         
-                        {props.style==="home"? (
+                        {props.type==="home"? (
                             <Link  className="tuerquita-link-to-home" to="/">
                                 <MenuItem >Log out</MenuItem>
                             </Link>

@@ -3,7 +3,6 @@ import '../home/Home.css'
 import { ButtonHome } from './buttonsHome/ButtonHome'
 import ModalPopOverNewMedic from '../modals/ModalPopOverNewMedic'
 import  {UserTabHome}  from './usertabhome/UserTabHome'
-import { Component } from 'react';
 import { TabHey } from './tabhey/TabHey';
 import {getFirestore} from '../../firebase'
 import { connect } from 'react-redux'
@@ -23,7 +22,7 @@ const Home = ({medicData}) =>{
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [textSnack,setTextSnack] = useState("")
     const [loading,setLoad] = useState(false)
-    const [width, height] = useWindowSize();
+    const [width] = useWindowSize();
 
     function useWindowSize() {
         const [size, setSize] = useState([0, 0]);
@@ -97,11 +96,9 @@ const Home = ({medicData}) =>{
     },[medicData])
 
     useEffect(()=>{
-        console.log("se actualizo la lista")
     },[userList,images,medic])
 
     useEffect(()=>{
-      console.log("medico home es ",medic)
       setMedic(medicData)
     },[medicData])
 
@@ -111,7 +108,7 @@ const Home = ({medicData}) =>{
         var lista = []
         userList.map(item=> item.status==="Activo" && itemCollectionSymptoms.where("id","==",item.id).get().then((querySnapshot) => {
  
-            let avatars = querySnapshot.docs.map(doc => {
+            querySnapshot.docs.map(doc => {
                     return(
                         lista = [...lista,{name:item.name,id:item.id,...doc.data()}]
                         )
@@ -139,6 +136,7 @@ const Home = ({medicData}) =>{
 
     useEffect(()=>{
         cleanSym()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[symptomsList,userList])
 
     const handleLoad = (bool) =>{
@@ -161,7 +159,7 @@ const Home = ({medicData}) =>{
                     <div className="home-cont-buttons">
                         {medic.admin&&<ButtonHome text="REGISTRAR NUEVO MÉDICO" color="purple" onClick={selectModal }></ButtonHome>}
                         <ButtonHome text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>
-                        <ButtonHome text="VER ULTIMOS PACIENTES CON symptoms" color="lightblue" link="seeSymptoms"></ButtonHome>
+                        <ButtonHome text="VER ULTIMOS PACIENTES CON SINTOMAS" color="lightblue" link="seeSymptoms"></ButtonHome>
                     </div>
                         <ModalPopOverNewMedic 
                             handleOpensnackBar={()=>handleOpensnackBar("Medico creado con exito!")}
@@ -182,7 +180,7 @@ const Home = ({medicData}) =>{
                 :   
                 <>
                <h1>Estamos trabajando para usar la web en celulares, por ahora solo se puede usar desde la computadora!</h1>
-               <img src={sorry}/>
+               <img alt="" src={sorry}/>
                </>
             }
         </div>

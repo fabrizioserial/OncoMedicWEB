@@ -1,6 +1,5 @@
-import React, { Fragment,useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import { DatePicker, KeyboardDatePicker } from "@material-ui/pickers";
+import React, { useState } from 'react';
+import {KeyboardDatePicker } from "@material-ui/pickers";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 export default function MyDatePicker({handleDate}) {

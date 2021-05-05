@@ -22,8 +22,6 @@ const PatientSymptoms = ({medicData}) =>{
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [severity,setSeverity] = useState("")
     const [message,setMessage] = useState("")
-    const [endDate,setEndDate] = useState(new Date())
-    const [startDate,setStartDate] = useState(new Date())
 
     useEffect(()=>{
         
@@ -148,8 +146,6 @@ const PatientSymptoms = ({medicData}) =>{
 
     function handleSearch(e,title,selected,dateStart,dateEnd){
         (title === "" && selected!=="FECHA") && handleRefresh()
-        console.log("fecha1",dateStart)
-        console.log("fecha2",dateEnd)
         switch (selected){
             case "FECHA":
                 return setSymptomsList2(symptomsList2.filter((item=>
@@ -161,14 +157,15 @@ const PatientSymptoms = ({medicData}) =>{
             case "SINTOMA":
                 return setSymptomsList2(symptomsList2.filter((item=>item.symptom.toUpperCase().includes(title.toUpperCase()))));  
             case "GRADO":
-                return setSymptomsList2(symptomsList2.filter((item=>item.grade.toUpperCase().includes(title.toUpperCase()))));  
+                // eslint-disable-next-line eqeqeq
+                return setSymptomsList2(symptomsList2.filter((item=>item.grade==(title))));  
             default:
                 return handleWarnBar() 
         }
     }
 
     const filterDate = (date,title,item) =>{
-        if (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(date.toDate()) == title){
+        if (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(date.toDate()) === title){
             return item
         }
     }

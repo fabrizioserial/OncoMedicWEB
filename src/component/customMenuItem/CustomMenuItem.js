@@ -1,4 +1,3 @@
-import { Button, MenuItem } from '@material-ui/core'
 import React,{useEffect,useState} from 'react'
 import '../customMenuItem/CustomMenuItem.css'
 import { faCheck,faTimes } from '@fortawesome/free-solid-svg-icons'
@@ -12,7 +11,6 @@ export const CustomMenuItem = ({name,id,type,handleEl,handleAc}) => {
     const [user,setUser] = useState(id)
     const [openModal, setOpenModal] = React.useState(false);
     const [openModalCancer, setOpenModalCancer] = React.useState(false);
-    const [anchorEl, setAnchorEl] = React.useState(null);
 
 
     useEffect(() => {

@@ -32,7 +32,7 @@ export const TabHey = ({name,userlist,handleEl,handleAc}) => {
                 <div className="tabhey-cont-options">
 
                     <div >
-                       <OptionsMenu style="home"/>
+                       <OptionsMenu type="home"/>
                     </div>
                     
                     <button aria-describedby={id} className="tabhey-btn-options" onClick={handleClick}>

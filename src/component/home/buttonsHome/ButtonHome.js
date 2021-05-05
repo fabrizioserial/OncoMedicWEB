@@ -1,6 +1,6 @@
 import React from 'react'
 import '../buttonsHome/ButtonHome.css'
-import { Router,Link, Route, Switch } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 export const ButtonHome = (props) => {

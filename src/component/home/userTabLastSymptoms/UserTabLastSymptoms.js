@@ -1,25 +1,14 @@
-import React,{useState,useEffect} from 'react'
+import React from 'react'
 import {Menu,MenuItem} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
-import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate'
 import {ItemUser} from '../../ItemUser/ItemUser'
 import './UserTabLastSymptoms.css'
 import ModalPopOverSymptom from '../../modals/ModalPopOverSymptom';
 
 
-
-const useStyles = makeStyles((theme) => ({
-  typography: {
-    padding: theme.spacing(2),
-  },
-}));
-
 export const UserTabLastSymptoms=({symptomsList})=> {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false);
   const [symptom, setSymptom] = React.useState('');
-
-  const i = [1,2,3,4,5,6]
 
   // Menu
   const handleClick = (event,item) => {
@@ -40,7 +29,7 @@ export const UserTabLastSymptoms=({symptomsList})=> {
   };
 
   const handleCloseAndOpenModal = (event,item) => {
-    {item!=undefined && setSymptom(item);}
+    item!==undefined && setSymptom(item);
     setOpenModal(true)
     setAnchorEl(null);
   }; 
