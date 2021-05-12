@@ -3,7 +3,7 @@ import './UsertabSymptoms.css'
 import { ItemUser } from '../../ItemUser/ItemUser'
 import { useHistory } from 'react-router'
 
-export const UsertabSymptoms=({sympstoms,descs})=> {
+export const UsertabSymptoms=({sympstoms,descs,id})=> {
   const [sympInfo,setSympInfo] = useState(descs)
 
   useEffect(()=>{
@@ -12,7 +12,7 @@ export const UsertabSymptoms=({sympstoms,descs})=> {
 
   const history = useHistory()
   function handleCloseAndNavigate(){
-    
+      history.push(`/userSympts/${id}`);
   }
 
   return (

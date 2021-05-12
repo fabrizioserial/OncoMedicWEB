@@ -13,18 +13,19 @@ import { useHistory } from 'react-router-dom';
 
 export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sad,run,social,hid,hungry,handletotalClick}) => {
     const [imgs,setImgs] = useState(image)
-    const [descripcion,setDescripcion] = useState("")
+    const [descripcion,setDescripcion] = useState("Descripcion del sintoma no encontrado")
     const [regdiario,setRegDiario] = useState()
 
     useEffect(() => {
         setImgs(image)
+        symptom && console.log("Hola",symptom.name)
     }, [image])
 
     useEffect(()=>{
         if(desc && symptom){
             const listOfGrades = desc.gravity.find(element => element.value===symptom.grade)
             setDescripcion(listOfGrades)
-        }
+        } 
     },[desc, symptom])
 
     useEffect(()=>{
@@ -170,7 +171,25 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
             }
             
             <td onClick={handleClick}></td>
-        </tr>: ""
+        </tr>:
+          type==="seeUserSymptoms"?
+          <tr className="usertab-fila">
+              <td onClick={handleClick}></td>
+              {symptom.date &&  <td>{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
+              <td onClick={handleClick}>{symptom.symptom}</td>
+              { descripcion && 
+                      <td className="usertab-first-col-grado"><MouseOverPopover name={`Grado ${symptom.grade}`} descrip={`${descripcion.label}`}/></td> 
+              }
+              { symptom.grade>2 ?
+                  (
+                      <td onClick={handleClick}>Urgencia</td>
+                  ):(
+                      <td onClick={handleClick}>Ver respuesta</td>
+                  )
+              }
+              
+              <td onClick={handleClick}></td>
+          </tr>: ""
     )
 }
   

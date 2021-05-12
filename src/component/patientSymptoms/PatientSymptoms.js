@@ -16,6 +16,7 @@ const PatientSymptoms = ({medicData}) =>{
     const [userList,setUserList] = useState([])
     const [symptomsList,setSymptomsList] = useState([])
     const [symptomsList2,setSymptomsList2] = useState([])
+    const [showedSymptomsList2,setShowedSymptomsList2] = useState([])
     const [images,setImageList] =useState([])
     const [sympInfo,setSympInfo] = useState([])
     const [openSnackBar,setOpenSnackBar] = useState(false)
@@ -106,6 +107,10 @@ const PatientSymptoms = ({medicData}) =>{
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[symptomsList,userList])
 
+    useEffect(()=>{
+        setShowedSymptomsList2(symptomsList2)
+    },[symptomsList2])
+
     const handleWarnBar = () => {
         setSeverity("error")
         setMessage("Por favor seleccione una categoria")
@@ -123,36 +128,23 @@ const PatientSymptoms = ({medicData}) =>{
         (title === "" && selected!=="FECHA") && handleRefresh()
         switch (selected){
             case "FECHA":
-                return setSymptomsList2(symptomsList2.filter((item=>
+                return setShowedSymptomsList2(showedSymptomsList2.filter((item=>
                     item.date.toDate() >= (dateStart)
                     && item.date.toDate() <= (dateEnd))));
             case "PACIENTE":
-                return setSymptomsList2(symptomsList2.filter((item=>item.name.toUpperCase().includes(title.toUpperCase()))));   
+                return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.name.toUpperCase().includes(title.toUpperCase()))));   
             case "SINTOMA":
-                return setSymptomsList2(symptomsList2.filter((item=>item.symptom.toUpperCase().includes(title.toUpperCase()))));  
+                return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.symptom.toUpperCase().includes(title.toUpperCase()))));  
             case "GRADO":
                 // eslint-disable-next-line eqeqeq
-                return setSymptomsList2(symptomsList2.filter((item=>item.grade==(title))));  
+                return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.grade==(title))));  
             default:
                 return handleWarnBar() 
         }
     }
 
     const handleRefresh=()=>{
-        const db = getFirestore()
-        const itemCollection = db.collection("users")
-
-        const usersActive = itemCollection.where("status","!=","Pendiente")
-        usersActive.get().then((querySnapshot)=>{
-            let activeuser = querySnapshot.docs.map(doc =>{
-                return(
-                    {
-                        id:doc.id,...doc.data()
-                    }
-                )
-            })
-            setUserList(activeuser)
-        })
+        setShowedSymptomsList2(symptomsList2)
     }
 
     useEffect(()=>{
@@ -199,7 +191,7 @@ const PatientSymptoms = ({medicData}) =>{
                         </thead>
                         <tbody>
                             {
-                                symptomsList2.length > 0 && symptomsList2.map((item,key) => <ItemUser  key={key} symptom={item} desc={sympInfo.find(element => element.label===item.symptom)} type="seeSymptoms"/>)
+                                showedSymptomsList2.length > 0 && showedSymptomsList2.map((item,key) => <ItemUser  key={key} symptom={item} desc={sympInfo.find(element => element.label===item.symptom)} type="seeSymptoms"/>)
                             }
                         </tbody>
                     </table>

@@ -111,14 +111,16 @@ export const CompleteProfile = () => {
             </div>:
             (user && user.name && image)? 
             <div className="profile-cont-background">
-                <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
+                <div className="userall-head">
+                    <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
+                </div>
                 <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
                 <div className="two-squares-complete-profile">
                     <div  className="estado-usertab-cont-background">
                         <UsertabState user={user} idProp={user.id} type="profile" flexi={{Flex:1}}/>
                     </div>
                     <div className="sintoms-usertab-cont-background">
-                        <UsertabSymptoms sympstoms={symptomsList} descs={symInfo} flexi={{Flex:1}}/>
+                        <UsertabSymptoms id={user.id} sympstoms={symptomsList} descs={symInfo} flexi={{Flex:1}}/>
                     </div>  
                 </div>
             </div>

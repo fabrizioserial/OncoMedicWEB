@@ -1,0 +1,26 @@
+.patientsymptoms-th-empty{
+    width: 3%;
+}
+.patientsymptoms-th-fecha{
+    width: 17.5%;
+}
+.patientsymptoms-th-patient{
+    width:20%;
+}
+.patientsymptoms-th-symptom{
+    width:20%;
+}
+.patientsymptoms-th-grade{
+    width:20%;
+}
+.mouse-over-descr{
+    cursor: pointer;
+    font: 16px 'Montserrat' !important;
+    border: none;
+    background: none;
+    width: 100%;
+}
+.userall-thead-sympts{
+    color: var(--primary);
+    margin-bottom: 10px;
+}

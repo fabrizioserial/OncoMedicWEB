@@ -17,6 +17,7 @@ const UserTabAllUsers = ({medicData}) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [openModal, setOpenModal] = React.useState(false);
     const [userList,setUserList] = useState([])
+    const [showedUserList,setShowedUserList] = useState([])
     const [images,setImageList] =useState([])
     const [user, setUser] = React.useState("");
     const [openSnackBar,setOpenSnackBar] = useState(false)
@@ -72,31 +73,22 @@ const UserTabAllUsers = ({medicData}) => {
         title = title.toUpperCase()
         switch (selected){
             case "N PACIENTE":
-                return setUserList(userList.filter((item=>item.id.toUpperCase().includes(title))));
+                return setShowedUserList(showedUserList.filter((item=>item.id.toUpperCase().includes(title))));
             case "NOMBRE":
-                return setUserList(userList.filter((item=>item.name.toUpperCase().includes(title))));   
+                return setShowedUserList(showedUserList.filter((item=>item.name.toUpperCase().includes(title))));   
             case "TIPO DE CANCER":
-                return setUserList(userList.filter((item=>item.cancer.toUpperCase().includes(title))));  
+                return setShowedUserList(userList.filter((item=>item.cancer.toUpperCase().includes(title))));  
             default:
                 return handleWarnBar() 
         }
     }
+
+    useEffect(()=>{
+        setShowedUserList(userList)
+    },[userList])
+
     const handleRefresh=()=>{
         const db = getFirestore()
-        const itemCollection = db.collection("users")
-        var usersActive = itemCollection.where("status","==","Activo").where("medic","==",medicData.id)
-        usersActive.get().then((querySnapshot)=>{
-            let activeuser = querySnapshot.docs.map(doc =>{
-                    return(
-                        {
-                            id:doc.id,...doc.data()
-                        }
-                    )
-                }
-            )
-            setUserList(activeuser)
-        })
-
 
         const itemCollectionAvatar = db.collection("avatars")
         
@@ -110,6 +102,8 @@ const UserTabAllUsers = ({medicData}) => {
                 )
             setImageList(avatars)
         })
+
+        setShowedUserList(userList)
     }
     // Eliminar
 
@@ -181,7 +175,7 @@ const UserTabAllUsers = ({medicData}) => {
                         </thead>
                         <tbody>
                             {
-                                (userList.length > 0) && userList.map((item,key) => <ItemUser image={images.find(element =>element.id===item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
+                                (showedUserList.length > 0) && showedUserList.map((item,key) => <ItemUser image={images.find(element =>element.id===item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
                             }
                             <Menu className="menu-see-all-users"
                                 id={id}

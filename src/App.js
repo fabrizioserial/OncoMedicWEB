@@ -13,6 +13,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import SeeAllDiaryRegs from './component/seeAllDiaryRegs/SeeAllDiaryRegs';
 import './Variables.css'
+import AllUserSympts from './component/allUserSympts/AllUserSympts';
 
 const App = () => {
   return (
@@ -47,6 +48,10 @@ const App = () => {
 
                 <Route exact path="/seeAllDiaryRegs/:id">
                   <SeeAllDiaryRegs/>
+                </Route>
+
+                <Route exact path="/userSympts/:id">
+                  <AllUserSympts/>
                 </Route>
 
 
