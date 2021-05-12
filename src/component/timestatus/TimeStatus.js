@@ -81,12 +81,12 @@ export const TimeStatus = () => {
             case 9:
                 return "09";
             default:
-                return;
+                return dateN;
         }
     }
 
     useEffect(()=>{
-        today &&
+        console.log("Dia",today.getDate())
         setDate(getDateByNumber(today.getDate()))
 
         setDay(getDayByNumber(today.getDay()))

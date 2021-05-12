@@ -18,15 +18,9 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
     const [cancer, setCancer] = useState(user.cancer);
     const [modal,setModal] = useState(false)
 
-
-    
     const selectModal = (info) => {
        setModal(!modal)
     }
-
-
- 
-
     const contentProps = useSpring({
         height: seeMore ? '100%':'50%'
     })
@@ -49,8 +43,12 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
     }; 
 
     const handleEliminado = () => {
-        handleSnackBar()
+        handleSnackBar("success","Usuario eliminado con exito!")
         switchToHome()
+    }
+
+    const editSnackBar = () => {
+        handleSnackBar("success","La informacion del usuario se ha actualizado")
     }
 
     const history = useHistory();
@@ -93,6 +91,7 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
                         <ModalUpdateProfile 
                             displayModal={modal}
                             closeModal={selectModal}
+                            editSnackBar={editSnackBar}
                             user={user}
                             updateDate={updateDate}/>
 

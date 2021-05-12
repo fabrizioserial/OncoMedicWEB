@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import "../profile/CompleteProfile.css"
 import {ButtonGoBack} from "../seeAllUsers/ButtonGoBack"
-import { UsertabEstado } from './usertabState/UsertabState'
+import { UsertabState } from './usertabState/UsertabState'
 import { UsertabSymptoms } from '../profile/usertabSymptoms/UsertabSymptoms'
 import ProfileTab from './profileTab/ProfileTab'
 import {useParams} from 'react-router-dom'
@@ -21,9 +21,13 @@ export const CompleteProfile = () => {
     const [userNotFound,setUserNotFound] = useState(false)
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [update,setUpdateData] = useState(false)
+    const [severity,setSeverity] = useState('')
+    const [message,setMessage] = useState('')
 
   
-    const handleOpensnackBar = () =>{
+    const handleOpensnackBar = (sev,mes) =>{
+        setSeverity(sev)
+        setMessage(mes)
         setOpenSnackBar(!openSnackBar)
     }
 
@@ -111,7 +115,7 @@ export const CompleteProfile = () => {
                 <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
                 <div className="two-squares-complete-profile">
                     <div  className="estado-usertab-cont-background">
-                        <UsertabEstado user={user} idProp={user.id} type="profile" flexi={{Flex:1}}/>
+                        <UsertabState user={user} idProp={user.id} type="profile" flexi={{Flex:1}}/>
                     </div>
                     <div className="sintoms-usertab-cont-background">
                         <UsertabSymptoms sympstoms={symptomsList} descs={symInfo} flexi={{Flex:1}}/>
@@ -124,8 +128,8 @@ export const CompleteProfile = () => {
             </div>
             }
             <MySnackbar
-                severity="success"
-                message="Usuario eliminado con exito!"
+                severity={severity}
+                message={message}
                 openSnackBar={openSnackBar}
                 handleCloseSnackBar={handleCloseSnackBar}
             />

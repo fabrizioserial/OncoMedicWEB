@@ -32,6 +32,14 @@ export const OptionsMenu = (props) => {
         setAnchorEl(null);
     }
 
+    function handleCloseAndOpenEdit(){
+        setAnchorEl(null);
+        props.handleEdit()
+    }
+
+
+
+
     // ELiminar
 
     const handleEliminate = () =>{
@@ -68,7 +76,7 @@ export const OptionsMenu = (props) => {
                             </Link>
                         ) : (
                             <div>
-                                    <MenuItem onClick={props.handleEdit}>Editar</MenuItem>
+                                    <MenuItem onClick={handleCloseAndOpenEdit}>Editar</MenuItem>
                                     <MenuItem onClick={handleCloseAndOpenModal}  >Eliminar</MenuItem>
                             </div>
                         )}

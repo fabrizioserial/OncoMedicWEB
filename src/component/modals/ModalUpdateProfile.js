@@ -1,16 +1,13 @@
-import React,{useState,useEffect} from 'react';
-import './ModalPopOver.css'
+import React,{useState,} from 'react';
+import './ModalUpdateProfile.css'
 import 'fontsource-roboto';
 import {getFirestore} from '../../firebase'
-import { ToastProvider,useToasts } from 'react-toast-notifications'
-import { Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 import './ModalUpdateProfile.css'
 
 const ModalUpdateProfile = (props) => {
       const [name,setName] = useState(props.user.name)
       const [lastName,setLastName] = useState(props.user.surname)
-      const [cancer,setCancer] = useState(props.user.cancer)
+      const [cancer] = useState(props.user.cancer)
       const [disabled,setDisabled] = useState(false)
       const [errorLastname,setErrorLastname] = useState(false)
       const [errorName,setErrorName] = useState(false)
@@ -50,13 +47,13 @@ const ModalUpdateProfile = (props) => {
          "surname": lastName,
          "cancer": cancer}).then(()=>{
             setDisabled("")
+            props.editSnackBar()
             props.updateDate()
-            props.closeModal() 
+            props.closeModal()
 
          }).catch(()=>{
             setDisabled("")
             props.closeModal() 
-
          })
 
       }
