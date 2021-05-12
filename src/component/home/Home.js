@@ -22,20 +22,7 @@ const Home = ({medicData}) =>{
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [textSnack,setTextSnack] = useState("")
     const [loading,setLoad] = useState(false)
-    const [width] = useWindowSize();
 
-    function useWindowSize() {
-        const [size, setSize] = useState([0, 0]);
-        useLayoutEffect(() => {
-            function updateSize() {
-            setSize([window.innerWidth, window.innerHeight]);
-            }
-            window.addEventListener('resize', updateSize);
-            updateSize();
-            return () => window.removeEventListener('resize', updateSize);
-        }, []);
-        return size;
-    }
 
 
     const selectModal = (info) => {
@@ -139,8 +126,6 @@ const Home = ({medicData}) =>{
 
     return( 
         <div className="home-cont-background">
-            {width>910 ?
-            <>
                 {(loading) && <div className="home-circ-progress">
                     <div className="login-loading"><CircularProgress  color="var(--primary)"/></div>
                 </div>
@@ -169,13 +154,6 @@ const Home = ({medicData}) =>{
                         openSnackBar={openSnackBar}
                         handleCloseSnackBar={handleCloseSnackBar}
                     />
-                </>
-                :   
-                <>
-               <h1>Estamos trabajando para usar la web en celulares, por ahora solo se puede usar desde la computadora!</h1>
-               <img alt="" src={sorry}/>
-               </>
-            }
         </div>
     )
 } 
