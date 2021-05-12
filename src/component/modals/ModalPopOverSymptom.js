@@ -1,10 +1,10 @@
 import React,{useState,useEffect} from 'react';
-import './ModalPopOverSintoma.css'
+import './ModalPopOverSymptom.css'
 import 'fontsource-roboto';
 import {getFirestore} from '../../firebase'
 
 
-const ModalPopOverSintoma = (props) => {
+const ModalPopOverSymptom = (props) => {
       const [disabled,setDisabled] = useState("")
 
      const divStyle = { 
@@ -50,4 +50,4 @@ const ModalPopOverSintoma = (props) => {
       </div>
      );
 }
-export default ModalPopOverSintoma;
+export default ModalPopOverSymptom;

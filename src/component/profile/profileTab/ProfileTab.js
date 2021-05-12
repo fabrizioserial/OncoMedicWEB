@@ -1,6 +1,11 @@
 import React,{useState,useEffect} from 'react'
+<<<<<<< HEAD
 import '../profileTab/ProfileTab.css'
 import { Tuerquita } from '../../tuerquita/Tuerquita'
+=======
+import "../profileTab/ProfileTab.css"
+import { OptionsMenu } from '../../optionsMenu/OptionsMenu'
+>>>>>>> fd873c8697a50ec8c9bb240142cd1ff5437702b1
 import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate';import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck,faChevronUp,faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import {getFirestore} from '../../../firebase'
@@ -96,7 +101,7 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
             <div className='tabhey-cont-options'>
                 {
                     <div >
-                       <Tuerquita id={user.id} style='profile' handleEdit={handleEdit} handleEliminado={handleEliminado}/>
+                       <OptionsMenu id={user.id} style='profile' handleEdit={handleEdit} handleEliminado={handleEliminado}/>
                     </div>
                 
                 }

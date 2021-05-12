@@ -1,7 +1,8 @@
 import React,{useEffect,useState} from 'react'
-import './PatientSymptoms.css'
+import './SeeAllDiaryRegs.css'
 import { ButtonGoBack } from '../seeAllUsers/ButtonGoBack'
 import { ItemUser } from '../ItemUser/ItemUser';
+import { makeStyles } from '@material-ui/core/styles';
 import {getFirestore} from '../../firebase'
 import { connect } from 'react-redux'
 import { ButtonRefresh } from '../seeAllUsers/ButtonRefresh'
@@ -10,7 +11,7 @@ import { MySnackbar } from '../mySnackBar/MySnackbar';
 
 
 
-const PatientSymptoms = ({medicData}) =>{
+const SeeAllDiaryRegs = ({medicData}) =>{
 
     const [medic,setMedic] = useState(medicData)
     const [userList,setUserList] = useState([])
@@ -22,8 +23,6 @@ const PatientSymptoms = ({medicData}) =>{
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [severity,setSeverity] = useState("")
     const [message,setMessage] = useState("")
-    const [endDate,setEndDate] = useState(new Date())
-    const [startDate,setStartDate] = useState(new Date())
 
     useEffect(()=>{
         
@@ -39,39 +38,6 @@ const PatientSymptoms = ({medicData}) =>{
                     }
                 )
             setUserList(userlista)
-        })
-
-        const itemCollectionSymp = db.collection("mainSymptoms")
-        itemCollectionSymp.onSnapshot((querySnapshot) => {
-            
-            let sympList = querySnapshot.docs.map(doc => {
-                    return(
-                        {id:doc.id,...doc.data()}
-                        )
-                    }
-                )
-            setSympInfo(sympList)
-        })
-
-        const itemCollectionAvatar = db.collection("avatars")
-        
-        itemCollectionAvatar.get().then((querySnapshot) => {
-            
-            let avatars = querySnapshot.docs.map(doc => {
-                    return(
-                        {...doc.data()}
-                        )
-                    }
-                )
-            setImageList(avatars)
-            console.log(avatars)
-        })
-
-        const itemCollectionSymptoms = db.collection("symptoms")
-
-        itemCollectionSymptoms.onSnapshot((querySnapshot) => {
-            let symptomslista = querySnapshot.docs.map(doc => doc.data())
-            setSymptomsList(symptomslista)
         })
     },[medicData])
 
@@ -90,7 +56,7 @@ const PatientSymptoms = ({medicData}) =>{
         var lista = []
         userList.map(item=> item.status==="Activo" && itemCollectionSymptoms.where("id","==",item.id).get().then((querySnapshot) => {
  
-            querySnapshot.docs.map(doc => {
+            let avatars = querySnapshot.docs.map(doc => {
                     return(
                         lista = [...lista,{name:item.name,desc:item.desc,...doc.data()}]
                         )
@@ -130,8 +96,17 @@ const PatientSymptoms = ({medicData}) =>{
 
     useEffect(()=>{
         cleanSym()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[symptomsList,userList])
+
+{/*
+    const handleSearch = (e,title) => {
+        title === "" ? handleRefresh() :
+        title = title.toUpperCase()
+        setSymptomsList2(symptomsOrigin.filter((item=>item.name.toUpperCase().includes(title)||
+                                    item.symptom.toUpperCase().includes(title) ||
+                                    item.symptom.toUpperCase().includes(title) || filterDate(item.date,title,item)
+                                    )))
+}*/}
 
     const handleWarnBar = () => {
         setSeverity("error")
@@ -142,19 +117,17 @@ const PatientSymptoms = ({medicData}) =>{
         if (reason === 'clickaway') {
             return;
         }
+
         setOpenSnackBar(false);
     };
 
-
-    function handleSearch(e,title,selected,dateStart,dateEnd){
-        (title === "" && selected!=="FECHA") && handleRefresh()
-        console.log("fecha1",dateStart)
-        console.log("fecha2",dateEnd)
+    function handleSearch(e,title,selected,date2){
+        title === "" && handleRefresh()
         switch (selected){
             case "FECHA":
                 return setSymptomsList2(symptomsList2.filter((item=>
-                    item.date.toDate() >= (dateStart)
-                    && item.date.toDate() <= (dateEnd))));
+                    (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(item.date.toDate())) >= (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(title))
+                    && (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(item.date.toDate())) <= (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(date2)))));
             case "PACIENTE":
                 console.log(title)
                 return setSymptomsList2(symptomsList2.filter((item=>item.name.toUpperCase().includes(title.toUpperCase()))));   
@@ -168,7 +141,7 @@ const PatientSymptoms = ({medicData}) =>{
     }
 
     const filterDate = (date,title,item) =>{
-        if (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(date.toDate()) == title){
+        if (Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(date.toDate())== title){
             return item
         }
     }
@@ -257,4 +230,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(PatientSymptoms)
+export default connect(mapStateToProps)(SeeAllDiaryRegs)

@@ -1,15 +1,6 @@
 import React,{useEffect,useState} from 'react'
-import './UsertabSintomas.css'
-import optionIcon from '../../../img/option_icon.png'
-import {Menu,MenuItem,Button} from '@material-ui/core'
-import { Component } from 'react';
-import ModalPopOverELiminate from '../../modals/ModalPopOverEliminate'
-import { Router,Link, Route, Switch } from 'react-router-dom'
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
+import './UsertabSymptoms.css'
 import { makeStyles } from '@material-ui/core/styles';
-import ModalPopOver from "../../modals/ModalPopOver"
-import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate'
 import { ItemUser } from '../../ItemUser/ItemUser'
 
 
@@ -19,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UsertabSintomas=({sympstoms,descs})=> {
+export const UsertabSymptoms=({sympstoms,descs})=> {
   const i = [1,2,3,4,5,6]
   const [sympInfo,setSympInfo] = useState(descs)
 
@@ -43,7 +34,7 @@ export const UsertabSintomas=({sympstoms,descs})=> {
                     </thead>
                     <tbody>
                         {
-                          sympstoms.map(item => <ItemUser desc={sympInfo.find(element => element.label == item.symptom)} symptom={item} type="sintomas"/>)
+                          sympstoms.map(item => <ItemUser desc={sympInfo.find(element => element.label===item.symptom)} symptom={item} type="symptoms"/>)
                         }
                     </tbody>
                   </table>
@@ -53,7 +44,7 @@ export const UsertabSintomas=({sympstoms,descs})=> {
                 :
                 <div className="sintoms-img-error-cont">
                   <img className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
-                  <p>No se encontró registro de sintomas</p>
+                  <p>No se encontró registro de symptoms</p>
                 </div>
                 }
             </React.Fragment>

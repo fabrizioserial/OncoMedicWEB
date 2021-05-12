@@ -10,7 +10,8 @@ export const SearchTab = ({handleClick,categories}) => {
     const [title, setTitle] = useState("")
     const [anchorEl, setAnchorEl] = useState(null);
     const [selected,setSelected] = useState()
-    const [date2,setDate2] = useState()
+    const [dateStart,setDateStart] = useState(new Date())
+    const [dateEnd,setDateEnd] = useState(new Date())
 
     const handlePickClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -26,11 +27,13 @@ export const SearchTab = ({handleClick,categories}) => {
     }
 
     const handleDate = (date) =>{
-        setTitle(date)
+        setDateStart(date)
+        console.log("fechaHola",dateStart)
     }
 
-    const handleDate2 = (date) =>{
-        setDate2(date)
+    const handledateEnd = (date) =>{
+        setDateEnd(date)
+        console.log("fechaHola",dateEnd)
     }
 
     const open = Boolean(anchorEl);
@@ -39,10 +42,10 @@ export const SearchTab = ({handleClick,categories}) => {
     return (
         <div className="searchtab-back">
         <div className="searchtab-cont-cont one">
-            {selected != "FECHA" ?
+            {selected !== "FECHA" ?
             <React.Fragment>
             <input
-                onKeyPress={(e) => e.key === 'Enter' && handleClick(e,title,selected,date2)}   
+                onKeyPress={(e) => e.key === 'Enter' && handleClick(e,title,selected)}   
                 placeholder="Buscar por Nombre, Apellido, DNI, ID paciente" 
                 className="searchtab-input"
                 onChange={event => setTitle(event.target.value)}
@@ -53,10 +56,10 @@ export const SearchTab = ({handleClick,categories}) => {
                     <a >Desde:</a>
                     <MyDatePicker handleDate={handleDate}/>
                     <a style={{marginLeft: "2%"}} >Hasta:</a>
-                    <MyDatePicker handleDate={handleDate2}/>
+                    <MyDatePicker handleDate={handledateEnd}/>
                 </div>
             }
-            <FontAwesomeIcon onClick={(e)=>handleClick(e,title,selected,date2)} icon={faSearch} className="searchtab-input-icon" />
+            <FontAwesomeIcon onClick={(e)=>handleClick(e,title,selected,dateStart,dateEnd)} icon={faSearch} className="searchtab-input-icon" />
         </div>
         <div onClick={handlePickClick} className="searchtab-cont-cont two">
             <p>{selected ? selected:"Filtrar por:"}</p>

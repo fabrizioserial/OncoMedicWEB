@@ -19,6 +19,8 @@ const Login = ({setMedicUserAction}) => {
     const [errorComplete,setEComplete] = useState(false)
     const [errorInvalid,setEInvalid] = useState(false)
     const [passwordShown, setPasswordShown] = useState(false);
+    const [eName,setEname] = useState(false)
+    const [ePass,setEPass] = useState(false)
 
     const checkUser = () =>{
         if(name.length > 0 && password.length >0){
@@ -31,10 +33,8 @@ const Login = ({setMedicUserAction}) => {
             itemCollection.get().then((querySnapshot)=>{
                 let name2 = ""
                 let usermedic = querySnapshot.docs.map(doc => {
-                    
-                    if(doc.data().name == name){
-                        if(doc.data().password == password){
-                            console.log('se Encontro')
+                    if(doc.data().name===name){
+                        if(doc.data().password===password){
                             console.log(doc.id,doc.data().name,doc.data().email)
                             name2 = doc.data().name
                             setMedicUserAction({id:doc.id,name:doc.data().name,email:doc.data().email,admin:doc.data().admin})
@@ -66,7 +66,7 @@ const Login = ({setMedicUserAction}) => {
     }
 
     const setError = (type) =>{
-        type == "error" ? setEComplete(true):setEInvalid(true)
+        type==="name" ? setEname(true):setEPass(true)
     }
 
     const pushToDatabase = () =>{
@@ -133,7 +133,7 @@ const Login = ({setMedicUserAction}) => {
         <div className="cont-login-container">
             {
                 loading && <div className="login-cont-loading">
-                    <div className="login-loading"><CircularProgress color="#9357F7"/></div>
+                    <div className="login-loading"><CircularProgress color="var(--primary)"/></div>
                 </div>
             }
             <div className="cont-login-backlogin">

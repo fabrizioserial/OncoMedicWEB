@@ -1,8 +1,8 @@
 import React,{useEffect,useState} from 'react'
 import "../profile/CompleteProfile.css"
 import {ButtonGoBack} from "../seeAllUsers/ButtonGoBack"
-import { UsertabEstado } from '../profile/usertabEstado/UsertabEstado'
-import { UsertabSintomas } from '../profile/usertabSintomas/UsertabSintomas'
+import { UsertabState } from './usertabState/UsertabState'
+import { UsertabSymptoms } from '../profile/usertabSymptoms/UsertabSymptoms'
 import ProfileTab from './profileTab/ProfileTab'
 import {useParams} from 'react-router-dom'
 import {getFirestore} from '../../firebase'
@@ -56,7 +56,7 @@ export const CompleteProfile = () => {
                 setUser(userFound)
                 setLoad(false)
                 console.log("El usuario encontrado es: ",userFound)
-                if(userFound.name == null){
+                if(userFound.name===null){
                     setUserNotFound(true)
                 }
             })
@@ -108,7 +108,7 @@ export const CompleteProfile = () => {
             { 
             load ? 
             <div className="login-cont-loading">
-                        <div className="login-loading"><CircularProgress color="#9357F7"/></div>
+                        <div className="login-loading"><CircularProgress color="var(--primary)"/></div>
             </div>:
             (user && user.name && image)? 
             <div className="profile-cont-background">
