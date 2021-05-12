@@ -3,7 +3,7 @@ import '../timestatus/TimeStatus.css'
 import deco from '../../img/decoTimeState.png' 
 
 export const TimeStatus = () => {
-    var today = new Date();
+    var today = new Date()
     const [day,setDay] = useState('')
     const [date,setDate] = useState('')
     const [month,setMonth] = useState('')
