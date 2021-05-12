@@ -31,7 +31,7 @@ const Login = ({setMedicUserAction}) => {
                 let name2 = ""
                 querySnapshot.docs.map(doc => {
                     
-                    if(doc.data().name === name){
+                    if(doc.data().email === name){
                         if(doc.data().password === password){
                             name2 = doc.data().name
                             setMedicUserAction({id:doc.id,name:doc.data().name,email:doc.data().email,admin:doc.data().admin})
@@ -41,6 +41,7 @@ const Login = ({setMedicUserAction}) => {
                             setError("error no data")
                         }
                     }
+                    return 0;
                     return 0;
                 })
                 if(name2 === ""){
@@ -61,51 +62,9 @@ const Login = ({setMedicUserAction}) => {
     const setError = (type) =>{
         type === "error" ? setEComplete(true):setEInvalid(true)
     }
-
-    const pushToDatabase = () =>{
-        const db = getFirestore()
-        db.collection("users").add({
-            name:"Fabri",
-            email:"aaa@",
-            gender:"",
-            birth:"",
-            medic:"123456",
-            place:"",
-            etnia:"",
-            cancer: "",
-            smoke:{
-                smoke:false,
-                time:"",
-                qnt:"",
-            },
-            dbt:{
-                dbt:false,
-                med:""
-            },
-            med:{
-                hip:false,
-                epoc:false,
-                acv:false,
-                inf:false
-            },
-            avatar:"1",
-            status:"Pendiente"
-        }).then(()=>{
-        }).catch((e)=>{
-        });
-        const date = new Date()
-        db.collection('symptoms').add({
-            id:"DrleMt4ynfecs9OHnyr8",
-            symptom:"fiebre",
-            grade:"4",
-            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-            date:date
-        })
-     }
-
-     const togglePasswordVisiblity = () => {
+    const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
-      };
+    };
     
     const history = useHistory();
     const handleClick = () => history.push('/home');
@@ -120,7 +79,7 @@ const Login = ({setMedicUserAction}) => {
             <div className="cont-login-backlogin">
                 <div className="cont-login-cont-ev">
                     <div className="login-text-cont">
-                        <p onClick={pushToDatabase} className="text-login-login">Log In</p>
+                        <p className="text-login-login">Log In</p>
                         <p className="text-login-punto">.</p>
                     </div>
                     <form>

@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { UserTabLastSymptoms } from './userTabLastSymptoms/UserTabLastSymptoms'
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import CircularProgress from '@material-ui/core/CircularProgress';
-import sorry from '../../img/sorry-removebg-preview.png'
+
 
 const Home = ({medicData}) =>{
 
