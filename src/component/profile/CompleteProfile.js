@@ -20,6 +20,8 @@ export const CompleteProfile = () => {
     const [load,setLoad] = useState(true)
     const [userNotFound,setUserNotFound] = useState(false)
     const [openSnackBar,setOpenSnackBar] = useState(false)
+    const [update,setUpdateData] = useState(false)
+
   
 
 
@@ -35,18 +37,22 @@ export const CompleteProfile = () => {
         setOpenSnackBar(false);
     };
 
+    const updateDate = () =>{
+        setUpdateData(!update)
+    }
 
     useEffect(()=>{
 
         if(id){
             setUserNotFound(false)
             console.log("DB READING")
-            console.log("id ",id)
             const db = getFirestore()
             const itemCollection = db.collection("users").doc(id)
             
             itemCollection.get().then((querySnapshot) => {
                 let userFound ={id:querySnapshot.id,...querySnapshot.data()}
+                                console.log("El usuario encontrado es: ",userFound)
+
                 setUser(userFound)
                 setLoad(false)
                 console.log("El usuario encontrado es: ",userFound)
@@ -62,7 +68,7 @@ export const CompleteProfile = () => {
         })
 
         }
-    },[id])
+    },[id,update])
 
     useEffect(()=>{
         console.log("user: ",user)
@@ -75,7 +81,6 @@ export const CompleteProfile = () => {
             const itemCollection = db.collection("avatars").doc(stringAvatar.toString())
             itemCollection.get().then((querySnapshot) => {
                 let imgFound =querySnapshot.data()
-                console.log(imgFound)
                 setImage(imgFound)
             })
 
@@ -100,35 +105,35 @@ export const CompleteProfile = () => {
 
     return (
         <React.Fragment>
-        { 
-        load ? 
-        <div className="login-cont-loading">
-                    <div className="login-loading"><CircularProgress color="#9357F7"/></div>
-        </div>:
-        (user && user.name && image)? 
-        <div className="profile-cont-background">
-            <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
-            <ProfileTab handleSnackBar={handleOpensnackBar} image={image} user={user}/>
-            <div className="two-squares-complete-profile">
-                <div  className="estado-usertab-cont-background">
-                    <UsertabEstado user={user} idProp={user.id} type="profile" flexi={{Flex:1}}/>
+            { 
+            load ? 
+            <div className="login-cont-loading">
+                        <div className="login-loading"><CircularProgress color="#9357F7"/></div>
+            </div>:
+            (user && user.name && image)? 
+            <div className="profile-cont-background">
+                <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
+                <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
+                <div className="two-squares-complete-profile">
+                    <div  className="estado-usertab-cont-background">
+                        <UsertabEstado user={user} idProp={user.id} type="profile" flexi={{Flex:1}}/>
+                    </div>
+                    <div className="sintoms-usertab-cont-background">
+                        <UsertabSintomas sympstoms={symptomsList} descs={symInfo} flexi={{Flex:1}}/>
+                    </div>  
                 </div>
-                <div className="sintoms-usertab-cont-background">
-                    <UsertabSintomas sympstoms={symptomsList} descs={symInfo} flexi={{Flex:1}}/>
-                </div>  
             </div>
-        </div>
-        : userNotFound &&
-        <div className="profile-cont-background1">
-            <img className={{width:"200px"}} src="https://www.initcoms.com/wp-content/uploads/2020/07/404-error-not-found-1.png" />
-        </div>
-        }
-        <MySnackbar
-            severity="success"
-            message="Usuario eliminado con exito!"
-            openSnackBar={openSnackBar}
-            handleCloseSnackBar={handleCloseSnackBar}
-        />
+            : userNotFound &&
+            <div className="profile-cont-background1">
+                <img className={{width:"200px"}} src="https://www.initcoms.com/wp-content/uploads/2020/07/404-error-not-found-1.png" />
+            </div>
+            }
+            <MySnackbar
+                severity="success"
+                message="Usuario eliminado con exito!"
+                openSnackBar={openSnackBar}
+                handleCloseSnackBar={handleCloseSnackBar}
+            />
         
         </React.Fragment>
         
