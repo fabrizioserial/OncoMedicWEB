@@ -3,8 +3,6 @@ import '@firebase/firestore';
 
 const APIKEY = process.env.REACT_APP_FIREBASECONFIG
 
-console.log(APIKEY)
-
 const app = firebase.initializeApp(APIKEY)
 
 export function getFirebase() {
