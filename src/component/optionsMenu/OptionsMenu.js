@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import '../optionsMenu/OptionsMenu.css'
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
-import {getFirestore} from '../../firebase'
 
 
 export const OptionsMenu = (props) => {
@@ -36,7 +35,6 @@ export const OptionsMenu = (props) => {
     // ELiminar
 
     const handleEliminate = () =>{
-        const db = getFirestore()
         setOpenModal(false);
         props.handleEliminado()
     }

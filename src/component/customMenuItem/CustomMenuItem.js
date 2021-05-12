@@ -52,7 +52,6 @@ export const CustomMenuItem = ({name,id,type,handleEl,handleAc}) => {
 
     const handleEliminate = () =>{
         handleEl()
-        const db = getFirestore()
         setOpenModal(false);
     }
     

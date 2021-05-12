@@ -78,18 +78,6 @@
     font-weight: 600;
     font-family: "Montserrat"!important;
     color: black;
-<<<<<<< HEAD
-}
-.editar-complete-profile{
-    padding-top: 5%;
-    font-size: 25px;
-    margin-top: -10px;
-    border: none;
-    font-weight: 600;
-    font-family: "Montserrat"!important;
-    color: red;
-    width: 100%;
-=======
     width: 100%;
     margin-bottom: 10px;
 }
@@ -106,17 +94,11 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
->>>>>>> 9fc4795f9fd976b8d207e85e20e02cf30e4345b9
 }
 .name-complete-profile:disabled{
     background-color: #F4F4F4;
 }
-<<<<<<< HEAD
-.expand-profile-tab{
-    padding-top: 1%;
-=======
 .label-cont-input{
     display: flex;
     flex-direction: column;
->>>>>>> 9fc4795f9fd976b8d207e85e20e02cf30e4345b9
 }
