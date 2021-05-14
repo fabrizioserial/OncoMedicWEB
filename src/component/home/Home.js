@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { UserTabLastSymptoms } from './userTabLastSymptoms/UserTabLastSymptoms'
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Skeleton } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 
 
@@ -22,6 +23,7 @@ const Home = ({medicData}) =>{
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [textSnack,setTextSnack] = useState("")
     const [loading,setLoad] = useState(false)
+    const [skeleton,setSkeleton] = useState(true)
 
     function seeMedic () {
         return medicData;
@@ -82,7 +84,10 @@ const Home = ({medicData}) =>{
     },[medicData])
 
     useEffect(()=>{
-    },[userList,images,medic])
+        setTimeout(function(){
+            setSkeleton(false)
+        }.bind(this),1500)
+    },[medicData])
 
     useEffect(()=>{
       setMedic(medicData)
@@ -145,9 +150,17 @@ const Home = ({medicData}) =>{
                             displayModal={modal}
                             closeModal={selectModal}/>
                     <div className="home-cont-usertabs">
-                        <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>
-                        <UserTabLastSymptoms className="usersympts-second" symptomsList={symptomsList2}/>
-                        
+                        {skeleton ?
+                        <>
+                            <Skeleton style={{marginRight: "50px"}} className="usertab-cont-info" variant="rect" animation="wave" width={"100%"} height={"400px"} />
+                            <Skeleton  className="usertab-cont-info" variant="rect" animation="wave" width={"100%"} height={"400px"} />
+                        </>
+                        :
+                        <>
+                            <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>
+                            <UserTabLastSymptoms className="usersympts-second" symptomsList={symptomsList2}/>
+                        </>
+                        }
                     </div>
                     <MySnackbar
                         severity="success"

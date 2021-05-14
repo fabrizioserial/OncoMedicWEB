@@ -6,12 +6,14 @@ import {useHistory } from 'react-router-dom'
 import ModalPopOverSeeDiaryReg from '../../modals/ModalPopOverSeeDiaryReg'
 import {ItemUser} from '../../ItemUser/ItemUser'
 import {getFirestore} from '../../../firebase'
+import { Skeleton } from '@material-ui/lab'
 
 export const UsertabState=({type,idProp,user})=> {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false); 
   const [regDiarios,setRegDiario] = useState([])
   const [regunique,setUniqReg] = useState()
+  const [skeleton,setSkeleton] = useState(true)
 
   const handleClick = (event,item) => {
     setUniqReg(item)
@@ -109,6 +111,9 @@ export const UsertabState=({type,idProp,user})=> {
         </div>
         </>
       ):(
+        skeleton ? 
+          <></>
+        :
         <div className="sintoms-img-error-cont">
           <img alt="" className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
           <p>No se encontraron registros diarios</p>

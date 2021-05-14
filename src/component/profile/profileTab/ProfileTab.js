@@ -1,5 +1,5 @@
 
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import "../profileTab/ProfileTab.css"
 import { OptionsMenu } from '../../optionsMenu/OptionsMenu'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,13 +10,17 @@ import '../profileTab/ProfileTab.css'
 import "../profileTab/ProfileTab.css"
 import ModalUpdateProfile from '../../modals/ModalUpdateProfile'
 import {useSpring,animated} from 'react-spring'
-
+import { Skeleton } from '@material-ui/lab'
+import ImageFadeIn from "react-image-fade-in";
 
 export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
     const [seeMore, setSeeMore] = useState(false);
     const [name] = useState(user.name);
     const [cancer, setCancer] = useState(user.cancer);
     const [modal,setModal] = useState(false)
+    const [skeleton,setSkeleton] = useState(true)
+    const [imgLoaded,setImgLoaded] = useState(false)
+
 
     const selectModal = (info) => {
        setModal(!modal)
@@ -32,6 +36,12 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
     const handleEdit = () => {
         setModal(!modal)
     }; 
+
+    useEffect(()=>{
+        setTimeout(function(){
+            setSkeleton(false)
+        }.bind(this),1500)
+    },[])
 
     const handleEditAndPush = () => {
         const db = getFirestore()
@@ -57,7 +67,14 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
     return (
         <animated.div className='name-div-complete-profile' style={contentProps}>
             <div className='div-complete-profile'>
-                <img alt="" className='complete-profile-user-image' src={image.url} />
+                    {!imgLoaded ?
+                        <Skeleton variant="circle" width={"169px"} height={"169px"}/>
+                    :null}
+                    <ImageFadeIn alt="" className='complete-profile-user-image' variant="circle" src={(image.url)} onLoad={() => (setImgLoaded(true))} style={{            animationName: 'gracefulimage',
+                        animationDuration: '0.3s',
+                        animationIterationCount: 1,
+                        animationTimingFunction: 'ease-in',
+                        display: !imgLoaded ? 'none' : undefined}}/>
                 <div className='text-complete-profile'>
                     <p  className='id-complete-profile' type='text'>{user.id}</p>
                     <p className='name-complete-profile' > {`${user.surname} , ${user.name}`} </p>
