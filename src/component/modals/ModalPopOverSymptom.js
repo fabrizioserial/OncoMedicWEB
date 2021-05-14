@@ -28,22 +28,30 @@ const ModalPopOverSymptom = (props) => {
                <p className="modal-title">SINTOMA PRESENTADO</p>
                <hr className="add-modal-line"/>
             </div>
-            <div className="add-inside-the-modal">
-                <p>Nombre y apellido:</p>
-                <p>{props.name}</p>
-            </div> 
-            <div className="add-inside-the-modal">
-                <p>ID:</p>
-                <p>{props.id}</p>
-            </div> 
-            <div className="add-inside-the-modal">
-                <p>Sintoma:</p>
-                <p>{props.symptom}</p>
-            </div> 
-            <div className="add-inside-the-modal">
-                <p>Grado:</p>
-                <p>{props.grade}</p>
-            </div>
+            <tr style={{marginTop: "5%"}} className="tabs-fila">
+                <td style={{paddingLeft: "2%"}}>Fecha:</td>
+                {props.date &&  <td style={{paddingRight: "2%"}}>{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(props.date.toDate())}</td> }
+            </tr>
+            <tr className="tabs-fila">
+                <td style={{paddingLeft: "2%"}}>Nombre:</td>
+                <td style={{paddingRight: "2%"}}>{props.name}</td>
+            </tr>
+            <tr className="tabs-fila">
+                <td style={{paddingLeft: "2%"}}>N paciente:</td>
+                <td style={{paddingRight: "2%"}}>{props.id}</td>
+            </tr>
+            <tr className="tabs-fila">
+                <td style={{paddingLeft: "2%"}}>Sintoma:</td>
+                <td style={{paddingRight: "2%"}}>{props.symptom}</td>
+            </tr>
+            <tr className="tabs-fila">
+                <td style={{paddingLeft: "2%"}}>Grado:</td>
+                <td style={{paddingRight: "2%"}}>{props.grade}</td>
+            </tr>
+            <tr className="tabs-fila">
+                <td style={{paddingLeft: "2%"}}>Respuesta:</td>
+                <td style={{paddingRight: "2%"}}>{props.grade>5 ? 'Urgencia':'No urgencia'}</td>
+            </tr>
          </div>
       </div>
      );

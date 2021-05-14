@@ -1,5 +1,5 @@
 import React,{useEffect,useState,useLayoutEffect} from 'react'
-import '../home/Home.css'
+import './Home.css'
 import { ButtonHome } from './buttonsHome/ButtonHome'
 import ModalPopOverNewMedic from '../modals/ModalPopOverNewMedic'
 import  {UserTabHome}  from './usertabhome/UserTabHome'
@@ -9,10 +9,10 @@ import { connect } from 'react-redux'
 import { UserTabLastSymptoms } from './userTabLastSymptoms/UserTabLastSymptoms'
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import PropTypes from 'prop-types';
 
 
 const Home = ({medicData}) =>{
-
     const [medic,setMedic] = useState(medicData)
     const [userList,setUserList] = useState([])
     const [symptomsList,setSymptomsList] = useState([])
@@ -23,7 +23,9 @@ const Home = ({medicData}) =>{
     const [textSnack,setTextSnack] = useState("")
     const [loading,setLoad] = useState(false)
 
-
+    function seeMedic () {
+        return medicData;
+    }
 
     const selectModal = (info) => {
        setModal(!modal)
@@ -45,7 +47,6 @@ const Home = ({medicData}) =>{
 
 
     useEffect(()=>{
-        
         const db = getFirestore()
         const itemCollection = db.collection("users").where("medic","==",medicData.id).limit(6)
         itemCollection.onSnapshot((querySnapshot) => {
@@ -136,7 +137,7 @@ const Home = ({medicData}) =>{
                     name={medic&&medic.name} userlist={userList.filter(item=>item.status==="Pendiente")}/>
                     <div className="home-cont-buttons">
                         {medic.admin&&<ButtonHome text="REGISTRAR NUEVO MÉDICO" color="purple" onClick={selectModal }></ButtonHome>}
-                        <ButtonHome text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>
+                        <ButtonHome test="BtnPurple" text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>
                         <ButtonHome text="VER ULTIMOS PACIENTES CON SINTOMAS" color="lightblue" link="seeSymptoms"></ButtonHome>
                     </div>
                         <ModalPopOverNewMedic 
@@ -157,6 +158,17 @@ const Home = ({medicData}) =>{
         </div>
     )
 } 
+Home.defaultProps = {
+    medicData: {
+        name: "121212", 
+        email: "aa@aa.com", 
+        id: "123456", 
+        admin: "true"
+    }
+}
+Home.propTypes = {
+    medicData: PropTypes.object
+}
 
 const mapStateToProps = (state) => {
     return {

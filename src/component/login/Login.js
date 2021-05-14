@@ -9,7 +9,7 @@ import {setMedicUserAction} from '../../reduxStore/actions/loginAction'
 import {faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Login = ({setMedicUserAction}) => {
+export const Login = ({setMedicUserAction}) => {
 
     const [name,setName] = useState("")
     const [password,setPassword] =useState("")
@@ -96,7 +96,7 @@ const Login = ({setMedicUserAction}) => {
                         </div>  
                             {errorComplete ? <p className="input-error-text">Complete los campos</p> : 
                             errorInvalid && <p className="input-error-text">Introduzca datos validos</p>}
-                        <button className={errorComplete || errorInvalid ? "btn-login-input active":"btn-login-input inactive"} onClick={()=>checkUser()}>
+                        <button id="Btnlogin" className={errorComplete || errorInvalid ? "btn-login-input active":"btn-login-input inactive"} onClick={()=>checkUser()}>
                             Log In
                         </button>
                         {//<button onClick={pushToDatabase}/>

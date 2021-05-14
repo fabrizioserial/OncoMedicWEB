@@ -7,6 +7,9 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import moment from 'moment'
 import ModalPopOverSeeDiaryReg from '../modals/ModalPopOverSeeDiaryReg';
+import { ButtonGoBack } from '../seeAllUsers/ButtonGoBack'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faLaughBeam,faSmile,faMeh,faFrown,faSadTear} from '@fortawesome/free-regular-svg-icons'
 
 const SeeAllDiaryRegs = ({medicData}) =>{
     const {id} = useParams()
@@ -16,6 +19,21 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     const [openModalDiario, setOpenModalDiario] = useState(false);
     const [modalDate, setModalDate] = useState("");
     const [regunique,setUnicReg] = useState([])
+    const [startDate,setStartDate] = useState('')
+
+    const returnEmoji = (mood)=>{
+        if(mood===10){
+            return '😀'
+        }else if(mood>=7){
+            return '🙂'
+        }else if(mood>=4){
+            return '😐'
+        }else if(mood>=2){
+            return '🙁'
+        }else{
+            return '😔'
+        }
+    }
 
     useEffect(()=>{
         if(id){
@@ -39,7 +57,11 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     useEffect(()=>{
         let eventList = regList.map(item => {
             return (
-                {title:`Humor: ${item.mood}`,start:(formatedDate(item.date.toDate()))}
+                {
+                title : '✓',
+                display : 'background',
+                backgroundColor: "lightgreen",
+                start:(formatedDate(item.date.toDate()))}
             )
         })
         setEvents(eventList)
@@ -69,6 +91,7 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     return (
         <>
             <div className="userall-cont-background">
+                <ButtonGoBack id={id} type="allUsers" text="VOLVER ATRAS" color="purple"/>
                 <FullCalendar
                     eventSources= {[events]}
                     locale= "es"
@@ -82,7 +105,6 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                 id={regunique}
                 displayModal={openModalDiario}
                 closeModal={handleCloseDiario}
-
             />
         </>
     );

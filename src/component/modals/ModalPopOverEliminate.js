@@ -56,7 +56,7 @@ const ModalPopOverEliminate = (props) => {
                   onChange={event => setTitle(event.target.value)}
                   value={title}
                   type="text"
-                  autocomplete="off"
+                  autoComplete="off"
                   id="idDelPaciente"
                   placeholder="Introduzca el numero del paciente para confirmar"
                   variant="outlined"/>
