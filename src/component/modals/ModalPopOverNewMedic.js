@@ -121,7 +121,7 @@ const ModalPopOverNewMedic = (props) => {
                      onChange={e => setPassword(e.target.value)}
                      disabled={disabled}
                      variant="outlined"/>
-                  <FontAwesomeIcon style={{paddingRight: "2%"}} onClick={()=>setPasswordShown(!passwordShown)} icon={passwordShown ? faEye:faEyeSlash}/>
+                  <FontAwesomeIcon style={{paddingRight: "2%",cursor: "pointer"}} onClick={()=>setPasswordShown(!passwordShown)} icon={passwordShown ? faEye:faEyeSlash}/>
                </div>
             </div>
             <p className="modal-add-input-cont-error">{errorPass ? "Introduzca una contraseña valida":""}</p>

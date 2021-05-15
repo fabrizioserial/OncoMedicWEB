@@ -39,7 +39,10 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
     useEffect(()=>{},[mood,sad,run,hungry,hid,social])
 
     const history = useHistory();
-    const switchToProfle = () => history.push(`/profile/${user.id}`);
+    const switchToProfle = () => {
+        console.log(user.id)
+        history.push(`/profile/${user.id}`);
+    }
 
     const returnEmoji = (mood)=>{
         if(mood===10){
@@ -71,7 +74,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
     return (
 
         type==="seeAllUsers"?
-            <tr className="item-user-fila">
+            <tr onClick={()=>switchToProfle()}  className="item-user-fila">
                 <th scope="row" className="item-user-user-image-table"><img alt="" className="usertab-user-image" src={imgs&&imgs.url} /></th>
                 <td>{user.id}</td> 
                 <td>{user.name}</td>

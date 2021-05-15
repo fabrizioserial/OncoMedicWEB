@@ -94,6 +94,7 @@
 .input-new-medic {
     border: "none" !important;
     width: "90%" !important;
+    font-size: 15px;
 }
 .input-new-medic:focus {
     outline: none;
