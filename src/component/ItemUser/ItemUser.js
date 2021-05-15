@@ -111,7 +111,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
             </tr>:
         type==="regdiarioMood"?
             <tr className="item-user-fila-regdiario">
-                <td className="emote-regdiario"> <FontAwesomeIcon icon={faLaughBeam} className="smile-icon emote-size"/></td>
+                <td className="emote-regdiario">{returnEmoji(mood)}</td>
                 <td>Estado de animo</td>
                 <td className="value-regdiario">{mood}</td>
             </tr> : 

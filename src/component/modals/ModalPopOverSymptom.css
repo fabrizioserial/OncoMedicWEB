@@ -1,0 +1,11 @@
+.tabs-fila{
+    cursor: pointer;
+    background-color: #e6e6e6;
+    border-radius: 5px;
+    height: 40px;
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

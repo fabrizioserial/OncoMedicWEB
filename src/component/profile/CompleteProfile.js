@@ -8,6 +8,7 @@ import {useParams} from 'react-router-dom'
 import {getFirestore} from '../../firebase'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { MySnackbar } from '../mySnackBar/MySnackbar'
+import { Skeleton } from '@material-ui/lab'
 
 
 export const CompleteProfile = () => {
@@ -98,9 +99,6 @@ export const CompleteProfile = () => {
         }
     },[id, user])
 
-    useEffect(()=>{
-
-    },[image,symInfo])
 
     return (
         <React.Fragment>
@@ -116,8 +114,8 @@ export const CompleteProfile = () => {
                 </div>
                 <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
                 <div className="two-squares-complete-profile">
-                    <div  className="estado-usertab-cont-background">
-                        <UsertabState user={user} idProp={user.id} type="profile" flexi={{Flex:1}}/>
+                    <div className="estado-usertab-cont-background">
+                            <UsertabState user={user} idProp={user.id} type="profile" flexi={{Flex:1}}/>
                     </div>
                     <div className="sintoms-usertab-cont-background">
                         <UsertabSymptoms id={user.id} sympstoms={symptomsList} descs={symInfo} flexi={{Flex:1}}/>
@@ -140,5 +138,3 @@ export const CompleteProfile = () => {
         
     )
 }
-
-

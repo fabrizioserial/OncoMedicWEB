@@ -10,11 +10,6 @@ export const UserTabLastSymptoms=({symptomsList})=> {
   const [openModal, setOpenModal] = useState(false);
   const [symptom, setSymptom] = useState('');
 
-  // Menu
-  const handleClick = (event,item) => {
-    setSymptom(item)
-    setAnchorEl(event.currentTarget);
-  }; 
 
   function handleClose(){
     setAnchorEl(null);
@@ -52,7 +47,7 @@ export const UserTabLastSymptoms=({symptomsList})=> {
             </thead>
             <tbody>
                 { 
-                    (symptomsList) && symptomsList.map((item,index) => <ItemUser symptom={item} key={index}  type="sympts" handleButtonClick={handleClick} handleClick={handleCloseAndOpenModal} />)
+                    (symptomsList) && symptomsList.map((item,index) => <ItemUser symptom={item} key={index}  type="sympts" handleClick={handleCloseAndOpenModal} />)
                 }
             </tbody>
             <Menu className="menu-eliminate-1"
@@ -73,6 +68,7 @@ export const UserTabLastSymptoms=({symptomsList})=> {
 
             <ModalPopOverSymptom
               id={symptom.id}
+              date={symptom.date && symptom.date}
               name={symptom.name}
               symptom={symptom.symptom}
               grade={symptom.grade}
