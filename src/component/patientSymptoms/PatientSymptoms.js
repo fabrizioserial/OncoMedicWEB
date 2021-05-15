@@ -22,6 +22,7 @@ const PatientSymptoms = ({medicData}) =>{
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [severity,setSeverity] = useState("")
     const [message,setMessage] = useState("")
+    const [load,setLoad] = useState(false)
 
     useEffect(()=>{
 
@@ -80,7 +81,7 @@ const PatientSymptoms = ({medicData}) =>{
         const itemCollectionSymptoms = db.collection("symptoms")
 
         var lista = []
-        userList.map(item=> item.status==="Activo" && itemCollectionSymptoms.where("id","==",item.id).get().then((querySnapshot) => {
+        var promises = userList.map(item=> item.status==="Activo" && itemCollectionSymptoms.where("id","==",item.id).get().then((querySnapshot) => {
  
             querySnapshot.docs.map(doc => {
                     return(
@@ -88,7 +89,7 @@ const PatientSymptoms = ({medicData}) =>{
                         )
                     }
                 )
-            setSymptomsList2(lista.sort(function (a, b) {
+            lista.sort(function (a, b) {
                                             if (b.date > a.date) {
                                                 return 1;
                                             }
@@ -97,9 +98,13 @@ const PatientSymptoms = ({medicData}) =>{
                                             }
                                             // a must be equal to b
                                             return 0;
-                                            }))
+                                            })
         })) 
-
+        
+        Promise.all(promises).then(function(results) {
+            setSymptomsList2(lista)
+            lista.length > 0 && setLoad(true)
+        })
 
     }
     useEffect(()=>{
@@ -108,8 +113,11 @@ const PatientSymptoms = ({medicData}) =>{
     },[symptomsList,userList])
 
     useEffect(()=>{
+
         setShowedSymptomsList2(symptomsList2)
     },[symptomsList2])
+
+
 
     const handleWarnBar = () => {
         setSeverity("error")
@@ -145,27 +153,9 @@ const PatientSymptoms = ({medicData}) =>{
 
     const handleRefresh=()=>{
         setShowedSymptomsList2(symptomsList2)
+        
     }
 
-    useEffect(()=>{
-        
-        
-         const db = getFirestore()
-        const itemCollection = db.collection("users")
-
-        const usersActive = itemCollection.where("status","!=","Pendiente")
-        usersActive.get().then((querySnapshot)=>{
-            let activeuser = querySnapshot.docs.map(doc =>{
-                return(
-                    {
-                        id:doc.id,...doc.data()
-                    }
-                )
-            })
-            setUserList(activeuser)
-        })
-
-    },[])
 
     return(
         <div className="userall-cont-background">
@@ -176,7 +166,8 @@ const PatientSymptoms = ({medicData}) =>{
 
             <div className="userall-cont-cont">
                 <SearchTab categories={["FECHA","PACIENTE","SINTOMA","GRADO"]} handleClick={handleSearch}/>
-                <div className="userall-cont-info-allUsers">
+                {load &&
+                   <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
                         <thead className="userall-thead-sympts">
                             <tr>
@@ -195,8 +186,9 @@ const PatientSymptoms = ({medicData}) =>{
                             }
                         </tbody>
                     </table>
-                    {userList&& <button className="userall-btn-load-more">Cargar mas</button>}
+                    { <button className="userall-btn-load-more">Cargar mas</button>}
                 </div>
+                }
                 <MySnackbar
                         severity={severity}
                         message={message}
