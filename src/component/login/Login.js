@@ -85,12 +85,12 @@ export const Login = ({setMedicUserAction}) => {
                     <form>
                         <div>
                             <p className="text-login-input">Ingresar direccion de email</p>
-                            <input type="email" className={(errorComplete || errorInvalid)  ? "input-login error" :"input-login normal"} onChange={e => setName(e.target.value)} placeholder="name@example.com"></input>
+                            <input type="email" className={(errorComplete || errorInvalid)  ? "input-login error" :"input-login normal"} onChange={e => setName(e.target.value)} placeholder="nombre@ejemplo.com"></input>
                         </div>
                         <div style={{marginTop:"40px"}}>
                             <p className="text-login-input">Ingresar constraseña</p>
                             <div className={(errorComplete || errorInvalid) ? "input-login error" :"input-login normal"}>
-                                <input type={passwordShown ? "text" : "password"} className="input-place" onChange={e => setPassword(e.target.value)} placeholder="atleast 8 caracters"></input>
+                                <input type={passwordShown ? "text" : "password"} className="input-place" onChange={e => setPassword(e.target.value)} placeholder="Al menos 8 caracteres"></input>
                                 <FontAwesomeIcon onClick={togglePasswordVisiblity} icon={passwordShown ? faEye:faEyeSlash}/>
                             </div>
                         </div>  

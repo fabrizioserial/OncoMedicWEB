@@ -2,6 +2,8 @@ import React,{useState} from 'react';
 import './ModalPopOverNewMedic.css'
 import 'fontsource-roboto';
 import {getFirestore} from '../../firebase'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 const ModalPopOverNewMedic = (props) => {
       const [name,setName] = useState("")
@@ -11,6 +13,7 @@ const ModalPopOverNewMedic = (props) => {
       const [errorEmail,setErrorEmail] = useState(false)
       const [errorName,setErrorName] = useState(false)
       const [errorPass,setErrorPass] = useState(false)
+      const [passwordShown, setPasswordShown] = useState(false);
      
       const resetValues=()=>{
          setName("")
@@ -110,15 +113,18 @@ const ModalPopOverNewMedic = (props) => {
                 <p>Contraseña</p>
             </div> 
             <div className="modal-add-input-cont">
-               <input className={errorPass ? "numero-del-paciente error" :"numero-del-paciente"}
-                  value={password}
-                  id="passDoctor"
-                  placeholder="Introduzca contraseña"
-                  onChange={e => setPassword(e.target.value)}
-                  disabled={disabled}
-                  variant="outlined"/>
+               <div className={errorPass ? "numero-del-paciente error" :"numero-del-paciente"} >
+                  <input style={{border: "none",width: "90%"}} className="input-new-medic" type={passwordShown ? "text" : "password"} 
+                     value={password}
+                     id="passDoctor"
+                     placeholder="Al menos 8 carateres"
+                     onChange={e => setPassword(e.target.value)}
+                     disabled={disabled}
+                     variant="outlined"/>
+                  <FontAwesomeIcon style={{paddingRight: "2%"}} onClick={()=>setPasswordShown(!passwordShown)} icon={passwordShown ? faEye:faEyeSlash}/>
+               </div>
             </div>
-            <p className="modal-add-input-cont-error">{errorPass ? "Introduzca un email valido":""}</p>
+            <p className="modal-add-input-cont-error">{errorPass ? "Introduzca una contraseña valida":""}</p>
             <div className="add-cont-button">
             <button className="agregar-button" onClick ={verifyInformation}>Agregar</button>
             </div>

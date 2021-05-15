@@ -25,10 +25,6 @@ const Home = ({medicData}) =>{
     const [loading,setLoad] = useState(false)
     const [skeleton,setSkeleton] = useState(true)
 
-    function seeMedic () {
-        return medicData;
-    }
-
     const selectModal = (info) => {
        setModal(!modal)
        handleCloseSnackBar()
@@ -86,7 +82,7 @@ const Home = ({medicData}) =>{
     useEffect(()=>{
         setTimeout(function(){
             setSkeleton(false)
-        }.bind(this),1500)
+        }.bind(this),2000)
     },[medicData])
 
     useEffect(()=>{
@@ -95,7 +91,7 @@ const Home = ({medicData}) =>{
 
     const cleanSym = () =>{
         const db = getFirestore()
-        const itemCollectionSymptoms = db.collection("symptoms").limit(4)
+        const itemCollectionSymptoms = db.collection("symptoms").limit(2)
         var lista = []
         userList.map(item=> item.status==="Activo" && itemCollectionSymptoms.where("id","==",item.id).get().then((querySnapshot) => {
  
@@ -116,8 +112,6 @@ const Home = ({medicData}) =>{
                                             return 0;
                                             }))
         })) 
-
-
     }
 
     useEffect(()=>{

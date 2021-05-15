@@ -79,6 +79,9 @@
 }
 
 .numero-del-paciente{
+    align-items: center;
+    display: flex;
+    justify-content: space-between !important;
     width: 370px;
     height: 30px;
     border-color:#a0a0a0;;
@@ -87,6 +90,13 @@
     padding: 2px;
     font-size: 15px;
     padding-left: 10px;
+}
+.input-new-medic {
+    border: "none" !important;
+    width: "90%" !important;
+}
+.input-new-medic:focus {
+    outline: none;
 }
 .numero-del-paciente.error{
     border-color: red !important;

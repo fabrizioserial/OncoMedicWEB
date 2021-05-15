@@ -8,6 +8,7 @@
     flex: 1;
 }
 .usertab-cont-info{
+    max-height: 463px;
     height: auto;
     width: 100%;
     padding: 15px;
@@ -28,6 +29,7 @@
 
 }
 .usertab-table{
+    max-height: 353px;
     width: 100%;
     border: none;
     border-spacing:0 10px;

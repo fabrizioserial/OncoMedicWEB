@@ -62,6 +62,7 @@ export const UsertabState=({type,idProp,user})=> {
         })
   },[idProp])
 
+
   return (
     <div>
       {regDiarios.length>0 ? (
@@ -111,9 +112,6 @@ export const UsertabState=({type,idProp,user})=> {
         </div>
         </>
       ):(
-        skeleton ? 
-          <></>
-        :
         <div className="sintoms-img-error-cont">
           <img alt="" className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
           <p>No se encontraron registros diarios</p>
