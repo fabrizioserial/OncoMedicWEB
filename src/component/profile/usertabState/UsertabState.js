@@ -8,10 +8,9 @@ import {ItemUser} from '../../ItemUser/ItemUser'
 import {getFirestore} from '../../../firebase'
 import { Skeleton } from '@material-ui/lab'
 
-export const UsertabState=({type,idProp,user})=> {
+export const UsertabState=({type,user,regDiarios})=> {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false); 
-  const [regDiarios,setRegDiario] = useState([])
   const [regunique,setUniqReg] = useState()
   const [skeleton,setSkeleton] = useState(true)
 
@@ -46,26 +45,10 @@ export const UsertabState=({type,idProp,user})=> {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
-  useEffect(()=>{
-    
-        const db = getFirestore()
-        const itemCollection = db.collection("diaryReg").where("id","==",idProp).limit(6)
-        itemCollection.onSnapshot((querySnapshot) => {
-            
-            let regList = querySnapshot.docs.map(doc => {
-                    return(
-                        {id:doc.id,...doc.data()}
-                        )
-                    }
-                )
-            setRegDiario(regList)
-        })
-  },[idProp])
-
 
   return (
     <div>
-      {regDiarios.length>0 ? (
+      {regDiarios && regDiarios.length>0 ? (
         <>
         <table class="estado-table">
             <thead className="estado-usertab-thead">

@@ -6,12 +6,30 @@ import { UsertabSymptoms } from '../profile/usertabSymptoms/UsertabSymptoms'
 import ProfileTab from './profileTab/ProfileTab'
 import {useParams} from 'react-router-dom'
 import {getFirestore} from '../../firebase'
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from "@material-ui/core/styles";
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import { Skeleton } from '@material-ui/lab'
 
 
+const useStyles = makeStyles(theme => ({
+    btn: {
+        marginLeft: "10px"
+    },
+    profileTab: {
+        marginTop: '25px',
+        borderRight: '30px solid var(--primary)'
+    },
+    squares: {
+        borderRight: '30px solid var(--primary)'
+    },
+    squares2: {
+        borderRight: '30px solid var(--primary)',
+        marginLeft: '50px'
+    }
+}));
+
 export const CompleteProfile = () => {
+    const classes = useStyles();
 
     const {id} = useParams()
     const [user,setUser] = useState({})
@@ -24,6 +42,7 @@ export const CompleteProfile = () => {
     const [update,setUpdateData] = useState(false)
     const [severity,setSeverity] = useState('')
     const [message,setMessage] = useState('')
+    const [regDiarios,setRegDiario] = useState([])
 
   
     const handleOpensnackBar = (sev,mes) =>{
@@ -51,23 +70,36 @@ export const CompleteProfile = () => {
             console.log("DB READING")
             const db = getFirestore()
             const itemCollection = db.collection("users").doc(id)
-            
-            itemCollection.get().then((querySnapshot) => {
-                let userFound ={id:querySnapshot.id,...querySnapshot.data()}
-                                console.log("El usuario encontrado es: ",userFound)
 
-                setUser(userFound)
-                setLoad(false)
-                if(userFound.name===null){
+            itemCollection.get().then((doc) => {
+                if (doc.exists) {
+                    let userFound ={id:doc.id,...doc.data()}
+                    console.log("El usuario encontrado es: ",userFound)
+                    setUser(userFound)
+                } else {
                     setUserNotFound(true)
                 }
-            })
+            }).catch((error) => {
+                console.log("Error getting user:", error);
+            });
 
             db.collection("symptoms").where("id","==", id).limit(6)
             .onSnapshot((querySnapshot) => {
                 let symptomslista = querySnapshot.docs.map(doc => doc.data())
                 setSymptomsList(symptomslista)
-        })
+            })
+
+            db.collection("diaryReg").where("id","==",id).limit(6)
+            .onSnapshot((querySnapshot) => {
+                
+                let regList = querySnapshot.docs.map(doc => {
+                        return(
+                            {id:doc.id,...doc.data()}
+                            )
+                        }
+                    )
+                setRegDiario(regList)
+            })
 
         }
     },[id,update])
@@ -99,13 +131,24 @@ export const CompleteProfile = () => {
         }
     },[id, user])
 
+    useEffect(()=>{
+        setTimeout(function(){
+            setLoad(false)
+        }.bind(this),3000)
+    },[])
+
 
     return (
         <React.Fragment>
             { 
             load ? 
-            <div className="login-cont-loading">
-                        <div className="login-loading"><CircularProgress color="var(--primary)"/></div>
+            <div className="profile-cont-background">
+                    <Skeleton className={classes.btn} height={40} width={250} />
+                    <Skeleton className={classes.profileTab} height={199} width={"97.5%"} />
+                    <div className="two-squares-complete-profile">
+                        <Skeleton className={classes.squares} height={468} width={"98%"} />
+                        <Skeleton className={classes.squares2} height={468} width={"98%"} />
+                    </div>
             </div>:
             (user && user.name && image)? 
             <div className="profile-cont-background">
@@ -115,17 +158,21 @@ export const CompleteProfile = () => {
                 <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
                 <div className="two-squares-complete-profile">
                     <div className="estado-usertab-cont-background">
-                            <UsertabState user={user} idProp={user.id} type="profile" flexi={{Flex:1}}/>
+                        <UsertabState regDiarios={regDiarios}  user={user} type="profile" flexi={{Flex:1}}/>
                     </div>
                     <div className="sintoms-usertab-cont-background">
                         <UsertabSymptoms id={user.id} sympstoms={symptomsList} descs={symInfo} flexi={{Flex:1}}/>
                     </div>  
                 </div>
             </div>
-            : userNotFound &&
-            <div className="profile-cont-background1">
-                <img className={{width:"200px"}} src="https://www.initcoms.com/wp-content/uploads/2020/07/404-error-not-found-1.png" />
-            </div>
+            : 
+            userNotFound ?
+            <div className="profile-cont-background">
+                <div className="profile-not-found">
+                    <img alt="" className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                    <p>No se encontró al usuario que buscabas</p>
+                </div>
+            </div>:null
             }
             <MySnackbar
                 severity={severity}
