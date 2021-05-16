@@ -46,7 +46,7 @@ const Home = ({medicData}) =>{
 
     useEffect(()=>{
         const db = getFirestore()
-        const itemCollection = db.collection("users").where("medic","==",medicData.id).limit(6)
+        const itemCollection = db.collection("users").where("medic","==",medicData.id)
         itemCollection.onSnapshot((querySnapshot) => {
             
             let userlista = querySnapshot.docs.map(doc => {
@@ -91,7 +91,7 @@ const Home = ({medicData}) =>{
 
     const cleanSym = () =>{
         const db = getFirestore()
-        const itemCollectionSymptoms = db.collection("symptoms").limit(2)
+        const itemCollectionSymptoms = db.collection("symptoms")
         var lista = []
         userList.map(item=> item.status==="Activo" && itemCollectionSymptoms.where("id","==",item.id).get().then((querySnapshot) => {
  
@@ -151,8 +151,8 @@ const Home = ({medicData}) =>{
                         </>
                         :
                         <>
-                            <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>
-                            <UserTabLastSymptoms className="usersympts-second" symptomsList={symptomsList2}/>
+                            <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo").slice(0,6)} images={images} margin_left={{marginRight:"50px"}}/>
+                            <UserTabLastSymptoms className="usersympts-second" symptomsList={symptomsList2.slice(0,6)}/>
                         </>
                         }
                     </div>

@@ -18,7 +18,6 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
 
     useEffect(() => {
         setImgs(image)
-        symptom && console.log("Hola",symptom.name)
     }, [image])
 
     useEffect(()=>{
@@ -44,17 +43,17 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
         history.push(`/profile/${user.id}`);
     }
 
-    const returnEmoji = (mood)=>{
+    const returnEmoji = (mood,regdia)=>{
         if(mood===10){
-            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faLaughBeam}  className="emote-size"/></th>
+            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faLaughBeam}  className={regdia ? "smile-icon emote-size":"emote-size"}/></th>
         }else if(mood>=7){
-            return <th  scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSmile}  className="emote-size"/></th>
+            return <th  scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSmile}  className={regdia ? "smile-icon emote-size":"emote-size"}/></th>
         }else if(mood>=4){
-            return <th  scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faMeh}  className="emote-size"/></th>
+            return <th  scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faMeh}  className={regdia ? "smile-icon emote-size":"emote-size"}/></th>
         }else if(mood>=2){
-            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faFrown}  className="emote-size"/></th>
+            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faFrown}  className={regdia ? "smile-icon emote-size":"emote-size"}/></th>
         }else{
-            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSadTear}  className="emote-size"/></th>
+            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSadTear}  className={regdia ? "smile-icon emote-size":"emote-size"}/></th>
         }
     }
     const returnEmote = (mood)=>{
@@ -114,7 +113,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
             </tr>:
         type==="regdiarioMood"?
             <tr className="item-user-fila-regdiario">
-                <td className="emote-regdiario">{returnEmoji(mood)}</td>
+                <td className="emote-regdiario">{returnEmoji(mood,true)}</td>
                 <td>Estado de animo</td>
                 <td className="value-regdiario">{mood}</td>
             </tr> : 

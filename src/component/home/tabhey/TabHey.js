@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import '../tabhey/TabHey.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell } from '@fortawesome/free-solid-svg-icons'
@@ -11,6 +11,10 @@ import { OptionsMenu } from '../../optionsMenu/OptionsMenu';
 export const TabHey = ({name,userlist,handleEl,handleAc}) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
+
+    useEffect(() => {
+        console.log(userlist)
+    }, [userlist])
 
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
