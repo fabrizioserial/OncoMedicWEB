@@ -71,7 +71,7 @@ const Home = ({medicData}) =>{
             setImageList(avatars)
         })
 
-        const itemCollectionSymptoms = db.collection("symptoms").orderBy("date").limit(6);
+        const itemCollectionSymptoms = db.collection("symptoms").orderBy("date")
 
         itemCollectionSymptoms.onSnapshot((querySnapshot) => {
             let symptomslista = querySnapshot.docs.map(doc => doc.data())
@@ -148,8 +148,8 @@ const Home = ({medicData}) =>{
                     <div className="home-cont-usertabs">
                         {skeleton ?
                         <>
-                            <Skeleton style={{marginRight: "50px"}} className="usertab-cont-info" variant="rect" animation="wave" width={"100%"} height={"400px"} />
-                            <Skeleton  className="usertab-cont-info" variant="rect" animation="wave" width={"100%"} height={"400px"} />
+                            <Skeleton style={{marginRight: "50px"}} className="usertab-cont-info" variant="rect" animation="wave" width={"100%"} height={"31vw"} />
+                            <Skeleton  className="usertab-cont-info" variant="rect" animation="wave" width={"100%"} height={"31vw"} />
                         </>
                         :
                         <>
