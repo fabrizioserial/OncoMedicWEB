@@ -76,14 +76,16 @@ const Home = ({medicData}) =>{
         itemCollectionSymptoms.onSnapshot((querySnapshot) => {
             let symptomslista = querySnapshot.docs.map(doc => doc.data())
             setSymptomsList(symptomslista)
+            startTimer()
         })
+        
     },[medicData])
 
-    useEffect(()=>{
+    const startTimer = () => {
         setTimeout(function(){
             setSkeleton(false)
-        }.bind(this),2000)
-    },[medicData])
+        }.bind(this),200)
+    }
 
     useEffect(()=>{
       setMedic(medicData)

@@ -17,13 +17,19 @@ const useStyles = makeStyles(theme => ({
     },
     profileTab: {
         marginTop: '25px',
-        borderRight: '30px solid var(--primary)'
+        borderRight: '30px solid var(--primary)',
+        borderTopRightRadius: '9px',
+        borderBottomRightRadius: '9px',
     },
     squares: {
-        borderRight: '30px solid var(--primary)'
+        borderRight: '30px solid var(--primary)',
+        borderTopRightRadius: '9px',
+        borderBottomRightRadius: '9px',
     },
     squares2: {
         borderRight: '30px solid var(--primary)',
+        borderTopRightRadius: '9px',
+        borderBottomRightRadius: '9px',
         marginLeft: '50px'
     }
 }));
@@ -126,16 +132,17 @@ export const CompleteProfile = () => {
                     }
                 )
             setSympInfo(sympList)
+            startTimer()
         })
 
         }
     },[id, user])
 
-    useEffect(()=>{
+    const startTimer = () => {
         setTimeout(function(){
             setLoad(false)
-        }.bind(this),3000)
-    },[])
+        }.bind(this),500)
+    }
 
 
     return (
@@ -146,8 +153,8 @@ export const CompleteProfile = () => {
                     <Skeleton className={classes.btn} height={40} width={250} />
                     <Skeleton className={classes.profileTab} height={199} width={"97.5%"} />
                     <div className="two-squares-complete-profile">
-                        <Skeleton className={classes.squares} height={468} width={"98%"} />
-                        <Skeleton className={classes.squares2} height={468} width={"98%"} />
+                        <Skeleton className={classes.squares} height={'34vw'} width={"98%"} />
+                        <Skeleton className={classes.squares2} height={'34vw'} width={"98%"} />
                     </div>
             </div>:
             (user && user.name && image)? 
