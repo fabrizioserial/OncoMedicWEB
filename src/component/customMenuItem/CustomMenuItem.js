@@ -45,9 +45,9 @@ export const CustomMenuItem = ({name,id,type,handleEl,handleAc}) => {
         setOpenModalCancer(true);
     }
 
-    const handleCloseModalCancer = () => {
+    const handleCloseModalCancer = (bool) => {
         setOpenModalCancer(false);
-        handleAc()
+        bool===true && handleAc()
     };
 
     const handleEliminate = () =>{

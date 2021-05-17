@@ -12,6 +12,7 @@ import ModalUpdateProfile from '../../modals/ModalUpdateProfile'
 import {useSpring,animated} from 'react-spring'
 import { Skeleton } from '@material-ui/lab'
 import ImageFadeIn from "react-image-fade-in";
+import moment from 'moment'
 
 export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
     const [seeMore, setSeeMore] = useState(false);
@@ -61,6 +62,11 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
         handleSnackBar("success","La informacion del usuario se ha actualizado")
     }
 
+    function formatedDate (date) {
+        var dateComponent = moment(date).format('DD/MM/YYYY');
+        return dateComponent
+    }
+
     const history = useHistory();
     const switchToHome = () => history.push(`/home`);
 
@@ -81,11 +87,12 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
                     <p onChange={(e) => setCancer(e.target.value)} className='id-complete-profile-items'>Tipo de cancer: <input className='id-complete-profile' type='text' disabled={true} defaultValue={cancer}/></p>
                 { seeMore ?
                     <animated.div style={textProps}>
-                        <p className='id-complete-profile-items'>Fecha de nacimiento: {user.birth}</p>
+                        <p className='id-complete-profile-items'>Etnia: {user.etnia}</p>
+                        <p className='id-complete-profile-items'>Fecha de nacimiento: {formatedDate(user.birth)}</p>
                         <p className='id-complete-profile-items'>Fuma: {user.smoke.smoke > 0 ? 'Si':'No'}</p>
                         {user.smoke.smoke > 0  &&
                             <div>
-                                <p className='id-complete-profile-items'>Tiempo: {user.smoke.time}</p>
+                                <p className='id-complete-profile-items'>Tiempo: {user.smoke.time} meses</p>
                                 <p className='id-complete-profile-items'>Cantidad por dia: {user.smoke.qnt}</p>
                             </div>
                         }
@@ -99,6 +106,7 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
                             <p className='id-complete-profile-items'>ACV: {user.med.acv? 'Si':'No'}</p>
                             <p className='id-complete-profile-items'>Infarto: {user.med.inf? 'Si':'No'}</p>
                             <p className='id-complete-profile-items'>Hipertension: {user.med.hip? 'Si':'No'}</p>
+                            <p style={{marginTop: "1%"}} className='id-complete-profile-items'>Mail: {user.email}</p>
                             <p onClick={()=>setSeeMore(!seeMore)} className='id-complete-profile-less' style={{marginTop:'20px'}}>VER MENOS  <FontAwesomeIcon icon={faChevronUp}/></p>
                     </animated.div>:
                             <p onClick={()=>setSeeMore(!seeMore)} className='id-complete-profile-more'>VER MAS  <FontAwesomeIcon icon={faChevronDown}/></p>
