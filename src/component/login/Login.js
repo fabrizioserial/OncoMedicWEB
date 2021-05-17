@@ -2,16 +2,17 @@ import React,{useState,useEffect} from 'react'
 import '../login/Login.css'
 import medical_ilustrator from '../../img/medical_ilustration.png'
 import {getFirestore} from '../../firebase'
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect } from 'react-redux'
+import Button from '@material-ui/core/Button';
 import {setMedicUserAction} from '../../reduxStore/actions/loginAction'
 import {faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const Login = ({setMedicUserAction}) => {
 
-    const [name,setName] = useState("")
+    const [email,setEmail] = useState("")
     const [password,setPassword] =useState("")
     const [medic] = useState({})
     const [loading,setLoad] = useState(false)
@@ -19,44 +20,48 @@ export const Login = ({setMedicUserAction}) => {
     const [errorInvalid,setEInvalid] = useState(false)
     const [passwordShown, setPasswordShown] = useState(false);
 
-    const checkUser = () =>{
-        if(name.length > 0 && password.length >0){
+    const history = useHistory();
+   
+
+    const checkUser =  () =>{
+        if(email.length > 0 && password.length >0){
             setEComplete(false)
             setEInvalid(false)
+            setLoad(true)
             const db = getFirestore()
             const itemCollection = db.collection("medic")
-            setLoad(true)
-
+            
             itemCollection.get().then((querySnapshot)=>{
-                let name2 = ""
+                let email2 = ""
+                
                 querySnapshot.docs.map(doc => {
                     
-                    if(doc.data().email === name){
+                    if(doc.data().email === email){
                         if(doc.data().password === password){
-                            name2 = doc.data().name
+                            email2 = doc.data().email
                             setMedicUserAction({id:doc.id,name:doc.data().name,email:doc.data().email,admin:doc.data().admin})
-                            handleClick()
-                            return 0;
+                               history.push('/home')   
+                            return 1;
                         }else{
                             setError("error no data")
                         }
                     }
-                    return 0;
-                    return 0;
+                    return 1;
                 })
-                if(name2 === ""){
+                if(email2 === ""){
                     setError("error2")
                 }
                 setLoad(false)
-                return 0;
 
             }).catch(e=>{
                 setLoad(false)
             })
-        }else if(name.length === 0 || password.length === 0){
+            
+        }else if(email.length === 0 || password.length === 0){
             setError("error")
-        }
-        
+        } 
+
+     
     }
 
     const setError = (type) =>{
@@ -66,8 +71,7 @@ export const Login = ({setMedicUserAction}) => {
         setPasswordShown(passwordShown ? false : true);
     };
     
-    const history = useHistory();
-    const handleClick = () => history.push('/home');
+
 
     return(
         <div className="cont-login-container">
@@ -85,7 +89,7 @@ export const Login = ({setMedicUserAction}) => {
                     <form>
                         <div>
                             <p className="text-login-input">Ingresar direccion de email</p>
-                            <input type="email" className={(errorComplete || errorInvalid)  ? "input-login error" :"input-login normal"} onChange={e => setName(e.target.value)} placeholder="nombre@ejemplo.com"></input>
+                            <input type="email" className={(errorComplete || errorInvalid)  ? "input-login error" :"input-login normal"} onChange={e => setEmail(e.target.value)} placeholder="nombre@ejemplo.com"></input>
                         </div>
                         <div style={{marginTop:"40px"}}>
                             <p className="text-login-input">Ingresar constraseña</p>
@@ -96,9 +100,9 @@ export const Login = ({setMedicUserAction}) => {
                         </div>  
                             {errorComplete ? <p className="input-error-text">Complete los campos</p> : 
                             errorInvalid && <p className="input-error-text">Introduzca datos validos</p>}
-                        <button id="Btnlogin" className={errorComplete || errorInvalid ? "btn-login-input active":"btn-login-input inactive"} onClick={()=>checkUser()}>
+                        <Button id="Btnlogin" color="primary" className={errorComplete || errorInvalid ? "btn-login-input active":"btn-login-input inactive"} onClick={checkUser}>
                             Log In
-                        </button>
+                        </Button>
                         {//<button onClick={pushToDatabase}/>
                         }
                             
