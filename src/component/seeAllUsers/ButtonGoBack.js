@@ -11,7 +11,7 @@ export const ButtonGoBack = ({text,type,id}) => {
 
     const history = useHistory();
     const handleNaigate = () => {
-        history.goBack()
+        history.goBack();
     }
 
     return(

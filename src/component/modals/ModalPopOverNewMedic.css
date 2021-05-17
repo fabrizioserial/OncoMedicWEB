@@ -90,6 +90,7 @@
     padding: 2px;
     font-size: 15px;
     padding-left: 10px;
+    border-width: 2px;
 }
 .input-new-medic {
     border: "none" !important;

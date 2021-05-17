@@ -53,6 +53,7 @@ const ModalUpdateProfile = (props) => {
 
          }).catch(()=>{
             setDisabled("")
+            props.updateDate()
             props.closeModal() 
          })
 
@@ -64,7 +65,6 @@ const ModalUpdateProfile = (props) => {
 
 
      function closeModal(e) {
-         resetValues()
          e.stopPropagation()
          props.closeModal() 
      }

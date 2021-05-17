@@ -26,6 +26,9 @@ export const UserTabHome=({margin_left,userlist,images,handleEl,handleLoad})=> {
     setAnchorEl(null);
   }
 
+  function handleSympts(){
+    history.push(`/userSympts/${user.id}`)
+  }
   function handleCloseAndNavigate(){
     history.push(`/profile/${user.id}`);
   }
@@ -60,27 +63,31 @@ export const UserTabHome=({margin_left,userlist,images,handleEl,handleLoad})=> {
   // Modal registro diario
   const findRegDiarios = ()=>{
     setAnchorEl(null);
-        const db = getFirestore()
-        const itemCollection = db.collection("diaryReg").where("id","==",user.id)
-        itemCollection.onSnapshot((querySnapshot) => {
-            
-            let regList = querySnapshot.docs.map(doc => {
-                    return(
-                        {id:doc.id,...doc.data()}
-                        )
-                    }
-                )
-            
-            var found = regList.find(function (element) {
-              var fecha = Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(element.date.toDate())
-              var hoy = Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(today)
-              return  fecha===(hoy);
-            });
-            setUniqReg(found) 
-            
-        })
+    const db = getFirestore()
+    const itemCollection = db.collection("diaryReg").where("id","==",user.id)
+    itemCollection.onSnapshot((querySnapshot) => {
         
-        handleOpenDiario()
+        let regList = querySnapshot.docs.map(doc => {
+                return(
+                    {id:doc.id,...doc.data()}
+                    )
+                }
+            )
+        
+        var found = regList.find(function (element) {
+          var fecha = Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(element.date.toDate())
+          var hoy = Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(today)
+          return  fecha===(hoy);
+        });
+        setUniqReg(found) 
+        
+    })
+    
+    handleOpenDiario()
+  }
+
+  const handleDailyReg = ()=>{
+    history.push(`/seeAllDiaryRegs/${user.id}`)
   }
 
   const handleOpenDiario = () => {
@@ -127,8 +134,8 @@ export const UserTabHome=({margin_left,userlist,images,handleEl,handleLoad})=> {
                     horizontal: 'left',
                     }}>
                     <MenuItem onClick={handleCloseAndNavigate}>VER PERFIL</MenuItem>
-                    <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
-                    <MenuItem onClick={findRegDiarios}>VER REGISTRO DIARIO</MenuItem>
+                    <MenuItem onClick={handleSympts}>VER SINTOMAS</MenuItem>
+                    <MenuItem onClick={handleDailyReg}>VER REGISTRO DIARIO</MenuItem>
                     <MenuItem onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
                 </Menu>
                 <ModalPopOverEliminate
