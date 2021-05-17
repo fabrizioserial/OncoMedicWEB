@@ -44,16 +44,12 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
         }.bind(this),1500)
     },[])
 
-    const handleEditAndPush = () => {
+    const handleEliminado = () => {
         const db = getFirestore()
         const thisUser = db.collection('users').doc(`${user.id}`)
         thisUser.update({
-            name: name,
-            cancer: cancer
+            status: "Inactivo",
         })
-    }; 
-
-    const handleEliminado = () => {
         handleSnackBar("success","Usuario eliminado con exito!")
         switchToHome()
     }
@@ -123,7 +119,7 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
             <div className='tabhey-cont-options'>
                 {
                     <div >
-                       <OptionsMenu id={user.id} type='profile' handleEdit={handleEdit} handleEliminado={handleEliminado}/>
+                       <OptionsMenu name={user.name} surname={user.surname} id={user.id} type='profile' handleEdit={handleEdit} handleEliminado={handleEliminado}/>
                     </div>
                 
                 }

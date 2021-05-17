@@ -56,6 +56,11 @@ export const UserTabHome=({margin_left,userlist,images,handleEl,handleLoad})=> {
   // Eliminar usuario
 
   const handleEliminate = () =>{
+    const db = getFirestore()
+    const thisUser = db.collection("users").doc(`${user.id}`)
+    thisUser.update({
+      status:"Inactivo",
+    })
     setOpenModal(false);  
     handleEl()
   }
@@ -139,6 +144,8 @@ export const UserTabHome=({margin_left,userlist,images,handleEl,handleLoad})=> {
                     <MenuItem onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
                 </Menu>
                 <ModalPopOverEliminate
+                    name={user.name}
+                    surname={user.surname}
                     id={user.id} // Numero de paciente, lo settea cunado apretas el boton al lado del nombre
                     displayModal={openModal}
                     closeModal={handleCloseModal}

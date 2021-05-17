@@ -6,7 +6,7 @@ import {getFirestore} from '../../firebase'
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
 import ModalPopOverAsignCancer from '../modals/ModalPopOverAsignCancer'
 
-export const CustomMenuItem = ({name,id,type,handleEl,handleAc}) => {
+export const CustomMenuItem = ({name,id,surname,type,handleEl,handleAc}) => {
 
     const [user,setUser] = useState(id)
     const [openModal, setOpenModal] = React.useState(false);
@@ -51,6 +51,9 @@ export const CustomMenuItem = ({name,id,type,handleEl,handleAc}) => {
     };
 
     const handleEliminate = () =>{
+        user.update({
+            status:"Inactivo",
+        })
         handleEl()
         setOpenModal(false);
     }
@@ -81,6 +84,8 @@ export const CustomMenuItem = ({name,id,type,handleEl,handleAc}) => {
                     </table>
                     <ModalPopOverEliminate
                         id={id}
+                        name={name}
+                        surname={surname}
                         displayModal={openModal}
                         closeModal={handleCloseModal}
                         handleEliminate={handleEliminate}
