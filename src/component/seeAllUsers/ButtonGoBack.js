@@ -11,7 +11,7 @@ export const ButtonGoBack = ({text,type,id}) => {
 
     const history = useHistory();
     const handleNaigate = () => {
-        history.push(`/profile/${id}`);
+        history.goBack()
     }
 
     return(

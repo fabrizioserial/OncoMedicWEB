@@ -132,10 +132,11 @@ export const CompleteProfile = () => {
                     }
                 )
             setSympInfo(sympList)
-            startTimer()
+            
         })
 
         }
+        startTimer()
     },[id, user])
 
     const startTimer = () => {
