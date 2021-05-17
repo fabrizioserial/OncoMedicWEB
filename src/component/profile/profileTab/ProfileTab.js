@@ -1,7 +1,7 @@
 
 import React,{useState,useEffect} from 'react'
 import "../profileTab/ProfileTab.css"
-import { OptionsMenu } from '../../optionsMenu/OptionsMenu'
+import {OptionsMenu}  from '../../optionsMenu/OptionsMenu'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp,faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import {getFirestore} from '../../../firebase'

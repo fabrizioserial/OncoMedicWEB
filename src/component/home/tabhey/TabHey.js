@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell } from '@fortawesome/free-solid-svg-icons'
 import Menu from '@material-ui/core/Menu';
 import { CustomMenuItem } from '../../customMenuItem/CustomMenuItem'
-import { OptionsMenu } from '../../optionsMenu/OptionsMenu';
+import {OptionsMenu} from '../../optionsMenu/OptionsMenu';
 
 
 

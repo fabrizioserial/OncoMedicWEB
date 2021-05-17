@@ -1,7 +1,7 @@
 import Home from '../src/component/home/Home'
 import './App.css';
 import Login  from './component/login/Login';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, StaticRouter, Switch } from 'react-router-dom';
 import { TimeStatus } from './component/timestatus/TimeStatus';
 import UserTabAllUsers from './component/seeAllUsers/UserTabAllUsers'
 import {CompleteProfile} from './component/profile/CompleteProfile.js'
