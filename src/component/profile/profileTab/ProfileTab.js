@@ -12,14 +12,16 @@ import ModalUpdateProfile from '../../modals/ModalUpdateProfile'
 import {useSpring,animated} from 'react-spring'
 import { Skeleton } from '@material-ui/lab'
 import ImageFadeIn from "react-image-fade-in";
+import moment from 'moment'
 
 export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
+
     const [seeMore, setSeeMore] = useState(false);
     const [name] = useState(user.name);
     const [cancer, setCancer] = useState(user.cancer);
     const [modal,setModal] = useState(false)
-    const [skeleton,setSkeleton] = useState(true)
     const [imgLoaded,setImgLoaded] = useState(false)
+    var [aDate,setADate] = useState(new Date())
 
 
     const selectModal = (info) => {
@@ -37,12 +39,6 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
         setModal(!modal)
     }; 
 
-    useEffect(()=>{
-        setTimeout(function(){
-            setSkeleton(false)
-        }.bind(this),1500)
-    },[])
-
     const handleEditAndPush = () => {
         const db = getFirestore()
         const thisUser = db.collection('users').doc(`${user.id}`)
@@ -59,6 +55,11 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
 
     const editSnackBar = () => {
         handleSnackBar("success","La informacion del usuario se ha actualizado")
+    }
+
+    function formatedDate (date) {
+        var dateComponent = moment(date).format('DD/MM/YYYY');
+        return dateComponent
     }
 
     const history = useHistory();
@@ -81,7 +82,7 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
                     <p onChange={(e) => setCancer(e.target.value)} className='id-complete-profile-items'>Tipo de cancer: <input className='id-complete-profile' type='text' disabled={true} defaultValue={cancer}/></p>
                 { seeMore ?
                     <animated.div style={textProps}>
-                        <p className='id-complete-profile-items'>Fecha de nacimiento: {user.birth}</p>
+                        <p className='id-complete-profile-items'>Fecha de nacimiento: {formatedDate(user.birth)}</p>
                         <p className='id-complete-profile-items'>Fuma: {user.smoke.smoke > 0 ? 'Si':'No'}</p>
                         {user.smoke.smoke > 0  &&
                             <div>
