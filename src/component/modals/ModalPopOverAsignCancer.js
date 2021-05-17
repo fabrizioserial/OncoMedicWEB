@@ -18,12 +18,13 @@ const ModalPopOverAsignCancer = (props) => {
    const handleAceptar = () => {
       props.updateUser(cancer)
       setCancer("")
+      props.closeModal(true)
    }
 
    return (
       <div 
       className="modal"
-      onClick={ closeModal }
+      onClick={closeModal}
       style={divStyle} >
          <div 
          className="modal-content"
@@ -51,9 +52,8 @@ const ModalPopOverAsignCancer = (props) => {
                variant="outlined"/>
          </div>
          <div>
-            <button onClick={handleAceptar} className="aceptar-cancer-button">ACEPTAR</button>   
+            <button style={{zIndex:"2"}} onClick={handleAceptar} className="aceptar-cancer-button">ACEPTAR</button>   
          </div>
-         
       </div>
    </div>
    );

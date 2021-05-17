@@ -13,6 +13,20 @@ export const UsertabState=({type,user,regDiarios})=> {
   const [openModal, setOpenModal] = React.useState(false); 
   const [regunique,setUniqReg] = useState()
   const [skeleton,setSkeleton] = useState(true)
+  const [orderedRegDiarios,setOrderedRegDiarios] = useState([])
+
+  useEffect(()=>{
+    setOrderedRegDiarios(regDiarios.sort(function (a, b) {
+      if (b.date > a.date) {
+          return 1;
+      }
+      if (b.date < a.date) {
+          return -1;
+      }
+      // a must be equal to b
+      return 0;
+      }))
+  },[regDiarios])
 
   const handleClick = (event,item) => {
     setUniqReg(item)
@@ -62,7 +76,7 @@ export const UsertabState=({type,user,regDiarios})=> {
             {type === "profile" && 
               <tbody> 
                 {
-                regDiarios && regDiarios.map(item => <ItemUser handletotalClick={handletotalClick} type="estado" daily={item} handleClick={handleClick} />)
+                orderedRegDiarios && orderedRegDiarios.slice(0,6).map(item => <ItemUser handletotalClick={handletotalClick} type="estado" daily={item} handleClick={handleClick} />)
                 }
                 <Menu className="menu-eliminate-1"
                     id={id}
@@ -91,7 +105,7 @@ export const UsertabState=({type,user,regDiarios})=> {
             }
         </table>
         <div>
-          {regDiarios.length >= 6 && <button onClick={handleCloseAndNavigate} className="menu-finalbutton">VER TODO</button>}
+          {orderedRegDiarios.length >= 6 && <button onClick={handleCloseAndNavigate} className="menu-finalbutton">VER TODO</button>}
         </div>
         </>
       ):(

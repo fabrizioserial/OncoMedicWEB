@@ -99,7 +99,7 @@ const Home = ({medicData}) =>{
  
             querySnapshot.docs.map(doc => {
                     return(
-                        lista = [...lista,{name:item.name,id:item.id,...doc.data()}]
+                        lista = [...lista,{name:item.name,surname:item.surname,id:item.id,...doc.data()}]
                         )
                     }
                 )
@@ -137,7 +137,7 @@ const Home = ({medicData}) =>{
                     handleAc={()=>handleOpensnackBar("Usuario creado con exito!")}  
                     name={medic&&medic.name} userlist={userList.filter(item=>item.status==="Pendiente")}/>
                     <div className="home-cont-buttons">
-                        {medic.admin&&<ButtonHome text="REGISTRAR NUEVO MÉDICO" color="purple" onClick={selectModal }></ButtonHome>}
+                        {medic.admin&&<ButtonHome text="REGISTRAR NUEVO MÉDICO" color="purple" onClick={selectModal}></ButtonHome>}
                         <ButtonHome test="BtnPurple" text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>
                         <ButtonHome text="VER ULTIMOS PACIENTES CON SINTOMAS" color="lightblue" link="seeSymptoms"></ButtonHome>
                     </div>

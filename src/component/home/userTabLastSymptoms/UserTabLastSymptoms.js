@@ -70,6 +70,7 @@ export const UserTabLastSymptoms=({symptomsList})=> {
               id={symptom.id}
               date={symptom.date && symptom.date}
               name={symptom.name}
+              surname={symptom.surname}
               symptom={symptom.symptom}
               grade={symptom.grade}
               displayModal={openModal}

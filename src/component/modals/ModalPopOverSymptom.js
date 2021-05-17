@@ -34,7 +34,7 @@ const ModalPopOverSymptom = (props) => {
             </tr>
             <tr className="tabs-fila">
                 <td style={{paddingLeft: "2%"}}>Nombre:</td>
-                <td style={{paddingRight: "2%"}}>{props.name}</td>
+                <td style={{paddingRight: "2%"}}>{props.surname}, {props.name}</td>
             </tr>
             <tr className="tabs-fila">
                 <td style={{paddingLeft: "2%"}}>N paciente:</td>

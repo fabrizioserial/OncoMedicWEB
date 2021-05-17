@@ -73,12 +73,12 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
     return (
 
         type==="seeAllUsers"?
-            <tr onClick={()=>switchToProfle()}  className="item-user-fila">
+            <tr   className="item-user-fila">
                 <th scope="row" className="item-user-user-image-table"><img alt="" className="usertab-user-image" src={imgs&&imgs.url} /></th>
-                <td>{user.id}</td> 
-                <td>{user.name}</td>
-                <td>{user.cancer}</td>
-                <td>{user.status=== "Activo" ? <FontAwesomeIcon icon={faCircle} className="item-status-active" size="lg"/> : <FontAwesomeIcon icon={faCircle} className="item-status-inactive" size="lg"/>}</td>
+                <td onClick={()=>switchToProfle()}>{user.id}</td> 
+                <td onClick={()=>switchToProfle()}>{user.name}</td>
+                <td onClick={()=>switchToProfle()}>{user.cancer}</td>
+                <td onClick={()=>switchToProfle()}>{user.status=== "Activo" ? <FontAwesomeIcon icon={faCircle} className="item-status-active" size="lg"/> : <FontAwesomeIcon icon={faCircle} className="item-status-inactive" size="lg"/>}</td>
                 <td className="item-user-config"><button className="item-user-options" onClick={(e)=>handleClick(e,user)}><img alt="" className="usertab_icon_image" src={optionIcon}/></button></td>
             </tr>: 
 
@@ -168,7 +168,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                 (
                     <td onClick={handleClick}>Urgencia</td>
                 ):(
-                    <td onClick={handleClick}>Ver respuesta</td>
+                    <td onClick={handleClick}>No urgencia</td>
                 )
             }
             
@@ -186,7 +186,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                   (
                       <td onClick={handleClick}>Urgencia</td>
                   ):(
-                      <td onClick={handleClick}>Ver respuesta</td>
+                      <td onClick={handleClick}>No urgencia</td>
                   )
               }
               
