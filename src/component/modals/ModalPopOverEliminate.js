@@ -49,6 +49,7 @@ const ModalPopOverEliminate = (props) => {
 
             </div>
             <div className="inside-the-modal">
+                <p>Nombre: {props.surname}, {props.name}</p>
                 <p>Numero del paciente: {props.id}</p>
             </div> 
             <div className="modal-add-input-cont">
@@ -62,7 +63,7 @@ const ModalPopOverEliminate = (props) => {
                   variant="outlined"/>
             </div>
             <p className="modal-add-input-cont-error">{errorMessage ? "Id incorrecto":""}</p>
-            <div>
+            <div className="div-btn-eliminate">
                <button onClick={handleIf} className="agregar-eliminate-button">ELIMINAR</button>   
             </div>
             

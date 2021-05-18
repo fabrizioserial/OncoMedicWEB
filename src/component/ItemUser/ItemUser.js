@@ -79,7 +79,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                 <td onClick={()=>switchToProfle()}>{user.name}</td>
                 <td onClick={()=>switchToProfle()}>{user.cancer}</td>
                 <td onClick={()=>switchToProfle()}>{user.status=== "Activo" ? <FontAwesomeIcon icon={faCircle} className="item-status-active" size="lg"/> : <FontAwesomeIcon icon={faCircle} className="item-status-inactive" size="lg"/>}</td>
-                <td className="item-user-config"><button className="item-user-options" onClick={(e)=>handleClick(e,user)}><img alt="" className="usertab_icon_image" src={optionIcon}/></button></td>
+                <td className="item-user-config"><button className="item-user-options" onClick={(e)=>handleClick(e,user,user.status)}><img alt="" className="usertab_icon_image" src={optionIcon}/></button></td>
             </tr>: 
 
         type==="home"?

@@ -20,7 +20,7 @@
     padding: 5px;
 }
 .inside-the-modal{
-    margin-top: 50px;
+    margin-top: 40px;
     margin-left: 30px;
 }
 .cancer-the-modal{
@@ -39,17 +39,21 @@
     padding-left: 10px;
     margin-left: 30px;
 }
+.div-btn-eliminate{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .agregar-eliminate-button{
+    width: 87%;
     background-color:#F63A39;
-    width: 370px;
     height: 50px;
     margin-top: 30px;
     color: white;
     font-weight: 600;
     font-size: 15px;
     border-style: none;
-    margin-left: 30px;
     border-radius: 7px;
     border-style: none;
 }

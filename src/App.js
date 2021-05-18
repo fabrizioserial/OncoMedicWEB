@@ -15,7 +15,7 @@ import SeeAllDiaryRegs from './component/seeAllDiaryRegs/SeeAllDiaryRegs';
 import './Variables.css'
 import AllUserSympts from './component/allUserSympts/AllUserSympts';
 import { useLayoutEffect, useState } from 'react';
-import sorry from './img/sorry-removebg-preview.png'
+import sorry from './img/working.png'
 
 const App = () => {
 
@@ -81,10 +81,10 @@ const App = () => {
         </div>
       </MuiPickersUtilsProvider>
       :   
-        <>
-        <h1>Estamos trabajando para usar la web en celulares, por ahora solo se puede usar desde la computadora!</h1>
-        <img alt="" src={sorry}/>
-        </>
+        <div className="working-cont">
+        <h1 className="working-text">Estamos trabajando para usar la web en celulares, por ahora solo se puede usar desde la computadora!</h1>
+        <img className="working-img" alt="" src={sorry}/>
+        </div>
     }
     </Provider>
   );

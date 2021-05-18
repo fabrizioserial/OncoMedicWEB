@@ -22,6 +22,8 @@ export const SearchTab = ({handleClick,categories}) => {
     }
 
     const handleSelectCat = (name) =>{
+        name==="ACTIVOS" && handleClick(null,title,name)
+        name==="INACTIVOS" && handleClick(null,title,name)
         setSelected(name)
         handleClose()
     }

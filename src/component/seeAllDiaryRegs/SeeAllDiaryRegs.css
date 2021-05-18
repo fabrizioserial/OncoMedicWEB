@@ -7,6 +7,10 @@
     color: green;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
-.fc .fc-daygrid-day-frame  {
-
+.fc-event-today {
+    background-color: lightgreen !important;
+    box-shadow: 2px 2px 2px #706868 !important;
+}
+.fc-today {
+    background-color: none !important;
 }

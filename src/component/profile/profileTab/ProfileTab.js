@@ -1,4 +1,3 @@
-
 import React,{useState,useEffect} from 'react'
 import "../profileTab/ProfileTab.css"
 import {OptionsMenu}  from '../../optionsMenu/OptionsMenu'
@@ -15,13 +14,12 @@ import ImageFadeIn from "react-image-fade-in";
 import moment from 'moment'
 
 export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
-
     const [seeMore, setSeeMore] = useState(false);
     const [name] = useState(user.name);
     const [cancer, setCancer] = useState(user.cancer);
     const [modal,setModal] = useState(false)
+    const [skeleton,setSkeleton] = useState(true)
     const [imgLoaded,setImgLoaded] = useState(false)
-    var [aDate,setADate] = useState(new Date())
 
 
     const selectModal = (info) => {
@@ -39,16 +37,18 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
         setModal(!modal)
     }; 
 
-    const handleEditAndPush = () => {
+    useEffect(()=>{
+        setTimeout(function(){
+            setSkeleton(false)
+        }.bind(this),1500)
+    },[])
+
+    const handleEliminado = () => {
         const db = getFirestore()
         const thisUser = db.collection('users').doc(`${user.id}`)
         thisUser.update({
-            name: name,
-            cancer: cancer
+            status: "Inactivo",
         })
-    }; 
-
-    const handleEliminado = () => {
         handleSnackBar("success","Usuario eliminado con exito!")
         switchToHome()
     }
@@ -118,7 +118,7 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
             <div className='tabhey-cont-options'>
                 {
                     <div >
-                       <OptionsMenu id={user.id} type='profile' handleEdit={handleEdit} handleEliminado={handleEliminado}/>
+                       <OptionsMenu name={user.name} surname={user.surname} id={user.id} type='profile' handleEdit={handleEdit} handleEliminado={handleEliminado}/>
                     </div>
                 
                 }

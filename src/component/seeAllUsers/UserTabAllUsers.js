@@ -17,17 +17,21 @@ const UserTabAllUsers = ({medicData}) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [openModal, setOpenModal] = React.useState(false);
     const [userList,setUserList] = useState([])
+    const [inactiveUserList,setInactiveUserList] = useState([])
     const [showedUserList,setShowedUserList] = useState([])
+    const [inactiveShowedUserList,setInactiveShowedUserList] = useState([])
     const [images,setImageList] =useState([])
     const [user, setUser] = React.useState("");
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [severity,setSeverity] = useState("")
     const [message,setMessage] = useState("")
+    const [bool,setBool] = useState(false)
 
     const history = useHistory();
     const switchToProfle = () => history.push(`/profile/${user.id}`);
   
-    const handleClick = (event,item) => {
+    const handleClick = (event,item,status) => {
+        status==="Activo" ? setBool(true):setBool(false)
         setUser(item)
         setAnchorEl(event.currentTarget);
     }; 
@@ -72,12 +76,24 @@ const UserTabAllUsers = ({medicData}) => {
         title === "" ? handleRefresh() :
         title = title.toUpperCase()
         switch (selected){
+            case "ACTIVOS":
+                setInactiveShowedUserList([])
+                return
+            case "INACTIVOS":
+                setShowedUserList([])
+                return
             case "N PACIENTE":
-                return setShowedUserList(showedUserList.filter((item=>item.id.toUpperCase().includes(title))));
+                setShowedUserList(showedUserList.filter((item=>item.id.toUpperCase().includes(title))));
+                setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.id.toUpperCase().includes(title))));
+                return
             case "NOMBRE":
-                return setShowedUserList(showedUserList.filter((item=>item.name.toUpperCase().includes(title))));   
+                setShowedUserList(showedUserList.filter((item=>item.name.toUpperCase().includes(title))));   
+                setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.name.toUpperCase().includes(title))));   
+                return
             case "TIPO DE CANCER":
-                return setShowedUserList(userList.filter((item=>item.cancer.toUpperCase().includes(title))));  
+                setShowedUserList(userList.filter((item=>item.cancer.toUpperCase().includes(title))));  
+                setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.cancer.toUpperCase().includes(title))));  
+                return
             default:
                 return handleWarnBar() 
         }
@@ -85,7 +101,8 @@ const UserTabAllUsers = ({medicData}) => {
 
     useEffect(()=>{
         setShowedUserList(userList)
-    },[userList])
+        setInactiveShowedUserList(inactiveUserList)
+    },[userList,inactiveUserList])
 
     const handleRefresh=()=>{
         const db = getFirestore()
@@ -104,12 +121,17 @@ const UserTabAllUsers = ({medicData}) => {
         })
 
         setShowedUserList(userList)
+        setInactiveShowedUserList(inactiveUserList)
     }
     // Eliminar
 
 
   const handleEliminate = () =>{
     const db = getFirestore()
+    const thisUser = db.collection("users").doc(`${user.id}`)
+    thisUser.update({
+      status:"Inactivo",
+    })
     handleRefresh()
     setOpenModal(false);
     handleOpensnackBar()
@@ -129,6 +151,18 @@ const UserTabAllUsers = ({medicData}) => {
                 )
             })
             setUserList(activeuser)
+        })
+
+        const usersInactive = db.collection('users').where("status","==","Inactivo").where("medic","==",medicData.id)
+        usersInactive.get().then((querySnapshot)=>{
+            let inactiveUSer = querySnapshot.docs.map(doc =>{
+                return(
+                    {
+                        id:doc.id,...doc.data()
+                    }
+                )
+            })
+            setInactiveUserList(inactiveUSer)
         })
 
 
@@ -160,7 +194,7 @@ const UserTabAllUsers = ({medicData}) => {
             </div>
 
             <div className="userall-cont-cont">
-                <SearchTab categories={["N PACIENTE","NOMBRE","TIPO DE CANCER"]} handleClick={handleSearch}/>
+                <SearchTab categories={["N PACIENTE","NOMBRE","TIPO DE CANCER","ACTIVOS","INACTIVOS"]} handleClick={handleSearch}/>
                 <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
                         <thead className="userall-thead-allUsers">
@@ -177,6 +211,11 @@ const UserTabAllUsers = ({medicData}) => {
                             {
                                 (showedUserList.length > 0) && showedUserList.map((item,key) => <ItemUser image={images.find(element =>element.id===item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
                             }
+
+                            {
+                                
+                                (inactiveShowedUserList.length > 0) && inactiveShowedUserList.map((item,key) => <ItemUser image={images.find(element =>element.id===item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
+                            }
                             <Menu className="menu-see-all-users"
                                 id={id}
                                 open={open}
@@ -190,11 +229,10 @@ const UserTabAllUsers = ({medicData}) => {
                                 vertical: 'left',
                                 horizontal: 'left',
                                 }}>
-                                
                                 <MenuItem onClick={()=>switchToProfle()}>VER PERFIL</MenuItem>
                                 <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
                                 <MenuItem onClick={handleClose}>VER REGISTRO DIARIO</MenuItem>
-                                <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
+                                {bool && <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>}
                             </Menu>
                             <ModalPopOverEliminate
                                 id={user.id} // Numero de paciente, lo settea cunado apretas el boton al lado del nombre

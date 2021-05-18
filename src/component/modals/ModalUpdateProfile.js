@@ -150,7 +150,8 @@ const ModalUpdateProfile = (props) => {
                         console.log("hola ", status)
                      }
                      <div className="modal-add-input-cont">
-                        <select className="input-user" value={status} onChange={handleClick} disabled={disabled}>
+                        <select className="input-user" value={status} onChange={handleClick} disabled={disabled}
+                        style={{height:"37px"}}>
                            <option value="Activo">Activo</option>
                            <option value="Inactivo">Inactivo</option>
                         </select>

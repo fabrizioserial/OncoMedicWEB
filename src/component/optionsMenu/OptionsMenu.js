@@ -82,6 +82,8 @@ export const OptionsMenu = (props) => {
                         )}
             </Menu> 
             <ModalPopOverEliminate
+                name={props.name}
+                surname={props.surname}
                 id={props.id}
                 displayModal={openModal}
                 closeModal={handleCloseModal}
