@@ -20,6 +20,7 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     const [modalDate, setModalDate] = useState("");
     const [regunique,setUnicReg] = useState([])
     const [startDate,setStartDate] = useState('')
+    const [color,setColor] = useState('')
 
     const returnEmoji = (mood)=>{
         if(mood===10){
@@ -56,11 +57,12 @@ const SeeAllDiaryRegs = ({medicData}) =>{
 
     useEffect(()=>{
         let eventList = regList.map(item => {
+            (formatedDate(item.date.toDate()))===(formatedDate(new Date())) ? setColor(null):setColor("lightgreen")
             return (
                 {
                 title : '✓',
                 display : 'background',
-                backgroundColor: "lightgreen",
+                backgroundColor: {color},
                 start:(formatedDate(item.date.toDate()))}
             )
         })
