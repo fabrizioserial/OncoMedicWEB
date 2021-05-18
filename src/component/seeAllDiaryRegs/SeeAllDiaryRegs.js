@@ -95,8 +95,11 @@ const SeeAllDiaryRegs = ({medicData}) =>{
             <div className="userall-cont-background">
                 <ButtonGoBack id={id} type="allUsers" text="VOLVER ATRAS" color="purple"/>
                 <FullCalendar
+                    buttonText={{
+                        today:"Hoy"
+                    }} 
                     eventSources= {[events]}
-                    locale= "es"
+                    locale= 'es'
                     plugins={[ dayGridPlugin ]}
                     initialView="dayGridMonth"
                     eventClick={handleClick}
