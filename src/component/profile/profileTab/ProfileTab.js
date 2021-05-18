@@ -82,10 +82,7 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
                     <p onChange={(e) => setCancer(e.target.value)} className='id-complete-profile-items'>Tipo de cancer: <input className='id-complete-profile' type='text' disabled={true} defaultValue={cancer}/></p>
                 { seeMore ?
                     <animated.div style={textProps}>
-<<<<<<< HEAD
-=======
                         <p className='id-complete-profile-items'>Etnia: {user.etnia}</p>
->>>>>>> origin/fixes
                         <p className='id-complete-profile-items'>Fecha de nacimiento: {formatedDate(user.birth)}</p>
                         <p className='id-complete-profile-items'>Fuma: {user.smoke.smoke > 0 ? 'Si':'No'}</p>
                         {user.smoke.smoke > 0  &&

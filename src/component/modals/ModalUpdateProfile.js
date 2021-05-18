@@ -3,6 +3,7 @@ import './ModalUpdateProfile.css'
 import 'fontsource-roboto';
 import {getFirestore} from '../../firebase'
 import './ModalUpdateProfile.css'
+import { Menu, Button, MenuItem } from '@material-ui/core';
 
 const ModalUpdateProfile = (props) => {
       const [name,setName] = useState(props.user.name)
@@ -12,7 +13,9 @@ const ModalUpdateProfile = (props) => {
       const [errorLastname,setErrorLastname] = useState(false)
       const [errorName,setErrorName] = useState(false)
       const [errorCancer,setErrorCancer] = useState(false)
-     
+      const [anchorEl, setAnchorEl] = useState(null);
+      const [status,setStatus] = useState(props.user.status)
+
       const resetValues=()=>{
          setName("")
          setErrorCancer("")
@@ -26,6 +29,13 @@ const ModalUpdateProfile = (props) => {
          setErrorLastname(false)
          setErrorCancer(false)
       }
+
+      
+      const handleClick = (event) => {
+         setStatus(event.target.value);
+      };
+
+
 
       const verifyInformation = () =>{
          
@@ -45,8 +55,10 @@ const ModalUpdateProfile = (props) => {
          db.collection("users").doc(props.user.id).update({
          "name": name,
          "surname": lastName,
-         "cancer": cancer}).then(()=>{
+         "cancer": cancer,
+         "status":status}).then(()=>{
             setDisabled("")
+            props.resetValues()
             props.editSnackBar()
             props.updateDate()
             props.closeModal()
@@ -128,6 +140,23 @@ const ModalUpdateProfile = (props) => {
                               variant="outlined"/>
                      </div>
                      <p className="modal-add-input-cont-error">{errorCancer && "Introduzca un tipo de cancer valido"}</p>
+               </div>
+               <div className="modal-update-div">
+                  <div style={{flex:0.5,marginRight:"10px"}}>
+                     <div className="uu-input-label">
+                        <p>Estado</p>
+                     </div> 
+                     {
+                        console.log("hola ", status)
+                     }
+                     <div className="modal-add-input-cont">
+                        <select className="input-user" value={status} onChange={handleClick} disabled={disabled}>
+                           <option value="Activo">Activo</option>
+                           <option value="Inactivo">Inactivo</option>
+                        </select>
+                     </div>
+                     <p className="modal-add-input-cont-error">{errorName && "Introduzca un nombre valido"}</p>
+                  </div>
                </div>
             </div>
  
