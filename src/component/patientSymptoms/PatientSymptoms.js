@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { ButtonRefresh } from '../seeAllUsers/ButtonRefresh'
 import { SearchTab } from '../seeAllUsers/searchTab/SearchTab';
 import { MySnackbar } from '../mySnackBar/MySnackbar';
+import moment from 'moment';
 
 
 
@@ -23,6 +24,8 @@ const PatientSymptoms = ({medicData}) =>{
     const [severity,setSeverity] = useState("")
     const [message,setMessage] = useState("")
     const [load,setLoad] = useState(false)
+    const [refresh,setRefresh] = useState(false)
+    const [reTitle,setRetitle] = useState(false)
 
     useEffect(()=>{
 
@@ -113,7 +116,6 @@ const PatientSymptoms = ({medicData}) =>{
     },[symptomsList,userList])
 
     useEffect(()=>{
-
         setShowedSymptomsList2(symptomsList2)
     },[symptomsList2])
 
@@ -132,13 +134,15 @@ const PatientSymptoms = ({medicData}) =>{
     };
 
 
-    function handleSearch(e,title,selected,dateStart,dateEnd){
-        (title === "" && selected!=="FECHA") && handleRefresh()
-        switch (selected){
+    function handleSearch(e,title,selectedList,dateStart,dateEnd){
+        setRetitle(!reTitle)
+        title = title.toUpperCase()
+        console.log("Fechas",dateStart,dateEnd)
+        switch (selectedList[selectedList.length-1]){
             case "FECHA":
                 return setShowedSymptomsList2(showedSymptomsList2.filter((item=>
-                    item.date.toDate() >= (dateStart)
-                    && item.date.toDate() <= (dateEnd))));
+                    formatedDate(item.date.toDate()) >= (formatedDate(dateStart))
+                    && formatedDate(item.date.toDate()) <= (formatedDate(dateEnd)))));
             case "PACIENTE":
                 return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.name.toUpperCase().includes(title.toUpperCase()))));   
             case "SINTOMA":
@@ -151,10 +155,19 @@ const PatientSymptoms = ({medicData}) =>{
         }
     }
 
+    function formatedDate (date) {
+        var dateComponent = moment(date).format('DD/MM/YYYY');
+        return dateComponent
+    }
+
     const handleRefresh=()=>{
         setShowedSymptomsList2(symptomsList2)
-        
+        setRefresh(true)
     }
+
+    useEffect(()=>{
+        setRefresh(false)
+    },[refresh])
 
 
     return(
@@ -165,7 +178,7 @@ const PatientSymptoms = ({medicData}) =>{
             </div>
 
             <div className="userall-cont-cont">
-                <SearchTab categories={["FECHA","PACIENTE","SINTOMA","GRADO"]} handleClick={handleSearch}/>
+                <SearchTab  reTitle={reTitle} refresh={refresh} categories={["FECHA","PACIENTE","SINTOMA","GRADO"]} handleClick={handleSearch}/>
                 {load &&
                    <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">

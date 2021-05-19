@@ -26,6 +26,8 @@ const UserTabAllUsers = ({medicData}) => {
     const [severity,setSeverity] = useState("")
     const [message,setMessage] = useState("")
     const [bool,setBool] = useState(false)
+    const [refresh,setRefresh] = useState(false)
+    const [reTitle,setRetitle] = useState(false)
 
     const history = useHistory();
     const switchToProfle = () => history.push(`/profile/${user.id}`);
@@ -61,7 +63,6 @@ const UserTabAllUsers = ({medicData}) => {
         if (reason === 'clickaway') {
             return;
         }
-
         setOpenSnackBar(false);
     };
 
@@ -71,11 +72,10 @@ const UserTabAllUsers = ({medicData}) => {
         setOpenSnackBar(!openSnackBar)
     }
 
-
-    const handleSearch = (e,title,selected) => {
-        title === "" ? handleRefresh() :
+    const handleSearch = (e,title,selectedList) => {
+        setRetitle(!reTitle)
         title = title.toUpperCase()
-        switch (selected){
+        switch (selectedList[selectedList.length-1]){
             case "ACTIVOS":
                 setInactiveShowedUserList([])
                 return
@@ -97,7 +97,9 @@ const UserTabAllUsers = ({medicData}) => {
             default:
                 return handleWarnBar() 
         }
+
     }
+    
 
     useEffect(()=>{
         setShowedUserList(userList)
@@ -119,10 +121,14 @@ const UserTabAllUsers = ({medicData}) => {
                 )
             setImageList(avatars)
         })
-
         setShowedUserList(userList)
         setInactiveShowedUserList(inactiveUserList)
+        setRefresh(true)
     }
+
+    useEffect(()=>{
+        setRefresh(false)
+    },[refresh])
     // Eliminar
 
 
@@ -194,7 +200,8 @@ const UserTabAllUsers = ({medicData}) => {
             </div>
 
             <div className="userall-cont-cont">
-                <SearchTab categories={["N PACIENTE","NOMBRE","TIPO DE CANCER","ACTIVOS","INACTIVOS"]} handleClick={handleSearch}/>
+                <SearchTab reTitle={reTitle} refresh={refresh} categories={["N PACIENTE","NOMBRE","TIPO DE CANCER","ACTIVOS","INACTIVOS"]} handleClick={handleSearch}/>
+
                 <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
                         <thead className="userall-thead-allUsers">
@@ -243,7 +250,7 @@ const UserTabAllUsers = ({medicData}) => {
 
                         </tbody>
                     </table>
-                    {userList&& <button className="userall-btn-load-more">Cargar mas</button>}
+                    {userList && <button className="userall-btn-load-more">Cargar mas</button>}
                 </div>
                 <MySnackbar
                         severity={severity}
