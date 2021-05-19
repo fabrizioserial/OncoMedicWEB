@@ -15,11 +15,14 @@
     font-size: 16px;
     border-radius: 7px;
     cursor: pointer;
-    margin-left: 10px;
+
     display: flex;
     align-items: center;
     margin-bottom: 25px;
     font-family: 'Montserrat', sans-serif;
+}
+.goBack-btn:hover{
+    background-color: #b991ff;
 }
 .go-back-back a{
     text-decoration: none;

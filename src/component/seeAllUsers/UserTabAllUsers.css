@@ -21,6 +21,9 @@
     font-family: 'Montserrat', sans-serif;
 
 }
+.userall-btn-load-more:hover{
+    background-color: #c0c0c0;
+}
 .userall-cont-background{
     width: auto;
     height: 100%;

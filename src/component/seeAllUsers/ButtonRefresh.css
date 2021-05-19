@@ -22,6 +22,9 @@
     font-family: 'Montserrat', sans-serif;
 
 }
+.refresh-btn:hover{
+    background-color: #b991ff;
+}
 .button-refresh-icon{
     margin-right: 5px;
     margin-left: 5px;

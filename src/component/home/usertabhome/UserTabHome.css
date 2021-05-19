@@ -28,6 +28,9 @@
     font-family: 'Montserrat', sans-serif;
 
 }
+.usertab-btn-vermas:hover{
+    background-color: #c0c0c0;
+}
 .usertab-table{
     max-height: 353px;
     width: 100%;
