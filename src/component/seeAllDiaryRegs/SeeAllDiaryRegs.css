@@ -44,3 +44,14 @@
 .regdiarios-td{
     flex-direction: column;
 }
+.alldiaries-chart{
+    width: 100%;
+    display: flex;
+}
+.alldiaries-chart-labels{
+    margin-top: 5%;
+    font-family: 'Montserrat',-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    font-weight: bold;
+}

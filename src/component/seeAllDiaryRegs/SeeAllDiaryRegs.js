@@ -8,12 +8,12 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import moment from 'moment'
 import ModalPopOverSeeDiaryReg from '../modals/ModalPopOverSeeDiaryReg';
 import { ButtonGoBack } from '../seeAllUsers/ButtonGoBack'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faLaughBeam,faSmile,faMeh,faFrown,faSadTear} from '@fortawesome/free-regular-svg-icons'
-import { UsertabState } from '../profile/usertabState/UsertabState'
-import { UsertabSymptoms } from '../profile/usertabSymptoms/UsertabSymptoms'
 import { ItemUser } from '../ItemUser/ItemUser'
 import { SearchTab } from '../seeAllUsers/searchTab/SearchTab'
+import * as V from 'victory';
+import { VictoryLine,VictoryChart,VictoryAxis,VictoryTooltip,VictoryVoronoiContainer,VictoryLabel } from 'victory';
+import {faSquare } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const SeeAllDiaryRegs = ({medicData}) =>{
     const {id} = useParams()
@@ -27,6 +27,8 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     const [regunique,setUnicReg] = useState([])
     const [color,setColor] = useState('')
     const [calendar,setCalendar] = useState(true)
+    const [mood,setMood] = useState([])
+    const [pain,setPain] = useState([])
 
     const returnEmoji = (mood)=>{
         if(mood===10){
@@ -87,10 +89,11 @@ const SeeAllDiaryRegs = ({medicData}) =>{
           // a must be equal to b
           return 0;
           }))
+          listEvents()
       },[regList])
 
     useEffect(()=>{
-        let eventList = regList.map(item => {
+        let eventList = regList.map((item,index) => {
             (formatedDate(item.date.toDate()))===(formatedDate(new Date())) ? setColor(null):setColor("lightgreen")
             return (
                 {
@@ -103,6 +106,34 @@ const SeeAllDiaryRegs = ({medicData}) =>{
         setEvents(eventList)
     },[regList])
 
+    const listEvents = () => {
+
+        let eventList = regList.reverse().map((item,index) => {
+            return (
+                {
+                x : index,
+                y : item.mood,
+                label: (otherformatedDate(item.date.toDate()))}
+            )
+        })
+        setMood(eventList)
+
+
+        let otherList = regList.map((item,index) => {
+            return (
+                {
+                x : index,
+                y : item.sad,
+                label: (otherformatedDate(item.date.toDate()))}
+            )
+        })
+        setPain(otherList)
+
+        regList.reverse()
+
+
+    }
+
     useEffect (()=>{
         setShowedRegList(regList)
         {console.log("Reglist",regList)}
@@ -112,6 +143,12 @@ const SeeAllDiaryRegs = ({medicData}) =>{
         var dateComponent = moment(date).format('YYYY-MM-DD');
         return dateComponent
     }
+
+    function otherformatedDate (date) {
+        var dateComponent = moment(date).format('DD-MM-YYYY');
+        return dateComponent
+    }
+
 
     const handleClick = (eventInfo) => {
         setModalDate(eventInfo.event.start)
@@ -126,8 +163,7 @@ const SeeAllDiaryRegs = ({medicData}) =>{
 
     function handleCloseDiario(){
         setOpenModalDiario(false);
-      }
-    
+    }
       
     return (
         <>
@@ -168,6 +204,44 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                                 }
                                 </tbody>
                             </table>
+                        </div>
+                        <div className="alldiaries-chart">
+                            <VictoryChart
+                                containerComponent={<VictoryVoronoiContainer/>}
+                            >
+                                
+                                <VictoryAxis dependentAxis padding={{left: 20}} domain={[0,10]} />
+                                <VictoryAxis  style={{ tickLabels: { fill:"transparent"} }}  tickFormat={(t) => `${Math.round(t)}`}/>
+                                <VictoryLine
+                                    labelComponent={<VictoryTooltip  style={{fontSize: '10px'}} cornerRadius={0} flyoutStyle={{fill: "#e6e6e6"}}/>}
+                                    style={{
+                                        data: { stroke: "#c43a31" },
+                                        parent: { border: "1px solid #ccc"},
+                                        labels: {color: "tomato"}
+                                    }}
+                                    data={mood}
+                                />
+                                
+                            </VictoryChart>
+
+                            <VictoryChart
+                                containerComponent={<VictoryVoronoiContainer/>}
+                                
+                            >
+                                <VictoryAxis dependentAxis padding={{left: 20}} domain={[0,10]} />
+                                <VictoryAxis style={{ tickLabels: { fill:"transparent"} }}/>
+                                
+                                <VictoryLine
+                                    labelComponent={<VictoryTooltip  style={{fontSize: '10px'}}  cornerRadius={0} flyoutStyle={{fill: "#e6e6e6"}}/>}
+                                    style={{
+                                        parent: { border: "1px solid #ccc"},
+
+                                    }}
+                                    data={pain}
+                                />
+                                
+                            </VictoryChart>
+
                         </div>
                     </div>
                 }
