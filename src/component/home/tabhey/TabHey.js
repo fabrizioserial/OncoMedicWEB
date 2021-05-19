@@ -8,7 +8,7 @@ import {OptionsMenu} from '../../optionsMenu/OptionsMenu';
 
 
 
-export const TabHey = ({name,userlist,handleEl,handleAc}) => {
+export const TabHey = ({name,userlist,handleEl,handleAc,cancerList}) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -61,7 +61,7 @@ export const TabHey = ({name,userlist,handleEl,handleAc}) => {
                         >
                         {
                             (userlist.length>0) ? (
-                                userlist.map((item,index) => <CustomMenuItem handleAc={handleAc} handleEl={handleEl} surname={item.surname} name={item.name}  id={item.id}/>)
+                                userlist.map((item,index) => <CustomMenuItem handleAc={handleAc} medicHistory={item.id} cancerList={cancerList} handleEl={handleEl} surname={item.surname} name={item.name}  id={item.id}/>)
                             ) : (
                                 <CustomMenuItem type="finished">No hay mas usuarios para aceptar</CustomMenuItem>
                             )

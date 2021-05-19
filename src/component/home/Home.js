@@ -24,6 +24,7 @@ const Home = ({medicData}) =>{
     const [textSnack,setTextSnack] = useState("")
     const [loading,setLoad] = useState(false)
     const [skeleton,setSkeleton] = useState(true)
+    const [cancerList,setCancerList] = useState([])
 
     const selectModal = (info) => {
        setModal(!modal)
@@ -77,6 +78,13 @@ const Home = ({medicData}) =>{
             let symptomslista = querySnapshot.docs.map(doc => doc.data())
             setSymptomsList(symptomslista)
             startTimer()
+        })
+
+        const cancerListCollection = db.collection("cancer")
+
+        cancerListCollection.onSnapshot((querySnapshot)=>{
+            let cancerListDB = querySnapshot.docs.map(doc=>doc.data())
+            setCancerList(cancerListDB)
         })
         
     },[medicData])
@@ -135,7 +143,8 @@ const Home = ({medicData}) =>{
                 <TabHey 
                     handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")}  
                     handleAc={()=>handleOpensnackBar("Usuario creado con exito!")}  
-                    name={medic&&medic.name} userlist={userList.filter(item=>item.status==="Pendiente")}/>
+                    name={medic&&medic.name} userlist={userList.filter(item=>item.status==="Pendiente")}
+                    cancerList={cancerList.length > 0 && cancerList}/>
                     <div className="home-cont-buttons">
                         {medic.admin&&<ButtonHome text="REGISTRAR NUEVO MÉDICO" color="purple" onClick={selectModal}></ButtonHome>}
                         <ButtonHome test="BtnPurple" text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>

@@ -4,9 +4,9 @@ import { faCheck,faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {getFirestore} from '../../firebase'
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
-import ModalPopOverAsignCancer from '../modals/ModalPopOverAsignCancer'
+import ModalPopOverAcceptUser from '../modals/ModalPopOverAcceptUser'
 
-export const CustomMenuItem = ({name,id,surname,type,handleEl,handleAc}) => {
+export const CustomMenuItem = ({name,id,surname,type,handleEl,handleAc,cancerList,medicHistory}) => {
 
     const [user,setUser] = useState(id)
     const [openModal, setOpenModal] = React.useState(false);
@@ -20,12 +20,13 @@ export const CustomMenuItem = ({name,id,surname,type,handleEl,handleAc}) => {
     }, [id])
 
 
-    const updateUser = (cancerType) => {
+    const updateUser = (cancerType,medicHistory) => {
         user.update({
             status:"Activo",
+            id:medicHistory,
             cancer: cancerType
-        })
-        handleCloseModalCancer()
+        }).then(()=>        handleCloseModalCancer())
+
     }
 
 
@@ -90,12 +91,15 @@ export const CustomMenuItem = ({name,id,surname,type,handleEl,handleAc}) => {
                         closeModal={handleCloseModal}
                         handleEliminate={handleEliminate}
                     />
-                    <ModalPopOverAsignCancer
+                    <ModalPopOverAcceptUser
                         name={name}
                         id={id}
+                        surname={surname}
                         displayModal={openModalCancer}
                         closeModal={handleCloseModalCancer}
                         updateUser = {updateUser}
+                        cancerList={cancerList}
+                        medicHistory ={medicHistory}
                     />
                 </div>
             )
