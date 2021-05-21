@@ -82,7 +82,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
             </tr>: 
 
         type==="allRegs"?
-        <tr  className="item-user-fila">
+        <tr onClick={()=>handleClick("no",regdiario)} className="item-user-fila">
             <td className="item-user-alldiaryRegs-fecha">{regdiario && Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(regdiario.date.toDate())}</td>
             {
                 regdiario && <td className="regdiarios-td">{regdiario.mood}</td>
