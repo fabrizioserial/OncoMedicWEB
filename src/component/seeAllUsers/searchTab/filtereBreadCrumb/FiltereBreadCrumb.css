@@ -1,0 +1,30 @@
+.filter-breadcrumb-background {
+    background-color: #BE99FD;
+    border-radius: 2vw;
+    height: 1.5vw;
+    margin-top: 0;
+    width: fit-content;
+    font: 400 13.3333px Arial;
+    padding: 7px;
+    display: flex;;
+}
+.filter-breadcrumb-text{
+    margin-top: 2%;
+    width: fit-content;
+    margin-left: 5%;
+    color: white;
+    font-size: 1vw;
+    font-weight: bold;
+}
+.filter-breadcrumb-div-cross{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5%;
+    width: 2vw;
+    font-size: 1vw;
+    background-color: white;
+    border-radius: 100%;
+    cursor: pointer;
+    color: #BE99FD;
+}
