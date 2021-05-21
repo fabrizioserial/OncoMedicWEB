@@ -8,8 +8,6 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import moment from 'moment'
 import ModalPopOverSeeDiaryReg from '../modals/ModalPopOverSeeDiaryReg';
 import { ButtonGoBack } from '../seeAllUsers/ButtonGoBack'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faLaughBeam,faSmile,faMeh,faFrown,faSadTear} from '@fortawesome/free-regular-svg-icons'
 
 const SeeAllDiaryRegs = ({medicData}) =>{
     const {id} = useParams()

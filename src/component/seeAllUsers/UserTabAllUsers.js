@@ -29,6 +29,8 @@ const UserTabAllUsers = ({medicData}) => {
     const [refresh,setRefresh] = useState(false)
     const [reTitle,setRetitle] = useState(false)
 
+
+
     const history = useHistory();
     const switchToProfle = () => history.push(`/profile/${user.id}`);
   
@@ -72,31 +74,40 @@ const UserTabAllUsers = ({medicData}) => {
         setOpenSnackBar(!openSnackBar)
     }
 
-    const handleSearch = (e,title,selectedList) => {
+    const handleElCat = () => {
+       setShowedUserList(userList)
+       setInactiveShowedUserList(inactiveUserList)
+    }
+
+    const handleSearch = (e,hash) => {
+        if(hash.length===0) { handleRefresh()} else {
         setRetitle(!reTitle)
-        title = title.toUpperCase()
-        switch (selectedList[selectedList.length-1]){
-            case "ACTIVOS":
-                setInactiveShowedUserList([])
-                return
-            case "INACTIVOS":
-                setShowedUserList([])
-                return
-            case "N PACIENTE":
-                setShowedUserList(showedUserList.filter((item=>item.id.toUpperCase().includes(title))));
-                setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.id.toUpperCase().includes(title))));
-                return
-            case "NOMBRE":
-                setShowedUserList(showedUserList.filter((item=>item.name.toUpperCase().includes(title))));   
-                setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.name.toUpperCase().includes(title))));   
-                return
-            case "TIPO DE CANCER":
-                setShowedUserList(userList.filter((item=>item.cancer.toUpperCase().includes(title))));  
-                setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.cancer.toUpperCase().includes(title))));  
-                return
-            default:
-                return handleWarnBar() 
-        }
+        
+        hash.map((selected)=>{
+            switch (selected.selected){
+                case "ACTIVOS":
+                    setInactiveShowedUserList([])
+                    return
+                case "INACTIVOS":
+                    setShowedUserList([])
+                    return
+                case "N PACIENTE":
+                    setShowedUserList(showedUserList.filter((item=>item.id.toUpperCase().includes(selected.title.toUpperCase()))));
+                    setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.id.toUpperCase().includes(selected.title.toUpperCase()))));
+                    return
+                case "NOMBRE":
+                    setShowedUserList(showedUserList.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
+                    setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
+                    return
+                case "TIPO DE CANCER":
+                    setShowedUserList(showedUserList.filter((item=>item.cancer.toUpperCase().includes(selected.title.toUpperCase()))));  
+                    setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.cancer.toUpperCase().includes(selected.title.toUpperCase()))));  
+                    return
+                default:
+                    return;
+            }
+        })}
+        
 
     }
     
@@ -200,7 +211,7 @@ const UserTabAllUsers = ({medicData}) => {
             </div>
 
             <div className="userall-cont-cont">
-                <SearchTab reTitle={reTitle} refresh={refresh} categories={["N PACIENTE","NOMBRE","TIPO DE CANCER","ACTIVOS","INACTIVOS"]} handleClick={handleSearch}/>
+                <SearchTab elCAt={handleElCat} warnBar={handleWarnBar} reTitle={reTitle} refresh={refresh} categories={["N PACIENTE","NOMBRE","TIPO DE CANCER","ACTIVOS","INACTIVOS"]} handleClick={handleSearch}/>
 
                 <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">

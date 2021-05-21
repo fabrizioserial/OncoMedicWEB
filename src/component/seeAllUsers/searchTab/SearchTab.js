@@ -7,15 +7,18 @@ import { Picker } from './picker/Picker'
 import MyDatePicker from '../../datePicker/MyDatePicker'
 import FiltereBreadCrumb from './filtereBreadCrumb/FiltereBreadCrumb'
 import { tr } from 'date-fns/locale'
+import { set } from 'date-fns'
 
-export const SearchTab = ({handleClick,categories,refresh,reTitle}) => {
+export const SearchTab = ({handleClick,categories,refresh,reTitle,warnBar,elCAt}) => {
     const [title, setTitle] = useState("")
     const [anchorEl, setAnchorEl] = useState(null);
     const [selected,setSelected] = useState()
     const [dateStart,setDateStart] = useState(new Date())
     const [dateEnd,setDateEnd] = useState(new Date())
-    const [selectedList,setSelectedList] = useState([])
-    const [nextFilter,setNextFilter] = useState(true)
+    const [hash,setHash] = useState([])
+    const [dateIsActive,setDateIsActive] = useState(false)
+
+
 
     const handlePickClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -26,14 +29,9 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle}) => {
     }
 
     const handleSelectCat = (name) =>{
-        nextFilter && setSelected(name)
+        setSelected(name)
         handleClose()
-        nextFilter && setNextFilter(false)
     }
-
-    useEffect(()=>{
-        selected && setSelectedList([...selectedList,selected])
-    },[selected])
 
     useEffect(()=>{
         setTitle("")
@@ -41,29 +39,47 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle}) => {
 
 
     const handleDate = (date) =>{
+        setDateIsActive(true)
         setDateStart(date)
     }
 
     const handledateEnd = (date) =>{
+        setDateIsActive(true)
         setDateEnd(date)
     }
 
     const handleCross = (name) => {
-        setSelectedList(selectedList.filter(x => x!==name))
-        setNextFilter(true)
+        name==="FECHA" && setDateIsActive(false)
+        name!=="FECHA" && setDateIsActive(true)
+        elCAt()
+        setHash(hash.filter(x => x.selected!==name))
     }
 
     useEffect(()=>{
-        refresh && setSelectedList([])
+        refresh && setHash([])
         refresh && setTitle("")
         setSelected("")
-        setNextFilter(true)
     },[refresh])
 
-    const handleClickAndClose = (e,title,selectedList,dateStart,dateEnd) => {
-        setNextFilter(true)
-        handleClick(e,title,selectedList,dateStart,dateEnd)
+    const handleClickAndClose = (e) => {
+        if (dateIsActive) { 
+            dateStart && setHash([...hash,{selected: selected,dateStart: dateStart,dateEnd: dateEnd}])
+        } else {
+            if(selected) {
+                setHash([...hash,{selected: selected,title: title}])
+            } else warnBar()
+        }
     }
+
+    useEffect(()=>{
+        selected && handleClick(null,hash)
+    },[hash])
+
+    useEffect(()=>{
+        selected!=="FECHA" && setDateIsActive(false)
+    },[selected])
+        
+
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
@@ -75,7 +91,7 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle}) => {
             {selected !== "FECHA" ?
             <React.Fragment>
             <input
-                onKeyPress={(e) => e.key === 'Enter' && handleClickAndClose(e,title,selectedList)}   
+                onKeyPress={(e) => e.key === 'Enter' && handleClickAndClose(e)}   
                 placeholder="Buscar por Nombre, Apellido, DNI, ID paciente" 
                 className="searchtab-input"
                 onChange={event => setTitle(event.target.value)}
@@ -86,10 +102,10 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle}) => {
                     <p >Desde:</p>
                     <MyDatePicker handleDate={handleDate}/>
                     <p style={{marginLeft: "2%"}} >Hasta:</p>
-                    <MyDatePicker handleDate={handledateEnd}/>
+                    <MyDatePicker dateStart={dateStart}  handleDate={handledateEnd}/>
                 </div>
             }
-            <FontAwesomeIcon onClick={(e)=>handleClickAndClose(e,title,selectedList,dateStart,dateEnd)} icon={faSearch} className="searchtab-input-icon" />
+            <FontAwesomeIcon onClick={(e)=>handleClickAndClose(e,dateStart)} icon={faSearch} className="searchtab-input-icon" />
         </div>
         <div onClick={handlePickClick} className="searchtab-cont-cont two">
             <p>{selected ? selected:"Filtrar por:"}</p>
@@ -112,7 +128,7 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle}) => {
             </Menu>
         </div>
         <div className="searchtab-filters-breadcrumbs">
-            {selectedList && selectedList.map((item,index) => <FiltereBreadCrumb handleCross={handleCross} index={index} name={item}></FiltereBreadCrumb>)}
+            {hash && hash.map((item) => <FiltereBreadCrumb handleCross={handleCross} name={item.selected}></FiltereBreadCrumb>)}
         </div>
         </>
     )

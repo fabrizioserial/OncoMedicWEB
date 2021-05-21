@@ -133,26 +133,32 @@ const PatientSymptoms = ({medicData}) =>{
         setOpenSnackBar(false);
     };
 
+    const handleElCat = (name) => {
+        setShowedSymptomsList2(symptomsList2)
+    }
+ 
 
-    function handleSearch(e,title,selectedList,dateStart,dateEnd){
+
+    function handleSearch(e,hash){
+        if(hash.length===0) { handleRefresh()} else {
         setRetitle(!reTitle)
-        title = title.toUpperCase()
-        console.log("Fechas",dateStart,dateEnd)
-        switch (selectedList[selectedList.length-1]){
-            case "FECHA":
-                return setShowedSymptomsList2(showedSymptomsList2.filter((item=>
-                    formatedDate(item.date.toDate()) >= (formatedDate(dateStart))
-                    && formatedDate(item.date.toDate()) <= (formatedDate(dateEnd)))));
-            case "PACIENTE":
-                return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.name.toUpperCase().includes(title.toUpperCase()))));   
-            case "SINTOMA":
-                return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.symptom.toUpperCase().includes(title.toUpperCase()))));  
-            case "GRADO":
-                // eslint-disable-next-line eqeqeq
-                return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.grade==(title))));  
-            default:
-                return handleWarnBar() 
-        }
+        hash.map((selected)=>{
+            switch (selected.selected){
+                case "FECHA":
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>
+                        formatedDate(item.date.toDate()) >= (formatedDate(selected.dateStart))
+                        && formatedDate(item.date.toDate()) <= (formatedDate(selected.dateEnd)))));
+                case "PACIENTE":
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
+                case "SINTOMA":
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.symptom.toUpperCase().includes(selected.title.toUpperCase()))));  
+                case "GRADO":
+                    // eslint-disable-next-line eqeqeq
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.grade==(selected.title))));  
+                default:
+                    return handleWarnBar() 
+            }
+         })} 
     }
 
     function formatedDate (date) {
@@ -178,7 +184,7 @@ const PatientSymptoms = ({medicData}) =>{
             </div>
 
             <div className="userall-cont-cont">
-                <SearchTab  reTitle={reTitle} refresh={refresh} categories={["FECHA","PACIENTE","SINTOMA","GRADO"]} handleClick={handleSearch}/>
+                <SearchTab  reTitle={reTitle} elCAt={handleElCat} warnBar={handleWarnBar} refresh={refresh} categories={["FECHA","PACIENTE","SINTOMA","GRADO"]} handleClick={handleSearch}/>
                 {load &&
                    <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
