@@ -1,6 +1,6 @@
 import React , {useState, useEffect} from 'react'
 import './ItemUser.css'
-import optionIcon from 'src/img/option_icon.png'
+import optionIcon from '../../img/option_icon.png'
 import {Button} from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faLaughBeam,faSadTear,faFrown,faMeh,faSmile } from '@fortawesome/free-regular-svg-icons'

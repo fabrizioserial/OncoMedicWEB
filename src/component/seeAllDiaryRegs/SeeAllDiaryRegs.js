@@ -206,10 +206,7 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                             </table>
                         </div>
                         <div className="alldiaries-chart">
-                            <VictoryChart
-                                containerComponent={<VictoryVoronoiContainer/>}
-                            >
-                                
+                            <VictoryChart containerComponent={<VictoryVoronoiContainer/>}>
                                 <VictoryAxis dependentAxis padding={{left: 20}} domain={[0,10]} />
                                 <VictoryAxis  style={{ tickLabels: { fill:"transparent"} }}  tickFormat={(t) => `${Math.round(t)}`}/>
                                 <VictoryLine
@@ -219,15 +216,11 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                                         parent: { border: "1px solid #ccc"},
                                         labels: {color: "tomato"}
                                     }}
-                                    data={mood}
-                                />
-                                
+                                    data={mood}/>
                             </VictoryChart>
 
                             <VictoryChart
-                                containerComponent={<VictoryVoronoiContainer/>}
-                                
-                            >
+                                containerComponent={<VictoryVoronoiContainer/>}>
                                 <VictoryAxis dependentAxis padding={{left: 20}} domain={[0,10]} />
                                 <VictoryAxis style={{ tickLabels: { fill:"transparent"} }}/>
                                 
@@ -237,8 +230,7 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                                         parent: { border: "1px solid #ccc"},
 
                                     }}
-                                    data={pain}
-                                />
+                                    data={pain}/>
                                 
                             </VictoryChart>
 

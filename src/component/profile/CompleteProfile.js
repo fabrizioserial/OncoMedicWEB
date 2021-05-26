@@ -6,10 +6,16 @@ import { UsertabSymptoms } from '../profile/usertabSymptoms/UsertabSymptoms'
 import ProfileTab from './profileTab/ProfileTab'
 import {useParams} from 'react-router-dom'
 import {getFirestore} from '../../firebase'
+import moment from 'moment'
 import { makeStyles } from "@material-ui/core/styles";
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import { Skeleton } from '@material-ui/lab'
-
+import * as V from 'victory';
+import { VictoryArea,VictoryChart,VictoryScatter,VictoryAxis,VictoryTooltip,VictoryVoronoiContainer,VictoryLabel } from 'victory';
+import {Button,Menu,MenuItem} from '@material-ui/core'
+import arrow from '../../img/arrow_down.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 const useStyles = makeStyles(theme => ({
     btn: {
@@ -49,7 +55,12 @@ export const CompleteProfile = () => {
     const [severity,setSeverity] = useState('')
     const [message,setMessage] = useState('')
     const [regDiarios,setRegDiario] = useState([])
-
+    const [mood,setMood] = useState([])
+    const [pain,setPain] = useState([])
+    const [activeSelect,setActiveSelect] = useState("Estado de Animo")
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl2, setAnchorEl2] = useState(null);
+    const [dateActive,setActiveDate] = useState("Ultimos 7 dias")
   
     const handleOpensnackBar = (sev,mes) =>{
         setSeverity(sev)
@@ -68,6 +79,41 @@ export const CompleteProfile = () => {
     const updateDate = () =>{
         setUpdateData(!update)
     }
+    const listEvents = () => {
+
+        let eventList = regDiarios.reverse().map((item,index) => {
+            return (
+                {
+                x : index+1,
+                y : item.mood,
+                label: (otherformatedDate(item.date.toDate()))}
+            )
+        })
+        setMood(eventList)
+
+
+        let otherList = regDiarios.map((item,index) => {
+            return (
+                {
+                x : index+1,
+                y : item.sad,
+                label: (otherformatedDate(item.date.toDate()))}
+            )
+        })
+        setPain(otherList)
+
+        regDiarios.reverse()
+    }
+
+    function otherformatedDate (date) {
+        var dateComponent = moment(date).format('DD/MM/YYYY');
+        return dateComponent
+    }
+
+    useEffect(()=>{
+
+    },[activeSelect])
+
 
     useEffect(()=>{
 
@@ -111,6 +157,10 @@ export const CompleteProfile = () => {
     },[id,update])
 
     useEffect(()=>{
+            listEvents()
+    },[regDiarios])
+
+    useEffect(()=>{
         
         if(id && user.avatar){
             
@@ -145,6 +195,29 @@ export const CompleteProfile = () => {
         }.bind(this),500)
     }
 
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClickDate = (event) => {
+        setAnchorEl2(event.currentTarget);
+    };
+
+    const handleClose = () => {
+    setAnchorEl(null);
+    };
+
+    const handleClose2 = () => {
+    setAnchorEl2(null);
+    };
+
+    const handleChange = (event) => {    setActiveSelect(event.target.textContent)
+    handleClose()  }
+
+    const handleChange2 = (event) => {    setActiveDate(event.target.textContent)
+    handleClose2()  }
+
+ 
 
     return (
         <React.Fragment>
@@ -164,6 +237,104 @@ export const CompleteProfile = () => {
                     <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
                 </div>
                 <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
+                <div className="profile-chart-cont">
+                    <div className="profile-chart-top-cont">
+                        <p className="profile-chart-top-text">{activeSelect.toUpperCase()}</p>
+                        <div>
+                        <Button onClick={handleClickDate}>{dateActive} <FontAwesomeIcon icon={faChevronDown} className="profile-arrow"/></Button>
+                        <Menu
+                        style={{marginTop: "45px"}}
+                            id="date"
+                            anchorEl={anchorEl2}
+                            open={Boolean(anchorEl2)}
+                            onClose={handleClose2}
+                            anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                            }}
+                            >
+                            <MenuItem onClick={handleChange2}>Ultimos 7 dias</MenuItem>
+                            <MenuItem onClick={handleChange2}>Ultimos 14 dias</MenuItem>
+                            <MenuItem onClick={handleChange2}>Ultimos 30 dias</MenuItem>
+                            <MenuItem onClick={handleChange2}>Ultimos 6 meses</MenuItem>
+                            <MenuItem onClick={handleChange2}>Ultimos año</MenuItem>
+
+
+                        </Menu>
+                        <Button style={{marginLeft:"10px"}} onClick={handleClick}>{activeSelect} <FontAwesomeIcon icon={faChevronDown} className="profile-arrow"/></Button>
+                        <Menu
+                        style={{marginTop: "45px"}}
+                            id="select"
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                            }}
+                            >
+                            <MenuItem onClick={handleChange}>Estado de Animo</MenuItem>
+                            <MenuItem onClick={handleChange}>Dolor</MenuItem>
+                        </Menu>
+                        </div>
+
+                    </div>
+                    
+                    <svg style={{ height: 0 }}>
+                        <defs>
+                        <linearGradient id="myGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+                            <stop offset="0%" stopColor="#9357F7" stopOpacity="0.4"/>
+                            <stop offset="100%" stopColor="#9357F7" stopOpacity="0.05"/>
+                        </linearGradient>
+                        </defs>
+                    </svg>
+                    <div className="profile-chart-svg-cont">
+                        <VictoryChart animate={{ duration: 1000 }} containerComponent={<VictoryVoronoiContainer  responsive={true} height={450}/>}height={400} width={1100}>
+                            <VictoryAxis dependentAxis
+                                domain={[0, 10]}
+                                style={{
+
+                                    axis: { stroke: "#e0e0e0", strokeWidth: 0 },
+                                    ticks: { strokeWidth: 0 },
+                                    tickLabels: {
+                                    fill: "#b7b7b7",
+                                    fontFamily: "inherit",
+                                    fontSize: 15
+                                    }
+                                }}
+                            />
+                            <VictoryAxis  style={{axis: { stroke: "#e0e0e0", strokeWidth: 0 }, tickLabels: { fontSize:'10px', fill:"#b7b7b7"} }}   tickValues={mood.map(item=>item.label)}/>
+                            <VictoryArea
+                                labelComponent={<VictoryTooltip  activateData={true} style={{fontSize: '10px'}} cornerRadius={0} flyoutStyle={{ fill:"#9357F7",stroke: "transparent", strokeWidth: 0.5 }}/>}
+                                style={{
+                                    data: { stroke: "#9357F7",fill: "url(#myGradient)" },
+                                    parent: { border: "1px solid #e8e8e8"},
+                                    labels: {color: "tomato"}
+                                }}
+                                interpolation="natural"
+                                data={activeSelect == "Estado de Animo" ? mood : pain }/>
+                            <VictoryScatter
+                                size={3}
+                                    style={{
+                                    data: {fill: "#9357F7"}
+                                    }}
+                                    labelComponent={<VictoryTooltip activateData={true} style={{fontSize: '10px'}} cornerRadius={0} flyoutStyle={{ fill:"#9357F7", stroke: "transparent", strokeWidth: 0.5 }}/>}
+                                    data={activeSelect == "Estado de Animo" ? mood : pain }
+                                />
+
+                                
+                        </VictoryChart>
+                    </div>
+
+                </div>
                 <div className="two-squares-complete-profile">
                     <div className="estado-usertab-cont-background">
                         <UsertabState regDiarios={regDiarios}  user={user} type="profile" flexi={{Flex:1}}/>
