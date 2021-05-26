@@ -150,13 +150,17 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     }
 
 
-    const handleClick = (eventInfo) => {
-        setModalDate(eventInfo.event.start)
-        var found = regList.find(function (element) {
-            var fecha = Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(element.date.toDate())
-            var hoy = Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(eventInfo.event.start)
-            return  fecha===(hoy);
-        });
+    const handleClick = (eventInfo,item) => {
+        if (eventInfo!=="no") {
+            setModalDate(eventInfo.event.start)
+            var found = regList.find(function (element) {
+                var fecha = Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(element.date.toDate())
+                var hoy = Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(eventInfo.event.start)
+                return  fecha===(hoy);
+        });} else {
+            setModalDate(item.date.toDate())
+            var found = item
+        }
         setUnicReg(found)
         setOpenModalDiario(true)
     }
@@ -200,7 +204,7 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                                 </thead>
                                 <tbody>
                                 {
-                                    (showedRegList.length > 0) && showedRegList.map((item,key) => <ItemUser key={key} type="allRegs" daily={item}/>)
+                                    (showedRegList.length > 0) && showedRegList.map((item,key) => <ItemUser handleClick={handleClick} key={key} type="allRegs" daily={item}/>)
                                 }
                                 </tbody>
                             </table>
