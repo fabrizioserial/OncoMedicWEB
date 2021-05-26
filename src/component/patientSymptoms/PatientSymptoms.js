@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { ButtonRefresh } from '../seeAllUsers/ButtonRefresh'
 import { SearchTab } from '../seeAllUsers/searchTab/SearchTab';
 import { MySnackbar } from '../mySnackBar/MySnackbar';
+import moment from 'moment';
 
 
 
@@ -23,6 +24,8 @@ const PatientSymptoms = ({medicData}) =>{
     const [severity,setSeverity] = useState("")
     const [message,setMessage] = useState("")
     const [load,setLoad] = useState(false)
+    const [refresh,setRefresh] = useState(false)
+    const [reTitle,setRetitle] = useState(false)
 
     useEffect(()=>{
 
@@ -113,7 +116,6 @@ const PatientSymptoms = ({medicData}) =>{
     },[symptomsList,userList])
 
     useEffect(()=>{
-
         setShowedSymptomsList2(symptomsList2)
     },[symptomsList2])
 
@@ -131,30 +133,47 @@ const PatientSymptoms = ({medicData}) =>{
         setOpenSnackBar(false);
     };
 
+    const handleElCat = (name) => {
+        setShowedSymptomsList2(symptomsList2)
+    }
+ 
 
-    function handleSearch(e,title,selected,dateStart,dateEnd){
-        (title === "" && selected!=="FECHA") && handleRefresh()
-        switch (selected){
-            case "FECHA":
-                return setShowedSymptomsList2(showedSymptomsList2.filter((item=>
-                    item.date.toDate() >= (dateStart)
-                    && item.date.toDate() <= (dateEnd))));
-            case "PACIENTE":
-                return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.name.toUpperCase().includes(title.toUpperCase()))));   
-            case "SINTOMA":
-                return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.symptom.toUpperCase().includes(title.toUpperCase()))));  
-            case "GRADO":
-                // eslint-disable-next-line eqeqeq
-                return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.grade==(title))));  
-            default:
-                return handleWarnBar() 
-        }
+
+    function handleSearch(e,hash){
+        if(hash.length===0) { handleRefresh()} else {
+        setRetitle(!reTitle)
+        hash.map((selected)=>{
+            switch (selected.selected){
+                case "FECHA":
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>
+                        formatedDate(item.date.toDate()) >= (formatedDate(selected.dateStart))
+                        && formatedDate(item.date.toDate()) <= (formatedDate(selected.dateEnd)))));
+                case "PACIENTE":
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
+                case "SINTOMA":
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.symptom.toUpperCase().includes(selected.title.toUpperCase()))));  
+                case "GRADO":
+                    // eslint-disable-next-line eqeqeq
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.grade==(selected.title))));  
+                default:
+                    return handleWarnBar() 
+            }
+         })} 
+    }
+
+    function formatedDate (date) {
+        var dateComponent = moment(date).format('DD/MM/YYYY');
+        return dateComponent
     }
 
     const handleRefresh=()=>{
         setShowedSymptomsList2(symptomsList2)
-        
+        setRefresh(true)
     }
+
+    useEffect(()=>{
+        setRefresh(false)
+    },[refresh])
 
 
     return(
@@ -165,7 +184,7 @@ const PatientSymptoms = ({medicData}) =>{
             </div>
 
             <div className="userall-cont-cont">
-                <SearchTab categories={["FECHA","PACIENTE","SINTOMA","GRADO"]} handleClick={handleSearch}/>
+                <SearchTab  reTitle={reTitle} elCAt={handleElCat} warnBar={handleWarnBar} refresh={refresh} categories={["FECHA","PACIENTE","SINTOMA","GRADO"]} handleClick={handleSearch}/>
                 {load &&
                    <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
