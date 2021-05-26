@@ -101,10 +101,10 @@
     outline: none;
 }
 .numero-del-paciente.error{
-    border-color: red !important;
+    border-color: #F63A39 !important;
 }
 .error-not-valid{
-    color: red;
+    color: #F63A39;
 }
 
 .agregar-button{
@@ -130,10 +130,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+.modal-password-validate-text{
+    margin-top: 10px !important;
+    font-size: 13px;
+    margin-bottom: 0px !important;
+}
+
+.modal-password-validate{
+    color: #0EDE0B;
+}
+
+.show{
+    display: block;
+}
+.hide{
+    display: none;
 }
 .modal-add-input-cont-error{
     margin-top: 1%;
-    color: red;
+    color: #F63A39;
     margin-left: 35px;
     font-size: 0.7rem;
     margin-bottom: 0;
