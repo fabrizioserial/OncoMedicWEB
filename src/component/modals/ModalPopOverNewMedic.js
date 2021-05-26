@@ -1,10 +1,9 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState} from 'react';
 import './ModalPopOverNewMedic.css'
 import 'fontsource-roboto';
 import {getFirestore} from '../../firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faEye,faEyeSlash,faTimes,faCheck } from '@fortawesome/free-solid-svg-icons'
-
+import {faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 const ModalPopOverNewMedic = (props) => {
       const [name,setName] = useState("")
@@ -15,7 +14,6 @@ const ModalPopOverNewMedic = (props) => {
       const [errorName,setErrorName] = useState(false)
       const [errorPass,setErrorPass] = useState(false)
       const [passwordShown, setPasswordShown] = useState(false);
-      const [error,setError] = useState({upper:true,lower:true,number:true,chars:true})
      
       const resetValues=()=>{
          setName("")
@@ -34,7 +32,7 @@ const ModalPopOverNewMedic = (props) => {
       const verifyInformation = () =>{
          const arroba = "@"
          
-         if(name.length > 0 && email.length >0 && password.length > 0  && email.includes(arroba) && error.upper == false && error.lower == false && error.number == false && error.chars == false){
+         if(name.length > 0 && email.length >0 && password.length > 0  && email.includes(arroba)){
             pushToDatabase()
          }
          else{
@@ -72,31 +70,6 @@ const ModalPopOverNewMedic = (props) => {
          e.stopPropagation()
          props.closeModal() 
      }
-
-
-
-      const setPasswordValidate = (e)=>{
-         hasUpper(e.target.value)
-         hasLower(e.target.value)
-         hasNumber(e.target.value)
-         hasChar(e.target.value)
-         setPassword(e.target.value)
-      }
-      
-      const hasUpper = (str) =>{
-         return error.upper = !str.match(/[A-Z]/)
-      }
-      const hasLower = (str) =>{
-         return error.lower = !str.match(/[a-z]/)
-      }
-      const hasNumber = (str) =>{
-         return error.number = !str.match(/[0-9]/)
-      }
-      const hasChar = (str) =>{
-         return error.chars = str.length < 8
-      }
-      
-
      return (
        <div className="modal" onClick={ closeModal } style={divStyle} >
           <div 
@@ -145,19 +118,13 @@ const ModalPopOverNewMedic = (props) => {
                      value={password}
                      id="passDoctor"
                      placeholder="Al menos 8 carateres"
-                     onChange={e => setPasswordValidate(e)}
+                     onChange={e => setPassword(e.target.value)}
                      disabled={disabled}
                      variant="outlined"/>
                   <FontAwesomeIcon style={{paddingRight: "2%",cursor: "pointer"}} onClick={()=>setPasswordShown(!passwordShown)} icon={passwordShown ? faEye:faEyeSlash}/>
                </div>
             </div>
-            <div className="add-inside-the-modal modal-add-input-cont " style={{alignItems:"start"}}>
-               <p className={error.upper ? "modal-password-validate-text error-not-valid" :"modal-password-validate modal-password-validate-text"}><FontAwesomeIcon icon={error.upper ? faTimes:faCheck}/> Al menos 1 mayúscula</p>
-               <p className={error.lower ? "modal-password-validate-text error-not-valid" :"modal-password-validate modal-password-validate-text"}><FontAwesomeIcon icon={error.lower ? faTimes : faCheck}/> Al menos 1 minúscula</p>
-               <p className={error.number ? "modal-password-validate-text error-not-valid" :"modal-password-validate modal-password-validate-text"}><FontAwesomeIcon icon={error.number ? faTimes : faCheck}/> Al menos 1 número</p>
-               <p className={error.chars ? "modal-password-validate-text error-not-valid" :"modal-password-validate modal-password-validate-text"}><FontAwesomeIcon icon={error.chars ? faTimes : faCheck}/> Al menos 8 caracteres</p>
-
-            </div>
+            <p className="modal-add-input-cont-error">{errorPass ? "Introduzca una contraseña valida":""}</p>
             <div className="add-cont-button">
             <button className="agregar-button" onClick ={verifyInformation}>Agregar</button>
             </div>
