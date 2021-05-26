@@ -14,6 +14,7 @@ const ModalPopOverNewMedic = (props) => {
       const [errorName,setErrorName] = useState(false)
       const [errorPass,setErrorPass] = useState(false)
       const [passwordShown, setPasswordShown] = useState(false);
+      const [uniqueEmail,setUniqueEmail] = useState(false)
      
       const resetValues=()=>{
          setName("")
@@ -27,13 +28,14 @@ const ModalPopOverNewMedic = (props) => {
          setErrorName(false)
          setErrorPass(false)
          setErrorEmail(false)
+         setUniqueEmail(false)
       }
 
       const verifyInformation = () =>{
          const arroba = "@"
          
          if(name.length > 0 && email.length >0 && password.length > 0  && email.includes(arroba)){
-            pushToDatabase()
+            verifyUniqueEmail() ? pushToDatabase() : setUniqueEmail(true)
          }
          else{
             name.length <=0  && (setErrorName(true))
@@ -42,6 +44,19 @@ const ModalPopOverNewMedic = (props) => {
             password.length <=0 && (setErrorPass(true))
          }
       } 
+
+      const verifyUniqueEmail = () =>{
+         const db = getFirestore()
+         const itemCollection = db.collection("medic")
+         let lista = []
+         itemCollection.where("id","==",email).get().then((querySnapshot)=>{
+            querySnapshot.docs.map(doc =>{
+            return(
+               lista = [...lista,doc.data()]
+            )
+         })})
+         return lista.lenght == 0
+      }
 
       const pushToDatabase = () =>{
          setDisabled("disabled")
@@ -108,7 +123,7 @@ const ModalPopOverNewMedic = (props) => {
                   disabled={disabled}
                   variant="outlined"/>
             </div>               
-            <p className="modal-add-input-cont-error">{errorEmail ? "Introduzca un email valido":""}</p>
+            <p className="modal-add-input-cont-error">{errorEmail ? "Introduzca un email valido": uniqueEmail ? "Instroduzca un mail no registrado" : ""}</p>
             <div className="add-inside-the-modal">
                 <p>Contraseña</p>
             </div> 
