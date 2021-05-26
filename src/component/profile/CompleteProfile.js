@@ -56,17 +56,30 @@ export const CompleteProfile = () => {
     const [message,setMessage] = useState('')
     const [regDiarios,setRegDiario] = useState([])
     const [mood,setMood] = useState([])
+    const [showedMood,setShowedMood] = useState([])
     const [pain,setPain] = useState([])
+    const [showedPain,setShowedPain] = useState([])
     const [activeSelect,setActiveSelect] = useState("Estado de Animo")
     const [anchorEl, setAnchorEl] = useState(null);
     const [anchorEl2, setAnchorEl2] = useState(null);
     const [dateActive,setActiveDate] = useState("Ultimos 7 dias")
+    const [hoy] = useState(new Date())
+    const [minDate,setMinDate] = useState(new Date())
   
     const handleOpensnackBar = (sev,mes) =>{
         setSeverity(sev)
         setMessage(mes)
         setOpenSnackBar(!openSnackBar)
     }
+
+    useEffect(()=>{
+        minDate.setDate(hoy.getDate()-7)
+        setShowedMood(mood.filter((item=>
+            item.date>=minDate)))
+
+        setShowedPain(pain.filter((item=>
+            item.date>=minDate)))
+    },[mood,pain])
 
     const handleCloseSnackBar = (event, reason) => {
         if (reason === 'clickaway') {
@@ -79,6 +92,7 @@ export const CompleteProfile = () => {
     const updateDate = () =>{
         setUpdateData(!update)
     }
+    
     const listEvents = () => {
 
         let eventList = regDiarios.reverse().map((item,index) => {
@@ -86,7 +100,8 @@ export const CompleteProfile = () => {
                 {
                 x : index+1,
                 y : item.mood,
-                label: (otherformatedDate(item.date.toDate()))}
+                label: (otherformatedDate(item.date.toDate())),
+                date: item.date.toDate()}
             )
         })
         setMood(eventList)
@@ -97,7 +112,9 @@ export const CompleteProfile = () => {
                 {
                 x : index+1,
                 y : item.sad,
-                label: (otherformatedDate(item.date.toDate()))}
+                label: (otherformatedDate(item.date.toDate())),
+                date: item.date.toDate()
+                }
             )
         })
         setPain(otherList)
@@ -109,10 +126,6 @@ export const CompleteProfile = () => {
         var dateComponent = moment(date).format('DD/MM/YYYY');
         return dateComponent
     }
-
-    useEffect(()=>{
-
-    },[activeSelect])
 
 
     useEffect(()=>{
@@ -214,9 +227,50 @@ export const CompleteProfile = () => {
     const handleChange = (event) => {    setActiveSelect(event.target.textContent)
     handleClose()  }
 
-    const handleChange2 = (event) => {    setActiveDate(event.target.textContent)
-    handleClose2()  }
+    const handleChange2 = (event,min) => {    
+        handleDateStart(min)
+        setActiveDate(event.target.textContent)
+        handleClose2()  
+    }
 
+    const handleDateStart = (min) => {  
+        switch (min){
+            case 7:
+                setMinDate(new Date())
+                minDate.setDate(hoy.getDate()-7)
+                break;
+            case 14:
+                setMinDate(new Date())
+                minDate.setDate(hoy.getDate()-14)
+                break;
+            case 30:
+                setMinDate(new Date())
+                minDate.setDate(hoy.getDate()-30)
+                break;
+            case 600:
+                setMinDate(new Date())
+                minDate.setMonth(hoy.getMonth()-6)
+                break;
+            case 1000:
+                setMinDate(new Date())
+                minDate.setMonth(hoy.getMonth()-12)
+                break; 
+            default:
+                setMinDate(new Date())
+                minDate.setDate(hoy.getDate()-7)
+                break;
+        }
+
+        setShowedMood(mood.filter((item=>
+            item.date>=minDate)))
+
+        setShowedPain(pain.filter((item=>
+            item.date>=minDate)))
+    }
+
+    useEffect(()=>{
+        
+    },[minDate])
  
 
     return (
@@ -257,11 +311,11 @@ export const CompleteProfile = () => {
                             horizontal: 'center',
                             }}
                             >
-                            <MenuItem onClick={handleChange2}>Ultimos 7 dias</MenuItem>
-                            <MenuItem onClick={handleChange2}>Ultimos 14 dias</MenuItem>
-                            <MenuItem onClick={handleChange2}>Ultimos 30 dias</MenuItem>
-                            <MenuItem onClick={handleChange2}>Ultimos 6 meses</MenuItem>
-                            <MenuItem onClick={handleChange2}>Ultimos año</MenuItem>
+                            <MenuItem onClick={e=>handleChange2(e,7)}>Ultimos 7 dias</MenuItem>
+                            <MenuItem onClick={e=>handleChange2(e,14)}>Ultimos 14 dias</MenuItem>
+                            <MenuItem onClick={e=>handleChange2(e,30)}>Ultimos 30 dias</MenuItem>
+                            <MenuItem onClick={e=>handleChange2(e,600)}>Ultimos 6 meses</MenuItem>
+                            <MenuItem onClick={e=>handleChange2(e,1000)}>Ultimo año</MenuItem>
 
 
                         </Menu>
@@ -301,7 +355,6 @@ export const CompleteProfile = () => {
                             <VictoryAxis dependentAxis
                                 domain={[0, 10]}
                                 style={{
-
                                     axis: { stroke: "#e0e0e0", strokeWidth: 0 },
                                     ticks: { strokeWidth: 0 },
                                     tickLabels: {
@@ -311,7 +364,7 @@ export const CompleteProfile = () => {
                                     }
                                 }}
                             />
-                            <VictoryAxis  style={{axis: { stroke: "#e0e0e0", strokeWidth: 0 }, tickLabels: { fontSize:'10px', fill:"#b7b7b7"} }}   tickValues={mood.map(item=>item.label)}/>
+                            <VictoryAxis  style={{axis: { stroke: "#e0e0e0", strokeWidth: 0 }, tickLabels: {fontSize:'0', fill:"#b7b7b7"} }} />
                             <VictoryArea
                                 labelComponent={<VictoryTooltip  activateData={true} style={{fontSize: '10px'}} cornerRadius={0} flyoutStyle={{ fill:"#9357F7",stroke: "transparent", strokeWidth: 0.5 }}/>}
                                 style={{
@@ -320,17 +373,15 @@ export const CompleteProfile = () => {
                                     labels: {color: "tomato"}
                                 }}
                                 interpolation="natural"
-                                data={activeSelect == "Estado de Animo" ? mood : pain }/>
+                                data={activeSelect === "Estado de Animo" ? showedMood : showedPain }/>
                             <VictoryScatter
                                 size={3}
                                     style={{
                                     data: {fill: "#9357F7"}
                                     }}
                                     labelComponent={<VictoryTooltip activateData={true} style={{fontSize: '10px'}} cornerRadius={0} flyoutStyle={{ fill:"#9357F7", stroke: "transparent", strokeWidth: 0.5 }}/>}
-                                    data={activeSelect == "Estado de Animo" ? mood : pain }
+                                    data={activeSelect === "Estado de Animo" ? showedMood : showedPain }
                                 />
-
-                                
                         </VictoryChart>
                     </div>
 
