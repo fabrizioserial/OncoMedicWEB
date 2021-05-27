@@ -32,6 +32,7 @@ const ModalPopOverNewMedic = (props) => {
          setErrorPass(false)
          setErrorEmail(false)
          setUniqueEmail(false)
+         setError({upper:true,lower:true,number:true,chars:true})
       }
 
       const verifyInformation = () =>{
