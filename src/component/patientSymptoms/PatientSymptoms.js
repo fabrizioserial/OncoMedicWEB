@@ -104,7 +104,7 @@ const PatientSymptoms = ({medicData}) =>{
                                             })
         })) 
         
-        Promise.all(promises).then(function(results) {
+        promises.then(function(results) {
             setSymptomsList2(lista)
             lista.length > 0 && setLoad(true)
         })

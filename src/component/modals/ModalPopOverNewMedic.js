@@ -20,6 +20,7 @@ const ModalPopOverNewMedic = (props) => {
          setName("")
          setPassword("")
          setEmail("")
+         setUniqueEmail(false)
          resetErrors()
       }
 
@@ -35,7 +36,7 @@ const ModalPopOverNewMedic = (props) => {
          const arroba = "@"
          
          if(name.length > 0 && email.length >0 && password.length > 0  && email.includes(arroba)){
-            verifyUniqueEmail() ? pushToDatabase() : setUniqueEmail(true)
+            pushToDatabase()
          }
          else{
             name.length <=0  && (setErrorName(true))
@@ -45,34 +46,39 @@ const ModalPopOverNewMedic = (props) => {
          }
       } 
 
-      const verifyUniqueEmail = () =>{
-         const db = getFirestore()
-         const itemCollection = db.collection("medic")
-         let lista = []
-         itemCollection.where("id","==",email).get().then((querySnapshot)=>{
-            querySnapshot.docs.map(doc =>{
-            return(
-               lista = [...lista,doc.data()]
-            )
-         })})
-         return lista.lenght == 0
-      }
 
       const pushToDatabase = () =>{
          setDisabled("disabled")
          const db = getFirestore()
-         db.collection("medic").add({
-            name:name,
-            email:email,
-            password:password
-         }).then(()=>{
-            setDisabled("")  
-         }).catch((e)=>{
-            setDisabled("")  
-         });
-         resetValues();
-         props.closeModal() 
-         props.handleOpensnackBar();
+         let user
+         let promises = db.collection("medic").where("email","==",email).get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                  user = doc.data()
+                  console.log(doc.id, " => ", doc.data());
+            });
+         })
+
+
+         promises.then(function(result){
+            if(user == null){
+               db.collection("medic").add({
+                  name:name,
+                  email:email,
+                  password:password
+               }).then(()=>{
+                  setDisabled("")  
+               }).catch((e)=>{
+                  setDisabled("")  
+               });
+               resetValues();
+               props.closeModal() 
+               props.handleOpensnackBar(); 
+            }else{
+               setUniqueEmail(true)
+               setDisabled("")
+            }
+         })
+         
       }
 
      const divStyle = { 
