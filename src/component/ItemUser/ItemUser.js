@@ -22,11 +22,6 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
         setImgs(image)
     }, [image])
 
-    useEffect(() => {
-        setSymptsList(symptom)
-        symptom && console.log("Sintoma",symptom.symptoms[0].symptom)
-    }, [symptom])
-
 
     useEffect(()=>{
         if(desc && symptom){
@@ -164,23 +159,21 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                     {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)} className="usertab-sympts-col-grado">{symptom.symptoms[0].grade}</td>}
                 </tr>:
         type==="seeSymptoms"?
-        <tr className="usertab-fila">
-            <td onClick={handleClick}></td>
+        <tr  onClick={(e)=>handleClick(e,symptom)} className="usertab-fila">
+            <td ></td>
             {symptom.date &&  <td>{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
-            <td onClick={handleClick}>{symptom.name}</td>
-            <td onClick={handleClick}>{symptom.symptom}</td>
-            { descripcion && 
-                    <td className="usertab-first-col-grado"><MouseOverPopover name={`Grado ${symptom.grade}`} descrip={`${descripcion.label}`}/></td> 
+            <td >{symptom.name}</td>
+            {symptom.symptoms && <td >{symptom.symptoms.length>=2 ? `${symptom.symptoms[0].symptom}+${symptom.symptoms.length-1}`:symptom.symptoms[0].symptom}</td>}
+            { (descripcion && symptom.symptoms) && 
+                <td className="usertab-first-col-grado">{symptom.symptoms[0].grade}</td> 
             }
             { symptom.grade>2 ?
                 (
-                    <td onClick={handleClick}>Urgencia</td>
+                    <td>Urgencia</td>
                 ):(
-                    <td onClick={handleClick}>No urgencia</td>
+                    <td>No urgencia</td>
                 )
             }
-            
-            <td onClick={handleClick}></td>
         </tr>:
           type==="seeUserSymptoms"?
           <tr className="usertab-fila">

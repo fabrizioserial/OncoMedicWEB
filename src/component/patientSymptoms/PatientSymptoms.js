@@ -8,6 +8,7 @@ import { ButtonRefresh } from '../seeAllUsers/ButtonRefresh'
 import { SearchTab } from '../seeAllUsers/searchTab/SearchTab';
 import { MySnackbar } from '../mySnackBar/MySnackbar';
 import moment from 'moment';
+import ModalPopOverSymptom from '../modals/ModalPopOverSymptom';
 
 
 
@@ -26,6 +27,17 @@ const PatientSymptoms = ({medicData}) =>{
     const [load,setLoad] = useState(false)
     const [refresh,setRefresh] = useState(false)
     const [reTitle,setRetitle] = useState(false)
+    const [openModal, setOpenModal] = useState(false);
+    const [symptom, setSymptom] = useState('');
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
+    
+    const handleCloseAndOpenModal = (event,item) => {
+    item!==undefined && setSymptom(item);
+    setOpenModal(true)
+    }; 
 
     useEffect(()=>{
 
@@ -66,13 +78,6 @@ const PatientSymptoms = ({medicData}) =>{
                 )
             setImageList(avatars)
         })
-
-        const itemCollectionSymptoms = db.collection("symptoms")
-
-        itemCollectionSymptoms.onSnapshot((querySnapshot) => {
-            let symptomslista = querySnapshot.docs.map(doc => doc.data())
-            setSymptomsList(symptomslista)
-        })
     },[medicData])
 
     useEffect(()=>{
@@ -88,7 +93,7 @@ const PatientSymptoms = ({medicData}) =>{
  
             querySnapshot.docs.map(doc => {
                     return(
-                        lista = [...lista,{name:item.name,desc:item.desc,...doc.data()}]
+                        lista = [...lista,{name:item.name,surname:item.surname,desc:item.desc,...doc.data()}]
                         )
                     }
                 )
@@ -151,7 +156,7 @@ const PatientSymptoms = ({medicData}) =>{
                 case "PACIENTE":
                     return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
                 case "SINTOMA":
-                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.symptom.toUpperCase().includes(selected.title.toUpperCase()))));  
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.symptoms.filter((item=>item.symptom.toUpperCase().includes(selected.title.toUpperCase()))))));  
                 case "GRADO":
                     // eslint-disable-next-line eqeqeq
                     return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.grade==(selected.title))));  
@@ -201,13 +206,18 @@ const PatientSymptoms = ({medicData}) =>{
                         </thead>
                         <tbody>
                             {
-                                showedSymptomsList2.length > 0 && showedSymptomsList2.map((item,key) => <ItemUser  key={key} symptom={item} desc={sympInfo.find(element => element.label===item.symptom)} type="seeSymptoms"/>)
+                                showedSymptomsList2.length > 0 && showedSymptomsList2.map((item,key) => <ItemUser  key={key} symptom={item} desc={sympInfo.find(element => element.label===item.symptom)} handleClick={handleCloseAndOpenModal}  type="seeSymptoms"/>)
                             }
                         </tbody>
                     </table>
                     { <button className="userall-btn-load-more">Cargar mas</button>}
                 </div>
                 }
+                <ModalPopOverSymptom
+                    symptoms={symptom}
+                    displayModal={openModal}
+                    closeModal={handleCloseModal}
+                    />
                 <MySnackbar
                         severity={severity}
                         message={message}
