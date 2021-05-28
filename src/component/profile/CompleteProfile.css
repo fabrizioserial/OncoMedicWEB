@@ -80,6 +80,11 @@
     margin-top: 50px;
     background-color: #F4F4F4;
     height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 .profile-chart-selector{
     width: 160px;

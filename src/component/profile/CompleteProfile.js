@@ -10,12 +10,11 @@ import moment from 'moment'
 import { makeStyles } from "@material-ui/core/styles";
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import { Skeleton } from '@material-ui/lab'
-import * as V from 'victory';
-import { VictoryArea,VictoryChart,VictoryScatter,VictoryAxis,VictoryTooltip,VictoryVoronoiContainer,VictoryLabel } from 'victory';
 import {Button,Menu,MenuItem} from '@material-ui/core'
 import arrow from '../../img/arrow_down.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import ReactApexChart from '../../../node_modules/react-apexcharts'
 
 const useStyles = makeStyles(theme => ({
     btn: {
@@ -56,15 +55,11 @@ export const CompleteProfile = () => {
     const [message,setMessage] = useState('')
     const [regDiarios,setRegDiario] = useState([])
     const [mood,setMood] = useState([])
-    const [showedMood,setShowedMood] = useState([])
     const [pain,setPain] = useState([])
-    const [showedPain,setShowedPain] = useState([])
-    const [activeSelect,setActiveSelect] = useState("Estado de Animo")
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [anchorEl2, setAnchorEl2] = useState(null);
-    const [dateActive,setActiveDate] = useState("Ultimos 7 dias")
-    const [hoy] = useState(new Date())
-    const [minDate,setMinDate] = useState(new Date())
+   
+
+    const [serie,setSerie] = useState({})
+    const [options,setOptions] = useState({})
   
     const handleOpensnackBar = (sev,mes) =>{
         setSeverity(sev)
@@ -72,14 +67,7 @@ export const CompleteProfile = () => {
         setOpenSnackBar(!openSnackBar)
     }
 
-    useEffect(()=>{
-        minDate.setDate(hoy.getDate()-7)
-        setShowedMood(mood.filter((item=>
-            item.date>=minDate)))
 
-        setShowedPain(pain.filter((item=>
-            item.date>=minDate)))
-    },[mood,pain])
 
     const handleCloseSnackBar = (event, reason) => {
         if (reason === 'clickaway') {
@@ -208,69 +196,82 @@ export const CompleteProfile = () => {
         }.bind(this),500)
     }
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
 
-    const handleClickDate = (event) => {
-        setAnchorEl2(event.currentTarget);
-    };
 
-    const handleClose = () => {
-    setAnchorEl(null);
-    };
 
-    const handleClose2 = () => {
-    setAnchorEl2(null);
-    };
-
-    const handleChange = (event) => {    setActiveSelect(event.target.textContent)
-    handleClose()  }
-
-    const handleChange2 = (event,min) => {    
-        handleDateStart(min)
-        setActiveDate(event.target.textContent)
-        handleClose2()  
-    }
-
-    const handleDateStart = (min) => {  
-        switch (min){
-            case 7:
-                setMinDate(new Date())
-                minDate.setDate(hoy.getDate()-7)
-                break;
-            case 14:
-                setMinDate(new Date())
-                minDate.setDate(hoy.getDate()-14)
-                break;
-            case 30:
-                setMinDate(new Date())
-                minDate.setDate(hoy.getDate()-30)
-                break;
-            case 600:
-                setMinDate(new Date())
-                minDate.setMonth(hoy.getMonth()-6)
-                break;
-            case 1000:
-                setMinDate(new Date())
-                minDate.setMonth(hoy.getMonth()-12)
-                break; 
-            default:
-                setMinDate(new Date())
-                minDate.setDate(hoy.getDate()-7)
-                break;
-        }
-
-        setShowedMood(mood.filter((item=>
-            item.date>=minDate)))
-
-        setShowedPain(pain.filter((item=>
-            item.date>=minDate)))
-    }
 
     useEffect(()=>{
-        
-    },[minDate])
+        console.log(mood.map(item=>item.date))
+        setSerie( [{
+              name: 'Humor',
+              data:  mood.map(item=>item.y)
+            }, {
+              name: 'Dolor',
+              data: pain.map(item=>item.y)
+            }])
+        setOptions({
+              chart: {
+                height: 460,
+                type: 'area',
+                defaultLocale:'es',
+                locales: [{
+                    name: 'es',
+                    options: {
+                    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    shortMonths: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    days: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+                    shortDays: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                    toolbar: {
+                        download: 'Descargar SVG',
+                        selection: 'Seleccion',
+                        selectionZoom: 'Seleccion Zoom',
+                        zoomIn: 'Aumentar',
+                        zoomOut: 'Disminuir',
+                        pan: 'Panning',
+                        reset: 'Resetear Zoom',
+                    }
+                    }
+                }]
+              },
+              fill: {
+                type: "gradient",
+                gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.7,
+                opacityTo: 0.4,
+                stops: [0, 90, 100]
+                },
+                colors:['#008FFB','#9357F7']
+              },
+              dataLabels: {
+                enabled: false
+              },
+              stroke: {
+                curve: 'smooth',
+                colors:['#008FFB','#9357F7']
+              },
+              xaxis: {
+                type: 'datetime',
+                categories: mood.map(item=>item.date.toString()),
+                labels: {
+                    datetimeFormatter: {
+                        year: 'yyyy',
+                        month: "MMM 'yy",
+                        day: 'dd MMM'
+                    }
+                }
+              },
+              yaxis:{
+                min:0,
+                max:10
+              },
+              tooltip: {
+                x: {
+                  format: 'dd/MM/yy'
+                },
+              },
+            })
+    },[mood,pain])
  
 
     return (
@@ -292,99 +293,8 @@ export const CompleteProfile = () => {
                 </div>
                 <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
                 <div className="profile-chart-cont">
-                    <div className="profile-chart-top-cont">
-                        <p className="profile-chart-top-text">{activeSelect.toUpperCase()}</p>
-                        <div>
-                        <Button onClick={handleClickDate}>{dateActive} <FontAwesomeIcon icon={faChevronDown} className="profile-arrow"/></Button>
-                        <Menu
-                        style={{marginTop: "45px"}}
-                            id="date"
-                            anchorEl={anchorEl2}
-                            open={Boolean(anchorEl2)}
-                            onClose={handleClose2}
-                            anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
-                            }}
-                            transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
-                            }}
-                            >
-                            <MenuItem onClick={e=>handleChange2(e,7)}>Ultimos 7 dias</MenuItem>
-                            <MenuItem onClick={e=>handleChange2(e,14)}>Ultimos 14 dias</MenuItem>
-                            <MenuItem onClick={e=>handleChange2(e,30)}>Ultimos 30 dias</MenuItem>
-                            <MenuItem onClick={e=>handleChange2(e,600)}>Ultimos 6 meses</MenuItem>
-                            <MenuItem onClick={e=>handleChange2(e,1000)}>Ultimo año</MenuItem>
-
-
-                        </Menu>
-                        <Button style={{marginLeft:"10px"}} onClick={handleClick}>{activeSelect} <FontAwesomeIcon icon={faChevronDown} className="profile-arrow"/></Button>
-                        <Menu
-                        style={{marginTop: "45px"}}
-                            id="select"
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            onClose={handleClose}
-                            anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
-                            }}
-                            transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
-                            }}
-                            >
-                            <MenuItem onClick={handleChange}>Estado de Animo</MenuItem>
-                            <MenuItem onClick={handleChange}>Dolor</MenuItem>
-                        </Menu>
-                        </div>
-
-                    </div>
-                    
-                    <svg style={{ height: 0 }}>
-                        <defs>
-                        <linearGradient id="myGradient" x1="0%" x2="0%" y1="0%" y2="100%">
-                            <stop offset="0%" stopColor="#9357F7" stopOpacity="0.4"/>
-                            <stop offset="100%" stopColor="#9357F7" stopOpacity="0.05"/>
-                        </linearGradient>
-                        </defs>
-                    </svg>
-                    <div className="profile-chart-svg-cont">
-                        <VictoryChart animate={{ duration: 1000 }} containerComponent={<VictoryVoronoiContainer  responsive={true} height={450}/>}height={400} width={1100}>
-                            <VictoryAxis dependentAxis
-                                domain={[0, 10]}
-                                style={{
-                                    axis: { stroke: "#e0e0e0", strokeWidth: 0 },
-                                    ticks: { strokeWidth: 0 },
-                                    tickLabels: {
-                                    fill: "#b7b7b7",
-                                    fontFamily: "inherit",
-                                    fontSize: 15
-                                    }
-                                }}
-                            />
-                            <VictoryAxis  style={{axis: { stroke: "#e0e0e0", strokeWidth: 0 }, tickLabels: {fontSize:'0', fill:"#b7b7b7"} }} />
-                            <VictoryArea
-                                labelComponent={<VictoryTooltip  activateData={true} style={{fontSize: '10px'}} cornerRadius={0} flyoutStyle={{ fill:"#9357F7",stroke: "transparent", strokeWidth: 0.5 }}/>}
-                                style={{
-                                    data: { stroke: "#9357F7",fill: "url(#myGradient)" },
-                                    parent: { border: "1px solid #e8e8e8"},
-                                    labels: {color: "tomato"}
-                                }}
-                                interpolation="natural"
-                                data={activeSelect === "Estado de Animo" ? showedMood : showedPain }/>
-                            <VictoryScatter
-                                size={3}
-                                    style={{
-                                    data: {fill: "#9357F7"}
-                                    }}
-                                    labelComponent={<VictoryTooltip activateData={true} style={{fontSize: '10px'}} cornerRadius={0} flyoutStyle={{ fill:"#9357F7", stroke: "transparent", strokeWidth: 0.5 }}/>}
-                                    data={activeSelect === "Estado de Animo" ? showedMood : showedPain }
-                                />
-                        </VictoryChart>
-                    </div>
-
+                    {
+                     serie && <ReactApexChart options={options} series={serie} type="area" height={450} />}
                 </div>
                 <div className="two-squares-complete-profile">
                     <div className="estado-usertab-cont-background">
