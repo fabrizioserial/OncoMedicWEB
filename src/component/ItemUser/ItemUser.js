@@ -15,10 +15,18 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
     const [imgs,setImgs] = useState(image)
     const [descripcion,setDescripcion] = useState("Descripcion del sintoma no encontrado")
     const [regdiario,setRegDiario] = useState()
+    const [symptsList,setSymptsList] = useState([])
+
 
     useEffect(() => {
         setImgs(image)
     }, [image])
+
+    useEffect(() => {
+        setSymptsList(symptom)
+        symptom && console.log("Sintoma",symptom.symptoms[0].symptom)
+    }, [symptom])
+
 
     useEffect(()=>{
         if(desc && symptom){
@@ -152,8 +160,8 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                 <tr className="usertab-fila">
                     {symptom.date &&  <td className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
                     <td style={{paddingLeft: "2%"}} onClick={(e)=>handleClick(e,symptom)}>{symptom.id}</td>
-                    <td onClick={(e)=>handleClick(e,symptom)}>{symptom.symptom}</td>
-                    <td onClick={(e)=>handleClick(e,symptom)} className="usertab-sympts-col-grado">{symptom.grade}</td>
+                    {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)}>{symptom.symptoms.length>=2 ? `${symptom.symptoms[0].symptom}+${symptom.symptoms.length-1}`:symptom.symptoms[0].symptom}</td>}
+                    {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)} className="usertab-sympts-col-grado">{symptom.symptoms[0].grade}</td>}
                 </tr>:
         type==="seeSymptoms"?
         <tr className="usertab-fila">

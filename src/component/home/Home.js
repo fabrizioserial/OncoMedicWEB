@@ -122,6 +122,7 @@ const Home = ({medicData}) =>{
                                             return 0;
                                             }))
         })) 
+
     }
 
     useEffect(()=>{
