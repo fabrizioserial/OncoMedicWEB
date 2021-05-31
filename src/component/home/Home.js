@@ -80,7 +80,7 @@ const Home = ({medicData}) =>{
             startTimer()
         })
 
-        const cancerListCollection = db.collection("cancer")
+        const cancerListCollection = db.collection("cancer").orderBy('name')
 
         cancerListCollection.onSnapshot((querySnapshot)=>{
             let cancerListDB = querySnapshot.docs.map(doc=>doc.data())

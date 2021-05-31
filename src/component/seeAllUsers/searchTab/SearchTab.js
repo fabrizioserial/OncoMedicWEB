@@ -17,6 +17,7 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle,warnBar,elCAt}
     const [dateEnd,setDateEnd] = useState(new Date())
     const [hash,setHash] = useState([])
     const [dateIsActive,setDateIsActive] = useState(false)
+    const [boolean,setBoolean] = useState(false)
 
 
 
@@ -62,6 +63,16 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle,warnBar,elCAt}
     },[refresh])
 
     const handleClickAndClose = (e) => {
+        let found=false
+        hash.map((item)=>{
+            if(item.selected.includes(selected)) {
+                found=true
+            } 
+        })
+        !found && aFuncion()
+    }
+
+    function aFuncion () {
         if (dateIsActive) { 
             dateStart && setHash([...hash,{selected: selected,dateStart: dateStart,dateEnd: dateEnd}])
         } else {

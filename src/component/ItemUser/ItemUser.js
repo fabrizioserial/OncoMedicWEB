@@ -155,7 +155,10 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                 <tr className="usertab-fila">
                     {symptom.date &&  <td className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
                     <td style={{paddingLeft: "2%"}} onClick={(e)=>handleClick(e,symptom)}>{symptom.id}</td>
-                    {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)}>{symptom.symptoms.length>=2 ? `${symptom.symptoms[0].symptom}+${symptom.symptoms.length-1}`:symptom.symptoms[0].symptom}</td>}
+                    {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)}><div style={{display: 'flex',alignItems: 'center'}}>
+                                            {`${symptom.symptoms[0].symptom} `}
+                                            <p className="p-itemuser-symptoms">+{symptom.symptoms.length-1}</p>
+                                            </div></td>}
                     {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)} className="usertab-sympts-col-grado">{symptom.symptoms[0].grade}</td>}
                 </tr>:
         type==="seeSymptoms"?
@@ -163,7 +166,13 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
             <td ></td>
             {symptom.date &&  <td>{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
             <td >{symptom.name}</td>
-            {symptom.symptoms && <td >{symptom.symptoms.length>=2 ? `${symptom.symptoms[0].symptom}+${symptom.symptoms.length-1}`:symptom.symptoms[0].symptom}</td>}
+            {symptom.symptoms && <td>
+                                        <div style={{display: 'flex',alignItems: 'center'}}>
+                                            {`${symptom.symptoms[0].symptom} `}
+                                            <p className="p-itemuser-symptoms">+{symptom.symptoms.length-1}</p>
+                                        </div>
+                                </td>
+            }
             { (descripcion && symptom.symptoms) && 
                 <td className="usertab-first-col-grado">{symptom.symptoms[0].grade}</td> 
             }

@@ -99,7 +99,7 @@ const UserTabAllUsers = ({medicData}) => {
                     setShowedUserList(showedUserList.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
                     setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
                     return
-                case "TIPO DE CANCER":
+                case "CANCER":
                     setShowedUserList(showedUserList.filter((item=>item.cancer.toUpperCase().includes(selected.title.toUpperCase()))));  
                     setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.cancer.toUpperCase().includes(selected.title.toUpperCase()))));  
                     return
@@ -211,7 +211,7 @@ const UserTabAllUsers = ({medicData}) => {
             </div>
 
             <div className="userall-cont-cont">
-                <SearchTab elCAt={handleElCat} warnBar={handleWarnBar} reTitle={reTitle} refresh={refresh} categories={["N PACIENTE","NOMBRE","TIPO DE CANCER","ACTIVOS","INACTIVOS"]} handleClick={handleSearch}/>
+                <SearchTab elCAt={handleElCat} warnBar={handleWarnBar} reTitle={reTitle} refresh={refresh} categories={["N PACIENTE","NOMBRE","CANCER","ACTIVOS","INACTIVOS"]} handleClick={handleSearch}/>
 
                 <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
