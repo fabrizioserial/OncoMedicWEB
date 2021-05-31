@@ -10,8 +10,6 @@ import ModalPopOverSeeDiaryReg from '../modals/ModalPopOverSeeDiaryReg';
 import { ButtonGoBack } from '../seeAllUsers/ButtonGoBack'
 import { ItemUser } from '../ItemUser/ItemUser'
 import { SearchTab } from '../seeAllUsers/searchTab/SearchTab'
-import * as V from 'victory';
-import { VictoryLine,VictoryChart,VictoryAxis,VictoryTooltip,VictoryVoronoiContainer,VictoryLabel } from 'victory';
 import {faSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -27,22 +25,7 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     const [regunique,setUnicReg] = useState([])
     const [color,setColor] = useState('')
     const [calendar,setCalendar] = useState(true)
-    const [mood,setMood] = useState([])
-    const [pain,setPain] = useState([])
 
-    const returnEmoji = (mood)=>{
-        if(mood===10){
-            return '😀'
-        }else if(mood>=7){
-            return '🙂'
-        }else if(mood>=4){
-            return '😐'
-        }else if(mood>=2){
-            return '🙁'
-        }else{
-            return '😔'
-        }
-    }
 
     useEffect(()=>{
         if(id){
@@ -89,7 +72,6 @@ const SeeAllDiaryRegs = ({medicData}) =>{
           // a must be equal to b
           return 0;
           }))
-          listEvents()
       },[regList])
 
     useEffect(()=>{
@@ -106,33 +88,7 @@ const SeeAllDiaryRegs = ({medicData}) =>{
         setEvents(eventList)
     },[regList])
 
-    const listEvents = () => {
 
-        let eventList = regList.reverse().map((item,index) => {
-            return (
-                {
-                x : index,
-                y : item.mood,
-                label: (otherformatedDate(item.date.toDate()))}
-            )
-        })
-        setMood(eventList)
-
-
-        let otherList = regList.map((item,index) => {
-            return (
-                {
-                x : index,
-                y : item.sad,
-                label: (otherformatedDate(item.date.toDate()))}
-            )
-        })
-        setPain(otherList)
-
-        regList.reverse()
-
-
-    }
 
     useEffect (()=>{
         setShowedRegList(regList)
@@ -209,36 +165,7 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                                 </tbody>
                             </table>
                         </div>
-                        <div className="alldiaries-chart">
-                            <VictoryChart containerComponent={<VictoryVoronoiContainer/>}>
-                                <VictoryAxis dependentAxis padding={{left: 20}} domain={[0,10]} />
-                                <VictoryAxis  style={{ tickLabels: { fill:"transparent"} }}  tickFormat={(t) => `${Math.round(t)}`}/>
-                                <VictoryLine
-                                    labelComponent={<VictoryTooltip  style={{fontSize: '10px'}} cornerRadius={0} flyoutStyle={{fill: "#e6e6e6"}}/>}
-                                    style={{
-                                        data: { stroke: "#c43a31" },
-                                        parent: { border: "1px solid #ccc"},
-                                        labels: {color: "tomato"}
-                                    }}
-                                    data={mood}/>
-                            </VictoryChart>
 
-                            <VictoryChart
-                                containerComponent={<VictoryVoronoiContainer/>}>
-                                <VictoryAxis dependentAxis padding={{left: 20}} domain={[0,10]} />
-                                <VictoryAxis style={{ tickLabels: { fill:"transparent"} }}/>
-                                
-                                <VictoryLine
-                                    labelComponent={<VictoryTooltip  style={{fontSize: '10px'}}  cornerRadius={0} flyoutStyle={{fill: "#e6e6e6"}}/>}
-                                    style={{
-                                        parent: { border: "1px solid #ccc"},
-
-                                    }}
-                                    data={pain}/>
-                                
-                            </VictoryChart>
-
-                        </div>
                     </div>
                 }
             </div>
