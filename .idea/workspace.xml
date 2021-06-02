@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="781951f1-4784-4609-87ae-d5317649b20a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/component/login/__test__/Login.test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/login/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/ItemUser/ItemUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/ItemUser/ItemUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profile/CompleteProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profile/CompleteProfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/seeAllDiaryRegs/SeeAllDiaryRegs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/seeAllDiaryRegs/SeeAllDiaryRegs.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +89,7 @@
       <updated>1620836949614</updated>
       <workItem from="1620836951740" duration="4105000" />
       <workItem from="1620844383335" duration="2407000" />
+      <workItem from="1621637439123" duration="595000" />
     </task>
     <servers />
   </component>
