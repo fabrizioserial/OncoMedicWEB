@@ -79,7 +79,7 @@ export const CompleteProfile = () => {
 
             itemCollection.get().then((doc) => {
                 if (doc.exists) {
-                    let userFound ={id:doc.id,...doc.data()}
+                    let userFound ={docid:doc.id,...doc.data()}
                     console.log("El usuario encontrado es: ",userFound)
                     setUser(userFound)
                 } else {
@@ -88,12 +88,6 @@ export const CompleteProfile = () => {
             }).catch((error) => {
                 console.log("Error getting user:", error);
             });
-
-            db.collection("symptoms").where("id","==", id).limit(6)
-            .onSnapshot((querySnapshot) => {
-                let symptomslista = querySnapshot.docs.map(doc => doc.data())
-                setSymptomsList(symptomslista)
-            })
 
             db.collection("diaryReg").where("id","==",id).limit(6)
             .onSnapshot((querySnapshot) => {
@@ -122,16 +116,25 @@ export const CompleteProfile = () => {
                 setImage(imgFound)
             })
 
+            db.collection("symptoms").where("id","==", user.id).limit(6)
+            .onSnapshot((querySnapshot) => {
+                let symptomslista = querySnapshot.docs.map(doc => doc.data())
+                setSymptomsList(symptomslista)
+            })
+
             const itemCollectionSymp = db.collection("mainSymptoms")
             itemCollectionSymp.onSnapshot((querySnapshot) => {
             
             let sympList = querySnapshot.docs.map(doc => {
                     return(
-                        {id:doc.id,...doc.data()}
+                        {docid:doc.id,...doc.data()}
                         )
                     }
                 )
             setSympInfo(sympList)
+
+
+
             
         })
 

@@ -2,9 +2,17 @@ import React,{useEffect,useState} from 'react'
 import './UsertabSymptoms.css'
 import { ItemUser } from '../../ItemUser/ItemUser'
 import { useHistory } from 'react-router'
+import ModalPopOverSymptom from '../../modals/ModalPopOverSymptom'
 
 export const UsertabSymptoms=({sympstoms,descs,id})=> {
   const [sympInfo,setSympInfo] = useState(descs)
+  const [openModal, setOpenModal] = useState(false);
+  const [symptom, setSymptom] = useState('');
+
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   useEffect(()=>{
       setSympInfo(descs)
@@ -14,6 +22,12 @@ export const UsertabSymptoms=({sympstoms,descs,id})=> {
   function handleCloseAndNavigate(){
       history.push(`/userSympts/${id}`);
   }
+
+
+  const handleCloseAndOpenModal = (event,item) => {
+    item!==undefined && setSymptom(item);
+    setOpenModal(true)
+  }; 
 
   return (
             <React.Fragment>
@@ -25,17 +39,21 @@ export const UsertabSymptoms=({sympstoms,descs,id})=> {
                     <thead className="sintoms-usertab-thead">
                         <tr>
                         <th className="sintoms-th-fecha" scope="col">FECHA</th>
-                        <th className="sintoms-th-fecha" scope="col">SINTOMA</th>
-                        <th className="sintoms-th-grado" scope="col">GRADO</th>
+                        <th scope="col">SINTOMA</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                          sympstoms.map(item => <ItemUser desc={sympInfo.find(element => element.label===item.symptom)} symptom={item} type="symptoms"/>)
+                          sympstoms.map(item => <ItemUser handleClick={handleCloseAndOpenModal} desc={sympInfo.find(element => element.label===item.symptom)} symptom={item} type="symptoms"/>)
                         }
                     </tbody>
                   </table>
                   {sympstoms.length >= 6 && <button onClick={handleCloseAndNavigate} className="menu-finalbutton">VER TODO</button>}
+                  <ModalPopOverSymptom
+                    symptoms={symptom}
+                    displayModal={openModal}
+                    closeModal={handleCloseModal}
+                  />
                 </div>
                 )
                 :

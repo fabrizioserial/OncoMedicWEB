@@ -198,10 +198,8 @@ const PatientSymptoms = ({medicData}) =>{
                             <th className="patientsymptoms-th-empty" scope="col"></th>
                             <th className="patientsymptoms-th-fecha" scope="col">FECHA</th>
                             <th className="patientsymptoms-th-patient" scope="col">PACIENTE</th>
-                            <th className="patientsymptoms-th-symptom" scope="col">SINTOMA</th>
-                            <th className="patientsymptoms-th-grade" scope="col">GRADO</th>
+                            <th className="patientsymptoms-th-symptom" scope="col">SINTOMAS</th>
                             <th className="patientsymptoms-th-grade" scope="col">RESPUESTA</th>
-                            <th className="patientsymptoms-th-empty" scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>

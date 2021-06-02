@@ -163,7 +163,7 @@ const UserTabAllUsers = ({medicData}) => {
             let activeuser = querySnapshot.docs.map(doc =>{
                 return(
                     {
-                        id:doc.id,...doc.data()
+                        docid:doc.id,...doc.data()
                     }
                 )
             })

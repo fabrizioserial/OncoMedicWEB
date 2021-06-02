@@ -27,10 +27,10 @@ export const UserTabHome=({margin_left,userlist,images,handleEl,handleLoad})=> {
   }
 
   function handleSympts(){
-    history.push(`/userSympts/${user.id}`)
+    history.push(`/userSympts/${user.docid}`)
   }
   function handleCloseAndNavigate(){
-    history.push(`/profile/${user.id}`);
+    history.push(`/profile/${user.docid}`);
   }
 
   const open = Boolean(anchorEl);

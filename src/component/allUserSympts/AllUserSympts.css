@@ -10,9 +10,7 @@
 .patientsymptoms-th-symptom{
     width:20%;
 }
-.patientsymptoms-th-grade{
-    width:20%;
-}
+
 .mouse-over-descr{
     cursor: pointer;
     font: 16px 'Montserrat' !important;
