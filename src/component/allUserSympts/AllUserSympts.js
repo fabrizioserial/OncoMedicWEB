@@ -31,7 +31,7 @@ const AllUserSympts = ({medicData}) =>{
             setUserNotFound(false)
             console.log("DB READING")
             const db = getFirestore()
-            const itemCollection = db.collection("users").doc(id)
+            const itemCollection = db.collection("testUsers").doc(id)
             
             itemCollection.get().then((querySnapshot) => {
                 let userFound ={id:querySnapshot.id,...querySnapshot.data()}

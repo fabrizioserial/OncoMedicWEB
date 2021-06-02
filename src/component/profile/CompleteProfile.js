@@ -119,7 +119,16 @@ export const CompleteProfile = () => {
             db.collection("symptoms").where("id","==", user.id).limit(6)
             .onSnapshot((querySnapshot) => {
                 let symptomslista = querySnapshot.docs.map(doc => doc.data())
-                setSymptomsList(symptomslista)
+                setSymptomsList(symptomslista.sort(function (a, b) {
+                    if (b.date > a.date) {
+                        return 1;
+                    }
+                    if (b.date < a.date) {
+                        return -1;
+                    }
+                    // a must be equal to b
+                    return 0;
+                    }))
             })
 
             const itemCollectionSymp = db.collection("mainSymptoms")

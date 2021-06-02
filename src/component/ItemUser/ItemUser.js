@@ -4,7 +4,7 @@ import optionIcon from '../../img/option_icon.png'
 import {Button} from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faLaughBeam,faSadTear,faFrown,faMeh,faSmile } from '@fortawesome/free-regular-svg-icons'
-import {faCircle, faCrutch,faDrumstickBite,faRunning,faTint,faUsers} from '@fortawesome/free-solid-svg-icons'
+import {faCircle, faCrutch,faDrumstickBite,faRunning,faTint,faUsers,faExclamation} from '@fortawesome/free-solid-svg-icons'
 import MouseOverPopover from '../mouseOverPopover/MouseOverPopover'
 import { useHistory } from 'react-router-dom';
 
@@ -79,7 +79,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
             <tr   className="item-user-fila">
                 <th scope="row" className="item-user-user-image-table"><img alt="" className="usertab-user-image" src={imgs&&imgs.url} /></th>
                 <td onClick={()=>switchToProfle()}>{user.id}</td> 
-                <td onClick={()=>switchToProfle()}>{user.name}</td>
+                <td onClick={()=>switchToProfle()}>{user.surname}, {user.name}</td>
                 <td onClick={()=>switchToProfle()}>{user.cancer}</td>
                 <td onClick={()=>switchToProfle()}>{user.status=== "Activo" ? <FontAwesomeIcon icon={faCircle} className="item-status-active" size="lg"/> : <FontAwesomeIcon icon={faCircle} className="item-status-inactive" size="lg"/>}</td>
                 <td className="item-user-config"><button className="item-user-options" onClick={(e)=>handleClick(e,user,user.status)}><img alt="" className="usertab_icon_image" src={optionIcon}/></button></td>
@@ -116,6 +116,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                                             {symptom.symptoms.length>1 && `, ${symptom.symptoms[1].symptom} `}
                                             {symptom.symptoms.length>2 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-2}</p>}
                                             </div></td>}
+                <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faExclamation}/>}</td>
             </tr>:
         type==="regdiarioMood"?
             <tr className="item-user-fila-regdiario">
@@ -157,17 +158,19 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
         type==="sympts"?
                 <tr onClick={(e)=>handleClick(e,symptom)}  className="usertab-fila">
                     {symptom.date &&  <td  className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
-                    <td style={{paddingLeft: "2%"}}>{symptom.id}</td>
-                    {symptom.symptoms && <td><div style={{display: 'flex',alignItems: 'center'}}>
+                    <td style={{paddingLeft: "4%"}}>{symptom.id}</td>
+                    <td style={{paddingLeft: "4%"}}>{symptom.surname}, {symptom.name}</td>
+                    {symptom.symptoms && <td style={{paddingLeft: "4%"}}><div style={{display: 'flex',alignItems: 'center'}}>
                                             {`${symptom.symptoms[0].symptom} `}
                                             {symptom.symptoms.length>1 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-1}</p>}
                                             </div></td>}
+                    <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faExclamation}/>}</td>
                 </tr>:
         type==="seeSymptoms"?
         <tr  onClick={(e)=>handleClick(e,symptom)} className="usertab-fila">
             <td ></td>
             {symptom.date &&  <td>{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
-            <td >{symptom.name}</td>
+            <td >{symptom.surn}, {symptom.name} </td>
             {symptom.symptoms && <td>
                                     <div style={{display: 'flex',alignItems: 'center'}}>
                                         {`${symptom.symptoms[0].symptom} `}
@@ -192,7 +195,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
               { descripcion && 
                       <td className="usertab-first-col-grado"><MouseOverPopover name={`Grado ${symptom.grade}`} descrip={`${descripcion.label}`}/></td> 
               }
-              { symptom.grade>2 ?
+              { symptom.grade>5 ?
                   (
                       <td onClick={handleClick}>Urgencia</td>
                   ):(
