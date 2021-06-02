@@ -16,11 +16,13 @@ const ModalPopOverNewMedic = (props) => {
       const [errorPass,setErrorPass] = useState(false)
       const [passwordShown, setPasswordShown] = useState(false);
       const [error,setError] = useState({upper:true,lower:true,number:true,chars:true})
+      const [uniqueEmail,setUniqueEmail] = useState(false)
      
       const resetValues=()=>{
          setName("")
          setPassword("")
          setEmail("")
+         setUniqueEmail(false)
          resetErrors()
       }
 
@@ -29,6 +31,8 @@ const ModalPopOverNewMedic = (props) => {
          setErrorName(false)
          setErrorPass(false)
          setErrorEmail(false)
+         setUniqueEmail(false)
+         setError({upper:true,lower:true,number:true,chars:true})
       }
 
       const verifyInformation = () =>{
@@ -45,21 +49,39 @@ const ModalPopOverNewMedic = (props) => {
          }
       } 
 
+
       const pushToDatabase = () =>{
          setDisabled("disabled")
          const db = getFirestore()
-         db.collection("medic").add({
-            name:name,
-            email:email,
-            password:password
-         }).then(()=>{
-            setDisabled("")  
-         }).catch((e)=>{
-            setDisabled("")  
-         });
-         resetValues();
-         props.closeModal() 
-         props.handleOpensnackBar();
+         let user
+         let promises = db.collection("medic").where("email","==",email).get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                  user = doc.data()
+                  console.log(doc.id, " => ", doc.data());
+            });
+         })
+
+
+         promises.then(function(result){
+            if(user == null){
+               db.collection("medic").add({
+                  name:name,
+                  email:email,
+                  password:password
+               }).then(()=>{
+                  setDisabled("")  
+               }).catch((e)=>{
+                  setDisabled("")  
+               });
+               resetValues();
+               props.closeModal() 
+               props.handleOpensnackBar(); 
+            }else{
+               setUniqueEmail(true)
+               setDisabled("")
+            }
+         })
+         
       }
 
      const divStyle = { 
@@ -135,7 +157,7 @@ const ModalPopOverNewMedic = (props) => {
                   disabled={disabled}
                   variant="outlined"/>
             </div>               
-            <p className="modal-add-input-cont-error">{errorEmail ? "Introduzca un email valido":""}</p>
+            <p className="modal-add-input-cont-error">{errorEmail ? "Introduzca un email valido": uniqueEmail ? "Instroduzca un mail no registrado" : ""}</p>
             <div className="add-inside-the-modal">
                 <p>Contraseña</p>
             </div> 
