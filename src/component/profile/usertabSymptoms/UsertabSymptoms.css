@@ -92,7 +92,8 @@
     width: 20%;
 }
 .sintoms-th-fecha{
-    padding-left: 5%;
+    padding-left: 3.5%;
+    width: 30%;
 }
 .sintoms-img-error-cont{
     display: flex;

@@ -42,8 +42,8 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
 
     const history = useHistory();
     const switchToProfle = () => {
-        console.log(user.id)
-        history.push(`/profile/${user.id}`);
+        console.log(user.docid)
+        history.push(`/profile/${user.docid}`);
     }
 
     const returnEmoji = (mood,regdia)=>{
@@ -107,12 +107,15 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                 <td><Button className="item-user-options" onClick={(e)=>handleClick(e,regdiario)}><img alt="" className="usertab_icon_image" src={optionIcon} /></Button></td>
             </tr>:
         type==="symptoms"?
-            <tr className="symptoms-usertab-fila">
+            <tr onClick={(e)=>handleClick(e,symptom)}  className="usertab-fila">
                 {  
                    symptom.date &&  <td className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> 
                 }
-                <td className="symptoms-fila-fecha">{symptom.symptom}</td>
-                {<td className="symptoms-fila-grado"><MouseOverPopover name={symptom.grade} descrip={descripcion.label}/></td>}
+                {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)}><div style={{display: 'flex',alignItems: 'center'}}>
+                                            {`${symptom.symptoms[0].symptom} `}
+                                            {symptom.symptoms.length>1 && `, ${symptom.symptoms[1].symptom} `}
+                                            {symptom.symptoms.length>2 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-2}</p>}
+                                            </div></td>}
             </tr>:
         type==="regdiarioMood"?
             <tr className="item-user-fila-regdiario">
@@ -152,14 +155,13 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                 <td  className="value-regdiario">{hid}</td>
             </tr> : 
         type==="sympts"?
-                <tr className="usertab-fila">
-                    {symptom.date &&  <td className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
-                    <td style={{paddingLeft: "2%"}} onClick={(e)=>handleClick(e,symptom)}>{symptom.id}</td>
-                    {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)}><div style={{display: 'flex',alignItems: 'center'}}>
+                <tr onClick={(e)=>handleClick(e,symptom)}  className="usertab-fila">
+                    {symptom.date &&  <td  className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
+                    <td style={{paddingLeft: "2%"}}>{symptom.id}</td>
+                    {symptom.symptoms && <td><div style={{display: 'flex',alignItems: 'center'}}>
                                             {`${symptom.symptoms[0].symptom} `}
-                                            <p className="p-itemuser-symptoms">+{symptom.symptoms.length-1}</p>
+                                            {symptom.symptoms.length>1 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-1}</p>}
                                             </div></td>}
-                    {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)} className="usertab-sympts-col-grado">{symptom.symptoms[0].grade}</td>}
                 </tr>:
         type==="seeSymptoms"?
         <tr  onClick={(e)=>handleClick(e,symptom)} className="usertab-fila">
@@ -167,14 +169,12 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
             {symptom.date &&  <td>{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
             <td >{symptom.name}</td>
             {symptom.symptoms && <td>
-                                        <div style={{display: 'flex',alignItems: 'center'}}>
-                                            {`${symptom.symptoms[0].symptom} `}
-                                            <p className="p-itemuser-symptoms">+{symptom.symptoms.length-1}</p>
-                                        </div>
+                                    <div style={{display: 'flex',alignItems: 'center'}}>
+                                        {`${symptom.symptoms[0].symptom} `}
+                                        {symptom.symptoms.length>1 && `, ${symptom.symptoms[1].symptom} `}
+                                        {symptom.symptoms.length>2 &&<p className="p-itemuser-symptoms">+{symptom.symptoms.length-2}</p>}
+                                    </div>
                                 </td>
-            }
-            { (descripcion && symptom.symptoms) && 
-                <td className="usertab-first-col-grado">{symptom.symptoms[0].grade}</td> 
             }
             { symptom.grade>2 ?
                 (
@@ -204,4 +204,3 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
           </tr>: ""
     )
 }
-  
