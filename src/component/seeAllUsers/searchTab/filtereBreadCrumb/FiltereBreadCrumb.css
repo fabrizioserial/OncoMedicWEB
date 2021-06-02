@@ -3,10 +3,11 @@
     border-radius: 2vw;
     height: 1.5vw;
     margin-top: 0;
-    width: fit-content;
+    width:14%;
     font: 400 13.3333px Arial;
     padding: 7px;
     display: flex;;
+    justify-content: space-between;
 }
 .filter-breadcrumb-text{
     margin-top: 2%;
@@ -21,7 +22,7 @@
     align-items: center;
     justify-content: center;
     margin-left: 5%;
-    width: 2vw;
+    width: 30px;
     font-size: 1vw;
     background-color: white;
     border-radius: 100%;

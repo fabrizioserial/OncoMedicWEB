@@ -4,20 +4,25 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
-const FiltereBreadCrumb = ({name,index,handleCross}) => {
+const FiltereBreadCrumb = ({name,index,handleCross,Atitle}) => {
     const [title,setTitle] = useState('')
+    const [string,setString] = useState('')
 
     useEffect(() => {
         setTitle(name)
     }, [name])
 
     const capitalize = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1);
+        if (str.length>6){
+            return str.charAt(0).toUpperCase() + str.slice(1)
+        } else{
+            return str.charAt(0).toUpperCase() + str.slice(1)
+        }
     }
 
     return (
         <div style={{marginLeft: index===0 ? "0%": "1%" }} className="filter-breadcrumb-background">
-            {title && <p className="filter-breadcrumb-text">{capitalize(title.toLowerCase())}</p>}
+            {title && <p className="filter-breadcrumb-text">{capitalize(title.toLowerCase())}:{Atitle}</p>}
             <div onClick={()=>handleCross(name)} className="filter-breadcrumb-div-cross">
                 <FontAwesomeIcon icon={faTimes}/>
             </div>

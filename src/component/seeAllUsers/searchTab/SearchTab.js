@@ -139,7 +139,7 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle,warnBar,elCAt}
             </Menu>
         </div>
         <div className="searchtab-filters-breadcrumbs">
-            {hash && hash.map((item) => <FiltereBreadCrumb handleCross={handleCross} name={item.selected}></FiltereBreadCrumb>)}
+            {hash && hash.map((item) => <FiltereBreadCrumb Atitle={item.title} handleCross={handleCross} name={item.selected}></FiltereBreadCrumb>)}
         </div>
         </>
     )
