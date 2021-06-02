@@ -6,10 +6,15 @@ import { UsertabSymptoms } from '../profile/usertabSymptoms/UsertabSymptoms'
 import ProfileTab from './profileTab/ProfileTab'
 import {useParams} from 'react-router-dom'
 import {getFirestore} from '../../firebase'
+import moment from 'moment'
 import { makeStyles } from "@material-ui/core/styles";
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import { Skeleton } from '@material-ui/lab'
-
+import {Button,Menu,MenuItem} from '@material-ui/core'
+import arrow from '../../img/arrow_down.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import ReactApexChart from '../../../node_modules/react-apexcharts'
 
 const useStyles = makeStyles(theme => ({
     btn: {
@@ -49,13 +54,19 @@ export const CompleteProfile = () => {
     const [severity,setSeverity] = useState('')
     const [message,setMessage] = useState('')
     const [regDiarios,setRegDiario] = useState([])
-
+    const [mood,setMood] = useState([])
+    const [pain,setPain] = useState([])
+    const [serie,setSerie] = useState({})
+    const [options,setOptions] = useState({})
+    const [graph,setGraph] = useState(true)
   
     const handleOpensnackBar = (sev,mes) =>{
         setSeverity(sev)
         setMessage(mes)
         setOpenSnackBar(!openSnackBar)
     }
+
+
 
     const handleCloseSnackBar = (event, reason) => {
         if (reason === 'clickaway') {
@@ -68,6 +79,41 @@ export const CompleteProfile = () => {
     const updateDate = () =>{
         setUpdateData(!update)
     }
+    
+    const listEvents = () => {
+
+        let eventList = regDiarios.reverse().map((item,index) => {
+            return (
+                {
+                x : index+1,
+                y : item.mood,
+                label: (otherformatedDate(item.date.toDate())),
+                date: item.date.toDate()}
+            )
+        })
+        setMood(eventList)
+
+
+        let otherList = regDiarios.map((item,index) => {
+            return (
+                {
+                x : index+1,
+                y : item.sad,
+                label: (otherformatedDate(item.date.toDate())),
+                date: item.date.toDate()
+                }
+            )
+        })
+        setPain(otherList)
+
+        regDiarios.reverse()
+    }
+
+    function otherformatedDate (date) {
+        var dateComponent = moment(date).format('DD/MM/YYYY');
+        return dateComponent
+    }
+
 
     useEffect(()=>{
 
@@ -103,6 +149,10 @@ export const CompleteProfile = () => {
 
         }
     },[id,update])
+
+    useEffect(()=>{
+            listEvents()
+    },[regDiarios])
 
     useEffect(()=>{
         
@@ -158,6 +208,87 @@ export const CompleteProfile = () => {
     }
 
 
+
+
+
+    useEffect(()=>{
+        mood.length == 0 && setGraph(false)
+        console.log(mood.length)
+        setSerie( [{
+              name: 'Humor',
+              data:  mood.map(item=>item.y)
+            }, {
+              name: 'Dolor',
+              data: pain.map(item=>item.y)
+            }])
+        setOptions({
+              chart: {
+                height: 460,
+                type: 'area',
+                defaultLocale:'es',
+                locales: [{
+                    name: 'es',
+                    options: {
+                    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    shortMonths: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    days: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+                    shortDays: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                    toolbar: {
+                        download: 'Descargar SVG',
+                        selection: 'Seleccion',
+                        selectionZoom: 'Seleccion Zoom',
+                        zoomIn: 'Aumentar',
+                        zoomOut: 'Disminuir',
+                        pan: 'Panning',
+                        reset: 'Resetear Zoom',
+                    }
+                    }
+                }]
+              },
+              fill: {
+                type: "gradient",
+                gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.7,
+                opacityTo: 0.4,
+                stops: [0, 90, 100]
+                },
+                colors:['#008FFB','#9357F7']
+              },
+              dataLabels: {
+                enabled: false
+              },
+              stroke: {
+                curve: 'smooth',
+                colors:['#008FFB','#9357F7']
+              },
+              xaxis: {
+                type: 'datetime',
+                categories: mood.map(item=>item.date.toString()),
+                labels: {
+                    datetimeFormatter: {
+                        year: 'yyyy',
+                        month: "MMM 'yy",
+                        day: 'dd MMM'
+                    }
+                }
+              },
+              yaxis:{
+                min:0,
+                max:10
+              },
+              tooltip: {
+                x: {
+                  format: 'dd/MM/yy'
+                },
+              },
+            })
+    },[mood,pain])
+ 
+    useEffect(()=>{
+
+    },[graph])
+
     return (
         <React.Fragment>
             { 
@@ -176,6 +307,11 @@ export const CompleteProfile = () => {
                     <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
                 </div>
                 <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
+               {graph &&  <div className="profile-chart-cont">
+                    {
+                     serie && <ReactApexChart options={options} series={serie} type="area" height={450} />
+                     }
+                </div>}
                 <div className="two-squares-complete-profile">
                     <div className="estado-usertab-cont-background">
                         <UsertabState regDiarios={regDiarios}  user={user} type="profile" flexi={{Flex:1}}/>

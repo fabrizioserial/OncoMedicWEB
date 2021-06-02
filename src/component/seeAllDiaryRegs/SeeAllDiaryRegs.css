@@ -14,3 +14,44 @@
 .fc-today {
     background-color: none !important;
 }
+.userall-top-btns{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.userall-final-btns-class{
+    height: 40px;
+    width: auto;
+    background-color: lightgray;
+    border: none;
+    padding: 10px 10px;
+    cursor: pointer;
+}
+.userall-final-btns-class.true {
+    background: #e5e5e5;
+    outline: none;
+    -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+       -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+            box-shadow: inset 0px 0px 5px #c1c1c1;
+}
+.alldiarys-th {
+    width: 25%;
+}
+.item-user-alldiaryRegs-fecha{
+    width: 20%;
+    padding-left: 5%;
+}
+.regdiarios-td{
+    flex-direction: column;
+}
+.alldiaries-chart{
+    width: 100%;
+    display: flex;
+}
+.alldiaries-chart-labels{
+    margin-top: 5%;
+    font-family: 'Montserrat',-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    font-weight: bold;
+}

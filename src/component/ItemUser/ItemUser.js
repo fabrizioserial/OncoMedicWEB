@@ -14,9 +14,13 @@ import { useHistory } from 'react-router-dom';
 export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sad,run,social,hid,hungry,handletotalClick}) => {
     const [imgs,setImgs] = useState(image)
     const [descripcion,setDescripcion] = useState("Descripcion del sintoma no encontrado")
+<<<<<<< HEAD
+    const [regdiario,setRegDiario] = useState("")
+=======
     const [regdiario,setRegDiario] = useState()
     const [symptsList,setSymptsList] = useState([])
 
+>>>>>>> 64f034b85792fbf60760f5b81d7158e8b80d6f35
 
     useEffect(() => {
         setImgs(image)
@@ -32,9 +36,8 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
 
     useEffect(()=>{
         if(daily){
-        setRegDiario(daily)
+            setRegDiario(daily)
         } 
-
     },[daily])
 
 
@@ -84,6 +87,20 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                 <td onClick={()=>switchToProfle()}>{user.status=== "Activo" ? <FontAwesomeIcon icon={faCircle} className="item-status-active" size="lg"/> : <FontAwesomeIcon icon={faCircle} className="item-status-inactive" size="lg"/>}</td>
                 <td className="item-user-config"><button className="item-user-options" onClick={(e)=>handleClick(e,user,user.status)}><img alt="" className="usertab_icon_image" src={optionIcon}/></button></td>
             </tr>: 
+
+        type==="allRegs"?
+        <tr onClick={()=>handleClick("no",regdiario)} className="item-user-fila">
+            <td className="item-user-alldiaryRegs-fecha">{regdiario && Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(regdiario.date.toDate())}</td>
+            {
+                regdiario && <td className="regdiarios-td">{regdiario.mood}</td>
+            }
+            {
+                regdiario && <td className="regdiarios-td">{regdiario.sad}</td>
+            }
+            {
+                regdiario && <td>{regdiario.hungry}</td>
+            }
+        </tr>:
 
         type==="home"?
                 <tr className="usertab-fila" >
