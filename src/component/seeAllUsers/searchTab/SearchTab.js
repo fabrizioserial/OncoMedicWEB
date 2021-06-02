@@ -17,6 +17,7 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle,warnBar,elCAt}
     const [dateEnd,setDateEnd] = useState(new Date())
     const [hash,setHash] = useState([])
     const [dateIsActive,setDateIsActive] = useState(false)
+    const [boolean,setBoolean] = useState(false)
 
 
 
@@ -62,6 +63,16 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle,warnBar,elCAt}
     },[refresh])
 
     const handleClickAndClose = (e) => {
+        let found=false
+        hash.map((item)=>{
+            if(item.selected.includes(selected)) {
+                found=true
+            } 
+        })
+        !found && aFuncion()
+    }
+
+    function aFuncion () {
         if (dateIsActive) { 
             dateStart && setHash([...hash,{selected: selected,dateStart: dateStart,dateEnd: dateEnd}])
         } else {
@@ -128,7 +139,7 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle,warnBar,elCAt}
             </Menu>
         </div>
         <div className="searchtab-filters-breadcrumbs">
-            {hash && hash.map((item) => <FiltereBreadCrumb handleCross={handleCross} name={item.selected}></FiltereBreadCrumb>)}
+            {hash && hash.map((item) => <FiltereBreadCrumb Atitle={item.title} handleCross={handleCross} name={item.selected}></FiltereBreadCrumb>)}
         </div>
         </>
     )

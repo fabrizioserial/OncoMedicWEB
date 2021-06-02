@@ -67,12 +67,7 @@ export const UserTabLastSymptoms=({symptomsList})=> {
               </Menu>
 
             <ModalPopOverSymptom
-              id={symptom.id}
-              date={symptom.date && symptom.date}
-              name={symptom.name}
-              surname={symptom.surname}
-              symptom={symptom.symptom}
-              grade={symptom.grade}
+              symptoms={symptom}
               displayModal={openModal}
               closeModal={handleCloseModal}
             />

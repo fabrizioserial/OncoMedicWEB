@@ -14,11 +14,18 @@ import { useHistory } from 'react-router-dom';
 export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sad,run,social,hid,hungry,handletotalClick}) => {
     const [imgs,setImgs] = useState(image)
     const [descripcion,setDescripcion] = useState("Descripcion del sintoma no encontrado")
+<<<<<<< HEAD
     const [regdiario,setRegDiario] = useState("")
+=======
+    const [regdiario,setRegDiario] = useState()
+    const [symptsList,setSymptsList] = useState([])
+
+>>>>>>> 64f034b85792fbf60760f5b81d7158e8b80d6f35
 
     useEffect(() => {
         setImgs(image)
     }, [image])
+
 
     useEffect(()=>{
         if(desc && symptom){
@@ -165,27 +172,34 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                 <tr className="usertab-fila">
                     {symptom.date &&  <td className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
                     <td style={{paddingLeft: "2%"}} onClick={(e)=>handleClick(e,symptom)}>{symptom.id}</td>
-                    <td onClick={(e)=>handleClick(e,symptom)}>{symptom.symptom}</td>
-                    <td onClick={(e)=>handleClick(e,symptom)} className="usertab-sympts-col-grado">{symptom.grade}</td>
+                    {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)}><div style={{display: 'flex',alignItems: 'center'}}>
+                                            {`${symptom.symptoms[0].symptom} `}
+                                            <p className="p-itemuser-symptoms">+{symptom.symptoms.length-1}</p>
+                                            </div></td>}
+                    {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)} className="usertab-sympts-col-grado">{symptom.symptoms[0].grade}</td>}
                 </tr>:
         type==="seeSymptoms"?
-        <tr className="usertab-fila">
-            <td onClick={handleClick}></td>
+        <tr  onClick={(e)=>handleClick(e,symptom)} className="usertab-fila">
+            <td ></td>
             {symptom.date &&  <td>{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
-            <td onClick={handleClick}>{symptom.name}</td>
-            <td onClick={handleClick}>{symptom.symptom}</td>
-            { descripcion && 
-                    <td className="usertab-first-col-grado"><MouseOverPopover name={`Grado ${symptom.grade}`} descrip={`${descripcion.label}`}/></td> 
+            <td >{symptom.name}</td>
+            {symptom.symptoms && <td>
+                                        <div style={{display: 'flex',alignItems: 'center'}}>
+                                            {`${symptom.symptoms[0].symptom} `}
+                                            <p className="p-itemuser-symptoms">+{symptom.symptoms.length-1}</p>
+                                        </div>
+                                </td>
+            }
+            { (descripcion && symptom.symptoms) && 
+                <td className="usertab-first-col-grado">{symptom.symptoms[0].grade}</td> 
             }
             { symptom.grade>2 ?
                 (
-                    <td onClick={handleClick}>Urgencia</td>
+                    <td>Urgencia</td>
                 ):(
-                    <td onClick={handleClick}>No urgencia</td>
+                    <td>No urgencia</td>
                 )
             }
-            
-            <td onClick={handleClick}></td>
         </tr>:
           type==="seeUserSymptoms"?
           <tr className="usertab-fila">

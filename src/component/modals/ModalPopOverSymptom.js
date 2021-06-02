@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './ModalPopOverSymptom.css'
 import 'fontsource-roboto';
 
@@ -8,10 +8,12 @@ const ModalPopOverSymptom = (props) => {
      const divStyle = { 
           display: props.displayModal ? 'block' : 'none'
      };
+
      function closeModal(e) {
         e.stopPropagation()
         props.closeModal()
      }
+     
      return (
        <div 
          className="modal"
@@ -28,30 +30,37 @@ const ModalPopOverSymptom = (props) => {
                <p className="modal-title">SINTOMA PRESENTADO</p>
                <hr className="add-modal-line"/>
             </div>
-            <tr style={{marginTop: "5%"}} className="tabs-fila">
-                <td style={{paddingLeft: "2%"}}>Fecha:</td>
-                {props.date &&  <td style={{paddingRight: "2%"}}>{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(props.date.toDate())}</td> }
+            <tr style={{marginTop: "5%",backgroundColor: 'white'}} className="tabs-fila">
+                <td >Fecha:</td>
+                {props.symptoms.date &&  <td >{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(props.symptoms.date.toDate())}</td> }
             </tr>
-            <tr className="tabs-fila">
-                <td style={{paddingLeft: "2%"}}>Nombre:</td>
-                <td style={{paddingRight: "2%"}}>{props.surname}, {props.name}</td>
+            <tr style={{backgroundColor: 'white'}} className="tabs-fila">
+                <td >Nombre:</td>
+                <td>{props.symptoms.surname}, {props.symptoms.name}</td>
             </tr>
-            <tr className="tabs-fila">
-                <td style={{paddingLeft: "2%"}}>N paciente:</td>
-                <td style={{paddingRight: "2%"}}>{props.id}</td>
-            </tr>
-            <tr className="tabs-fila">
-                <td style={{paddingLeft: "2%"}}>Sintoma:</td>
-                <td style={{paddingRight: "2%"}}>{props.symptom}</td>
-            </tr>
-            <tr className="tabs-fila">
-                <td style={{paddingLeft: "2%"}}>Grado:</td>
-                <td style={{paddingRight: "2%"}}>{props.grade}</td>
-            </tr>
-            <tr className="tabs-fila">
-                <td style={{paddingLeft: "2%"}}>Respuesta:</td>
-                <td style={{paddingRight: "2%"}}>{props.grade>5 ? 'Urgencia':'No urgencia'}</td>
-            </tr>
+            {
+                props.symptoms.symptoms ? 
+                    <table  className="table-modal-sympts">
+                        <thead className="usertab-thead">
+                            <tr>
+                            <th >Sintoma</th>
+                            <th>Grado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                    props.symptoms.symptoms.map((item,index)=>
+                                    <tr style={{marginTop: 0}} >
+                                        <td className="td-table-modal-sympts">{item.symptom}</td>
+                                        <td  className="td-table-modal-sympts grade">{item.grade}</td>
+                                    </tr>
+                                )
+                            }
+                        </tbody>
+ 
+                    </table>
+                :null
+            }
          </div>
       </div>
      );

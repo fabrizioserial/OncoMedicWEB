@@ -9,3 +9,19 @@
     align-items: center;
     justify-content: space-between;
 }
+.table-modal-sympts{
+    border: none;
+    border-spacing:0 10px;
+    max-height: 353px;
+    margin-left: 2%;
+    
+
+}
+.td-table-modal-sympts.grade{
+    display: flex;
+    justify-content: center;
+
+}
+.td-table-modal-sympts{
+
+}
