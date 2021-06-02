@@ -56,10 +56,9 @@ export const CompleteProfile = () => {
     const [regDiarios,setRegDiario] = useState([])
     const [mood,setMood] = useState([])
     const [pain,setPain] = useState([])
-   
-
     const [serie,setSerie] = useState({})
     const [options,setOptions] = useState({})
+    const [graph,setGraph] = useState(true)
   
     const handleOpensnackBar = (sev,mes) =>{
         setSeverity(sev)
@@ -201,7 +200,8 @@ export const CompleteProfile = () => {
 
 
     useEffect(()=>{
-        console.log(mood.map(item=>item.date))
+        mood.length == 0 && setGraph(false)
+        console.log(mood.length)
         setSerie( [{
               name: 'Humor',
               data:  mood.map(item=>item.y)
@@ -273,6 +273,9 @@ export const CompleteProfile = () => {
             })
     },[mood,pain])
  
+    useEffect(()=>{
+
+    },[graph])
 
     return (
         <React.Fragment>
@@ -292,10 +295,11 @@ export const CompleteProfile = () => {
                     <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
                 </div>
                 <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
-                <div className="profile-chart-cont">
+               {graph &&  <div className="profile-chart-cont">
                     {
-                     serie && <ReactApexChart options={options} series={serie} type="area" height={450} />}
-                </div>
+                     serie && <ReactApexChart options={options} series={serie} type="area" height={450} />
+                     }
+                </div>}
                 <div className="two-squares-complete-profile">
                     <div className="estado-usertab-cont-background">
                         <UsertabState regDiarios={regDiarios}  user={user} type="profile" flexi={{Flex:1}}/>
