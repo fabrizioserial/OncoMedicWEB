@@ -50,6 +50,7 @@ export const UsertabSymptoms=({sympstoms,descs,id})=> {
                   </table>
                   {sympstoms.length >= 6 && <button onClick={handleCloseAndNavigate} className="menu-finalbutton">VER TODO</button>}
                   <ModalPopOverSymptom
+                    type="profile"
                     symptoms={symptom}
                     displayModal={openModal}
                     closeModal={handleCloseModal}

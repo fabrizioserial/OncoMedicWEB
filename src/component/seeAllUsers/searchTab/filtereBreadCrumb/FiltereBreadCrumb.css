@@ -3,16 +3,19 @@
     border-radius: 2vw;
     height: 1.5vw;
     margin-top: 0;
-    width:14%;
+    width:fit-content;
     font: 400 13.3333px Arial;
     padding: 7px;
     display: flex;;
     justify-content: space-between;
 }
+.div-inside-bread{
+    display: flex;
+    align-items: center;
+}
 .filter-breadcrumb-text{
-    margin-top: 2%;
     width: fit-content;
-    margin-left: 5%;
+    margin-left: 10px;
     color: white;
     font-size: 1vw;
     font-weight: bold;
@@ -21,9 +24,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 5%;
-    width: 30px;
-    font-size: 1vw;
+    margin-left: 1vw;
+    width: 1.5vw;
+    height: 1.5vw;
+    font-size: 1.2rem;
     background-color: white;
     border-radius: 100%;
     cursor: pointer;

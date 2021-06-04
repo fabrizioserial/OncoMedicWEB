@@ -10,6 +10,7 @@ import {getFirestore} from '../../firebase'
 import { ButtonRefresh } from './ButtonRefresh'
 import { MySnackbar } from '../mySnackBar/MySnackbar';
 import { connect } from 'react-redux'
+import { Skeleton } from '@material-ui/lab';
 
 const UserTabAllUsers = ({medicData}) => {
 
@@ -28,6 +29,7 @@ const UserTabAllUsers = ({medicData}) => {
     const [bool,setBool] = useState(false)
     const [refresh,setRefresh] = useState(false)
     const [reTitle,setRetitle] = useState(false)
+    const [loading,setLoading] = useState(true)
 
 
 
@@ -68,9 +70,9 @@ const UserTabAllUsers = ({medicData}) => {
         setOpenSnackBar(false);
     };
 
-    const handleWarnBar = () => {
+    const handleWarnBar = (warnTitle) => {
         setSeverity("error")
-        setMessage("Por favor seleccione una categoria")
+        setMessage(warnTitle)
         setOpenSnackBar(!openSnackBar)
     }
 
@@ -196,7 +198,15 @@ const UserTabAllUsers = ({medicData}) => {
             setImageList(avatars)
         })
 
+        startTimer();
+
     },[medicData])
+
+    const startTimer = () =>{
+        setTimeout(function(){
+            setLoading(false)
+        }.bind(this),1000)
+    }
 
     useEffect(()=>{
         setMedic(medicData)
@@ -213,6 +223,10 @@ const UserTabAllUsers = ({medicData}) => {
             <div className="userall-cont-cont">
                 <SearchTab elCAt={handleElCat} warnBar={handleWarnBar} reTitle={reTitle} refresh={refresh} categories={["N PACIENTE","NOMBRE","CANCER","ACTIVOS","INACTIVOS"]} handleClick={handleSearch}/>
 
+
+            {loading ?
+                <Skeleton className="userall-cont-info-allUsers" variant="rect" animation="wave" width={"81.5vw"} height={"37vw"} />
+            :
                 <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
                         <thead className="userall-thead-allUsers">
@@ -261,8 +275,7 @@ const UserTabAllUsers = ({medicData}) => {
 
                         </tbody>
                     </table>
-                    {userList && <button className="userall-btn-load-more">Cargar mas</button>}
-                </div>
+                </div>}
                 <MySnackbar
                         severity={severity}
                         message={message}

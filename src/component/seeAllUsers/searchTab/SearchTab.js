@@ -69,16 +69,20 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle,warnBar,elCAt}
                 found=true
             } 
         })
-        !found && aFuncion()
+        !found ? aFuncion():warnBar("Categoria ya elegida")
     }
 
     function aFuncion () {
         if (dateIsActive) { 
             dateStart && setHash([...hash,{selected: selected,dateStart: dateStart,dateEnd: dateEnd}])
         } else {
-            if(selected) {
+            if(selected && title) {
                 setHash([...hash,{selected: selected,title: title}])
-            } else warnBar()
+            } else if(selected==="ACTIVOS" || selected==="INACTIVOS" ){
+                setHash([...hash,{selected: selected,title: title}])
+            } else if(selected){
+                warnBar(`Escriba un ${selected.toLowerCase()} para filtrar`)
+            } else warnBar("Seleccione una categoria")
         }
     }
 
@@ -139,7 +143,7 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle,warnBar,elCAt}
             </Menu>
         </div>
         <div className="searchtab-filters-breadcrumbs">
-            {hash && hash.map((item) => <FiltereBreadCrumb Atitle={item.title} handleCross={handleCross} name={item.selected}></FiltereBreadCrumb>)}
+            {hash && hash.map((item,index) => <FiltereBreadCrumb Atitle={item.title} handleCross={handleCross} index={index} name={item.selected}></FiltereBreadCrumb>)}
         </div>
         </>
     )

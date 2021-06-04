@@ -21,10 +21,12 @@ const FiltereBreadCrumb = ({name,index,handleCross,Atitle}) => {
     }
 
     return (
-        <div style={{marginLeft: index===0 ? "0%": "1%" }} className="filter-breadcrumb-background">
-            {title && <p className="filter-breadcrumb-text">{capitalize(title.toLowerCase())}:{Atitle}</p>}
-            <div onClick={()=>handleCross(name)} className="filter-breadcrumb-div-cross">
-                <FontAwesomeIcon icon={faTimes}/>
+        <div style={{marginLeft: index==0 ? "0%": "1%" }} className="filter-breadcrumb-background">
+            <div className="div-inside-bread">
+                {title && <p className="filter-breadcrumb-text">{capitalize(title.toLowerCase())}{Atitle && `: ${Atitle}`}</p>}
+                <div onClick={()=>handleCross(name)} className="filter-breadcrumb-div-cross">
+                    <FontAwesomeIcon icon={faTimes}/>
+                </div>
             </div>
         </div>
     )

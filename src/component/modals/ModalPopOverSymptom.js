@@ -47,10 +47,11 @@ const ModalPopOverSymptom = (props) => {
                 <td className="tmodal-td" >Fecha:</td>
                 {props.symptoms.date &&  <td className="tmodal-final-td" >{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(props.symptoms.date.toDate())}</td> }
             </tr>
+            {props.type!="profile"?
             <tr  className="tabs-fila">
                 <td className="tmodal-td" >Nombre:</td>
                 <td className="tmodal-final-td">{props.symptoms.surname}, {props.symptoms.name}</td>
-            </tr>
+            </tr>:null}
             {
                 props.symptoms.symptoms ? 
                     <table  className="table-modal-sympts">
