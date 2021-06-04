@@ -14,13 +14,7 @@ import { useHistory } from 'react-router-dom';
 export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sad,run,social,hid,hungry,handletotalClick}) => {
     const [imgs,setImgs] = useState(image)
     const [descripcion,setDescripcion] = useState("Descripcion del sintoma no encontrado")
-<<<<<<< HEAD
     const [regdiario,setRegDiario] = useState("")
-=======
-    const [regdiario,setRegDiario] = useState()
-    const [symptsList,setSymptsList] = useState([])
-
->>>>>>> 64f034b85792fbf60760f5b81d7158e8b80d6f35
 
     useEffect(() => {
         setImgs(image)
