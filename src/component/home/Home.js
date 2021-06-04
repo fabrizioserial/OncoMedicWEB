@@ -52,7 +52,7 @@ const Home = ({medicData}) =>{
             
             let userlista = querySnapshot.docs.map(doc => {
                     return(
-                        {id:doc.id,...doc.data()}
+                        {docid:doc.id,...doc.data()}
                         )
                     }
                 )

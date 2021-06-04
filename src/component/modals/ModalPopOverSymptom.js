@@ -1,19 +1,32 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './ModalPopOverSymptom.css'
 import 'fontsource-roboto';
 
 
 const ModalPopOverSymptom = (props) => {
+    const [rta,setRta] = useState(false)
 
      const divStyle = { 
           display: props.displayModal ? 'block' : 'none'
      };
 
      function closeModal(e) {
+        setRta(false)
         e.stopPropagation()
         props.closeModal()
      }
-     
+     const handleGrade = (grade)=>{
+         console.log("HOLA")
+        grade>5 && setRta(true)
+     }
+
+     useEffect(()=>{
+        if (props.symptoms.symptoms) {
+            props.symptoms.symptoms.map((item,index)=>{
+                item.grade>5 && setRta(true)
+            })
+        }
+     },[props.symptoms.symptoms])
      return (
        <div 
          className="modal"
@@ -30,21 +43,21 @@ const ModalPopOverSymptom = (props) => {
                <p className="modal-title">SINTOMA PRESENTADO</p>
                <hr className="add-modal-line"/>
             </div>
-            <tr style={{marginTop: "5%",backgroundColor: 'white'}} className="tabs-fila">
-                <td >Fecha:</td>
-                {props.symptoms.date &&  <td >{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(props.symptoms.date.toDate())}</td> }
+            <tr style={{marginTop: "5%"}} className="tabs-fila">
+                <td className="tmodal-td" >Fecha:</td>
+                {props.symptoms.date &&  <td className="tmodal-final-td" >{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(props.symptoms.date.toDate())}</td> }
             </tr>
-            <tr style={{backgroundColor: 'white'}} className="tabs-fila">
-                <td >Nombre:</td>
-                <td>{props.symptoms.surname}, {props.symptoms.name}</td>
+            <tr  className="tabs-fila">
+                <td className="tmodal-td" >Nombre:</td>
+                <td className="tmodal-final-td">{props.symptoms.surname}, {props.symptoms.name}</td>
             </tr>
             {
                 props.symptoms.symptoms ? 
                     <table  className="table-modal-sympts">
                         <thead className="usertab-thead">
                             <tr>
-                            <th >Sintoma</th>
-                            <th>Grado</th>
+                            <th>Sintoma</th>
+                            <th className="td-table-modal-sympts grade">Grado</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,10 +70,15 @@ const ModalPopOverSymptom = (props) => {
                                 )
                             }
                         </tbody>
- 
                     </table>
                 :null
             }
+            <div>
+                <tr className="tabs-fila">
+                    <td className="tmodal-td" >Respuesta:</td>
+                    <td className="tmodal-final-td">{rta ? "Urgencia":"No urgencia"}</td>
+                </tr>
+            </div>
          </div>
       </div>
      );
