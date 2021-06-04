@@ -70,6 +70,40 @@ export const Login = ({setMedicUserAction}) => {
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
     };
+
+    const pushToDatabase = () =>{
+        const db = getFirestore()
+        db.collection("users").add({
+            avatar: 1,
+            birth: "Wed Jun 02 2021",
+            cancer: "",
+            dbt: {
+                dbt: false,
+                med: ""
+            },
+            email: "mail@gmail.com",
+            etnia: "Caucasico",
+            gender: 0,
+            id: "18234323",
+            med: {
+                acv: false,
+                epoc: false,
+                hip: false,
+                inf: false,
+            },
+            medic: "123456",
+            name: "Nacho",
+            password: "123",
+            place: "Austral",
+            smoke:{
+                qnt: "",
+                smoke: 0,
+                time: "",
+            },
+            status: "Activo",
+            surname: "Ferrari",
+        })
+    }
     
 
 
@@ -102,10 +136,7 @@ export const Login = ({setMedicUserAction}) => {
                             errorInvalid && <p className="input-error-text">Introduzca datos validos</p>}
                         <Button id="Btnlogin" color="primary" className={errorComplete || errorInvalid ? "btn-login-input active":"btn-login-input inactive"} onClick={checkUser}>
                             Log In
-                        </Button>
-                        {//<button onClick={pushToDatabase}/>
-                        }
-                            
+                        </Button>  
                     </form>
                     
                 </div>

@@ -10,10 +10,6 @@ import moment from 'moment'
 import { makeStyles } from "@material-ui/core/styles";
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import { Skeleton } from '@material-ui/lab'
-import {Button,Menu,MenuItem} from '@material-ui/core'
-import arrow from '../../img/arrow_down.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import ReactApexChart from '../../../node_modules/react-apexcharts'
 
 const useStyles = makeStyles(theme => ({

@@ -9,6 +9,7 @@ import { SearchTab } from '../seeAllUsers/searchTab/SearchTab';
 import { MySnackbar } from '../mySnackBar/MySnackbar';
 import moment from 'moment';
 import ModalPopOverSymptom from '../modals/ModalPopOverSymptom';
+import { Skeleton } from '@material-ui/lab';
 
 
 
@@ -24,7 +25,7 @@ const PatientSymptoms = ({medicData}) =>{
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [severity,setSeverity] = useState("")
     const [message,setMessage] = useState("")
-    const [load,setLoad] = useState(false)
+    const [load,setLoad] = useState(true)
     const [refresh,setRefresh] = useState(false)
     const [reTitle,setRetitle] = useState(false)
     const [openModal, setOpenModal] = useState(false);
@@ -111,9 +112,15 @@ const PatientSymptoms = ({medicData}) =>{
         
         Promise.all(promises).then(function(results) {
             setSymptomsList2(lista)
-            lista.length > 0 && setLoad(true)
+            lista.length > 0 && startTimer()
         })
 
+    }
+
+    const startTimer = () =>{
+        setTimeout(function(){
+            setLoad(false)
+        }.bind(this),1500)
     }
     useEffect(()=>{
         cleanSym()
@@ -149,6 +156,10 @@ const PatientSymptoms = ({medicData}) =>{
         setRetitle(!reTitle)
         hash.map((selected)=>{
             switch (selected.selected){
+                case "URGENCIA":
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.symptoms.some(el=>el.grade>5)))); 
+                case "NO URGENCIA":
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>!item.symptoms.some(el=>el.grade>5))));  
                 case "FECHA":
                     return setShowedSymptomsList2(showedSymptomsList2.filter((item=>
                         formatedDate(item.date.toDate()) >= (formatedDate(selected.dateStart))
@@ -156,10 +167,7 @@ const PatientSymptoms = ({medicData}) =>{
                 case "PACIENTE":
                     return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
                 case "SINTOMA":
-                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.symptoms.filter((item=>item.symptom.toUpperCase().includes(selected.title.toUpperCase()))))));  
-                case "GRADO":
-                    // eslint-disable-next-line eqeqeq
-                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.grade==(selected.title))));  
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.symptoms.some(el=>el.symptom.toUpperCase().includes(selected.title.toUpperCase())))));  
                 default:
                     return handleWarnBar() 
             }
@@ -189,8 +197,7 @@ const PatientSymptoms = ({medicData}) =>{
             </div>
 
             <div className="userall-cont-cont">
-                <SearchTab  reTitle={reTitle} elCAt={handleElCat} warnBar={handleWarnBar} refresh={refresh} categories={["FECHA","PACIENTE","SINTOMA","GRADO"]} handleClick={handleSearch}/>
-                {load &&
+                <SearchTab  reTitle={reTitle} elCAt={handleElCat} warnBar={handleWarnBar} refresh={refresh} categories={["FECHA","PACIENTE","SINTOMA","URGENCIA","NO URGENCIA"]} handleClick={handleSearch}/>
                    <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
                         <thead className="userall-thead-sympts">
@@ -203,14 +210,31 @@ const PatientSymptoms = ({medicData}) =>{
                             </tr>
                         </thead>
                         <tbody>
+                        {load ?
+                            <>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2683%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2683%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2683%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2683%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2683%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2683%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2683%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2683%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2683%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2683%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2683%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2683%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2683%"} height={"41px"}></Skeleton>
+                            </>
+                            :
+                            <>
                             {
                                 showedSymptomsList2.length > 0 && showedSymptomsList2.map((item,key) => <ItemUser  key={key} symptom={item} desc={sympInfo.find(element => element.label===item.symptom)} handleClick={handleCloseAndOpenModal}  type="seeSymptoms"/>)
+                            }</>
                             }
                         </tbody>
                     </table>
-                    { <button className="userall-btn-load-more">Cargar mas</button>}
                 </div>
-                }
                 <ModalPopOverSymptom
                     symptoms={symptom}
                     displayModal={openModal}

@@ -50,7 +50,8 @@
     height: 100%;
 }
 .userall-cont-info-allUsers{
-    height: 37vw;
+    min-height: 75vh;
+    height: fit-content;
     width: initial;
     padding-right: 15px;
     padding-left: 15px;

@@ -205,7 +205,7 @@ const UserTabAllUsers = ({medicData}) => {
     const startTimer = () =>{
         setTimeout(function(){
             setLoading(false)
-        }.bind(this),1000)
+        }.bind(this),1500)
     }
 
     useEffect(()=>{
@@ -224,22 +224,37 @@ const UserTabAllUsers = ({medicData}) => {
                 <SearchTab elCAt={handleElCat} warnBar={handleWarnBar} reTitle={reTitle} refresh={refresh} categories={["N PACIENTE","NOMBRE","CANCER","ACTIVOS","INACTIVOS"]} handleClick={handleSearch}/>
 
 
-            {loading ?
-                <Skeleton className="userall-cont-info-allUsers" variant="rect" animation="wave" width={"81.5vw"} height={"37vw"} />
-            :
+
                 <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
                         <thead className="userall-thead-allUsers">
                             <tr>
-                            <th scope="col"></th>
-                            <th scope="col">N PACIENTE</th>
-                            <th scope="col">NOMBRE</th>
-                            <th scope="col">TIPO DE CANCER</th>
+                            <th style={{width: '7vw'}} scope="col"></th>
+                            <th style={{width: '14vw'}} scope="col">N PACIENTE</th>
+                            <th style={{width: '28vw'}} scope="col">NOMBRE</th>
+                            <th style={{width: '20vw'}} scope="col">TIPO DE CANCER</th>
                             <th scope="col">ESTADO</th>
                             <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
+                        {loading ?
+                            <>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                            </>
+                            :
+                            <>
                             {
                                 (showedUserList.length > 0) && showedUserList.map((item,key) => <ItemUser image={images.find(element =>element.id===item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
                             }
@@ -247,7 +262,7 @@ const UserTabAllUsers = ({medicData}) => {
                             {
                                 
                                 (inactiveShowedUserList.length > 0) && inactiveShowedUserList.map((item,key) => <ItemUser image={images.find(element =>element.id===item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
-                            }
+                            }</>}
                             <Menu className="menu-see-all-users"
                                 id={id}
                                 open={open}
@@ -275,7 +290,7 @@ const UserTabAllUsers = ({medicData}) => {
 
                         </tbody>
                     </table>
-                </div>}
+                </div>
                 <MySnackbar
                         severity={severity}
                         message={message}

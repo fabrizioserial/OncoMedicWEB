@@ -78,7 +78,7 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle,warnBar,elCAt}
         } else {
             if(selected && title) {
                 setHash([...hash,{selected: selected,title: title}])
-            } else if(selected==="ACTIVOS" || selected==="INACTIVOS" ){
+            } else if(selected==="ACTIVOS" || selected==="INACTIVOS" || selected==="URGENCIA" || selected==="NO URGENCIA"){
                 setHash([...hash,{selected: selected,title: title}])
             } else if(selected){
                 warnBar(`Escriba un ${selected.toLowerCase()} para filtrar`)
@@ -107,7 +107,7 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle,warnBar,elCAt}
             <React.Fragment>
             <input
                 onKeyPress={(e) => e.key === 'Enter' && handleClickAndClose(e)}   
-                placeholder="Buscar por Nombre, Apellido, DNI, ID paciente" 
+                placeholder="Ingrese una palabra para buscar" 
                 className="searchtab-input"
                 onChange={event => setTitle(event.target.value)}
                 value={title}

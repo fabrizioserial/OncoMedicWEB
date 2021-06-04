@@ -15,7 +15,6 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
     const [imgs,setImgs] = useState(image)
     const [descripcion,setDescripcion] = useState("Descripcion del sintoma no encontrado")
     const [regdiario,setRegDiario] = useState()
-    const [symptsList,setSymptsList] = useState([])
 
 
     useEffect(() => {
@@ -183,7 +182,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
         <tr  onClick={(e)=>handleClick(e,symptom)} className="usertab-fila">
             <td ></td>
             {symptom.date &&  <td>{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
-            <td >{symptom.surn}, {symptom.name} </td>
+            <td >{symptom.surname}, {symptom.name} </td>
             {symptom.symptoms && <td>
                                     <div style={{display: 'flex',alignItems: 'center'}}>
                                         {`${symptom.symptoms[0].symptom} `}
@@ -192,7 +191,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                                     </div>
                                 </td>
             }
-            { symptom.grade>2 ?
+            { symptom.symptoms.some(el => el.grade > 5) ?
                 (
                     <td>Urgencia</td>
                 ):(
@@ -201,22 +200,22 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
             }
         </tr>:
           type==="seeUserSymptoms"?
-          <tr className="usertab-fila">
-              <td onClick={handleClick}></td>
-              {symptom.date &&  <td>{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
-              <td onClick={handleClick}>{symptom.symptom}</td>
-              { descripcion && 
-                      <td className="usertab-first-col-grado"><MouseOverPopover name={`Grado ${symptom.grade}`} descrip={`${descripcion.label}`}/></td> 
-              }
-              { symptom.grade>5 ?
-                  (
-                      <td onClick={handleClick}>Urgencia</td>
-                  ):(
-                      <td onClick={handleClick}>No urgencia</td>
-                  )
-              }
-              
-              <td onClick={handleClick}></td>
+          <tr onClick={(e)=>handleClick(e,symptom)} className="usertab-fila">
+              {symptom.date &&  <td style={{paddingLeft: '5vw'}}>{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
+              {symptom.symptoms && <td><div style={{display: 'flex',alignItems: 'center'}}>
+                                            {`${symptom.symptoms[0].symptom}`}
+                                            {symptom.symptoms.length>1 && `, ${symptom.symptoms[1].symptom}`}
+                                            {symptom.symptoms.length>2 &&`, ${symptom.symptoms[2].symptom}`}
+                                            {symptom.symptoms.length>3 &&`, ${symptom.symptoms[3].symptom}`}
+                                            {symptom.symptoms.length>4 &&`, ${symptom.symptoms[4].symptom}`}
+                                            {symptom.symptoms.length>5 &&`, ${symptom.symptoms[4].symptom}`}
+                                            {symptom.symptoms.length>6 &&`, ${symptom.symptoms[4].symptom}`}
+                                            {symptom.symptoms.length>7 &&`, ${symptom.symptoms[4].symptom}`}
+                                            {symptom.symptoms.length>8 &&`, ${symptom.symptoms[4].symptom}`}
+                                            {symptom.symptoms.length>9 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-9}</p>}
+                                            </div></td>}
+                                    
+                                            <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faExclamation}/>}</td>
           </tr>: ""
     )
 }
