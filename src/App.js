@@ -17,6 +17,7 @@ import './Variables.css'
 import AllUserSympts from './component/allUserSympts/AllUserSympts';
 import { useLayoutEffect, useState } from 'react';
 import sorry from './img/working.png'
+import { AcceptUser } from './component/acceptUser/AcceptUser';
 
 const App = () => {
 
@@ -72,6 +73,10 @@ const App = () => {
 
                 <Route exact path="/userSympts/:id">
                   <AllUserSympts/>
+                </Route>
+
+                <Route exact path="/acceptuser">
+                  <AcceptUser/>
                 </Route>
 
 

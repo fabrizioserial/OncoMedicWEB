@@ -76,10 +76,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
-<<<<<<< HEAD
     "eslint": "^7.25.0",
-=======
->>>>>>> table-in-profile
     "redux-mock-store": "^1.5.4",
     "regenerator-runtime": "^0.13.7"
   },

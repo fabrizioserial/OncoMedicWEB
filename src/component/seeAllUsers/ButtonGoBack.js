@@ -7,7 +7,7 @@ import { faHome,faUndoAlt } from '@fortawesome/free-solid-svg-icons'
 
 
 
-export const ButtonGoBack = ({text,type,id}) => {
+export const ButtonGoBack = ({text,type,id,classNameProp=""}) => {
 
     const history = useHistory();
     const handleNaigate = () => {
@@ -15,7 +15,7 @@ export const ButtonGoBack = ({text,type,id}) => {
     }
 
     return(
-        <div className="go-back-back">
+        <div className={`go-back-back ${classNameProp}`}>
             {(type==="allUsers" && id) ? (
                     <button className="goBack-btn" onClick={handleNaigate}> <FontAwesomeIcon icon={faUndoAlt} className="go-back-space-icon" />{text}</button>
             ):(
