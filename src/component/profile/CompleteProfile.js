@@ -54,7 +54,7 @@ export const CompleteProfile = () => {
     const [pain,setPain] = useState([])
     const [serie,setSerie] = useState({})
     const [options,setOptions] = useState({})
-    const [graph,setGraph] = useState(true)
+    const [graph,setGraph] = useState(false)
   
     const handleOpensnackBar = (sev,mes) =>{
         setSeverity(sev)
@@ -78,7 +78,17 @@ export const CompleteProfile = () => {
     
     const listEvents = () => {
 
-        let eventList = regDiarios.reverse().map((item,index) => {
+        regDiarios.sort(function (a, b) {
+                    if (b.date > a.date) {
+                        return 1;
+                    }
+                    if (b.date < a.date) {
+                        return -1;
+                    }
+                    return 0;
+                    })
+        console.log(regDiarios)
+        let eventList = regDiarios.map((item,index) => {
             return (
                 {
                 x : index+1,
@@ -208,8 +218,8 @@ export const CompleteProfile = () => {
 
 
     useEffect(()=>{
-        mood.length == 0 && setGraph(false)
-        console.log(mood.length)
+        mood.length > 0 && setGraph(true)
+        console.log("el largo es ",mood)
         setSerie( [{
               name: 'Humor',
               data:  mood.map(item=>item.y)
@@ -305,7 +315,7 @@ export const CompleteProfile = () => {
                 <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
                {graph &&  <div className="profile-chart-cont">
                     {
-                     serie && <ReactApexChart options={options} series={serie} type="area" height={450} />
+                     serie && <ReactApexChart options={options} series={serie} type="area" width={1100} height={450} />
                      }
                 </div>}
                 <div className="two-squares-complete-profile">

@@ -101,7 +101,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                 <tr className="usertab-fila" >
                     <th onClick={()=>switchToProfle()} scope="row" className="usertab-user-image-table"><img alt="" className="usertab-user-image" src={imgs&&imgs.url} /></th>
                     <td onClick={()=>switchToProfle()}>{user.id}</td>
-                    <td onClick={()=>switchToProfle()}>{user.name}</td>
+                    <td onClick={()=>switchToProfle()}>{user.surname}, {user.name}</td>
                     <td  className="item-user-config"><Button className="item-user-options" onClick={(e)=>handleClick(e,user)}><img alt="" className="usertab_icon_image" src={optionIcon} /></Button></td>
                 </tr>
 
@@ -170,10 +170,9 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
         type==="sympts"?
                 <tr onClick={(e)=>handleClick(e,symptom)}  className="usertab-fila">
                     {symptom.date &&  <td  className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
-                    <td style={{paddingLeft: "4%"}}>{symptom.id}</td>
                     <td style={{paddingLeft: "4%"}}>{symptom.surname}, {symptom.name}</td>
                     {symptom.symptoms && <td style={{paddingLeft: "4%"}}><div style={{display: 'flex',alignItems: 'center'}}>
-                                            {`${symptom.symptoms[0].symptom} `}
+                                            {symptom.symptoms[0].symptom.length>8 ? `${symptom.symptoms[0].symptom.slice(0,8)}...`:`${symptom.symptoms[0].symptom}`}
                                             {symptom.symptoms.length>1 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-1}</p>}
                                             </div></td>}
                     <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faExclamation}/>}</td>
