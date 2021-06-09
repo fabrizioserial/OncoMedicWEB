@@ -91,3 +91,7 @@ select,
     clip-path: polygon(100% 0%, 0 0%, 50% 100%);
     justify-self: end;
 }
+
+select:focus{
+    outline: none !important;
+}

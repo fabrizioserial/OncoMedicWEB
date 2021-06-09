@@ -5,6 +5,7 @@ import { faBell } from '@fortawesome/free-solid-svg-icons'
 import Menu from '@material-ui/core/Menu';
 import { CustomMenuItem } from '../../customMenuItem/CustomMenuItem'
 import {OptionsMenu} from '../../optionsMenu/OptionsMenu';
+import { Link } from 'react-router-dom';
 
 
 
@@ -38,35 +39,10 @@ export const TabHey = ({name,userlist,handleEl,handleAc,cancerList}) => {
                     <div >
                        <OptionsMenu type="home"/>
                     </div>
-                    
-                    <button aria-describedby={id} className="tabhey-btn-options" onClick={handleClick}>
+
+                    <Link style={{color: "black"}} to="/acceptuser" className="tabhey-btn-options">
                         <FontAwesomeIcon icon={faBell}/>
-                    </button>
-                        <Menu className="menu-1"
-                            id={id}
-                            open={open}
-                            anchorEl={anchorEl}
-                            onClose={handleClose}
-                            anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                            }}
-                            transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                            }}
-                            PaperProps={{
-                            style: { width: '450px',marginTop: '2px' },
-                            }}
-                        >
-                        {
-                            (userlist.length>0) ? (
-                                userlist.map((item,index) => <CustomMenuItem handleAc={handleAc} medicHistory={item.id} cancerList={cancerList} handleEl={handleEl} surname={item.surname} name={item.name}  id={item.id}/>)
-                            ) : (
-                                <CustomMenuItem type="finished">No hay mas usuarios para aceptar</CustomMenuItem>
-                            )
-                        }
-                        </Menu>
+                    </Link>
                 </div>
             </div>
     )

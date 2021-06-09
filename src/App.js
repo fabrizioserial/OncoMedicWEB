@@ -2,7 +2,7 @@ import Home from '../src/component/home/Home'
 import './App.css';
 import React from 'react'
 import Login  from './component/login/Login';
-import { BrowserRouter, HashRouter, Route, StaticRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Switch } from 'react-router-dom';
 import { TimeStatus } from './component/timestatus/TimeStatus';
 import UserTabAllUsers from './component/seeAllUsers/UserTabAllUsers'
 import {CompleteProfile} from './component/profile/CompleteProfile.js'
@@ -17,7 +17,7 @@ import './Variables.css'
 import AllUserSympts from './component/allUserSympts/AllUserSympts';
 import { useLayoutEffect, useState } from 'react';
 import sorry from './img/working.png'
-import { AcceptUser } from './component/acceptUser/AcceptUser';
+import AcceptUser from './component/acceptUser/AcceptUser';
 
 const App = () => {
 

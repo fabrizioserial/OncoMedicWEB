@@ -11,18 +11,16 @@
     display: flex;
     flex-direction: row;
 }
+
 .accept-user-left{
     flex: 0.2;
     width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
 }
 .accept-user-right{
     flex: 0.8;
-    width: 100%;
+    width: fit-content;
     height: auto;
-    margin-left: 50px;
+    margin-left: 100px;
     min-height: 50px;
     margin-right: 50px;
 }
@@ -30,11 +28,17 @@
     background-color: #F2F2F2;
     min-height: 50px;
     padding: 10px;
-    flex: 0.9;
+    height: 94vh;
+    overflow-y: scroll;
+    border-radius: 10px;
+    position: absolute;
+}
+.accept-user-list.fixed{
+    top: 10px;
+    position: fixed;
 }
 .accept-form{
     background-color: #F2F2F2;
-    height: 100%;
 }
 .accept-user-btn{
     flex: 0.1;

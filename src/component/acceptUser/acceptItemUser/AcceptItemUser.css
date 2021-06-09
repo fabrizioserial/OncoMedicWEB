@@ -4,6 +4,7 @@
     background-color: white;
     padding: 8px 8px 8px 15px;
     cursor: pointer;
+    width: 16vw;
 }
 .aitem-border-active{
     border-color: #BE99FD;
