@@ -25,12 +25,6 @@ export const Login = ({setMedicUserAction}) => {
    
 
     const checkUser =  () =>{
-        let hashPass = bcrypt.hash("12345678",8).then((rec)=>{
-            console.log(rec)
-            bcrypt.compare("HOA",rec).then(ras=>{
-                console.log(ras)
-            })
-        })
 
         if(email.length > 0 && password.length >0){
             setEComplete(false)
