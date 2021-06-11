@@ -2,9 +2,9 @@ import React,{useState,useEffect} from 'react'
 import "../profileTab/ProfileTab.css"
 import {OptionsMenu}  from '../../optionsMenu/OptionsMenu'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronUp,faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp,faChevronDown,faCog } from '@fortawesome/free-solid-svg-icons'
 import {getFirestore} from '../../../firebase'
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import '../profileTab/ProfileTab.css'
 import "../profileTab/ProfileTab.css"
 import ModalUpdateProfile from '../../modals/ModalUpdateProfile'
@@ -13,7 +13,7 @@ import { Skeleton } from '@material-ui/lab'
 import ImageFadeIn from "react-image-fade-in";
 import moment from 'moment'
 
-export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
+export default function ProfileTab({user,image,handleSnackBar,updateDate,id}) {
     const [seeMore, setSeeMore] = useState(false);
     const [name] = useState(user.name);
     const [cancer, setCancer] = useState(user.cancer);
@@ -117,10 +117,9 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
 
             <div className='tabhey-cont-options'>
                 {
-                    <div >
-                       <OptionsMenu name={user.name} surname={user.surname} id={user.id} type='profile' handleEdit={handleEdit} handleEliminado={handleEliminado}/>
-                    </div>
-                
+                    <Link style={{color: "black"}} to={`/editUser/${id}`} className="tabhey-btn-options">
+                        <FontAwesomeIcon icon={faCog}/>
+                    </Link>
                 }
             </div>
         </animated.div>

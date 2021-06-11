@@ -40,7 +40,7 @@ export const TabHey = ({name,userlist,handleEl,handleAc,cancerList}) => {
                        <OptionsMenu type="home"/>
                     </div>
 
-                    <Link style={{color: "black"}} to="/acceptuser" className="tabhey-btn-options">
+                    <Link style={{color: "black"}} to="/acceptUser" className="tabhey-btn-options">
                         <FontAwesomeIcon icon={faBell}/>
                     </Link>
                 </div>

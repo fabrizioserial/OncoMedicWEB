@@ -95,3 +95,26 @@ select,
 select:focus{
     outline: none !important;
 }
+.af-input-per{
+    background: none;
+    border: none;
+    width: 94%;
+    font-size: 15px;
+    margin-top: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-bottom: 5px;
+    height: fit-content;
+    color: #3B3B3B;
+}
+.af-input-per:focus{
+    outline: none;
+}
+.af-input.theper{
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    align-items:center;
+    height: 38px;
+    padding-top: 12px;
+}

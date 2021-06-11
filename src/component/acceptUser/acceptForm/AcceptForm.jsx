@@ -21,8 +21,10 @@ export const AcceptForm = ({user,handleAcept}) => {
     const [medHip,setMedHip] = useState(false)
     const [medInf,setMedInf] = useState(false)
     const [smokeEnabled,setSmokeEnabled] = useState(false)
-    const [dbtEnabled,setDbtEnabled] = useState(false)
+    const [dbtEnabled,setDbtEnabled] = useState(false)  
 
+    //Medic
+    const [pdl,setPdl] = useState('')  
     
     useEffect(()=>{
         setName(user.name)
@@ -81,6 +83,12 @@ export const AcceptForm = ({user,handleAcept}) => {
         diab==="No" && setDiab(0)
         diab==="Si" && setDiab(1)
     }
+
+    const handleSetPdl =(pdl)=>{
+        pdl>100 ? setPdl(100):pdl<0 ? setPdl(0):setPdl(pdl)
+    }
+
+    
     
     return (
         <div className="aform-background">
@@ -138,11 +146,11 @@ export const AcceptForm = ({user,handleAcept}) => {
                 <div className="af-input-line">
                     <div className="af-input-cont flex50">
                         <p className="af-input-text">Cantidad por día</p>
-                        <input value={smokeQuant} onChange={event=>setSmokeQuant(event.target.value)} disabled={!smokeEnabled} className="af-input"/>
+                        <input placeholder={!smokeEnabled ? "No aplica":"Ingrese cantidad"} value={smokeQuant} onChange={event=>setSmokeQuant(event.target.value)} disabled={!smokeEnabled} className="af-input"/>
                     </div>
                     <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
                         <p className="af-input-text">Tiempo fumado en años</p>
-                        <input value={smokeTime} onChange={event=>setSmokeTime(event.target.value)} disabled={!smokeEnabled} className="af-input"/>
+                        <input  placeholder={!smokeEnabled ? "No aplica":"Ingrese tiempo"} value={smokeTime} onChange={event=>setSmokeTime(event.target.value)} disabled={!smokeEnabled} className="af-input"/>
                     </div>
                 </div>
 
@@ -161,10 +169,13 @@ export const AcceptForm = ({user,handleAcept}) => {
                         <p className="af-input-text">Medicamento</p>
                         <div className="select">
                             <select disabled={!dbtEnabled} id="standard-select">
+                                {(!dbtEnabled) ? <option value="No aplica">No aplica</option>:
+                                <>
                                 <option value="Option 1">Option 1</option>
                                 <option value="Option 2">Option 2</option>
                                 <option value="Option 3">Option 3</option>
                                 <option value="Option 4">Option 4</option>
+                                </>}
                             </select>
                         </div>
                     </div>
@@ -219,13 +230,9 @@ export const AcceptForm = ({user,handleAcept}) => {
                     </div>
                     <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
                         <p className="af-input-text">Expresiones del PDL1</p>
-                        <div className="select">
-                            <select id="standard-select">
-                                <option value="Option 1">Option 1</option>
-                                <option value="Option 2">Option 2</option>
-                                <option value="Option 3">Option 3</option>
-                                <option value="Option 4">Option 4</option>
-                            </select>
+                        <div className="af-input theper">
+                            <input min='0' max='100' type="number" value={pdl} onChange={e=>handleSetPdl(e.target.value)} className="af-input-per" placeHolder="Introduzca un numero del 1 al 100"/>
+                            <p className="af-input-text">%</p>
                         </div>
                     </div>
                 </div>
@@ -240,7 +247,7 @@ export const AcceptForm = ({user,handleAcept}) => {
                         </div>
                     </div>
                     <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
-                        <p className="af-input-text">Tratamiento preoperatorio</p>
+                        <p className="af-input-text">Tratamiento perioperatorio</p>
                         <div className="select">
                             <select id="standard-select">
                                 <option value="Option 1">Option 1</option>

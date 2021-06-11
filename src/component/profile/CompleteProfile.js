@@ -10,10 +10,6 @@ import moment from 'moment'
 import { makeStyles } from "@material-ui/core/styles";
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import { Skeleton } from '@material-ui/lab'
-import {Button,Menu,MenuItem} from '@material-ui/core'
-import arrow from '../../img/arrow_down.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import ReactApexChart from '../../../node_modules/react-apexcharts'
 
 const useStyles = makeStyles(theme => ({
@@ -207,12 +203,8 @@ export const CompleteProfile = () => {
         }.bind(this),500)
     }
 
-
-
-
-
     useEffect(()=>{
-        mood.length == 0 && setGraph(false)
+        mood.length === 0 && setGraph(false)
         console.log(mood.length)
         setSerie( [{
               name: 'Humor',
@@ -306,7 +298,7 @@ export const CompleteProfile = () => {
                 <div className="userall-head">
                     <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
                 </div>
-                <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
+                <ProfileTab id={id} handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
                {graph &&  <div className="profile-chart-cont">
                     {
                      serie && <ReactApexChart options={options} series={serie} type="area" height={450} />

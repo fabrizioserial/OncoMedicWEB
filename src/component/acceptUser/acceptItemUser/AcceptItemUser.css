@@ -1,10 +1,13 @@
 .aitem-background{
-    margin-top: 15px;
     border-radius: 10px;
     background-color: white;
     padding: 8px 8px 8px 15px;
     cursor: pointer;
     width: 16vw;
+    margin-top: 15px;
+}
+.aitem-background.true{
+    border: 2px solid var(--primary);
 }
 .aitem-border-active{
     border-color: #BE99FD;

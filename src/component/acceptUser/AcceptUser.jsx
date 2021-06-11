@@ -12,6 +12,7 @@ const AcceptUser = ({medicData}) => {
     const[userList,setUserList] = useState([])
     const [sticky,setSicky] = useState(true)
     const[skeleton,setSkeleton] = useState(true)
+    const[otherIndex,setIndex] = useState(0)
     const [user,setUser] = useState('')
 
     function myFunction() {
@@ -49,8 +50,8 @@ const AcceptUser = ({medicData}) => {
         setUser(userList[0])
     },[userList])
 
-    const handleChangeUser =(user)=>{
-        console.log("user",user)
+    const handleChangeUser =(user,ind)=>{
+        setIndex(ind)
         setUser(user)
     }
 
@@ -78,7 +79,7 @@ const AcceptUser = ({medicData}) => {
                     </>
                     :
                     <>
-                    {userList.length>0 && userList.map((item)=>(<AcceptItemUser handleClick={handleChangeUser} user={item}/>))}
+                        {userList.length>0 && userList.map((item,index)=>(<AcceptItemUser index={index} otherIndex={otherIndex} handleClick={handleChangeUser} user={item}/>))}
                     </>}
                 </div>
             </div>
