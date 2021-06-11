@@ -8,7 +8,7 @@
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 .fc-event-today {
-    background-color: lightgreen !important;
+    background-color: var(--green) !important;
     box-shadow: 2px 2px 2px #706868 !important;
 }
 .fc-today {

@@ -1,7 +1,7 @@
 .estado-usertab-cont-background{
     width: 100%;
     min-height: 300px;
-    background-color: #F4F4F4;
+    background-color: var(--grey1);
     border-right: 30px solid var(--primary);
     border-top-right-radius: 9px;
     border-bottom-right-radius: 9px;
@@ -43,7 +43,7 @@
     justify-content: center;
     align-items: center;
     border-style: none;
-    background-color: #e6e6e6;
+    background-color: var(--grey2);
     width: 32px;
     border-radius: 50px;
 }
@@ -51,7 +51,7 @@
     width: 32px;
 }
 .estado-usertab-options:hover{
-    background-color: #dddddd;
+    background-color: var(--greyholder);
 }
 
 
@@ -71,7 +71,7 @@
 }   
 
 .estado-menu-item-eliminar-profile {
-    color: red i !important;
+    color: var(--red) i !important;
 }
 .estado-usertab-final-button{
     margin-top: 13%;
@@ -82,7 +82,7 @@
 }
 .menu-finalbutton{
     cursor: pointer;
-    background-color:#D6D6D6;
+    background-color:var(--grey4);
     border-style: none;
     height: 35px;
     width: 100%;

@@ -70,7 +70,7 @@
     margin-top: 15px;
 
     border-bottom-color: white;
-    border-top-color: #A0A0A0;
+    border-top-color: var(--grey6);
     border-top-style: solid;
     border-top-width: 2px;
     border-left-width: 0px;
@@ -83,7 +83,7 @@
     justify-content: space-between !important;
     width: 370px;
     height: 30px;
-    border-color:#a0a0a0;;
+    border-color:var(--grey6);
     border-style: solid;
     border-radius: 7px;
     padding: 2px;
@@ -100,14 +100,14 @@
     outline: none;
 }
 .numero-del-paciente.error{
-    border-color: #F63A39 !important;
+    border-color: var(--red) !important;
 }
 .error-not-valid{
-    color: #F63A39;
+    color: var(--red);
 }
 
 .agregar-button{
-    background-color:#8A2CE2;
+    background-color:var(--primary);
     width: 200px;
     height: 50px;
     color: white;
@@ -138,7 +138,7 @@
 }
 
 .modal-password-validate{
-    color: #0EDE0B;
+    color: var(--green);
 }
 
 .show{
@@ -149,7 +149,7 @@
 }
 .modal-add-input-cont-error{
     margin-top: 1%;
-    color: #F63A39;
+    color: var(--red);
     margin-left: 35px;
     font-size: 0.7rem;
     margin-bottom: 0;

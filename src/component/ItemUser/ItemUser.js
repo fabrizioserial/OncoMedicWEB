@@ -4,7 +4,7 @@ import optionIcon from '../../img/option_icon.png'
 import {Button} from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faLaughBeam,faSadTear,faFrown,faMeh,faSmile } from '@fortawesome/free-regular-svg-icons'
-import {faCircle, faCrutch,faDrumstickBite,faRunning,faTint,faUsers,faExclamation} from '@fortawesome/free-solid-svg-icons'
+import {faCircle, faCrutch,faDrumstickBite,faRunning,faTint,faUsers,faClipboard} from '@fortawesome/free-solid-svg-icons'
 import MouseOverPopover from '../mouseOverPopover/MouseOverPopover'
 import { useHistory } from 'react-router-dom';
 
@@ -128,7 +128,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                                             {symptom.symptoms.length>1 && `, ${symptom.symptoms[1].symptom} `}
                                             {symptom.symptoms.length>2 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-2}</p>}
                                             </div></td>}
-                <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faExclamation}/>}</td>
+                <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faClipboard}/>}</td>
             </tr>:
         type==="regdiarioMood"?
             <tr className="item-user-fila-regdiario">
@@ -176,7 +176,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                                             {`${symptom.symptoms[0].symptom} `}
                                             {symptom.symptoms.length>1 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-1}</p>}
                                             </div></td>}
-                    <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faExclamation}/>}</td>
+                    <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faClipboard}/>}</td>
                 </tr>:
         type==="seeSymptoms"?
         <tr  onClick={(e)=>handleClick(e,symptom)} className="usertab-fila">
@@ -215,7 +215,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                                             {symptom.symptoms.length>9 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-9}</p>}
                                             </div></td>}
                                     
-                                            <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faExclamation}/>}</td>
+                                            <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faClipboard}/>}</td>
           </tr>: ""
     )
 }

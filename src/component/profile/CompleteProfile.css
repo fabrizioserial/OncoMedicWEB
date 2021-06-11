@@ -34,7 +34,7 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     text-align: center;
-    background-color: #F4F4F4;
+    background-color: var(--grey1);
     border-radius: 7px;
 }
 
@@ -45,7 +45,7 @@
     margin-top: 30px;
     width: 47%;
     text-align: center;
-    background-color: #F4F4F4;
+    background-color: var(--grey1);
     border-right: 2em solid var(--primary);
     border-right-style: inset;
     border-top-right-radius: 5px;
@@ -78,7 +78,7 @@
 }
 .profile-chart-cont{
     margin-top: 50px;
-    background-color: #F4F4F4;
+    background-color: var(--grey1);
     height: 500px;
     display: flex;
     justify-content: center;

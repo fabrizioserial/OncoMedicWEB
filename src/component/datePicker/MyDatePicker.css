@@ -4,6 +4,6 @@
 }
 
 .MuiOutlinedInput-notchedOutline2{
-    border-color: red !important;
+    border-color: var(--red) !important;
 }
 

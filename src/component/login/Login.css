@@ -21,7 +21,7 @@
 .cont-login-ilustrator{
     width: inherit;
     height: 100vh;
-    background-color: #F5F5F5;
+    background-color: var(--grey5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,7 +55,7 @@
     margin-bottom: 5px;
 }
 .normal{
-    border-color: #dddddd;
+    border-color: var(--greyholder);
 }
 .input-login{
     display: flex;
@@ -79,10 +79,10 @@
     font-size: 14px;
     margin-bottom: 0px;
     margin-top: 17px;
-    color: #F63A39;
+    color: var(--red);
 }
 .error{
-    border-color: #F63A39 !important; 
+    border-color: var(--red) !important; 
 }
 .input-place{
     color: #767676;
@@ -113,7 +113,7 @@
 }
 
 .btn-login-input:hover{
-    background-color: #8146e0;
+    background-color: var(--primaryhover);
 }
 .btn-login-input:focus{
     outline: none;
@@ -148,7 +148,7 @@
     align-items: center;
 }
 .input-error{
-    color: red;
+    color: var(--red);
     margin-top: 5px;
     font-size: 13px;
 }
