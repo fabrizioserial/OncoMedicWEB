@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import {setMedicUserAction} from '../../reduxStore/actions/loginAction'
 import {faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import * as bcrypt from 'bcryptjs'
 
 export const Login = ({setMedicUserAction}) => {
 
@@ -24,27 +25,39 @@ export const Login = ({setMedicUserAction}) => {
    
 
     const checkUser =  () =>{
+        let hashPass = bcrypt.hash("12345678",8).then((rec)=>{
+            console.log(rec)
+            bcrypt.compare("HOA",rec).then(ras=>{
+                console.log(ras)
+            })
+        })
+
         if(email.length > 0 && password.length >0){
             setEComplete(false)
             setEInvalid(false)
             setLoad(true)
+            
             const db = getFirestore()
             const itemCollection = db.collection("medic")
             
             itemCollection.get().then((querySnapshot)=>{
+
                 let email2 = ""
                 
                 querySnapshot.docs.map(doc => {
                     
                     if(doc.data().email === email){
-                        if(doc.data().password === password){
-                            email2 = doc.data().email
-                            setMedicUserAction({id:doc.id,name:doc.data().name,email:doc.data().email,admin:doc.data().admin})
-                               history.push('/home')   
-                            return 1;
-                        }else{
-                            setError("error no data")
-                        }
+                        bcrypt.compare(password,doc.data().password).then(ras=>{
+                            console.log(ras)
+                            if(ras){
+                                email2 = doc.data().email
+                                setMedicUserAction({id:doc.id,name:doc.data().name,email:doc.data().email,admin:doc.data().admin})
+                                history.push('/home')   
+                                return 1;
+                            }else{
+                                setError("error no data")
+                            }
+                        })
                     }
                     return 1;
                 })
@@ -70,40 +83,6 @@ export const Login = ({setMedicUserAction}) => {
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
     };
-
-    const pushToDatabase = () =>{
-        const db = getFirestore()
-        db.collection("users").add({
-            avatar: 1,
-            birth: "Wed Jun 02 2021",
-            cancer: "",
-            dbt: {
-                dbt: false,
-                med: ""
-            },
-            email: "mail@gmail.com",
-            etnia: "Caucasico",
-            gender: 0,
-            id: "18234323",
-            med: {
-                acv: false,
-                epoc: false,
-                hip: false,
-                inf: false,
-            },
-            medic: "123456",
-            name: "Nacho",
-            password: "123",
-            place: "Austral",
-            smoke:{
-                qnt: "",
-                smoke: 0,
-                time: "",
-            },
-            status: "Activo",
-            surname: "Ferrari",
-        })
-    }
     
 
 
@@ -136,7 +115,10 @@ export const Login = ({setMedicUserAction}) => {
                             errorInvalid && <p className="input-error-text">Introduzca datos validos</p>}
                         <Button id="Btnlogin" color="primary" className={errorComplete || errorInvalid ? "btn-login-input active":"btn-login-input inactive"} onClick={checkUser}>
                             Log In
-                        </Button>  
+                        </Button>
+                        {//<button onClick={pushToDatabase}/>
+                        }
+                            
                     </form>
                     
                 </div>
