@@ -118,3 +118,18 @@ select:focus{
     height: 38px;
     padding-top: 12px;
 }
+.ad-new-bio{
+    margin-top: 2%;
+    background-color: #E0E0E0;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.ad-new-bio-p{
+    margin: 0.5%;
+    font-size: 0.9rem;
+}
+.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline{
+    border: none;
+}

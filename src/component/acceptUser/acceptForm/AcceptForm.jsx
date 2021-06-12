@@ -1,11 +1,15 @@
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import FontAwesome from 'react-fontawesome'
 import './AcceptForm.css'
 import { TopForm } from './TopForm'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRadioGroup } from '@material-ui/core';
-import { id } from 'date-fns/locale';
+import {faUser,faUserMd,faStarOfLife} from '@fortawesome/free-solid-svg-icons'
+import { Biom } from './biom/Biom'
+import { BottomNavigation } from '@material-ui/core'
+import MyDatePicker from '../../datePicker/MyDatePicker'
 
 export const AcceptForm = ({user,handleAcept}) => {
+    const [registerDate,setRegisterDate] = useState(new Date())
     const [name,setName] = useState("")
     const [surname,setSurname] = useState("")
     const [email,setEmail] = useState("")
@@ -22,12 +26,16 @@ export const AcceptForm = ({user,handleAcept}) => {
     const [medInf,setMedInf] = useState(false)
     const [smokeEnabled,setSmokeEnabled] = useState(false)
     const [dbtEnabled,setDbtEnabled] = useState(false)  
+    const[counter,setCounter] = useState([{bio: '',evaluation: 'No evaluada'}])
 
     //Medic
     const [pdl,setPdl] = useState('')  
+    const [biom,setBiom] = useState([])
+    const [date,setDate] = useState(new Date())
     
     useEffect(()=>{
         setName(user.name)
+        setRegisterDate(user.registerDate)
         setSurname(user.surname)
         setEmail(user.email)
         setSex(user.gender)
@@ -45,7 +53,6 @@ export const AcceptForm = ({user,handleAcept}) => {
     },[user])
 
     useEffect(()=>{
-        console.log('hola',smokeEnabled)
         if(smoke!==0) {
             setSmokeEnabled(true)
             setSmokeQuant(user.smoke.qnt)
@@ -56,6 +63,10 @@ export const AcceptForm = ({user,handleAcept}) => {
             setSmokeTime('')
         }
     },[smoke])
+
+    const handleDate = (date) =>{
+        setDate(date)
+    }
 
     useEffect(()=>{
         if(diab===1) {
@@ -87,12 +98,28 @@ export const AcceptForm = ({user,handleAcept}) => {
     const handleSetPdl =(pdl)=>{
         pdl>100 ? setPdl(100):pdl<0 ? setPdl(0):setPdl(pdl)
     }
+    function otherformatedDate (date) {
+        var dateComponent = moment(date).format('DD-MM-YYYY');
+        return dateComponent
+    }
 
-    
-    
+    const handleCounter =()=>{
+        console.log(counter,'arr2')
+        setCounter([...counter,{bio: '',evaluation: 'No evaluada'}])
+    }
+
+    const handleEliminateBiom =(index)=>{
+        setCounter(counter.filter(x=>x.bio!==index))
+    }
+
+
+    const handleAddBio = (bio,evaluation,index) => {
+        counter[index]={bio: bio,evaluation: evaluation}
+    }
+
     return (
         <div className="aform-background">
-            <TopForm name="Datos de usuario" topRadius={true}/>
+            <TopForm name="Datos de usuario" topRadius={true} icon={faUser}/>
             <div className="form-container" style={{marginBottom:"40px"}}>
                 <div className="af-input-line">
                     <div className="af-input-cont flex50">
@@ -128,7 +155,7 @@ export const AcceptForm = ({user,handleAcept}) => {
                     </div>
                 </div>
             </div>
-            <TopForm name="Datos hospitalarios"/>
+            <TopForm icon={faUserMd} name="Datos hospitalarios"/>
             <div className="form-container" style={{marginBottom:"40px"}}>
                 <div className="af-input-line">
                     <div className="af-input-cont flex50" style={{marginRight:"40px"}}>
@@ -218,24 +245,22 @@ export const AcceptForm = ({user,handleAcept}) => {
                         </div>
                     </div>
                 </div>
-                <div className="af-input-line">
-                    <div className="af-input-cont flex50" >
-                        <p className="af-input-text">Biomarcadores</p>
-                        <div className="select">
-                            <select id="standard-select">
-                                <option value="Si">Si</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
+                {counter.map((item,index)=><Biom array={counter} handleElimIndex={handleEliminateBiom} handleAddBio={handleAddBio} propbio={item.bio} propeval={item.evaluation} index={index}/>)}
+
+                <div onClick={handleCounter} className="ad-new-bio">
+                    <p className="ad-new-bio-p">Añadir nuevo biomarcador</p>
+                </div>
+
+                <div className="af-input-line" >
+                    <div className="af-input-cont">
                         <p className="af-input-text">Expresiones del PDL1</p>
-                        <div className="af-input theper">
-                            <input min='0' max='100' type="number" value={pdl} onChange={e=>handleSetPdl(e.target.value)} className="af-input-per" placeHolder="Introduzca un numero del 1 al 100"/>
-                            <p className="af-input-text">%</p>
-                        </div>
+                            <div className="af-input theper">
+                                <input min='0' max='100' type="number" value={pdl} onChange={e=>handleSetPdl(e.target.value)} className="af-input-per" placeHolder="Introduzca un numero del 1 al 100"/>
+                                <p className="af-input-text">%</p>
+                            </div>
                     </div>
                 </div>
+
                 <div className="af-input-line">
                     <div className="af-input-cont flex50" >
                         <p className="af-input-text">Tratamiento del tumor primario</p>
@@ -258,41 +283,43 @@ export const AcceptForm = ({user,handleAcept}) => {
                         </div>
                     </div>
                 </div>
+                <div className="af-input-line">
+                    <div style={{flex: '0.2 1'}} className="af-input-cont flex50" >
+                        <p style={{marginLeft: '7px'}} className="af-input-text">T</p>
+                        <input className="af-input"/>
+                    </div>
+                    <div style={{flex: '0.2 1',marginLeft: '10px'}} className="af-input-cont flex50" >
+                        <p style={{marginLeft: '7px'}} className="af-input-text">N</p>
+                        <input className="af-input"/>
+                    </div>
+                    <div style={{flex: '0.2 1',marginLeft: '10px'}} className="af-input-cont flex50" >
+                        <p style={{marginLeft: '7px'}} className="af-input-text">M</p>
+                        <input className="af-input"/>
+                    </div>
+                    <div style={{flex: '0.4 1',marginLeft: '10px'}} className="af-input-cont flex50" >
+                        <p className="af-input-text">Estadio</p>
+                        <input className="af-input"/>
+                    </div>
+                </div>
             </div>
-            <TopForm name="Metástasis"/>
+
+            <TopForm icon={faStarOfLife} name="Recaída"/>
             <div className="form-container" style={{marginBottom:"40px"}}>
                 <div className="af-input-line">
-                    <div className="af-input-cont flex50">
-                        <p className="af-input-text">Nombre</p>
-                        <input placeHolder="Introduzca nombre" className="af-input"/>
-                    </div>
-                    <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
-                        <p className="af-input-text">Apellido</p>
-                        <input placeHolder="Introduzca apellido" className="af-input"/>
-                    </div>
-                </div>
-                <div className="af-input-line">
-                    <div className="af-input-cont">
-                        <p className="af-input-text">Email</p>
-                        <input placeHolder="Introduzca direccion de email" className="af-input"/>
-                    </div>
-                </div>
-
-                <div className="af-input-line">
-                    <div className="af-input-cont flex50">
-                        <p className="af-input-text">Género</p>
-                        <div className="select">
-                            <select id="standard-select">
-                                <option value="Masculino">Masculino</option>
-                                <option value="Femenino">Femenino</option>
-                                <option value="Otros">Otros</option>
-                            </select>
+                        <div style={{flex: '0.3 1'}} className="af-input-cont flex50" >
+                                <p className="af-input-text">Fecha de recaida</p>
+                                <MyDatePicker classname={"accept-patient"} className="af-input" handleDate={handleDate}></MyDatePicker>
                         </div>
-                    </div>
-                    <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
-                        <p className="af-input-text">Numero del historial médico</p>
-                        <input placeHolder="Introduzca historial médico" className="af-input"/>
-                    </div>
+                        <div style={{flex: '0.7 1',marginLeft: '10px'}} className="af-input-cont flex50" >
+                            <p className="af-input-text">Local o distancia</p>
+                            <div style={{height: '40px'}} className="select">
+                                <select  >
+                                    <option value={'L'}>Local</option>
+                                    <option value={'D'}>Distancia</option>
+                                    <option value={'LyD'}>Local y Distancia</option>
+                                </select>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>

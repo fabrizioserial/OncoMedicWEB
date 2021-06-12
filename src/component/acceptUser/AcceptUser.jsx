@@ -9,9 +9,40 @@ import { Skeleton } from '@material-ui/lab';
 
 const AcceptUser = ({medicData}) => {
     window.onscroll = function() {myFunction()};
-    const[userList,setUserList] = useState([])
+    const[userList,setUserList] = useState([{
+        avatar: 1,
+        birth: "Wed Jun 02 2021",
+        registerDate: new Date(),
+        cancer: "",
+        dbt: {
+            dbt: false,
+            med: ""
+        },
+        email: "mail@gmail.com",
+        etnia: "Caucasico",
+        gender: 0,
+        id: "10000000",
+        med: {
+            acv: false,
+            epoc: false,
+            hip: false,
+            inf: false,
+        },
+        medic: "123456",
+        name: "Carlos",
+        password: "123",
+        place: "Austral",
+        smoke:{
+            qnt: "",
+            smoke: 0,
+            time: "",
+        },
+        status: "Pendiente",
+        surname: "Crespo",
+        surname: "Crespo",
+    }] )
     const [sticky,setSicky] = useState(true)
-    const[skeleton,setSkeleton] = useState(true)
+    const[skeleton,setSkeleton] = useState(false)
     const[otherIndex,setIndex] = useState(0)
     const [user,setUser] = useState('')
 
@@ -23,7 +54,7 @@ const AcceptUser = ({medicData}) => {
         }
     }
 
-    useEffect(()=>{
+    /*useEffect(()=>{
         const db = getFirestore()
         const itemCollection = db.collection("users").where("medic","==",medicData.id)
         itemCollection.onSnapshot((querySnapshot) => {
@@ -34,11 +65,22 @@ const AcceptUser = ({medicData}) => {
                         )
                     }
                 )
+            userlista.sort(function (a, b) {
+                if (b.registerDate > a.registerDate) {
+                    return -1;
+                }
+                if (b.registerDate < a.registerDate) {
+                    return 1;
+                }
+                // a must be equal to b
+                return 0;
+                })
             setUserList(userlista.filter(item=>item.status==="Pendiente"))
             startTimer()
             }
         )
     },[medicData])
+    */
 
     const startTimer = () => {
         setTimeout(function(){
@@ -90,7 +132,7 @@ const AcceptUser = ({medicData}) => {
                     </>
                 :
                 <>
-                {user && <AcceptForm  user={user}/>}
+                    {user && <AcceptForm  user={user}/>}
                 </>}
             </div>
             

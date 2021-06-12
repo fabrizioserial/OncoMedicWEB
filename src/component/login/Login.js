@@ -64,6 +64,42 @@ export const Login = ({setMedicUserAction}) => {
      
     }
 
+
+    const pushToDatabase = () =>{
+        const db = getFirestore()
+        db.collection("testUsers").doc('10000000').set({
+            avatar: 1,
+            birth: "Wed Jun 02 2021",
+            registerDate: "Wed Jun 02 2021",
+            cancer: "",
+            dbt: {
+                dbt: false,
+                med: ""
+            },
+            email: "mail@gmail.com",
+            etnia: "Caucasico",
+            gender: 0,
+            id: "10000000",
+            med: {
+                acv: false,
+                epoc: false,
+                hip: false,
+                inf: false,
+            },
+            medic: "123456",
+            name: "Carlos",
+            password: "123",
+            place: "Austral",
+            smoke:{
+                qnt: "",
+                smoke: 0,
+                time: "",
+            },
+            status: "Pendiente",
+            surname: "Crespo",
+        })
+    }
+
     const setError = (type) =>{
         type === "error" ? setEComplete(true):setEInvalid(true)
     }
@@ -84,7 +120,7 @@ export const Login = ({setMedicUserAction}) => {
                 <div className="cont-login-cont-ev">
                     <div className="login-text-cont">
                         <p className="text-login-login">Log In</p>
-                        <p className="text-login-punto">.</p>
+                        <p onClick={pushToDatabase} className="text-login-punto">.</p>
                     </div>
                     <form>
                         <div>

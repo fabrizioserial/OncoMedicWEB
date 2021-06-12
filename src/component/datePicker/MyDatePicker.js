@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import {KeyboardDatePicker } from "@material-ui/pickers";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import './MyDatePicker.css'
 
-export default function MyDatePicker({handleDate,dateStart}) {
+export default function MyDatePicker({handleDate,dateStart,classname}) {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateChange = (date) => {
@@ -55,7 +56,7 @@ export default function MyDatePicker({handleDate,dateStart}) {
   }
 
   return (
-    <div style={{marginLeft: "2%"}}>
+    <div className={`${classname}`}>
       <ThemeProvider theme={defaultMaterialTheme }>
         <KeyboardDatePicker
           shouldDisableDate={disabledDates}
@@ -65,7 +66,7 @@ export default function MyDatePicker({handleDate,dateStart}) {
           inputVariant="outlined"
           format="dd/MM/yyyy"
           value={selectedDate}
-          inputProps={{style: {height: "0px",fontSize: 15,border: "none",color: "gray"}}} // font size of input text
+          inputProps={{style: {height: "0px",fontSize: 15,border: "none",color: "black"}}} // font size of input text
           onChange={date => handleDateChange(date)}
         />
       </ThemeProvider>
