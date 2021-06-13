@@ -1,17 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Menu,MenuItem} from '@material-ui/core'
 import { Link,} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
-import '../tuerquita/Tuerquita.css'
+import '../optionsMenu/OptionsMenu.css'
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
-import { UserTabAllUsers } from '../seeAllUsers/UserTabAllUsers'
-import {getFirestore} from '../../firebase'
 
 
-export const Tuerquita = (props) => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [openModal, setOpenModal] = React.useState(false);
+export const OptionsMenu = (props) => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
 
     // Menu
 
@@ -34,13 +32,17 @@ export const Tuerquita = (props) => {
         setAnchorEl(null);
     }
 
+    function handleCloseAndOpenEdit(){
+        setAnchorEl(null);
+        props.handleEdit()
+    }
+
+
+
+
     // ELiminar
 
     const handleEliminate = () =>{
-        const db = getFirestore()
-        db.collection("users").doc(`${props.id}`).delete().then(() => {
-        console.log("Document successfully deleted!");
-        })
         setOpenModal(false);
         props.handleEliminado()
     }
@@ -54,7 +56,7 @@ export const Tuerquita = (props) => {
             <div onClick={handleClick} className="tabhey-btn-options">
                <FontAwesomeIcon icon={faCog} className="button-log-out" />
             </div>
-             <Menu className={`menu-eliminate-tuerquita-${props.style}`}
+             <Menu className={`menu-eliminate-tuerquita-${props.type}`}
                         id={id}
                         open={open}
                         anchorEl={anchorEl}
@@ -68,18 +70,20 @@ export const Tuerquita = (props) => {
                             horizontal: 'right',
                         }}>
                         
-                        {props.style==="home"? (
+                        {props.type==="home"? (
                             <Link  className="tuerquita-link-to-home" to="/">
                                 <MenuItem >Log out</MenuItem>
                             </Link>
                         ) : (
                             <div>
-                                    <MenuItem onClick={props.handleEdit}>Editar</MenuItem>
+                                    <MenuItem onClick={handleCloseAndOpenEdit}>Editar</MenuItem>
                                     <MenuItem onClick={handleCloseAndOpenModal}  >Eliminar</MenuItem>
                             </div>
                         )}
             </Menu> 
             <ModalPopOverEliminate
+                name={props.name}
+                surname={props.surname}
                 id={props.id}
                 displayModal={openModal}
                 closeModal={handleCloseModal}

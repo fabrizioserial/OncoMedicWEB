@@ -1,133 +1,84 @@
-import React,{useState,useEffect,useCallback} from 'react'
+import React,{useState,useEffect} from 'react'
 import '../login/Login.css'
 import medical_ilustrator from '../../img/medical_ilustration.png'
-import { Link,NavLink } from 'react-router-dom'
 import {getFirestore} from '../../firebase'
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect } from 'react-redux'
+import Button from '@material-ui/core/Button';
 import {setMedicUserAction} from '../../reduxStore/actions/loginAction'
 import {faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import * as bcrypt from 'bcryptjs'
 
-const Login = ({setMedicUserAction}) => {
+export const Login = ({setMedicUserAction}) => {
 
-    const [name,setName] = useState("")
+    const [email,setEmail] = useState("")
     const [password,setPassword] =useState("")
-    const [medic,setMedic] = useState({})
+    const [medic] = useState({})
     const [loading,setLoad] = useState(false)
     const [errorComplete,setEComplete] = useState(false)
     const [errorInvalid,setEInvalid] = useState(false)
     const [passwordShown, setPasswordShown] = useState(false);
 
-    const checkUser = () =>{
-        if(name.length > 0 && password.length >0){
+    const history = useHistory();
+   
+
+    const checkUser =  () =>{
+
+        if(email.length > 0 && password.length >0){
             setEComplete(false)
             setEInvalid(false)
+            setLoad(true)
+            
             const db = getFirestore()
             const itemCollection = db.collection("medic")
-            setLoad(true)
-
+            
             itemCollection.get().then((querySnapshot)=>{
-                let name2 = ""
-                let usermedic = querySnapshot.docs.map(doc => {
+
+                let email2 = ""
+                
+                querySnapshot.docs.map(doc => {
                     
-                    if(doc.data().name == name){
-                        if(doc.data().password == password){
-                            console.log('se Encontro')
-                            console.log(doc.id,doc.data().name,doc.data().email)
-                            name2 = doc.data().name
-                            setMedicUserAction({id:doc.id,name:doc.data().name,email:doc.data().email,admin:doc.data().admin})
-                            handleClick()
-                            return
-                        }else{
-                            setError("error no data")
-                        }
-                    }else{
-                        
+                    if(doc.data().email === email){
+                        bcrypt.compare(password,doc.data().password).then(ras=>{
+                            console.log(ras)
+                            if(ras){
+                                email2 = doc.data().email
+                                setMedicUserAction({id:doc.id,name:doc.data().name,email:doc.data().email,admin:doc.data().admin})
+                                history.push('/home')   
+                                return 1;
+                            }else{
+                                setError("error no data")
+                            }
+                        })
                     }
-                    
-               
+                    return 1;
                 })
-                console.log("Medico:",medic)
-                if(name2 === ""){
+                if(email2 === ""){
                     setError("error2")
                 }
-            
                 setLoad(false)
 
             }).catch(e=>{
                 setLoad(false)
             })
-        }else if(name.length == 0 || password.length == 0){
+            
+        }else if(email.length === 0 || password.length === 0){
             setError("error")
-        }
-        
+        } 
+
+     
     }
 
     const setError = (type) =>{
-        type == "error" ? setEComplete(true):setEInvalid(true)
+        type === "error" ? setEComplete(true):setEInvalid(true)
     }
-
-    const pushToDatabase = () =>{
-        const db = getFirestore()
-        db.collection("users").add({
-            name:"Fabri",
-            email:"aaa@",
-            gender:"",
-            birth:"",
-            medic:"123456",
-            place:"",
-            etnia:"",
-            cancer: "",
-            smoke:{
-                smoke:false,
-                time:"",
-                qnt:"",
-            },
-            dbt:{
-                dbt:false,
-                med:""
-            },
-            med:{
-                hip:false,
-                epoc:false,
-                acv:false,
-                inf:false
-            },
-            avatar:"1",
-            status:"Pendiente"
-        }).then(()=>{
-        }).catch((e)=>{
-        });
-        const date = new Date()
-        db.collection('symptoms').add({
-            id:"DrleMt4ynfecs9OHnyr8",
-            symptom:"fiebre",
-            grade:"4",
-            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-            date:date
-        })
-     }
-
-     const togglePasswordVisiblity = () => {
+    const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
-      };
+    };
     
-    const history = useHistory();
-    const handleClick = () => history.push('/home');
 
-
-    useEffect(() => {
-        console.log(medic);
-    }, [medic])
-
-
-
-    useEffect(() => {
-        console.log("name: ",name)
-        console.log("password: ",password)
-    }, [name,password])
 
     return(
         <div className="cont-login-container">
@@ -139,26 +90,26 @@ const Login = ({setMedicUserAction}) => {
             <div className="cont-login-backlogin">
                 <div className="cont-login-cont-ev">
                     <div className="login-text-cont">
-                        <p onClick={pushToDatabase} className="text-login-login">Log In</p>
+                        <p className="text-login-login">Log In</p>
                         <p className="text-login-punto">.</p>
                     </div>
                     <form>
                         <div>
                             <p className="text-login-input">Ingresar direccion de email</p>
-                            <input type="email" className={(errorComplete || errorInvalid)  ? "input-login error" :"input-login normal"} onChange={e => setName(e.target.value)} placeholder="name@example.com"></input>
+                            <input type="email" className={(errorComplete || errorInvalid)  ? "input-login error" :"input-login normal"} onChange={e => setEmail(e.target.value)} placeholder="nombre@ejemplo.com"></input>
                         </div>
                         <div style={{marginTop:"40px"}}>
                             <p className="text-login-input">Ingresar constraseña</p>
                             <div className={(errorComplete || errorInvalid) ? "input-login error" :"input-login normal"}>
-                                <input type={passwordShown ? "text" : "password"} className="input-place" onChange={e => setPassword(e.target.value)} placeholder="atleast 8 caracters"></input>
+                                <input type={passwordShown ? "text" : "password"} className="input-place" onChange={e => setPassword(e.target.value)} placeholder="Al menos 8 caracteres"></input>
                                 <FontAwesomeIcon onClick={togglePasswordVisiblity} icon={passwordShown ? faEye:faEyeSlash}/>
                             </div>
                         </div>  
                             {errorComplete ? <p className="input-error-text">Complete los campos</p> : 
                             errorInvalid && <p className="input-error-text">Introduzca datos validos</p>}
-                        <button className={errorComplete || errorInvalid ? "btn-login-input active":"btn-login-input inactive"} onClick={()=>checkUser()}>
+                        <Button id="Btnlogin" color="primary" className={errorComplete || errorInvalid ? "btn-login-input active":"btn-login-input inactive"} onClick={checkUser}>
                             Log In
-                        </button>
+                        </Button>
                         {//<button onClick={pushToDatabase}/>
                         }
                             
@@ -168,7 +119,7 @@ const Login = ({setMedicUserAction}) => {
 
             </div>
             <div className="cont-login-ilustrator">
-                <img src={medical_ilustrator} className="img-login-ilustrator"/>
+                <img alt="" src={medical_ilustrator} className="img-login-ilustrator"/>
             </div>
         </div>
     )

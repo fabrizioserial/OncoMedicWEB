@@ -1,5 +1,6 @@
 .searchtab-back{
     display: flex;
+    margin-bottom: 0;
 }
 .searchtab-cont-cont{
     cursor: pointer;
@@ -57,4 +58,9 @@
     align-items: center;
     color: gray;
     font: 400 13.3333px Arial;
+}
+.searchtab-filters-breadcrumbs{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2%;
 }

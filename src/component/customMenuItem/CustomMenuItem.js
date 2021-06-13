@@ -1,35 +1,32 @@
-import { Button, MenuItem } from '@material-ui/core'
 import React,{useEffect,useState} from 'react'
 import '../customMenuItem/CustomMenuItem.css'
 import { faCheck,faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {getFirestore} from '../../firebase'
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
-import ModalPopOverAsignCancer from '../modals/ModalPopOverAsignCancer'
+import ModalPopOverAcceptUser from '../modals/ModalPopOverAcceptUser'
 
-export const CustomMenuItem = ({name,id,type,handleEl,handleAc}) => {
+export const CustomMenuItem = ({name,id,surname,type,handleEl,handleAc,cancerList,medicHistory}) => {
 
     const [user,setUser] = useState(id)
     const [openModal, setOpenModal] = React.useState(false);
     const [openModalCancer, setOpenModalCancer] = React.useState(false);
-    const [anchorEl, setAnchorEl] = React.useState(null);
 
 
     useEffect(() => {
         const db = getFirestore()
-        console.log({id})
         const thisUser = db.collection("users").doc(`${id}`)
         setUser(thisUser)
     }, [id])
 
 
-    const updateUser = (cancerType) => {
-        console.log(cancerType)
+    const updateUser = (cancerType,medicHistory) => {
         user.update({
             status:"Activo",
+            id:medicHistory,
             cancer: cancerType
-        })
-        handleCloseModalCancer()
+        }).then(()=>        handleCloseModalCancer())
+
     }
 
 
@@ -49,17 +46,16 @@ export const CustomMenuItem = ({name,id,type,handleEl,handleAc}) => {
         setOpenModalCancer(true);
     }
 
-    const handleCloseModalCancer = () => {
+    const handleCloseModalCancer = (bool) => {
         setOpenModalCancer(false);
-        handleAc()
+        bool===true && handleAc()
     };
 
     const handleEliminate = () =>{
-        handleEl()
-        const db = getFirestore()
-        db.collection("users").doc(`${user.id}`).delete().then(() => {
-          console.log("Document successfully deleted!");
+        user.update({
+            status:"Inactivo",
         })
+        handleEl()
         setOpenModal(false);
     }
     
@@ -89,16 +85,21 @@ export const CustomMenuItem = ({name,id,type,handleEl,handleAc}) => {
                     </table>
                     <ModalPopOverEliminate
                         id={id}
+                        name={name}
+                        surname={surname}
                         displayModal={openModal}
                         closeModal={handleCloseModal}
                         handleEliminate={handleEliminate}
                     />
-                    <ModalPopOverAsignCancer
+                    <ModalPopOverAcceptUser
                         name={name}
                         id={id}
+                        surname={surname}
                         displayModal={openModalCancer}
                         closeModal={handleCloseModalCancer}
                         updateUser = {updateUser}
+                        cancerList={cancerList}
+                        medicHistory ={medicHistory}
                     />
                 </div>
             )

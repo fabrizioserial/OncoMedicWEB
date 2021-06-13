@@ -1,16 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import './ModalPopOverVerRegistroDiario.css'
+import './ModalPopOverSeeDiaryReg.css'
 import 'fontsource-roboto';
-import { UserTabHome } from '../home/usertabhome/UserTabHome';
-import { UsertabEstado } from '../profile/usertabEstado/UsertabEstado';
-import { Tuerquita } from '../tuerquita/Tuerquita';
-import { ItemUser } from './../ItemUser/ItemUser';
+import { ItemUser } from '../ItemUser/ItemUser';
 
 
 
 
-const ModalPopOverVerRegistroDiario = (props) => {
-      const i = [1,2,3,4,5,6]
+const ModalPopOverSeeDiaryReg = (props) => {
       const [regdiario,setRegDiario] = useState()
 
      
@@ -23,8 +19,6 @@ const ModalPopOverVerRegistroDiario = (props) => {
      }
 
      useEffect(()=>{
-         {console.log(props.loading)}
-        console.log("el estado de registro: ",props.id)
         setRegDiario(props.id)
      },[props.id])
 
@@ -45,7 +39,6 @@ const ModalPopOverVerRegistroDiario = (props) => {
                   <hr className="add-modal-line"/>
                </div>
                <div className="inside-the-modal-diario">
-                  <p className="paciente-of-modal">Paciente: {props.name}</p>
                   <p className="paciente-of-modal">Fecha: {Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(props.Date)}</p>
                   { regdiario ?  
                   <table class="modal-diario-table">
@@ -60,7 +53,7 @@ const ModalPopOverVerRegistroDiario = (props) => {
                      </tbody>
                  </table>:
                     <div className="modal-error">
-                        <img className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                        <img alt="" className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
                         <p>El usuario no ha hecho su registro diario todavia</p>
                      </div>
                   }
@@ -69,8 +62,8 @@ const ModalPopOverVerRegistroDiario = (props) => {
       </div>
      );
 }
-ModalPopOverVerRegistroDiario.defaultProps = {
+ModalPopOverSeeDiaryReg.defaultProps = {
    Date: new Date()
 }
-export default ModalPopOverVerRegistroDiario;
+export default ModalPopOverSeeDiaryReg;
 

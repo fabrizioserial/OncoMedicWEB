@@ -1,19 +1,19 @@
 import React,{useEffect,useState,useLayoutEffect} from 'react'
-import '../home/Home.css'
+import './Home.css'
 import { ButtonHome } from './buttonsHome/ButtonHome'
-import ModalPopOver from '../modals/ModalPopOver'
+import ModalPopOverNewMedic from '../modals/ModalPopOverNewMedic'
 import  {UserTabHome}  from './usertabhome/UserTabHome'
-import { Component } from 'react';
 import { TabHey } from './tabhey/TabHey';
 import {getFirestore} from '../../firebase'
 import { connect } from 'react-redux'
 import { UserTabLastSymptoms } from './userTabLastSymptoms/UserTabLastSymptoms'
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import CircularProgress from '@material-ui/core/CircularProgress';
-import sorry from '../../img/sorry-removebg-preview.png'
+import { Skeleton } from '@material-ui/lab';
+import PropTypes from 'prop-types';
+
 
 const Home = ({medicData}) =>{
-
     const [medic,setMedic] = useState(medicData)
     const [userList,setUserList] = useState([])
     const [symptomsList,setSymptomsList] = useState([])
@@ -23,21 +23,8 @@ const Home = ({medicData}) =>{
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [textSnack,setTextSnack] = useState("")
     const [loading,setLoad] = useState(false)
-    const [width, height] = useWindowSize();
-
-    function useWindowSize() {
-        const [size, setSize] = useState([0, 0]);
-        useLayoutEffect(() => {
-            function updateSize() {
-            setSize([window.innerWidth, window.innerHeight]);
-            }
-            window.addEventListener('resize', updateSize);
-            updateSize();
-            return () => window.removeEventListener('resize', updateSize);
-        }, []);
-        return size;
-    }
-
+    const [skeleton,setSkeleton] = useState(true)
+    const [cancerList,setCancerList] = useState([])
 
     const selectModal = (info) => {
        setModal(!modal)
@@ -59,15 +46,13 @@ const Home = ({medicData}) =>{
 
 
     useEffect(()=>{
-        
-        console.log("DB READING")
         const db = getFirestore()
         const itemCollection = db.collection("users").where("medic","==",medicData.id)
         itemCollection.onSnapshot((querySnapshot) => {
             
             let userlista = querySnapshot.docs.map(doc => {
                     return(
-                        {id:doc.id,...doc.data()}
+                        {docid:doc.id,...doc.data()}
                         )
                     }
                 )
@@ -85,7 +70,6 @@ const Home = ({medicData}) =>{
                     }
                 )
             setImageList(avatars)
-            console.log("hola ",avatars)
         })
 
         const itemCollectionSymptoms = db.collection("symptoms").orderBy("date")
@@ -93,15 +77,25 @@ const Home = ({medicData}) =>{
         itemCollectionSymptoms.onSnapshot((querySnapshot) => {
             let symptomslista = querySnapshot.docs.map(doc => doc.data())
             setSymptomsList(symptomslista)
+            startTimer()
         })
+
+        const cancerListCollection = db.collection("cancer").orderBy('name')
+
+        cancerListCollection.onSnapshot((querySnapshot)=>{
+            let cancerListDB = querySnapshot.docs.map(doc=>doc.data())
+            setCancerList(cancerListDB)
+        })
+        
     },[medicData])
 
-    useEffect(()=>{
-        console.log("se actualizo la lista")
-    },[userList,images,medic])
+    const startTimer = () => {
+        setTimeout(function(){
+            setSkeleton(false)
+        }.bind(this),200)
+    }
 
     useEffect(()=>{
-      console.log("medico home es ",medic)
       setMedic(medicData)
     },[medicData])
 
@@ -109,15 +103,14 @@ const Home = ({medicData}) =>{
         const db = getFirestore()
         const itemCollectionSymptoms = db.collection("symptoms")
         var lista = []
-        userList.map(item=> item.status == "Activo" && itemCollectionSymptoms.where("id","==",item.id).get().then((querySnapshot) => {
+        userList.map(item=> item.status==="Activo" && itemCollectionSymptoms.where("id","==",item.id).get().then((querySnapshot) => {
  
-            let avatars = querySnapshot.docs.map(doc => {
+            querySnapshot.docs.map(doc => {
                     return(
-                        lista = [...lista,{name:item.name,id:item.id,...doc.data()}]
+                        lista = [...lista,{name:item.name,surname:item.surname,id:item.id,...doc.data()}]
                         )
                     }
                 )
-            console.log("los sintoms ",lista)
             setSymptomsList2(lista.sort(function (a, b) {
                                             if (b.date > a.date) {
                                                 return 1;
@@ -130,15 +123,11 @@ const Home = ({medicData}) =>{
                                             }))
         })) 
 
-
     }
 
     useEffect(()=>{
-        console.log("se actualizo",symptomsList2)
-    },[symptomsList2])
-
-    useEffect(()=>{
         cleanSym()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[symptomsList,userList])
 
     const handleLoad = (bool) =>{
@@ -148,29 +137,36 @@ const Home = ({medicData}) =>{
 
     return( 
         <div className="home-cont-background">
-            {width>910 ?
-            <>
                 {(loading) && <div className="home-circ-progress">
-                    <div className="login-loading"><CircularProgress  color="#9357F7"/></div>
+                    <div className="login-loading"><CircularProgress  color="var(--primary)"/></div>
                 </div>
                 }
                 <TabHey 
                     handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")}  
                     handleAc={()=>handleOpensnackBar("Usuario creado con exito!")}  
-                    name={medic&&medic.name} userlist={userList.filter(item=>item.status==="Pendiente")}/>
+                    name={medic&&medic.name} userlist={userList.filter(item=>item.status==="Pendiente")}
+                    cancerList={cancerList.length > 0 && cancerList}/>
                     <div className="home-cont-buttons">
-                        {medic.admin&&<ButtonHome text="REGISTRAR NUEVO MÉDICO" color="purple" onClick={selectModal }></ButtonHome>}
-                        <ButtonHome text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>
+                        {medic.admin&&<ButtonHome text="REGISTRAR NUEVO MÉDICO" color="purple" onClick={selectModal}></ButtonHome>}
+                        <ButtonHome test="BtnPurple" text="VER TODOS LOS PACIENTES" color="blue" link="seeAllUsers"></ButtonHome>
                         <ButtonHome text="VER ULTIMOS PACIENTES CON SINTOMAS" color="lightblue" link="seeSymptoms"></ButtonHome>
                     </div>
-                        <ModalPopOver 
+                        <ModalPopOverNewMedic 
                             handleOpensnackBar={()=>handleOpensnackBar("Medico creado con exito!")}
                             displayModal={modal}
                             closeModal={selectModal}/>
                     <div className="home-cont-usertabs">
-                        {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo")} images={images} margin_left={{marginRight:"50px"}}/>}
-                        {(userList.filter(item=>item.status==="Activo").length > 0 && images.length > 0) && <UserTabLastSymptoms className="usersympts-second" symptomsList={symptomsList2}/>}
-                        
+                        {skeleton ?
+                        <>
+                            <Skeleton style={{marginRight: "50px"}} className="usertab-cont-info" variant="rect" animation="wave" width={"100%"} height={"31vw"} />
+                            <Skeleton  className="usertab-cont-info" variant="rect" animation="wave" width={"100%"} height={"31vw"} />
+                        </>
+                        :
+                        <>
+                            <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo").slice(0,6)} images={images} margin_left={{marginRight:"50px"}}/>
+                            <UserTabLastSymptoms className="usersympts-second" symptomsList={symptomsList2.slice(0,6)}/>
+                        </>
+                        }
                     </div>
                     <MySnackbar
                         severity="success"
@@ -178,16 +174,20 @@ const Home = ({medicData}) =>{
                         openSnackBar={openSnackBar}
                         handleCloseSnackBar={handleCloseSnackBar}
                     />
-                </>
-                :   
-                <>
-               <h1>Estamos trabajando para usar la web en celulares, por ahora solo se puede usar desde la computadora!</h1>
-               <img src={sorry}/>
-               </>
-            }
         </div>
     )
 } 
+Home.defaultProps = {
+    medicData: {
+        name: "121212", 
+        email: "aa@aa.com", 
+        id: "123456", 
+        admin: "true"
+    }
+}
+Home.propTypes = {
+    medicData: PropTypes.object
+}
 
 const mapStateToProps = (state) => {
     return {

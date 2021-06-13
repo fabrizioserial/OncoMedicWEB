@@ -1,18 +1,20 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import '../tabhey/TabHey.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell } from '@fortawesome/free-solid-svg-icons'
-import { Tuerquita } from '../../tuerquita/Tuerquita.js'
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import { CustomMenuItem } from '../../customMenuItem/CustomMenuItem'
+import {OptionsMenu} from '../../optionsMenu/OptionsMenu';
 
 
 
-export const TabHey = ({name,userlist,handleEl,handleAc}) => {
+export const TabHey = ({name,userlist,handleEl,handleAc,cancerList}) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
+
+    useEffect(() => {
+        console.log(userlist)
+    }, [userlist])
 
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -34,7 +36,7 @@ export const TabHey = ({name,userlist,handleEl,handleAc}) => {
                 <div className="tabhey-cont-options">
 
                     <div >
-                       <Tuerquita style="home"/>
+                       <OptionsMenu type="home"/>
                     </div>
                     
                     <button aria-describedby={id} className="tabhey-btn-options" onClick={handleClick}>
@@ -59,8 +61,7 @@ export const TabHey = ({name,userlist,handleEl,handleAc}) => {
                         >
                         {
                             (userlist.length>0) ? (
-                                console.log(userlist),
-                                userlist.map((item,index) => <CustomMenuItem handleAc={handleAc} handleEl={handleEl} name={item.name}  id={item.id}/>)
+                                userlist.map((item,index) => <CustomMenuItem handleAc={handleAc} medicHistory={item.id} cancerList={cancerList} handleEl={handleEl} surname={item.surname} name={item.name}  id={item.id}/>)
                             ) : (
                                 <CustomMenuItem type="finished">No hay mas usuarios para aceptar</CustomMenuItem>
                             )

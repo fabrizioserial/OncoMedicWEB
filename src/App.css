@@ -41,5 +41,19 @@
     transform: rotate(360deg);
   }
 }
+.working-img{
+  width: 70%;
+}
 
+.working-cont{
+  padding: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  height:100vmax;
+}
+.working-text{
+  text-align: center;
+}
 

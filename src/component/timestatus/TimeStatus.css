@@ -1,8 +1,9 @@
+
 .timestatus-cont-background{
     position: absolute;
     width: 200px;
     height: 100vh;
-    background-color: #9357F7;
+    background-color: var(--primary);
     display: flex;
     justify-content: center;
     position: fixed;

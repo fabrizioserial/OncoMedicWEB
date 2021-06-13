@@ -5,19 +5,12 @@ import { ButtonGoBack } from './ButtonGoBack'
 import { ItemUser } from '../ItemUser/ItemUser';
 import { SearchTab } from './searchTab/SearchTab';
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
-import {Menu,MenuItem,Button} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
+import {Menu,MenuItem} from '@material-ui/core'
 import {getFirestore} from '../../firebase'
 import { ButtonRefresh } from './ButtonRefresh'
 import { MySnackbar } from '../mySnackBar/MySnackbar';
 import { connect } from 'react-redux'
-
-
-const useStyles = makeStyles((theme) => ({
-    typography: {
-      padding: theme.spacing(2),
-    },
-  }));
+import { Skeleton } from '@material-ui/lab';
 
 const UserTabAllUsers = ({medicData}) => {
 
@@ -25,16 +18,26 @@ const UserTabAllUsers = ({medicData}) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [openModal, setOpenModal] = React.useState(false);
     const [userList,setUserList] = useState([])
+    const [inactiveUserList,setInactiveUserList] = useState([])
+    const [showedUserList,setShowedUserList] = useState([])
+    const [inactiveShowedUserList,setInactiveShowedUserList] = useState([])
     const [images,setImageList] =useState([])
     const [user, setUser] = React.useState("");
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [severity,setSeverity] = useState("")
     const [message,setMessage] = useState("")
+    const [bool,setBool] = useState(false)
+    const [refresh,setRefresh] = useState(false)
+    const [reTitle,setRetitle] = useState(false)
+    const [loading,setLoading] = useState(true)
+
+
 
     const history = useHistory();
     const switchToProfle = () => history.push(`/profile/${user.id}`);
   
-    const handleClick = (event,item) => {
+    const handleClick = (event,item,status) => {
+        status==="Activo" ? setBool(true):setBool(false)
         setUser(item)
         setAnchorEl(event.currentTarget);
     }; 
@@ -64,48 +67,60 @@ const UserTabAllUsers = ({medicData}) => {
         if (reason === 'clickaway') {
             return;
         }
-
         setOpenSnackBar(false);
     };
 
-    const handleWarnBar = () => {
+    const handleWarnBar = (warnTitle) => {
         setSeverity("error")
-        setMessage("Por favor seleccione una categoria")
+        setMessage(warnTitle)
         setOpenSnackBar(!openSnackBar)
     }
 
-
-    const handleSearch = (e,title,selected) => {
-        title === "" ? handleRefresh() :
-        title = title.toUpperCase()
-        switch (selected){
-            case "N PACIENTE":
-                {console.log(userList)}
-                return setUserList(userList.filter((item=>item.id.toUpperCase().includes(title))));
-            case "NOMBRE":
-                return setUserList(userList.filter((item=>item.name.toUpperCase().includes(title))));   
-            case "TIPO DE CANCER":
-                return setUserList(userList.filter((item=>item.cancer.toUpperCase().includes(title))));  
-            default:
-                return handleWarnBar() 
-        }
+    const handleElCat = () => {
+       setShowedUserList(userList)
+       setInactiveShowedUserList(inactiveUserList)
     }
+
+    const handleSearch = (e,hash) => {
+        if(hash.length===0) { handleRefresh()} else {
+        setRetitle(!reTitle)
+        
+        hash.map((selected)=>{
+            switch (selected.selected){
+                case "ACTIVOS":
+                    setInactiveShowedUserList([])
+                    return
+                case "INACTIVOS":
+                    setShowedUserList([])
+                    return
+                case "N PACIENTE":
+                    setShowedUserList(showedUserList.filter((item=>item.id.toUpperCase().includes(selected.title.toUpperCase()))));
+                    setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.id.toUpperCase().includes(selected.title.toUpperCase()))));
+                    return
+                case "NOMBRE":
+                    setShowedUserList(showedUserList.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
+                    setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
+                    return
+                case "CANCER":
+                    setShowedUserList(showedUserList.filter((item=>item.cancer.toUpperCase().includes(selected.title.toUpperCase()))));  
+                    setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.cancer.toUpperCase().includes(selected.title.toUpperCase()))));  
+                    return
+                default:
+                    return;
+            }
+        })}
+        
+
+    }
+    
+
+    useEffect(()=>{
+        setShowedUserList(userList)
+        setInactiveShowedUserList(inactiveUserList)
+    },[userList,inactiveUserList])
+
     const handleRefresh=()=>{
         const db = getFirestore()
-        const itemCollection = db.collection("users")
-        var usersActive = itemCollection.where("status","==","Activo").where("medic","==",medicData.id)
-        usersActive.get().then((querySnapshot)=>{
-            let activeuser = querySnapshot.docs.map(doc =>{
-                    return(
-                        {
-                            id:doc.id,...doc.data()
-                        }
-                    )
-                }
-            )
-            setUserList(activeuser)
-        })
-
 
         const itemCollectionAvatar = db.collection("avatars")
         
@@ -118,42 +133,55 @@ const UserTabAllUsers = ({medicData}) => {
                     }
                 )
             setImageList(avatars)
-            console.log(avatars)
         })
+        setShowedUserList(userList)
+        setInactiveShowedUserList(inactiveUserList)
+        setRefresh(true)
     }
+
+    useEffect(()=>{
+        setRefresh(false)
+    },[refresh])
     // Eliminar
 
 
   const handleEliminate = () =>{
     const db = getFirestore()
-    db.collection("users").doc(`${user.id}`).delete().then(() => {
-      console.log("Document successfully deleted!");
+    const thisUser = db.collection("users").doc(`${user.id}`)
+    thisUser.update({
+      status:"Inactivo",
     })
     handleRefresh()
     setOpenModal(false);
     handleOpensnackBar()
   }
-
-
-    const i = [1,2,3,4,5,6,7,8,9]
-
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
     useEffect(()=>{
-        console.log("Medico:", medicData.id)
-        console.log("DB READING")
         const db = getFirestore()
         const usersActive = db.collection('users').where("status","==","Activo").where("medic","==",medicData.id)
         usersActive.get().then((querySnapshot)=>{
             let activeuser = querySnapshot.docs.map(doc =>{
                 return(
                     {
-                        id:doc.id,...doc.data()
+                        docid:doc.id,...doc.data()
                     }
                 )
             })
             setUserList(activeuser)
+        })
+
+        const usersInactive = db.collection('users').where("status","==","Inactivo").where("medic","==",medicData.id)
+        usersInactive.get().then((querySnapshot)=>{
+            let inactiveUSer = querySnapshot.docs.map(doc =>{
+                return(
+                    {
+                        id:doc.id,...doc.data()
+                    }
+                )
+            })
+            setInactiveUserList(inactiveUSer)
         })
 
 
@@ -168,15 +196,21 @@ const UserTabAllUsers = ({medicData}) => {
                     }
                 )
             setImageList(avatars)
-            console.log(avatars)
         })
+
+        startTimer();
 
     },[medicData])
 
+    const startTimer = () =>{
+        setTimeout(function(){
+            setLoading(false)
+        }.bind(this),1500)
+    }
+
     useEffect(()=>{
-        console.log("medico es ",medic)
         setMedic(medicData)
-      },[medicData])
+      },[medicData, setMedic])
 
     return(
         <div className="userall-cont-background">
@@ -187,23 +221,48 @@ const UserTabAllUsers = ({medicData}) => {
             </div>
 
             <div className="userall-cont-cont">
-                <SearchTab categories={["N PACIENTE","NOMBRE","TIPO DE CANCER"]} handleClick={handleSearch}/>
+                <SearchTab elCAt={handleElCat} warnBar={handleWarnBar} reTitle={reTitle} refresh={refresh} categories={["N PACIENTE","NOMBRE","CANCER","ACTIVOS","INACTIVOS"]} handleClick={handleSearch}/>
+
+
+
                 <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
                         <thead className="userall-thead-allUsers">
                             <tr>
-                            <th scope="col"></th>
-                            <th scope="col">N PACIENTE</th>
-                            <th scope="col">NOMBRE</th>
-                            <th scope="col">TIPO DE CANCER</th>
+                            <th style={{width: '7vw'}} scope="col"></th>
+                            <th style={{width: '14vw'}} scope="col">N PACIENTE</th>
+                            <th style={{width: '28vw'}} scope="col">NOMBRE</th>
+                            <th style={{width: '20vw'}} scope="col">TIPO DE CANCER</th>
                             <th scope="col">ESTADO</th>
                             <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
+                        {loading ?
+                            <>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
+                            </>
+                            :
+                            <>
                             {
-                                (userList.length > 0) && userList.map((item,key) => <ItemUser image={images.find(element =>element.id==item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
+                                (showedUserList.length > 0) && showedUserList.map((item,key) => <ItemUser image={images.find(element =>element.id===item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
                             }
+
+                            {
+                                
+                                (inactiveShowedUserList.length > 0) && inactiveShowedUserList.map((item,key) => <ItemUser image={images.find(element =>element.id===item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
+                            }</>}
                             <Menu className="menu-see-all-users"
                                 id={id}
                                 open={open}
@@ -217,11 +276,10 @@ const UserTabAllUsers = ({medicData}) => {
                                 vertical: 'left',
                                 horizontal: 'left',
                                 }}>
-                                
                                 <MenuItem onClick={()=>switchToProfle()}>VER PERFIL</MenuItem>
                                 <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
                                 <MenuItem onClick={handleClose}>VER REGISTRO DIARIO</MenuItem>
-                                <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
+                                {bool && <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>}
                             </Menu>
                             <ModalPopOverEliminate
                                 id={user.id} // Numero de paciente, lo settea cunado apretas el boton al lado del nombre
@@ -232,7 +290,6 @@ const UserTabAllUsers = ({medicData}) => {
 
                         </tbody>
                     </table>
-                    {userList&& <button className="userall-btn-load-more">Cargar mas</button>}
                 </div>
                 <MySnackbar
                         severity={severity}

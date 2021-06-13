@@ -68,10 +68,9 @@
 }
 .add-modal-line{
     margin-top: 15px;
-    margin-left: 30px;
-    margin-right: 30px;
+
     border-bottom-color: white;
-    border-top-color: #A0A0A0;
+    border-top-color: var(--grey6);
     border-top-style: solid;
     border-top-width: 2px;
     border-left-width: 0px;
@@ -79,24 +78,36 @@
 }
 
 .numero-del-paciente{
+    align-items: center;
+    display: flex;
+    justify-content: space-between !important;
     width: 370px;
     height: 30px;
-    border-color:#a0a0a0;;
+    border-color:var(--grey6);
     border-style: solid;
     border-radius: 7px;
     padding: 2px;
     font-size: 15px;
     padding-left: 10px;
+    border-width: 2px;
+}
+.input-new-medic {
+    border: "none" !important;
+    width: "90%" !important;
+    font-size: 15px;
+}
+.input-new-medic:focus {
+    outline: none;
 }
 .numero-del-paciente.error{
-    border-color: red !important;
+    border-color: var(--red) !important;
 }
 .error-not-valid{
-    color: red;
+    color: var(--red);
 }
 
 .agregar-button{
-    background-color:#8A2CE2;
+    background-color:var(--primary);
     width: 200px;
     height: 50px;
     color: white;
@@ -118,11 +129,29 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+.modal-password-validate-text{
+    margin-top: 10px !important;
+    font-size: 13px;
+    margin-bottom: 0px !important;
+}
+
+.modal-password-validate{
+    color: var(--green);
+}
+
+.show{
+    display: block;
+}
+.hide{
+    display: none;
 }
 .modal-add-input-cont-error{
     margin-top: 1%;
-    color: red;
+    color: var(--red);
     margin-left: 35px;
     font-size: 0.7rem;
     margin-bottom: 0;
 }
+

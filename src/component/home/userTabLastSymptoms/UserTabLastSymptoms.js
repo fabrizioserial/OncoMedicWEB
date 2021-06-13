@@ -1,31 +1,15 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState } from 'react'
 import {Menu,MenuItem} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
-import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate'
 import {ItemUser} from '../../ItemUser/ItemUser'
 import './UserTabLastSymptoms.css'
-import ModalPopOverSintoma from '../../modals/ModalPopOverSintoma';
-
-
-
-const useStyles = makeStyles((theme) => ({
-  typography: {
-    padding: theme.spacing(2),
-  },
-}));
+import ModalPopOverSymptom from '../../modals/ModalPopOverSymptom';
+import { useHistory } from 'react-router';
 
 export const UserTabLastSymptoms=({symptomsList})=> {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [openModal, setOpenModal] = React.useState(false);
-  const [symptom, setSymptom] = React.useState('');
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [symptom, setSymptom] = useState('');
 
-  const i = [1,2,3,4,5,6]
-
-  // Menu
-  const handleClick = (event,item) => {
-    setSymptom(item)
-    setAnchorEl(event.currentTarget);
-  }; 
 
   function handleClose(){
     setAnchorEl(null);
@@ -40,55 +24,64 @@ export const UserTabLastSymptoms=({symptomsList})=> {
   };
 
   const handleCloseAndOpenModal = (event,item) => {
-    {item!=undefined && setSymptom(item);}
+    item!==undefined && setSymptom(item);
     setOpenModal(true)
     setAnchorEl(null);
   }; 
 
+  const history = useHistory();
+  const switchToAllSympts = () => history.push(`/seeSymptoms/`);
 
   return (
-          <div className="usertab-cont-info second" >
-            <table class="usertab-table">
-                <thead className="usertab-thead">
-                    <tr>
-                    <th className="ultimos-sin-th-fecha" scope="col">FECHA</th>
-                    <th scope="col">N PACIENTE</th>
-                    <th scope="col">SINTOMA</th>
-                    <th scope="col" className="usertab-first-col-grado">GRADO</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                       (symptomsList) && symptomsList.map((item,index) => <ItemUser symptom={item} key={index}  type="sympts" handleButtonClick={handleClick} handleClick={handleCloseAndOpenModal} />)
-                    }
-                </tbody>
-                <Menu className="menu-eliminate-1"
-                  open={open}
-                  anchorEl={anchorEl}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                  }}
-                  transformOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                  }}>
-                  <MenuItem onClick={handleCloseAndOpenModal}>VER COMPLETO</MenuItem>
-                  <MenuItem onClick={handleClose}>ELIMINAR</MenuItem>
-                  </Menu>
+      <div className="usertab-cont-info second" >
+        {symptomsList.length > 0 ? (
+        <>
+        <table class="usertab-table">
+            <thead className="usertab-thead">
+                <tr>
+                <th className="ultimos-sin-th-fecha" scope="col">FECHA</th>
+                <th className="ultimos-sin-th-paciente" scope="col">N PACIENTE</th>
+                <th className="ultimos-sin-th-paciente" scope="col">NOMBRE</th>
+                <th className="ultimos-sin-th-sintoma" scope="col">SINTOMA</th>
 
-                <ModalPopOverSintoma
-                  id={symptom.id}
-                  name={symptom.name}
-                  symptom={symptom.symptom}
-                  grade={symptom.grade}
-                  displayModal={openModal}
-                  closeModal={handleCloseModal}
-                />
-                
-            </table>
-            {symptomsList && <button className="usertab-btn-vermas">Ver mas</button>}
-          </div>   
-    )
+                </tr>
+            </thead>
+            <tbody>
+                { 
+                    (symptomsList) && symptomsList.map((item,index) => <ItemUser symptom={item} key={index}  type="sympts" handleClick={handleCloseAndOpenModal} />)
+                }
+            </tbody>
+            <Menu className="menu-eliminate-1"
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+              }}
+              transformOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+              }}>
+              <MenuItem onClick={handleCloseAndOpenModal}>VER COMPLETO</MenuItem>
+              <MenuItem onClick={handleClose}>ELIMINAR</MenuItem>
+              </Menu>
+
+            <ModalPopOverSymptom
+              symptoms={symptom}
+              displayModal={openModal}
+              closeModal={handleCloseModal}
+            />
+            
+        </table>
+        {symptomsList.length>=6 && <button onClick={()=>switchToAllSympts()} className="usertab-btn-vermas">Ver mas</button>}
+        </>
+      ):(
+        <div className="sintoms-img-error-cont">
+          <img className="sintoms-img-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+          <p>No se encontraron pacientes</p>
+        </div>
+      )}
+    </div>       
+  )
 }

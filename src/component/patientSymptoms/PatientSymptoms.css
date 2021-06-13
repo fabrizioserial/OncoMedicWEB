@@ -8,10 +8,10 @@
     width:20%;
 }
 .patientsymptoms-th-symptom{
-    width:20%;
+    width:30%;
 }
 .patientsymptoms-th-grade{
-    width:20%;
+    width:10%;
 }
 .mouse-over-descr{
     cursor: pointer;
@@ -21,6 +21,6 @@
     width: 100%;
 }
 .userall-thead-sympts{
-    color: #9357F7;
+    color: var(--primary);
     margin-bottom: 10px;
 }

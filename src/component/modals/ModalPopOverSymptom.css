@@ -1,0 +1,33 @@
+.tabs-fila{
+    cursor: pointer;
+    background-color: var(--grey2);
+    border-radius: 5px;
+    height: 40px;
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.table-modal-sympts{
+    border: none;
+    border-spacing:0 10px;
+    max-height: 353px;
+    padding-left: 2%;
+    padding-right: 4%;
+    background-color: var(--grey2);
+    border-radius: 5px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin: 5px;
+}
+.td-table-modal-sympts.grade{
+    display: flex;
+    justify-content: flex-end;
+}
+.tmodal-td{
+    margin-left: 2%;
+}
+.tmodal-final-td{
+    margin-right: 2%;
+}

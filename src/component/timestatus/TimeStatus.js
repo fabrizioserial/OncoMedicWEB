@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import '../timestatus/TimeStatus.css'
 import deco from '../../img/decoTimeState.png' 
 
 export const TimeStatus = () => {
-    var today = new Date();
+    var today = new Date()
     const [day,setDay] = useState('')
     const [date,setDate] = useState('')
     const [month,setMonth] = useState('')
@@ -35,6 +34,8 @@ export const TimeStatus = () => {
                 return "NOVIEMBRE";
             case 11:
                 return "DICIEMBRE";
+            default:
+                return;
         }
     }
 
@@ -54,6 +55,8 @@ export const TimeStatus = () => {
                 return "SAB";
             case 0: 
                 return "DOM";
+            default:
+                return;
         }
     }
 
@@ -77,19 +80,18 @@ export const TimeStatus = () => {
                 return "08";
             case 9:
                 return "09";
+            default:
+                return dateN;
         }
-        return dateN;
     }
 
     useEffect(()=>{
-        today &&
+        console.log("Dia",today.getDate())
         setDate(getDateByNumber(today.getDate()))
 
         setDay(getDayByNumber(today.getDay()))
 
         setMonth(getMonthByNumber(today.getMonth()))
-
-
     },[today])
 
     return(
@@ -101,7 +103,7 @@ export const TimeStatus = () => {
                 <p className="timestatus-day">{day}</p>
                 <p className="timestatus-month">{month}</p>
             </div>
-            <img src={deco} className="img-timestate"/>
+            <img alt="" src={deco} className="img-timestate"/>
         </div>
     )
 }

@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import './ButtonRefresh.css'
-import { Link } from 'react-router-dom'
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSync,faHome } from '@fortawesome/free-solid-svg-icons'
+import { faSync } from '@fortawesome/free-solid-svg-icons'
 
 
 

@@ -1,16 +1,42 @@
 import React,{useEffect,useState} from 'react'
 import "../profile/CompleteProfile.css"
 import {ButtonGoBack} from "../seeAllUsers/ButtonGoBack"
-import { UsertabEstado } from '../profile/usertabEstado/UsertabEstado'
-import { UsertabSintomas } from '../profile/usertabSintomas/UsertabSintomas'
+import { UsertabState } from './usertabState/UsertabState'
+import { UsertabSymptoms } from '../profile/usertabSymptoms/UsertabSymptoms'
 import ProfileTab from './profileTab/ProfileTab'
 import {useParams} from 'react-router-dom'
 import {getFirestore} from '../../firebase'
-import CircularProgress from '@material-ui/core/CircularProgress';
+import moment from 'moment'
+import { makeStyles } from "@material-ui/core/styles";
 import { MySnackbar } from '../mySnackBar/MySnackbar'
+import { Skeleton } from '@material-ui/lab'
+import ReactApexChart from '../../../node_modules/react-apexcharts'
 
+const useStyles = makeStyles(theme => ({
+    btn: {
+        marginLeft: "10px"
+    },
+    profileTab: {
+        marginTop: '25px',
+        borderRight: '30px solid var(--primary)',
+        borderTopRightRadius: '9px',
+        borderBottomRightRadius: '9px',
+    },
+    squares: {
+        borderRight: '30px solid var(--primary)',
+        borderTopRightRadius: '9px',
+        borderBottomRightRadius: '9px',
+    },
+    squares2: {
+        borderRight: '30px solid var(--primary)',
+        borderTopRightRadius: '9px',
+        borderBottomRightRadius: '9px',
+        marginLeft: '50px'
+    }
+}));
 
 export const CompleteProfile = () => {
+    const classes = useStyles();
 
     const {id} = useParams()
     const [user,setUser] = useState({})
@@ -20,12 +46,23 @@ export const CompleteProfile = () => {
     const [load,setLoad] = useState(true)
     const [userNotFound,setUserNotFound] = useState(false)
     const [openSnackBar,setOpenSnackBar] = useState(false)
+    const [update,setUpdateData] = useState(false)
+    const [severity,setSeverity] = useState('')
+    const [message,setMessage] = useState('')
+    const [regDiarios,setRegDiario] = useState([])
+    const [mood,setMood] = useState([])
+    const [pain,setPain] = useState([])
+    const [serie,setSerie] = useState({})
+    const [options,setOptions] = useState({})
+    const [graph,setGraph] = useState(false)
   
-
-
-    const handleOpensnackBar = () =>{
+    const handleOpensnackBar = (sev,mes) =>{
+        setSeverity(sev)
+        setMessage(mes)
         setOpenSnackBar(!openSnackBar)
     }
+
+
 
     const handleCloseSnackBar = (event, reason) => {
         if (reason === 'clickaway') {
@@ -35,48 +72,119 @@ export const CompleteProfile = () => {
         setOpenSnackBar(false);
     };
 
+    const updateDate = () =>{
+        setUpdateData(!update)
+    }
+    
+    const listEvents = () => {
+
+        regDiarios.sort(function (a, b) {
+                    if (b.date > a.date) {
+                        return 1;
+                    }
+                    if (b.date < a.date) {
+                        return -1;
+                    }
+                    return 0;
+                    })
+        console.log(regDiarios)
+        let eventList = regDiarios.map((item,index) => {
+            return (
+                {
+                x : index+1,
+                y : item.mood,
+                label: (otherformatedDate(item.date.toDate())),
+                date: item.date.toDate()}
+            )
+        })
+        setMood(eventList)
+
+
+        let otherList = regDiarios.map((item,index) => {
+            return (
+                {
+                x : index+1,
+                y : item.sad,
+                label: (otherformatedDate(item.date.toDate())),
+                date: item.date.toDate()
+                }
+            )
+        })
+        setPain(otherList)
+
+        regDiarios.reverse()
+    }
+
+    function otherformatedDate (date) {
+        var dateComponent = moment(date).format('DD/MM/YYYY');
+        return dateComponent
+    }
+
 
     useEffect(()=>{
 
         if(id){
             setUserNotFound(false)
             console.log("DB READING")
-            console.log("id ",id)
             const db = getFirestore()
             const itemCollection = db.collection("users").doc(id)
-            
-            itemCollection.get().then((querySnapshot) => {
-                let userFound ={id:querySnapshot.id,...querySnapshot.data()}
-                setUser(userFound)
-                setLoad(false)
-                console.log("El usuario encontrado es: ",userFound)
-                if(userFound.name == null){
+
+            itemCollection.get().then((doc) => {
+                if (doc.exists) {
+                    let userFound ={docid:doc.id,...doc.data()}
+                    console.log("El usuario encontrado es: ",userFound)
+                    setUser(userFound)
+                } else {
                     setUserNotFound(true)
                 }
+            }).catch((error) => {
+                console.log("Error getting user:", error);
+            });
+
+            db.collection("diaryReg").where("id","==",id).limit(6)
+            .onSnapshot((querySnapshot) => {
+                
+                let regList = querySnapshot.docs.map(doc => {
+                        return(
+                            {id:doc.id,...doc.data()}
+                            )
+                        }
+                    )
+                setRegDiario(regList)
             })
 
-            const symptoms = db.collection("symptoms").where("id","==", id)
-            .onSnapshot((querySnapshot) => {
-                let symptomslista = querySnapshot.docs.map(doc => doc.data())
-                setSymptomsList(symptomslista)
-        })
-
         }
-    },[id])
+    },[id,update])
 
     useEffect(()=>{
-        console.log("user: ",user)
+            listEvents()
+    },[regDiarios])
+
+    useEffect(()=>{
         
         if(id && user.avatar){
-            console.log("DB READING")
+            
             const db = getFirestore()
             let stringAvatar = user.avatar
-            console.log(user.avatar.toString())
             const itemCollection = db.collection("avatars").doc(stringAvatar.toString())
             itemCollection.get().then((querySnapshot) => {
                 let imgFound =querySnapshot.data()
-                console.log(imgFound)
                 setImage(imgFound)
+            })
+
+            db.collection("symptoms").where("id","==", user.id).limit(6)
+            .onSnapshot((querySnapshot) => {
+                let symptomslista = querySnapshot.docs.map(doc => doc.data())
+                setSymptomsList(symptomslista.sort(function (a, b) {
+                    if (b.date > a.date) {
+                        return 1;
+                    }
+                    if (b.date < a.date) {
+                        return -1;
+                    }
+                    // a must be equal to b
+                    return 0;
+                    }))
             })
 
             const itemCollectionSymp = db.collection("mainSymptoms")
@@ -84,55 +192,158 @@ export const CompleteProfile = () => {
             
             let sympList = querySnapshot.docs.map(doc => {
                     return(
-                        {id:doc.id,...doc.data()}
+                        {docid:doc.id,...doc.data()}
                         )
                     }
                 )
             setSympInfo(sympList)
+
+
+
+            
         })
 
         }
-    },[user])
+        startTimer()
+    },[id, user])
+
+    const startTimer = () => {
+        setTimeout(function(){
+            setLoad(false)
+        }.bind(this),500)
+    }
+
+
+
+
 
     useEffect(()=>{
+        mood.length > 0 && setGraph(true)
+        console.log("el largo es ",mood)
+        setSerie( [{
+              name: 'Humor',
+              data:  mood.map(item=>item.y)
+            }, {
+              name: 'Dolor',
+              data: pain.map(item=>item.y)
+            }])
+        setOptions({
+              chart: {
+                height: 460,
+                type: 'area',
+                defaultLocale:'es',
+                locales: [{
+                    name: 'es',
+                    options: {
+                    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    shortMonths: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    days: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+                    shortDays: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                    toolbar: {
+                        download: 'Descargar SVG',
+                        selection: 'Seleccion',
+                        selectionZoom: 'Seleccion Zoom',
+                        zoomIn: 'Aumentar',
+                        zoomOut: 'Disminuir',
+                        pan: 'Panning',
+                        reset: 'Resetear Zoom',
+                    }
+                    }
+                }]
+              },
+              fill: {
+                type: "gradient",
+                gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.7,
+                opacityTo: 0.4,
+                stops: [0, 90, 100]
+                },
+                colors:['#008FFB','#9357F7']
+              },
+              dataLabels: {
+                enabled: false
+              },
+              stroke: {
+                curve: 'smooth',
+                colors:['#008FFB','#9357F7']
+              },
+              xaxis: {
+                type: 'datetime',
+                categories: mood.map(item=>item.date.toString()),
+                labels: {
+                    datetimeFormatter: {
+                        year: 'yyyy',
+                        month: "MMM 'yy",
+                        day: 'dd MMM'
+                    }
+                }
+              },
+              yaxis:{
+                min:0,
+                max:10
+              },
+              tooltip: {
+                x: {
+                  format: 'dd/MM/yy'
+                },
+              },
+            })
+    },[mood,pain])
+ 
+    useEffect(()=>{
 
-    },[image,symInfo])
+    },[graph])
 
     return (
         <React.Fragment>
-        { 
-        load ? 
-        <div className="login-cont-loading">
-                    <div className="login-loading"><CircularProgress color="#9357F7"/></div>
-        </div>:
-        (user && user.name && image)? 
-        <div className="profile-cont-background">
-            <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
-            <ProfileTab handleSnackBar={handleOpensnackBar} image={image} user={user}/>
-            <div className="two-squares-complete-profile">
-                <div  className="estado-usertab-cont-background">
-                    <UsertabEstado user={user} idProp={user.id} type="profile" flexi={{Flex:1}}/>
+            { 
+            load ? 
+            <div className="profile-cont-background">
+                    <Skeleton className={classes.btn} height={40} width={250} />
+                    <Skeleton className={classes.profileTab} height={199} width={"97.5%"} />
+                    <div className="two-squares-complete-profile">
+                        <Skeleton className={classes.squares} height={'34vw'} width={"98%"} />
+                        <Skeleton className={classes.squares2} height={'34vw'} width={"98%"} />
+                    </div>
+            </div>:
+            (user && user.name && image)? 
+            <div className="profile-cont-background">
+                <div className="userall-head">
+                    <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
                 </div>
-                <div className="sintoms-usertab-cont-background">
-                    <UsertabSintomas sympstoms={symptomsList} descs={symInfo} flexi={{Flex:1}}/>
-                </div>  
+                <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
+               {graph &&  <div className="profile-chart-cont">
+                    {
+                     serie && <ReactApexChart options={options} series={serie} type="area" height={450} />
+                     }
+                </div>}
+                <div className="two-squares-complete-profile">
+                    <div className="estado-usertab-cont-background">
+                        <UsertabState regDiarios={regDiarios}  user={user} type="profile" flexi={{Flex:1}}/>
+                    </div>
+                    <div className="sintoms-usertab-cont-background">
+                        <UsertabSymptoms id={user.id} sympstoms={symptomsList} descs={symInfo} flexi={{Flex:1}}/>
+                    </div>  
+                </div>
             </div>
-        </div>
-        : userNotFound &&
-        <div className="profile-cont-background1">
-            <img className={{width:"200px"}} src="https://www.initcoms.com/wp-content/uploads/2020/07/404-error-not-found-1.png" />
-        </div>
-        }
-        <MySnackbar
-            severity="success"
-            message="Usuario eliminado con exito!"
-            openSnackBar={openSnackBar}
-            handleCloseSnackBar={handleCloseSnackBar}
-        />
+            : 
+            userNotFound ?
+            <div className="profile-cont-background">
+                <div className="profile-not-found">
+                    <img alt="" className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                    <p>No se encontró al usuario que buscabas</p>
+                </div>
+            </div>:null
+            }
+            <MySnackbar
+                severity={severity}
+                message={message}
+                openSnackBar={openSnackBar}
+                handleCloseSnackBar={handleCloseSnackBar}
+            />
         
         </React.Fragment>
         
     )
 }
-
-

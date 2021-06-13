@@ -1,67 +1,64 @@
 import React , {useState, useEffect} from 'react'
 import './ItemUser.css'
-import optionIcon from 'src/img/option_icon.png'
-import {Menu,MenuItem,Button} from '@material-ui/core'
+import optionIcon from '../../img/option_icon.png'
+import {Button} from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faLaughBeam,faSadTear,faFrown,faMeh,faSmile } from '@fortawesome/free-regular-svg-icons'
-import {faLaughBeam2,faCircle, faCrutch,faDrumstickBite,faRunning,faTint,faUsers} from '@fortawesome/free-solid-svg-icons'
+import {faCircle, faCrutch,faDrumstickBite,faRunning,faTint,faUsers,faClipboard} from '@fortawesome/free-solid-svg-icons'
 import MouseOverPopover from '../mouseOverPopover/MouseOverPopover'
-import {Link} from 'react-router-dom'
 import { useHistory } from 'react-router-dom';
-import {getFirestore} from '../../firebase'
+
 
 
 
 export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sad,run,social,hid,hungry,handletotalClick}) => {
     const [imgs,setImgs] = useState(image)
-    const [descripcion,setDescripcion] = useState("")
+    const [descripcion,setDescripcion] = useState("Descripcion del sintoma no encontrado")
     const [regdiario,setRegDiario] = useState()
-    const [sintomasInfo,setSintomasInfo] = useState()
+
 
     useEffect(() => {
         setImgs(image)
     }, [image])
 
+
     useEffect(()=>{
         if(desc && symptom){
-            const listOfGrades = desc.gravity.find(element => element.value == symptom.grade)
+            const listOfGrades = desc.gravity.find(element => element.value===symptom.grade)
             setDescripcion(listOfGrades)
-        }
-    },[desc])
+        } 
+    },[desc, symptom])
 
     useEffect(()=>{
         if(daily){
-        console.log("reg diario: ",daily)
-        setRegDiario(daily)
+            setRegDiario(daily)
         } 
-
-    },daily)
+    },[daily])
 
 
     useEffect(()=>{},[mood,sad,run,hungry,hid,social])
 
-    useEffect(()=>{
-        console.log("decripcion: ",descripcion)
-    },[descripcion])
-
     const history = useHistory();
-    const switchToProfle = () => history.push(`/profile/${user.id}`);
+    const switchToProfle = () => {
+        console.log(user.docid)
+        history.push(`/profile/${user.docid}`);
+    }
 
-    const returnEmoji = (mood)=>{
-        if(mood == 10){
-            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faLaughBeam}  className="emote-size"/></th>
+    const returnEmoji = (mood,regdia)=>{
+        if(mood===10){
+            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faLaughBeam}  className={regdia ? "smile-icon emote-size":"emote-size"}/></th>
         }else if(mood>=7){
-            return <th  scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSmile}  className="emote-size"/></th>
+            return <th  scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSmile}  className={regdia ? "smile-icon emote-size":"emote-size"}/></th>
         }else if(mood>=4){
-            return <th  scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faMeh}  className="emote-size"/></th>
+            return <th  scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faMeh}  className={regdia ? "smile-icon emote-size":"emote-size"}/></th>
         }else if(mood>=2){
-            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faFrown}  className="emote-size"/></th>
+            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faFrown}  className={regdia ? "smile-icon emote-size":"emote-size"}/></th>
         }else{
-            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSadTear}  className="emote-size"/></th>
+            return <th scope="row" className="usertab-user-image-table"> <FontAwesomeIcon icon={faSadTear}  className={regdia ? "smile-icon emote-size":"emote-size"}/></th>
         }
     }
     const returnEmote = (mood)=>{
-        if(mood == 10){
+        if(mood===10){
             return "Feliz"
         }else if(mood>=7){
             return "Bien"
@@ -76,26 +73,40 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
 
     return (
 
-        type=="seeAllUsers"?
-            <tr className="item-user-fila">
-                <th scope="row" className="item-user-user-image-table"><img className="usertab-user-image" src={imgs&&imgs.url} /></th>
-                <td>{user.id}</td> 
-                <td>{user.name}</td>
-                <td>{user.cancer}</td>
-                <td>{user.status== "Activo" ? <FontAwesomeIcon icon={faCircle} className="item-status-active" size="lg"/> : <FontAwesomeIcon icon={faCircle} className="item-status-inactive" size="lg"/>}</td>
-                <td className="item-user-config"><button className="item-user-options" onClick={(e)=>handleClick(e,user)}><img className="usertab_icon_image" src={optionIcon}/></button></td>
+        type==="seeAllUsers"?
+            <tr   className="item-user-fila">
+                <th scope="row" className="item-user-user-image-table"><img alt="" className="usertab-user-image" src={imgs&&imgs.url} /></th>
+                <td onClick={()=>switchToProfle()}>{user.id}</td> 
+                <td onClick={()=>switchToProfle()}>{user.surname}, {user.name}</td>
+                <td onClick={()=>switchToProfle()}>{user.cancer}</td>
+                <td onClick={()=>switchToProfle()}>{user.status=== "Activo" ? <FontAwesomeIcon icon={faCircle} className="item-status-active" size="lg"/> : <FontAwesomeIcon icon={faCircle} className="item-status-inactive" size="lg"/>}</td>
+                <td className="item-user-config"><button className="item-user-options" onClick={(e)=>handleClick(e,user,user.status)}><img alt="" className="usertab_icon_image" src={optionIcon}/></button></td>
             </tr>: 
 
-        type=="home"?
+        type==="allRegs"?
+        <tr onClick={()=>handleClick("no",regdiario)} className="item-user-fila">
+            <td className="item-user-alldiaryRegs-fecha">{regdiario && Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(regdiario.date.toDate())}</td>
+            {
+                regdiario && <td className="regdiarios-td">{regdiario.mood}</td>
+            }
+            {
+                regdiario && <td className="regdiarios-td">{regdiario.sad}</td>
+            }
+            {
+                regdiario && <td>{regdiario.hungry}</td>
+            }
+        </tr>:
+
+        type==="home"?
                 <tr className="usertab-fila" >
-                    <th onClick={()=>switchToProfle()} scope="row" className="usertab-user-image-table"><img className="usertab-user-image" src={imgs&&imgs.url} /></th>
+                    <th onClick={()=>switchToProfle()} scope="row" className="usertab-user-image-table"><img alt="" className="usertab-user-image" src={imgs&&imgs.url} /></th>
                     <td onClick={()=>switchToProfle()}>{user.id}</td>
                     <td onClick={()=>switchToProfle()}>{user.name}</td>
-                    <td  className="item-user-config"><Button className="item-user-options" onClick={(e)=>handleClick(e,user)}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
+                    <td  className="item-user-config"><Button className="item-user-options" onClick={(e)=>handleClick(e,user)}><img alt="" className="usertab_icon_image" src={optionIcon} /></Button></td>
                 </tr>
 
             : 
-        type=="estado"?
+        type==="estado"?
             <tr  className="estado-usertab-fila">
                 <td onClick={(e)=>handletotalClick(e,regdiario)} className="regdiario-fila-fecha">{regdiario && Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(regdiario.date.toDate())}</td>
                 {
@@ -105,83 +116,106 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                     regdiario && <td onClick={(e)=>handletotalClick(e,regdiario)} >{returnEmote(regdiario.mood)}</td>
                 }
 
-                <td><Button className="item-user-options" onClick={(e)=>handleClick(e,regdiario)}><img className="usertab_icon_image" src={optionIcon} /></Button></td>
+                <td><Button className="item-user-options" onClick={(e)=>handleClick(e,regdiario)}><img alt="" className="usertab_icon_image" src={optionIcon} /></Button></td>
             </tr>:
-        type=="sintomas"?
-            <tr className="sintomas-usertab-fila">
+        type==="symptoms"?
+            <tr onClick={(e)=>handleClick(e,symptom)}  className="usertab-fila">
                 {  
-                   symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> 
+                   symptom.date &&  <td className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> 
                 }
-                <td className="sintomas-fila-fecha">{symptom.symptom}</td>
-                {<td className="sintomas-fila-grado"><MouseOverPopover name={symptom.grade} descrip={descripcion.label}/></td>}
+                {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)}><div style={{display: 'flex',alignItems: 'center'}}>
+                                            {`${symptom.symptoms[0].symptom} `}
+                                            {symptom.symptoms.length>1 && `, ${symptom.symptoms[1].symptom} `}
+                                            {symptom.symptoms.length>2 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-2}</p>}
+                                            </div></td>}
+                <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faClipboard}/>}</td>
             </tr>:
-        type=="regdiarioMood"?
+        type==="regdiarioMood"?
             <tr className="item-user-fila-regdiario">
-                <td className="emote-regdiario"> <FontAwesomeIcon icon={faLaughBeam} className="smile-icon" className="emote-size"/></td>
+                <td className="emote-regdiario">{returnEmoji(mood,true)}</td>
                 <td>Estado de animo</td>
                 <td className="value-regdiario">{mood}</td>
             </tr> : 
-            type=="regdiarioSad"?
+            type==="regdiarioSad"?
             <tr className="item-user-fila-regdiario">
-                <td className="emote-regdiario"> <FontAwesomeIcon icon={faCrutch} className="smile-icon" className="emote-size"/></td>
+                <td className="emote-regdiario"> <FontAwesomeIcon icon={faCrutch} className="smile-icon emote-size"/></td>
                 <td>Dolor</td>
                 <td className="value-regdiario">{sad}</td>
             </tr> : 
-            type=="regdiarioRun"?
+            type==="regdiarioRun"?
             <tr className="item-user-fila-regdiario">
-                <td className="emote-regdiario"> <FontAwesomeIcon icon={faRunning} className="smile-icon" className="emote-size"/></td>
+                <td className="emote-regdiario"> <FontAwesomeIcon icon={faRunning} className="smile-icon emote-size"/></td>
                 <td>Actividad Fisica</td>
                 <td  className="value-regdiario">{run}</td>
 
             </tr> : 
-            type=="regdiarioHungry"?
+            type==="regdiarioHungry"?
             <tr className="item-user-fila-regdiario">
-                <td className="emote-regdiario"> <FontAwesomeIcon icon={faDrumstickBite} className="smile-icon" className="emote-size"/></td>
+                <td className="emote-regdiario"> <FontAwesomeIcon icon={faDrumstickBite} className="smile-icon emote-size"/></td>
                 <td>Hambre</td>
                 <td className="value-regdiario">{hungry}</td>
             </tr> : 
-            type=="regdiarioSocial"?
+            type==="regdiarioSocial"?
             <tr className="item-user-fila-regdiario">
-                <td className="emote-regdiario"> <FontAwesomeIcon icon={faUsers} className="smile-icon" className="emote-size"/></td>
+                <td className="emote-regdiario"> <FontAwesomeIcon icon={faUsers} className="smile-icon emote-size"/></td>
                 <td>Actividad Social</td>
                 <td className="value-regdiario">{social}</td>
             </tr> : 
-            type=="regdiarioHid"?
+            type==="regdiarioHid"?
             <tr className="item-user-fila-regdiario">
-                <td className="emote-regdiario"> <FontAwesomeIcon icon={faTint} className="smile-icon" className="emote-size"/></td>
+                <td className="emote-regdiario"> <FontAwesomeIcon icon={faTint} className="smile-icon emote-size"/></td>
                 <td>Hidratación</td>
                 <td  className="value-regdiario">{hid}</td>
             </tr> : 
-        type=="sympts"?
-                <tr className="usertab-fila">
-                    {symptom.date &&  <td className="sintomas-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
-                    <td onClick={(e)=>handleClick(e,symptom)}>{symptom.id}</td>
-                    <td onClick={(e)=>handleClick(e,symptom)}>{symptom.symptom}</td>
-                    <td onClick={(e)=>handleClick(e,symptom)} className="usertab-sympts-col-grado">{symptom.grade}</td>
+        type==="sympts"?
+                <tr onClick={(e)=>handleClick(e,symptom)}  className="usertab-fila">
+                    {symptom.date &&  <td  className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
+                    <td style={{paddingLeft: "4%"}}>{symptom.id}</td>
+                    <td style={{paddingLeft: "4%"}}>{symptom.surname}, {symptom.name}</td>
+                    {symptom.symptoms && <td style={{paddingLeft: "4%"}}><div style={{display: 'flex',alignItems: 'center'}}>
+                                            {`${symptom.symptoms[0].symptom} `}
+                                            {symptom.symptoms.length>1 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-1}</p>}
+                                            </div></td>}
+                    <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faClipboard}/>}</td>
                 </tr>:
-        type=="seeSymptoms"?
-        <tr className="usertab-fila">
-            <td onClick={handleClick}></td>
+        type==="seeSymptoms"?
+        <tr  onClick={(e)=>handleClick(e,symptom)} className="usertab-fila">
+            <td ></td>
             {symptom.date &&  <td>{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
-            <td onClick={handleClick}>{symptom.name}</td>
-            <td onClick={handleClick}>{symptom.symptom}</td>
-            { descripcion && 
-                (descripcion.label.length<18   ? (
-                    <td className="usertab-first-col-grado"><MouseOverPopover name={descripcion.label} descrip={`Grado ${symptom.grade}`}/></td>
-                ):(
-                    <td className="usertab-first-col-grado"><MouseOverPopover name={descripcion.label} descrip={`Grado ${symptom.grade}: ${descripcion.label}`}/></td> 
-                ))
+            <td >{symptom.surname}, {symptom.name} </td>
+            {symptom.symptoms && <td>
+                                    <div style={{display: 'flex',alignItems: 'center'}}>
+                                        {`${symptom.symptoms[0].symptom} `}
+                                        {symptom.symptoms.length>1 && `, ${symptom.symptoms[1].symptom} `}
+                                        {symptom.symptoms.length>2 &&<p className="p-itemuser-symptoms">+{symptom.symptoms.length-2}</p>}
+                                    </div>
+                                </td>
             }
-            { symptom.grade>2 ?
+            { symptom.symptoms.some(el => el.grade > 5) ?
                 (
-                    <td onClick={handleClick}>Urgencia</td>
+                    <td>Urgencia</td>
                 ):(
-                    <td onClick={handleClick}>Ver respuesta</td>
+                    <td>No urgencia</td>
                 )
             }
-            
-            <td onClick={handleClick}></td>
-        </tr>: ""
+        </tr>:
+          type==="seeUserSymptoms"?
+          <tr onClick={(e)=>handleClick(e,symptom)} className="usertab-fila">
+              {symptom.date &&  <td style={{paddingLeft: '5vw'}}>{Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
+              {symptom.symptoms && <td><div style={{display: 'flex',alignItems: 'center'}}>
+                                            {`${symptom.symptoms[0].symptom}`}
+                                            {symptom.symptoms.length>1 && `, ${symptom.symptoms[1].symptom}`}
+                                            {symptom.symptoms.length>2 &&`, ${symptom.symptoms[2].symptom}`}
+                                            {symptom.symptoms.length>3 &&`, ${symptom.symptoms[3].symptom}`}
+                                            {symptom.symptoms.length>4 &&`, ${symptom.symptoms[4].symptom}`}
+                                            {symptom.symptoms.length>5 &&`, ${symptom.symptoms[4].symptom}`}
+                                            {symptom.symptoms.length>6 &&`, ${symptom.symptoms[4].symptom}`}
+                                            {symptom.symptoms.length>7 &&`, ${symptom.symptoms[4].symptom}`}
+                                            {symptom.symptoms.length>8 &&`, ${symptom.symptoms[4].symptom}`}
+                                            {symptom.symptoms.length>9 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-9}</p>}
+                                            </div></td>}
+                                    
+                                            <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faClipboard}/>}</td>
+          </tr>: ""
     )
 }
-  

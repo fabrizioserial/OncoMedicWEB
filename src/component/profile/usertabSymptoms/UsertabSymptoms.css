@@ -1,8 +1,8 @@
 .sintoms-usertab-cont-background{
     width: 100%;
     min-height: 300px;
-    background-color: #F4F4F4;
-    border-right: 30px solid #9357F7;
+    background-color: var(--grey1);
+    border-right: 30px solid var(--primary);
     border-top-right-radius: 9px;
     border-bottom-right-radius: 9px;
     padding: 25px;
@@ -31,14 +31,14 @@
     border-spacing:0 10px;
 }
 .sintoms-usertab-thead{ 
-    color: #9357F7;
+    color: var(--primary);
     margin-bottom: 10px;
 }
 
 .sintoms-usertab-fila{
     margin-top: 10px;
     cursor: pointer;
-    background-color: #e6e6e6;
+    background-color: var(--grey2);
     border-radius: 5px;
     height: 40px;
     margin: 5px;
@@ -54,7 +54,7 @@
     justify-content: center;
     align-items: center;
     border-style: none;
-    background-color: #e6e6e6;
+    background-color: var(--grey2);
     width: 32px;
     border-radius: 50px;
 }
@@ -62,7 +62,7 @@
     width: 32px;
 }
 .sintoms-usertab-options:hover{
-    background-color: #dddddd;
+    background-color: var(--greyholder);
 }
 
 .sintoms-usertab_icon_image{
@@ -81,7 +81,7 @@
 }   
 
 .sintoms-menu-item-eliminar-profile {
-    color: red i !important;
+    color: var(--red) i !important;
 }
 .sintoms-usertab-final-button{
     width: 100%;
@@ -92,7 +92,8 @@
     width: 20%;
 }
 .sintoms-th-fecha{
-    padding-left: 5%;
+    padding-left: 3.5%;
+    width: 30%;
 }
 .sintoms-img-error-cont{
     display: flex;

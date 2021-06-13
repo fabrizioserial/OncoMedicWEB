@@ -1,33 +1,32 @@
 import React,{useEffect} from 'react'
-import './UsertabEstado.css'
-import optionIcon from '../../../img/option_icon.png'
-import {Menu,MenuItem,Button} from '@material-ui/core'
+import './UsertabState.css'
+import {Menu,MenuItem} from '@material-ui/core'
 import {useState} from 'react'
-import { Component } from 'react';
-import ModalPopOverELiminate from '../../modals/ModalPopOverEliminate'
-import { Router,Link, Route, Switch } from 'react-router-dom'
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import ModalPopOverVerRegistroDiario from '../../modals/ModalPopOverVerRegistroDiario'
+import {useHistory } from 'react-router-dom'
+import ModalPopOverSeeDiaryReg from '../../modals/ModalPopOverSeeDiaryReg'
 import {ItemUser} from '../../ItemUser/ItemUser'
 import {getFirestore} from '../../../firebase'
+import { Skeleton } from '@material-ui/lab'
 
-
-
-const useStyles = makeStyles((theme) => ({
-  typography: {
-    padding: theme.spacing(2),
-  },
-}));
-
-export const UsertabEstado=({type,idProp,user})=> {
-  const classes = useStyles();
+export const UsertabState=({type,user,regDiarios})=> {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false); 
-  const i = [1,2,3,4,5,6]
-  const [regDiarios,setRegDiario] = useState([])
   const [regunique,setUniqReg] = useState()
+  const [skeleton,setSkeleton] = useState(true)
+  const [orderedRegDiarios,setOrderedRegDiarios] = useState([])
+
+  useEffect(()=>{
+    setOrderedRegDiarios(regDiarios.sort(function (a, b) {
+      if (b.date > a.date) {
+          return 1;
+      }
+      if (b.date < a.date) {
+          return -1;
+      }
+      // a must be equal to b
+      return 0;
+      }))
+  },[regDiarios])
 
   const handleClick = (event,item) => {
     setUniqReg(item)
@@ -38,10 +37,6 @@ export const UsertabEstado=({type,idProp,user})=> {
     setUniqReg(item)
     setOpenModal(true);
   }
-
-  useEffect(()=>{
-    console.log("modal a ",regunique)
-  },[regunique])
   
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -55,27 +50,20 @@ export const UsertabEstado=({type,idProp,user})=> {
     setOpenModal(true);
     setAnchorEl(null);
   }
+
+  const history = useHistory()
+  function handleCloseAndNavigate(){
+    history.push(`/seeAllDiaryRegs/${user.id}`);
+  }
+
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
-  useEffect(()=>{
-    console.log("DB READING")
-        const db = getFirestore()
-        const itemCollection = db.collection("diaryReg").where("id","==",idProp)
-        itemCollection.onSnapshot((querySnapshot) => {
-            
-            let regList = querySnapshot.docs.map(doc => {
-                    return(
-                        {id:doc.id,...doc.data()}
-                        )
-                    }
-                )
-            setRegDiario(regList)
-        })
-  },[idProp])
 
   return (
     <div>
+      {regDiarios && regDiarios.length>0 ? (
+        <>
         <table class="estado-table">
             <thead className="estado-usertab-thead">
                 <tr>
@@ -85,10 +73,10 @@ export const UsertabEstado=({type,idProp,user})=> {
                 <th className="estado-th-button" scope="col"></th>
                 </tr>
             </thead>
-            {type=="profile" && (
+            {type === "profile" && 
               <tbody> 
                 {
-                regDiarios && regDiarios.map(item => <ItemUser handletotalClick={handletotalClick} type="estado" daily={item} handleClick={handleClick} />)
+                orderedRegDiarios && orderedRegDiarios.slice(0,6).map(item => <ItemUser handletotalClick={handletotalClick} type="estado" daily={item} handleClick={handleClick} />)
                 }
                 <Menu className="menu-eliminate-1"
                     id={id}
@@ -106,7 +94,7 @@ export const UsertabEstado=({type,idProp,user})=> {
                     <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal}>VER COMPLETO</MenuItem>
                     <MenuItem >ELIMINAR</MenuItem>
                 </Menu>
-                <ModalPopOverVerRegistroDiario 
+                <ModalPopOverSeeDiaryReg 
                     Date = {regunique && regunique.date.toDate()}
                     name={user.name}
                     id={regunique && regunique}
@@ -114,14 +102,19 @@ export const UsertabEstado=({type,idProp,user})=> {
                     closeModal={handleCloseModal}
                 />
             </tbody>
-            )
             }
         </table>
-        {/* {type=="regDia"? (""):(
-          <button className="menu-finalbutton">VER TODO</button>
-          )
-        } */}
-        
+        <div>
+          {orderedRegDiarios.length >= 6 && <button onClick={handleCloseAndNavigate} className="menu-finalbutton">VER TODO</button>}
+        </div>
+        </>
+      ):(
+        <div className="sintoms-img-error-cont">
+          <img alt="" className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+          <p>No se encontraron registros diarios</p>
+        </div>
+      )}
     </div>
+
   )
 }

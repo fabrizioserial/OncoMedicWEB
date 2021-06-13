@@ -1,0 +1,35 @@
+.filter-breadcrumb-background {
+    background-color: var(--primary-light);
+    border-radius: 2vw;
+    height: 1.5vw;
+    margin-top: 0;
+    width:fit-content;
+    font: 400 13.3333px Arial;
+    padding: 7px;
+    display: flex;;
+    justify-content: space-between;
+}
+.div-inside-bread{
+    display: flex;
+    align-items: center;
+}
+.filter-breadcrumb-text{
+    width: fit-content;
+    margin-left: 10px;
+    color: white;
+    font-size: 1vw;
+    font-weight: bold;
+}
+.filter-breadcrumb-div-cross{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1vw;
+    width: 1.5vw;
+    height: 1.5vw;
+    font-size: 1vw;
+    background-color: white;
+    border-radius: 100%;
+    cursor: pointer;
+    color: var(--primary-light);
+}
