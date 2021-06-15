@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 .aform-background{
-    height: 100%;
+    height: 95%;
     border-radius: 10px;
     background-color: #F2F2F2;
 }
@@ -14,6 +14,9 @@
 }
 .af-input-cont{
     width: 100%;
+}
+.af-input.true{
+    border-color: red;
 }
 .af-input-line{
     display: flex;
@@ -132,4 +135,26 @@ select:focus{
 }
 .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline{
     border: none;
+}
+.div-final-btn-acceptform{
+    display: flex;
+    justify-content: flex-end;
+}
+.final-btn-acceptform{
+    width: 30vw;
+    height: 3vw;
+    margin-bottom: 3vw;
+    background-color: var(--primary-light);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+.MuiFormControl-root {
+    width: 100%;
+}
+.css-1wa3eu0-placeholder{
+    color: white !important;
 }

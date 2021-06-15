@@ -1,3 +1,19 @@
 :root{
     --primary:  #9357F7;
+    --primaryhover: #8845f5;
+    --primary-light:#BE99FD;
+    --blue :#6957F7;
+    --bluehover:#604bff;
+    --lightblue:#5795F7;
+    --lightbluehover:#4a8af0;
+    --red: #F63A39;
+    --green: #48f35f;
+    --grey1: #F4F4F4;
+    --grey2: #E6E6E6;
+    --grey3: #d1d1d1;
+    --grey4: #D6D6D6;
+    --grey5: #F5F5F5;
+    --grey6: #a0a0a0;
+    --greydark: #3f3f3f;
+    --greyholder:#dddddd;
 }

@@ -33,9 +33,6 @@ export const Biom = ({index,handleElimIndex,show,handleAddBio,propbio,propeval,a
        handleAddBio(bio,evaluation,index)
     },[evaluation,bio])
 
-    useEffect(()=>{
-        console.log(show,'SHOW')
-    },[show])
 
     return (
         <div className="af-input-line">

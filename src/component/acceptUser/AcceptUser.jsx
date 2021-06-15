@@ -25,8 +25,8 @@ const AcceptUser = ({medicData}) => {
         med: {
             acv: false,
             epoc: false,
-            hip: false,
-            inf: false,
+            hip: true,
+            inf: true,
         },
         medic: "123456",
         name: "Carlos",

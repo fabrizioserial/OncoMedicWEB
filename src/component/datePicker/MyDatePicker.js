@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {KeyboardDatePicker } from "@material-ui/pickers";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import './MyDatePicker.css'
 
-export default function MyDatePicker({handleDate,dateStart,classname}) {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+export default function MyDatePicker({handleDate,dateStart,classname,customDate}) {
+  const [selectedDate, setSelectedDate] = useState(null)
 
   const handleDateChange = (date) => {
       setSelectedDate(date)
       handleDate(date)
   }
+
+  useEffect(() => {
+    customDate!==null && setSelectedDate(customDate)
+  }, [customDate])
 
   const defaultMaterialTheme  = createMuiTheme({
     overrides: {
