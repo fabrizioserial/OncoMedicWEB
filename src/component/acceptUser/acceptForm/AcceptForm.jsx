@@ -278,6 +278,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
 
 
     const handleElimUser = () =>{
+        setOpenModal(false)
         eliminateUser(user)
     }
 

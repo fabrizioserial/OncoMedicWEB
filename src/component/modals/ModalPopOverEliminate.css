@@ -48,6 +48,7 @@
 }
 
 .agregar-eliminate-button{
+    cursor: pointer;
     width: 87%;
     background-color:#F63A39;
     height: 50px;

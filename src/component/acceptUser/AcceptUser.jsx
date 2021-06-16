@@ -6,6 +6,7 @@ import { AcceptForm } from './acceptForm/AcceptForm';
 import { connect } from 'react-redux'
 import {getFirestore} from '../../firebase'
 import { Skeleton } from '@material-ui/lab';
+import { MySnackbar } from '../mySnackBar/MySnackbar';
 
 const AcceptUser = ({medicData}) => {
     window.onscroll = function() {myFunction()};
@@ -14,6 +15,9 @@ const AcceptUser = ({medicData}) => {
     const[skeleton,setSkeleton] = useState(true)
     const[otherIndex,setIndex] = useState(0)
     const [user,setUser] = useState('')
+    const [openSnackBar,setOpenSnackBar] = useState(false)
+    const [severity,setSeverity] = useState("")
+    const [message,setMessage] = useState("")
 
 
     function myFunction() {
@@ -71,8 +75,26 @@ const AcceptUser = ({medicData}) => {
     }
 
     const eliminateUser = (theUser) => {
+        const db = getFirestore()
+        db.collection("users").doc(user.docid).delete().then(() => {
+            handleWarnBar()
+        }).catch((error) => {
+            console.error("Error removing document: ", error);
+        });
         setUserList(userList.filter(x=>x!==theUser))
     }
+
+    const handleWarnBar = () => {
+        setSeverity("success")
+        setMessage("Usuario eliminado con exito")
+        setOpenSnackBar(!openSnackBar)
+    }
+    const handleCloseSnackBar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSnackBar(false);
+    };
 
 
     return (
@@ -112,6 +134,12 @@ const AcceptUser = ({medicData}) => {
                     {user && <AcceptForm eliminateUser={eliminateUser} finish={handleFinish} id={user.docid} accept={true} user={user}/>}
                 </>}
             </div>
+            <MySnackbar
+                severity={severity}
+                message={message}
+                openSnackBar={openSnackBar}
+                handleCloseSnackBar={handleCloseSnackBar}
+            />
         </div>
     )
 }
