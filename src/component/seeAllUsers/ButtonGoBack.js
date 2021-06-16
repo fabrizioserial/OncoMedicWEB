@@ -16,7 +16,7 @@ export const ButtonGoBack = ({text,type,id,classNameProp=""}) => {
 
     return(
         <div className={`go-back-back ${classNameProp}`}>
-            {(type==="allUsers" && id) ? (
+            {(type==="allUsers") ? (
                     <button className="goBack-btn" onClick={handleNaigate}> <FontAwesomeIcon icon={faUndoAlt} className="go-back-space-icon" />{text}</button>
             ):(
                 <Link to='/home' className="">

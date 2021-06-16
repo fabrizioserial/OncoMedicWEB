@@ -7,6 +7,7 @@ import { Skeleton } from '@material-ui/lab';
 import { AcceptForm } from '../acceptUser/acceptForm/AcceptForm';
 import { AcceptItemUser } from '../acceptUser/acceptItemUser/AcceptItemUser';
 import {useParams} from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 const EditUser = ({medicData}) => {
     const {id} = useParams()
@@ -55,14 +56,19 @@ const EditUser = ({medicData}) => {
         }.bind(this),500)
     }
 
+    const history = useHistory();
+    const handleNaigate = () => {
+        history.goBack();
+    }
+
     return (
         <div className="accept-user-background-cont">
             <div className="accept-user-left">
-                <ButtonGoBack classNameProp="accept-user-btn" text="VOLVER AL INICIO" color="purple"/>
+                <ButtonGoBack classNameProp="accept-user-btn" text="VOLVER AL PERFIL" type="allUsers" color="purple"/>
                 <div className={sticky ? "accept-user-list":"accept-user-list fixed"}>
                     {skeleton ? 
                     <>
-                        <Skeleton style={{marginTop: '5%',borderRadius: '10px'}} width={'16vw'} height={'6.1vh'}/>
+                        <Skeleton style={{marginTop: '5%',borderRadius: '10px'}} width={'16vw'} height={'63px'}/>
                     </>
                     :
                     <>
@@ -77,7 +83,7 @@ const EditUser = ({medicData}) => {
                     </>
                 :
                 <>
-                {user && <AcceptForm  user={user}/>}
+                {user && <AcceptForm finish={handleNaigate} id={id} accept={false} user={user}/>}
                 </>}
             </div>
             

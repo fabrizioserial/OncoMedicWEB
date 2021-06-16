@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import MyDatePicker from '../../../datePicker/MyDatePicker'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 export const Recaida = ({customDate,customLocal,index,handleChangeDate}) => {
-    const [date,setDate] = useState(null)
+    const [date,setDate] = useState('')
     const [local,setLocal] = useState('Local')
 
     useEffect(()=>{
-        setDate(customDate)
-    },[customDate])
+        customDate && setDate(new Date(customDate.seconds * 1000 + customDate.nanoseconds/1000000))
+     },[customDate])
+ 
 
     useEffect(()=>{
         setLocal(customLocal)
@@ -25,7 +28,6 @@ export const Recaida = ({customDate,customLocal,index,handleChangeDate}) => {
 
 
     useEffect(()=>{
-        console.log('date',date,local)
         handleChangeDate(date,local,index)
      },[date,local])
 
@@ -45,6 +47,7 @@ export const Recaida = ({customDate,customLocal,index,handleChangeDate}) => {
                             </select>
                         </div>
                     </div>
+
             </div>
     )
 }

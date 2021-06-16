@@ -16,10 +16,6 @@ export const Biom = ({index,handleElimIndex,show,handleAddBio,propbio,propeval,a
         console.log(bio)
     },[propbio])
 
-    useEffect(()=>{
-        console.log(bio,'bio')
-    },[bio])
-
 
     useEffect(()=>{
         setEvaluation(propeval)
@@ -52,7 +48,8 @@ export const Biom = ({index,handleElimIndex,show,handleAddBio,propbio,propeval,a
                             <div className="select">
                                 <select value={evaluation} onChange={event=>handleEval(event.target.value)} id="standard-select">
                                     <option value="No evaluada">No evaluada</option>
-                                    <option value="No">No</option>
+                                    <option value="Positiva">Positiva</option>
+                                    <option value="Negativa">Negativa</option>
                                 </select>
                             </div>
                     </div>

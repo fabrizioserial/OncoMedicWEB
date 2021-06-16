@@ -9,42 +9,12 @@ import { Skeleton } from '@material-ui/lab';
 
 const AcceptUser = ({medicData}) => {
     window.onscroll = function() {myFunction()};
-    const[userList,setUserList] = useState([{
-        avatar: 1,
-        birth: "Wed Jun 02 2021",
-        registerDate: new Date(),
-        cancer: "",
-        dbt: {
-            dbt: false,
-            med: ""
-        },
-        email: "mail@gmail.com",
-        etnia: "Caucasico",
-        gender: 0,
-        id: "10000000",
-        med: {
-            acv: false,
-            epoc: false,
-            hip: true,
-            inf: true,
-        },
-        medic: "123456",
-        name: "Carlos",
-        password: "123",
-        place: "Austral",
-        smoke:{
-            qnt: "",
-            smoke: 0,
-            time: "",
-        },
-        status: "Pendiente",
-        surname: "Crespo",
-        surname: "Crespo",
-    }] )
+    const[userList,setUserList] = useState([] )
     const [sticky,setSicky] = useState(true)
-    const[skeleton,setSkeleton] = useState(false)
+    const[skeleton,setSkeleton] = useState(true)
     const[otherIndex,setIndex] = useState(0)
     const [user,setUser] = useState('')
+
 
     function myFunction() {
         if (window.pageYOffset <= 83) {
@@ -54,7 +24,7 @@ const AcceptUser = ({medicData}) => {
         }
     }
 
-    /*useEffect(()=>{
+    useEffect(()=>{
         const db = getFirestore()
         const itemCollection = db.collection("users").where("medic","==",medicData.id)
         itemCollection.onSnapshot((querySnapshot) => {
@@ -80,7 +50,6 @@ const AcceptUser = ({medicData}) => {
             }
         )
     },[medicData])
-    */
 
     const startTimer = () => {
         setTimeout(function(){
@@ -95,6 +64,14 @@ const AcceptUser = ({medicData}) => {
     const handleChangeUser =(user,ind)=>{
         setIndex(ind)
         setUser(user)
+    }
+
+    const handleFinish = (theUser) => {
+        setUserList(userList.filter(x=>x!==theUser))
+    }
+
+    const eliminateUser = (theUser) => {
+        setUserList(userList.filter(x=>x!==theUser))
     }
 
 
@@ -132,10 +109,9 @@ const AcceptUser = ({medicData}) => {
                     </>
                 :
                 <>
-                    {user && <AcceptForm  user={user}/>}
+                    {user && <AcceptForm eliminateUser={eliminateUser} finish={handleFinish} id={user.docid} accept={true} user={user}/>}
                 </>}
             </div>
-            
         </div>
     )
 }

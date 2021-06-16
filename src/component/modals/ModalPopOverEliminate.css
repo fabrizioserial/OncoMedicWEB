@@ -33,14 +33,13 @@
 
 .eliminate-numero-del-paciente{
     width: 354px;
-    height: 30px;
+    height: 40px;
     border-color:#a0a0a0;
     border-style: solid;
     border-radius: 7px;
     padding: 2px;
     font-size: 15px;
     padding-left: 10px;
-    margin-left: 30px;
 }
 .div-btn-eliminate{
     display: flex;
@@ -59,6 +58,7 @@
     border-style: none;
     border-radius: 7px;
     border-style: none;
+    margin-bottom: 10px;
 }
 .modalopoovereliminate-error{
     color: red;

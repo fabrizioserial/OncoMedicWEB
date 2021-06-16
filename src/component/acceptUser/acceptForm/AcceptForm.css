@@ -38,6 +38,7 @@
     font-weight: 600;
 }
 .af-input{
+    font-family: 'Montserrat',-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     width: 100%;
     padding:8px;
     font-size: 16px;
@@ -136,13 +137,21 @@ select:focus{
 .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline{
     border: none;
 }
-.div-final-btn-acceptform{
+.div-final-btn-acceptform.true{
+    display: flex;
+    justify-content: space-between;
+}
+.div-final-btn-acceptform.false{
     display: flex;
     justify-content: flex-end;
 }
+.final-btn-acceptform.elim{
+    background-color: rgb(255, 0, 0,0.5);
+    flex: 0.5 1;
+}
 .final-btn-acceptform{
     width: 30vw;
-    height: 3vw;
+    height: 50px;
     margin-bottom: 3vw;
     background-color: var(--primary-light);
     color: white;
@@ -155,6 +164,11 @@ select:focus{
 .MuiFormControl-root {
     width: 100%;
 }
-.css-1wa3eu0-placeholder{
-    color: white !important;
+
+.MuiInputBase-input{
+    font-family: 'Montserrat',-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+    font-size: 1rem !important;
+}
+.MuiFormHelperText-root{
+    font-size: 0 !important;
 }

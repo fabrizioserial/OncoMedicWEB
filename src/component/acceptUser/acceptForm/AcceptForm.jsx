@@ -1,16 +1,32 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import FontAwesome from 'react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './AcceptForm.css'
 import { TopForm } from './TopForm'
-import {faUser,faUserMd,faStarOfLife} from '@fortawesome/free-solid-svg-icons'
+import {faUser,faUserMd,faStarOfLife,faNotesMedical, faCaretDown} from '@fortawesome/free-solid-svg-icons'
 import { Biom } from './biom/Biom'
 import { Recaida } from './recaida/Recaida'
-import Select from 'react-select';
+import Select, { components }  from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
+import {getFirestore} from '../../../firebase'
+import ModalPopOverEliminate from '../../modals/ModalPopOverEliminate'
 
-export const AcceptForm = ({user,handleAcept}) => {
+const DropdownIndicator = (
+    props: ElementConfig<typeof components.DropdownIndicator>
+  ) => {
+    return (
+      <components.DropdownIndicator {...props}>
+        <FontAwesomeIcon size={'lg'} icon={faCaretDown} />
+      </components.DropdownIndicator>
+    );
+};
+
+export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
+    const [openModal, setOpenModal] = React.useState(false);
+    const [cancerList,setCancerList] = useState([{}])
     const [registerDate,setRegisterDate] = useState(new Date())
+    const [lastConnection,setLastConnection] = useState(new Date())
     const [name,setName] = useState("")
     const [surname,setSurname] = useState("")
     const [email,setEmail] = useState("")
@@ -36,42 +52,72 @@ export const AcceptForm = ({user,handleAcept}) => {
         { value: 'ACV', label: 'ACV' },
         { value: 'Infarto', label: 'Infarto' }
     ]
+    
 
     //Medic
     const [pdl,setPdl] = useState('')  
-    const[counter,setCounter] = useState([{bio: '',evaluation: 'No evaluada'}])
-    const[recaidas,setRecaidas] = useState([{date: null,local: 'Local'}])
+    const[biomarkers,setBiomarkers] = useState([{bio: '',evaluation: 'No evaluada'}])
+    const[recaidas,setRecaidas] = useState([{date: '',local: 'Local'}])
     const [t,setT] = useState('')  
     const [n,setN] = useState('')  
     const [m,setM] = useState('')  
     const [estadio,setEstadio] = useState('')  
-    const [primTumor,setPrimTumor] = useState('')  
-    const [histology,SetHistology] = useState('')  
-    const [tumorTreatment,setTumorTreatment] = useState('')  
+    const [primTumor,setPrimTumor] = useState('Mama')  
+    const [histology,setHistology] = useState('Option 1')  
+    const [tumorTreatment,setTumorTreatment] = useState('Si')  
+    const [periTreatment,setPeriTreatment] = useState('Option 1')  
+    const [status,setStatus] = useState("Activo")  
 
 
     //Error
     const [enableErrors,setEnableErrors] = useState(false)
+
+    useEffect(()=>{
+        const db = getFirestore()
+        const itemCollection = db.collection("cancer")
+        itemCollection.onSnapshot((querySnapshot) => {
+            
+            let canerList = querySnapshot.docs.map(doc => {
+                    return(
+                        {value:doc.data().name , label:doc.data().name}
+                        )
+                    }
+                )
+            setCancerList(canerList)
+        })
+    },[])
     
     useEffect(()=>{ 
-
         setDefaultMeds()
-        setName(user.name)
-        setRegisterDate(user.registerDate)
-        setSurname(user.surname)
-        setEmail(user.email)
-        setSex(user.gender)
-        setHist(user.id)
+        user.name && setName(user.name)
+        user.registerDate && setRegisterDate(user.registerDate.toDate())
+        user.lastConnection && setLastConnection(user.lastConnection.toDate())
+        user.surname && setSurname(user.surname)
+        user.email && setEmail(user.email)
+        user.gender && setSex(user.gender)
+        user.id ? setHist(user.id):setHist('')
 
-        setSmoke(user.smoke.smoke)
+        user.smoke.smoke && setSmoke(user.smoke.smoke)
 
-        setDiab(user.dbt.dbt)
+        user.dbt.dbt && setDiab(user.dbt.dbt)
 
-        setMedAcv(user.med.acv)
-        setMedEpoc(user.med.epoc)
-        setMedHip(user.med.hip)
-        setMedInf(user.med.inf)
+        user.med.acv && setMedAcv(user.med.acv)
+        user.med.epoc && setMedEpoc(user.med.epoc)
+        user.med.hip && setMedHip(user.med.hip)
+        user.med.inf && setMedInf(user.med.inf)
 
+        user.cancer ? setPrimTumor(user.cancer):setPrimTumor("Mama")
+        user.histogoly && setHistology(user.histology)
+        user.biomarkers ? setBiomarkers(user.biomarkers):setBiomarkers([{bio: '',evaluation: 'No evaluada'}])
+        user.PDL1 && setPdl(user.PDL1)
+        user.tumorTreatment && setTumorTreatment(user.tumorTreatment)
+        user.periTreatmen && setPeriTreatment(user.periTreatment)
+        user.T && setT(user.T)
+        user.N && setN(user.N)
+        user.M && setM(user.M)
+        user.estadio && setEstadio(user.estadio)
+        user.recaidas? setRecaidas(user.recaidas):setRecaidas([{date: null,local: 'Local'}])
+        setStatus("Activo")
     },[user])
 
     useEffect(()=>{
@@ -82,7 +128,6 @@ export const AcceptForm = ({user,handleAcept}) => {
     },[user])
 
     useEffect(()=>{
-        console.log(defaultMeds,'meds')
         if(smoke!==0) {
             setSmokeEnabled(true)
             setSmokeQuant(user.smoke.qnt)
@@ -105,6 +150,7 @@ export const AcceptForm = ({user,handleAcept}) => {
         }
     },[diab])
 
+
     const handleSmokeChanger =(smoke)=>{
         smoke==="No" && setSmoke(0)
         smoke==="Fumo" && setSmoke(1)
@@ -126,37 +172,33 @@ export const AcceptForm = ({user,handleAcept}) => {
         pdl>100 ? setPdl(100):pdl<0 ? setPdl(0):setPdl(pdl)
     }
     function otherformatedDate (date) {
-        var dateComponent = moment(date).format('DD-MM-YYYY');
+        var dateComponent = moment(date).format('DD/MM/YYYY');
         return dateComponent
     }
 
-    const handleCounter =()=>{
-        setCounter([...counter,{bio: '',evaluation: 'No evaluada'}])
+    const handlebiomarkers =()=>{
+        if (biomarkers[biomarkers.length-1].bio){
+            setBiomarkers([...biomarkers,{bio: '',evaluation: 'No evaluada'}])
+        }
     }
 
     const handleEliminateBiom =(index)=>{
-        setCounter(counter.filter(x=>x.bio!==index))
+        setBiomarkers(biomarkers.filter(x=>x.bio!==index))
     }
 
 
     const handleAddBio = (bio,evaluation,index) => {
-        counter[index]={bio: bio,evaluation: evaluation}
+        biomarkers[index]={bio: bio,evaluation: evaluation}
     }
 
     const handleRecaida = () =>{
-        setRecaidas([...recaidas,{date: null,local: 'Local'}])
+        if (recaidas[recaidas.length-1].date){
+            setRecaidas([...recaidas,{date: null,local: 'Local'}])
+        }
     }
 
     const handleDateChange = (Adate,Alocal,index) => {
-        recaidas[index]={date: Adate,local: Alocal}
-    }
-
-    const verifyInformation=()=>{
-        setRecaidas(recaidas.filter(x=>x.date!==null))
-        setCounter(counter.filter(x=>x.bio!==''))
-        setEnableErrors(true)
-        window.scroll(0,0)
-        console.log(medInf,medAcv,medHip,medEpoc,'epo')
+       recaidas[index]={date: Adate,local: Alocal}
     }
 
     const handleInputChange = (newValue) => {
@@ -171,8 +213,74 @@ export const AcceptForm = ({user,handleAcept}) => {
             item.label=="ACV" && setMedAcv(true)
             
         })
-        
     };
+
+    const verifyInformation=()=>{
+        if (!name || !surname || !email || !hist || !surname  || !pdl || !t || !n || !m || !estadio){
+            setEnableErrors(true) 
+        } else {
+            pushToDatabase()
+        }
+        window.scroll(0,0)
+    }
+
+    const pushToDatabase = () => {
+        let obj = {
+            cancer: primTumor,
+            dbt: {
+                dbt: diab,
+                med: diabMed
+            },
+            email: email,
+            gender: sex,
+            id: hist,
+            med: {
+                acv: medAcv,
+                epoc: medEpoc,
+                hip: medHip,
+                inf: medInf,
+            },
+            name: name,
+            smoke: {
+                smoke: smoke,
+                qnt: smokeQuant,
+                time: smokeTime
+            },
+            histology: histology,
+            PDL1: pdl,
+            tumorTreatment: tumorTreatment,
+            periTreatment: periTreatment,
+            T: t,
+            N: n,
+            M: m,
+            estadio: estadio,
+            status: status
+        }
+        if (biomarkers.filter(x=>x.bio!=='').length>0){
+            obj={...obj,biomarkers: biomarkers.filter(x=>x.bio!=='')}
+        }
+        console.log(recaidas,'obj')
+        if (recaidas.filter(x=>x.date!==null).length>0){
+            obj={...obj,recaidas: recaidas.filter(x=>x.date!==null)}
+        }
+        const db = getFirestore()
+        db.doc('users/' + id).update({
+            ...obj
+        });
+
+        finish(user)
+    }
+
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
+
+
+    const handleElimUser = () =>{
+        eliminateUser(user)
+    }
+
 
     return (
         <>
@@ -181,18 +289,28 @@ export const AcceptForm = ({user,handleAcept}) => {
             <div className="form-container" style={{marginBottom:"40px"}}>
                 <div className="af-input-line">
                     <div className="af-input-cont flex50">
+                        <p className="af-input-text">Fecha de registro</p>
+                        <input value={otherformatedDate(registerDate)} disabled={true} className={`af-input`}/>
+                    </div>
+                    <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
+                        <p className="af-input-text">Fecha de ultima conexion</p>
+                        <input value={otherformatedDate(lastConnection)} disabled={true} className={`af-input`}/>
+                    </div>
+                </div>
+                <div className="af-input-line">
+                    <div className="af-input-cont flex50">
                         <p className="af-input-text">Nombre</p>
-                        <input value={name} onChange={event=>setName(event.target.value)} className={`af-input ${(enableErrors && name==="")}`}/>
+                        <input value={name} onChange={event=>setName(event.target.value)} className={`af-input`}/>
                     </div>
                     <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
                         <p className="af-input-text">Apellido</p>
-                        <input value={surname} onChange={event=>setSurname(event.target.value)}  className={`af-input ${(enableErrors && surname==="")}`}/>
+                        <input value={surname} onChange={event=>setSurname(event.target.value)}  className={`af-input ${(enableErrors && !surname)}`}/>
                     </div>
                 </div>
                 <div className="af-input-line">
                     <div className="af-input-cont">
                         <p className="af-input-text">Email</p>
-                        <input type="email" value={email} onChange={event=>setEmail(event.target.value)}  className={`af-input ${(enableErrors && email==="")}`}/>
+                        <input type="email" value={email} onChange={event=>setEmail(event.target.value)}  className={`af-input ${(enableErrors && !email)}`}/>
                     </div>
                 </div>
 
@@ -209,7 +327,7 @@ export const AcceptForm = ({user,handleAcept}) => {
                     </div>
                     <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
                         <p className="af-input-text">Numero del historial médico</p>
-                        <input type='number' value={hist} onChange={event=>setHist(event.target.value)} className={`af-input ${(enableErrors && hist==="")}`}/>
+                        <input type='number' value={hist} onChange={event=>setHist(event.target.value)} className={`af-input ${(enableErrors && !hist)}`}/>
                     </div>
                 </div>
             </div>
@@ -231,11 +349,11 @@ export const AcceptForm = ({user,handleAcept}) => {
                 <div className="af-input-line">
                     <div className="af-input-cont flex50">
                         <p className="af-input-text">Cantidad por día</p>
-                        <input placeholder={!smokeEnabled ? "No aplica":"Ingrese cantidad"} value={smokeQuant} onChange={event=>setSmokeQuant(event.target.value)} disabled={!smokeEnabled} className={`af-input ${(enableErrors && smokeQuant==="" && smokeEnabled)}`}/>
+                        <input placeholder={!smokeEnabled ? "No aplica":"Ingrese cantidad"} value={smokeQuant} onChange={event=>setSmokeQuant(event.target.value)} disabled={!smokeEnabled} className={`af-input ${(enableErrors && !smokeQuant && smokeEnabled)}`}/>
                     </div>
                     <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
                         <p className="af-input-text">Tiempo fumado en años</p>
-                        <input  placeholder={!smokeEnabled ? "No aplica":"Ingrese tiempo"} value={smokeTime} onChange={event=>setSmokeTime(event.target.value)} disabled={!smokeEnabled} className={`af-input ${(enableErrors && smokeTime==="" && smokeEnabled)}`}/>
+                        <input  placeholder={!smokeEnabled ? "No aplica":"Ingrese tiempo"} value={smokeTime} onChange={event=>setSmokeTime(event.target.value)} disabled={!smokeEnabled} className={`af-input ${(enableErrors && !smokeTime && smokeEnabled)}`}/>
                     </div>
                 </div>
 
@@ -271,8 +389,9 @@ export const AcceptForm = ({user,handleAcept}) => {
                         <p className="af-input-title">Otros</p>
                         <p className="af-input-text">Otros factores de riesgo</p>
                             <Select id="standard-select"
+                                placeholder= "Ninguno"
                                 closeMenuOnSelect={false}
-                                components={animatedComponents}
+                                components={{animatedComponents,DropdownIndicator}}
                                 defaultValue={defOptions}
                                 isMulti
                                 options={theOptions}
@@ -284,17 +403,19 @@ export const AcceptForm = ({user,handleAcept}) => {
                 <div className="af-input-line" >
                     <div className="af-input-cont flex50" >
                         <p className="af-input-text">Tumor Primario</p>
-                        <div className="select">
-                            <select value={primTumor} onChange={e=>setPrimTumor(e.target.value)} id="standard-select">
-                                <option value="Si">Si</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
+                        {(cancerList.length>0) &&
+                            <CreatableSelect id="standard-select"
+                                defaultValue={user.cancer ? {value: user.cancer,label: user.cancer}:{value: "Mama",label: "Mama"}}
+                                closeMenuOnSelect={true}
+                                components={{animatedComponents,DropdownIndicator}}
+                                options={cancerList}
+                                onChange={e=>setPrimTumor(e.value)} 
+                        />}
                     </div>
                     <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
                         <p className="af-input-text">Histología</p>
                         <div className="select">
-                            <select value={histology} onChange={e=>SetHistology(e.target.value)}  id="standard-select">
+                            <select  value={histology} onChange={e=>setHistology(e.target.value)}  id="standard-select">
                                 <option value="Option 1">Option 1</option>
                                 <option value="Option 2">Option 2</option>
                                 <option value="Option 3">Option 3</option>
@@ -303,17 +424,17 @@ export const AcceptForm = ({user,handleAcept}) => {
                         </div>
                     </div>
                 </div>
-                {counter.map((item,index)=><Biom array={counter} handleElimIndex={handleEliminateBiom} handleAddBio={handleAddBio} propbio={item.bio} propeval={item.evaluation} index={index}/>)}
+                {biomarkers.map((item,index)=><Biom array={biomarkers} handleElimIndex={handleEliminateBiom} handleAddBio={handleAddBio} propbio={item.bio} propeval={item.evaluation} index={index}/>)}
 
-                <div onClick={handleCounter} className="ad-new-bio">
+                <div onClick={handlebiomarkers} className="ad-new-bio">
                     <p className="ad-new-bio-p">Añadir nuevo biomarcador</p>
                 </div>
 
                 <div className="af-input-line" >
                     <div className="af-input-cont">
                         <p className="af-input-text">Expresiones del PDL1</p>
-                            <div className={`af-input theper ${(enableErrors && pdl==="")}`}>
-                                <input min='0' max='100' type="number" value={pdl} onChange={e=>handleSetPdl(e.target.value)} className={`af-input-per`} placeHolder="Introduzca un numero del 1 al 100"/>
+                            <div className={`af-input theper ${(enableErrors && !pdl)}`}>
+                                <input min='0' max='100' type="number" value={pdl} onChange={e=>handleSetPdl(e.target.value)} className={`af-input-per`} placeholder="Introduzca un numero del 1 al 100"/>
                                 <p className="af-input-text">%</p>
                             </div>
                     </div>
@@ -332,7 +453,7 @@ export const AcceptForm = ({user,handleAcept}) => {
                     <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
                         <p className="af-input-text">Tratamiento perioperatorio</p>
                         <div className="select">
-                            <select id="standard-select">
+                            <select   value={periTreatment} onChange={e=>setPeriTreatment(e.target.value)} id="standard-select">
                                 <option value="Option 1">Option 1</option>
                                 <option value="Option 2">Option 2</option>
                                 <option value="Option 3">Option 3</option>
@@ -344,19 +465,19 @@ export const AcceptForm = ({user,handleAcept}) => {
                 <div className="af-input-line">
                     <div style={{flex: '0.2 1'}} className="af-input-cont flex50" >
                         <p style={{marginLeft: '7px'}} className="af-input-text">T</p>
-                        <input value={t} onChange={e=>setT(e.target.value)} className={`af-input ${(enableErrors && t==="")}`}/>
+                        <input value={t} onChange={e=>setT(e.target.value)} className={`af-input ${(enableErrors && !t)}`}/>
                     </div>
                     <div style={{flex: '0.2 1',marginLeft: '10px'}} className="af-input-cont flex50" >
                         <p style={{marginLeft: '7px'}} className="af-input-text">N</p>
-                        <input value={n} onChange={e=>setN(e.target.value)} className={`af-input ${(enableErrors && n==="")}`}/>
+                        <input value={n} onChange={e=>setN(e.target.value)} className={`af-input ${(enableErrors && !n)}`}/>
                     </div>
                     <div style={{flex: '0.2 1',marginLeft: '10px'}} className="af-input-cont flex50" >
                         <p style={{marginLeft: '7px'}} className="af-input-text">M</p>
-                        <input value={m} onChange={e=>setM(e.target.value)} className={`af-input ${(enableErrors && m==="")}`}/>
+                        <input value={m} onChange={e=>setM(e.target.value)} className={`af-input ${(enableErrors && !m)}`}/>
                     </div>
                     <div style={{flex: '0.4 1',marginLeft: '10px'}} className="af-input-cont flex50" >
                         <p className="af-input-text">Estadio</p>
-                        <input value={estadio} onChange={e=>setEstadio(e.target.value)} className={`af-input ${(enableErrors && estadio==="")}`}/>
+                        <input value={estadio} onChange={e=>setEstadio(e.target.value)} className={`af-input ${(enableErrors && !estadio)}`}/>
                     </div>
                 </div>
             </div>
@@ -370,10 +491,35 @@ export const AcceptForm = ({user,handleAcept}) => {
                         <p className="ad-new-bio-p">Añadir nueva recaida</p>
                 </div>
             </div>
+            <TopForm icon={faNotesMedical} name="Estado"/>
+            <div className="form-container" style={{marginBottom:"40px"}}>
+                <div className="af-input-cont flex50" style={{marginTop: '30px'}}>
+                    <p className="af-input-text">Estado</p>
+                    <div className="select">
+                        <select value={status} onChange={e=>setStatus(e.target.value)} id="standard-select">
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                            <option value="Muerto">Muerto</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+
         </div>
-        <div className="div-final-btn-acceptform">
-            <button onClick={verifyInformation} className="final-btn-acceptform">Guardar</button>
+        <div className={`div-final-btn-acceptform ${accept}`}>
+            {accept && <button onClick={e=>setOpenModal(true)} className="final-btn-acceptform elim">Eliminar</button>}
+            <button onClick={verifyInformation} className="final-btn-acceptform guard" >{accept ? "Confirmar usuario":"Guardar"}</button>
         </div>
+
+        <ModalPopOverEliminate
+            id={user.id}
+            name={user.name}
+            surname={user.surname}
+            displayModal={openModal}
+            closeModal={handleCloseModal}
+            handleEliminate={handleElimUser}
+        />
         </>
     )
 }

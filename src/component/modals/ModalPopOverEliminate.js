@@ -18,10 +18,6 @@ const ModalPopOverEliminate = (props) => {
         props.closeModal()
      }
 
-     function handleIf(){
-         title===props.id ? idCorrect():idNotCorrect()
-     }
-
      const idNotCorrect = () => {
          setErrorMessage(true)
      }
@@ -52,19 +48,9 @@ const ModalPopOverEliminate = (props) => {
                 <p>Nombre: {props.surname}, {props.name}</p>
                 <p>Numero del paciente: {props.id}</p>
             </div> 
-            <div className="modal-add-input-cont">
-               <input className={errorMessage? "numero-del-paciente error" :"numero-del-paciente"}
-                  onChange={event => setTitle(event.target.value)}
-                  value={title}
-                  type="text"
-                  autoComplete="off"
-                  id="idDelPaciente"
-                  placeholder="Introduzca el numero del paciente para confirmar"
-                  variant="outlined"/>
-            </div>
             <p className="modal-add-input-cont-error">{errorMessage ? "Id incorrecto":""}</p>
             <div className="div-btn-eliminate">
-               <button onClick={handleIf} className="agregar-eliminate-button">ELIMINAR</button>   
+               <button onClick={idCorrect} className="agregar-eliminate-button">CONFIRMAR</button>   
             </div>
             
          </div>
