@@ -149,9 +149,7 @@
 }
 
 .emote-size{
-    height: 25px;
-    width: 35px !important;
-    padding: 5px;
+   font-size: 1.3rem;
 }
 .value-regdiario{
     width: 150px;

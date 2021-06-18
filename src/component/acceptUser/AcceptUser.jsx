@@ -34,6 +34,7 @@ const AcceptUser = ({medicData}) => {
         itemCollection.onSnapshot((querySnapshot) => {
             
             let userlista = querySnapshot.docs.map(doc => {
+                console.log('recs',doc.data().recaidas)
                     return(
                         {docid:doc.id,...doc.data()}
                         )
@@ -49,6 +50,7 @@ const AcceptUser = ({medicData}) => {
                 // a must be equal to b
                 return 0;
                 })
+                
             setUserList(userlista.filter(item=>item.status==="Pendiente"))
             startTimer()
             }
@@ -120,7 +122,7 @@ const AcceptUser = ({medicData}) => {
                     </>
                     :
                     <>
-                        {userList.length>0 && userList.map((item,index)=>(<AcceptItemUser index={index} otherIndex={otherIndex} handleClick={handleChangeUser} user={item}/>))}
+                        {userList.length>0 ? userList.map((item,index)=>(<AcceptItemUser index={index} otherIndex={otherIndex} handleClick={handleChangeUser} user={item}/>)):null}
                     </>}
                 </div>
             </div>
@@ -131,7 +133,11 @@ const AcceptUser = ({medicData}) => {
                     </>
                 :
                 <>
-                    {user && <AcceptForm eliminateUser={eliminateUser} finish={handleFinish} id={user.docid} accept={true} user={user}/>}
+                    {user ? <AcceptForm eliminateUser={eliminateUser} finish={handleFinish} id={user.docid} accept={true} user={user}/>
+                        :<div style={{width: '100%'}} className="sintoms-img-error-cont">
+                        <img className="sintoms-img-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                        <p>No se encontraron pacientes</p>
+                        </div>}
                 </>}
             </div>
             <MySnackbar

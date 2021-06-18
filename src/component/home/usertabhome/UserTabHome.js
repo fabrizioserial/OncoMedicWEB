@@ -140,7 +140,7 @@ export const UserTabHome=({margin_left,userlist,images,handleEl,handleLoad})=> {
                     }}>
                     <MenuItem onClick={handleCloseAndNavigate}>VER PERFIL</MenuItem>
                     <MenuItem onClick={handleSympts}>VER SINTOMAS</MenuItem>
-                    <MenuItem onClick={handleDailyReg}>VER REGISTRO DIARIO</MenuItem>
+                    <MenuItem onClick={handleDailyReg}>VER REGISTROS DIARIO</MenuItem>
                     <MenuItem onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>
                 </Menu>
                 <ModalPopOverEliminate

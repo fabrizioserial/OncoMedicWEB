@@ -3,17 +3,17 @@ import MyDatePicker from '../../../datePicker/MyDatePicker'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
-export const Recaida = ({customDate,customLocal,index,handleChangeDate}) => {
+export const Recaida = ({customDate,customLocal,index,handleChangeDate,array,handleElimIndex}) => {
     const [date,setDate] = useState('')
-    const [local,setLocal] = useState('Local')
+    const [local,setLocal] = useState('')
 
     useEffect(()=>{
-        customDate && setDate(new Date(customDate.seconds * 1000 + customDate.nanoseconds/1000000))
+        (customDate && customDate.seconds) ? setDate(new Date(customDate.seconds * 1000 + customDate.nanoseconds/1000000)):setDate(customDate)
      },[customDate])
  
 
     useEffect(()=>{
-        setLocal(customLocal)
+        customLocal && setLocal(customLocal)
     },[customLocal])
 
     
@@ -47,7 +47,12 @@ export const Recaida = ({customDate,customLocal,index,handleChangeDate}) => {
                             </select>
                         </div>
                     </div>
-
+                    {array.length>1 ?
+                    <div onClick={()=>handleElimIndex(date,local)} style={{flex: '0 1',marginLeft: '20px',cursor: 'pointer'}} className="af-input-cont flex50" >
+                            <div className="af-input theper">
+                                <FontAwesomeIcon color='red' icon={faTrash}/>
+                            </div>
+                    </div>:null} 
             </div>
     )
 }
