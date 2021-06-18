@@ -196,11 +196,7 @@ export const CompleteProfile = () => {
                         )
                     }
                 )
-            setSympInfo(sympList)
-
-
-
-            
+            setSympInfo(sympList)    
         })
 
         }
@@ -227,6 +223,7 @@ export const CompleteProfile = () => {
               name: 'Dolor',
               data: pain.map(item=>item.y)
             }])
+
         setOptions({
               chart: {
                 height: 460,
@@ -288,6 +285,52 @@ export const CompleteProfile = () => {
                   format: 'dd/MM/yy'
                 },
               },
+              legend: {
+                show: true,
+                showForSingleSeries: false,
+                showForNullSeries: true,
+                showForZeroSeries: true,
+                position: 'bottom',
+                horizontalAlign: 'center', 
+                floating: false,
+                fontSize: '14px',
+                fontFamily: 'Helvetica, Arial',
+                fontWeight: 400,
+                formatter: undefined,
+                inverseOrder: false,
+                width: undefined,
+                height: undefined,
+                tooltipHoverFormatter: undefined,
+                customLegendItems: [],
+                offsetX: 0,
+                offsetY: 0,
+                labels: {
+                    colors: undefined,
+                    useSeriesColors: false
+                },
+                markers: {
+                    width: 12,
+                    height: 12,
+                    strokeWidth: 0,
+                    strokeColor: '#fff',
+                    fillColors: ['#008FFB','#9357F7'],
+                    radius: 12,
+                    customHTML: undefined,
+                    onClick: undefined,
+                    offsetX: 0,
+                    offsetY: 0
+                },
+                itemMargin: {
+                    horizontal: 5,
+                    vertical: 0
+                },
+                onItemClick: {
+                    toggleDataSeries: true
+                },
+                onItemHover: {
+                    highlightDataSeries: true
+                },
+            }
             })
     },[mood,pain])
  
