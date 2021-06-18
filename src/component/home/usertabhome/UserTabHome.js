@@ -92,7 +92,7 @@ export const UserTabHome=({margin_left,userlist,images,handleEl,handleLoad})=> {
   }
 
   const handleDailyReg = ()=>{
-    history.push(`/seeAllDiaryRegs/${user.id}`)
+    history.push(`/seeAllDiaryRegs/${user.docid}`)
   }
 
   const handleOpenDiario = () => {
