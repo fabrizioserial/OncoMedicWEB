@@ -417,7 +417,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                     <div className="af-input-cont flex50" >
                         <p className="af-input-text">Tumor Primario</p>
                         {(cancerList.length>0) &&
-                            <CreatableSelect id="standard-select"
+                            <Select id="standard-select"
                                 defaultValue={user.cancer ? {value: user.cancer,label: user.cancer}:{value: "Mama",label: "Mama"}}
                                 closeMenuOnSelect={true}
                                 components={{animatedComponents,DropdownIndicator}}
