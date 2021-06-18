@@ -48,7 +48,7 @@ export const Recaida = ({customDate,customLocal,index,handleChangeDate,array,han
                         </div>
                     </div>
                     {array.length>1 ?
-                    <div onClick={()=>handleElimIndex(date,local)} style={{flex: '0 1',marginLeft: '20px',cursor: 'pointer'}} className="af-input-cont flex50" >
+                    <div onClick={()=>handleElimIndex(index)} style={{flex: '0 1',marginLeft: '20px',cursor: 'pointer'}} className="af-input-cont flex50" >
                             <div className="af-input theper">
                                 <FontAwesomeIcon color='red' icon={faTrash}/>
                             </div>

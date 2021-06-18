@@ -2,7 +2,7 @@
 .item-user-fila{
     margin-top: 10px !important;
     cursor: pointer;
-    background-color: #e6e6e6;
+    background-color: var(--grey2);
     border-radius: 5px;
     height: 43px;
     margin: 5px;
@@ -20,10 +20,10 @@
     outline: none;
 }
 .item-status-active{
-    color:rgb(72, 243, 95)
+    color:var(--green)
 }
 .item-status-inactive{
-    color:rgb(243, 72, 72)
+    color:var(--red)
 }
 .item-user-user-image-table{
     display: flex;
@@ -43,12 +43,12 @@
     justify-content: center;
     align-items: center;
     border-style: none;
-    background-color: #e6e6e6;
+    background-color: var(--grey2);
     border-radius: 50px;
     cursor: pointer;
 }
 .item-user-options:hover{
-    background-color: #dddddd;
+    background-color: var(--greyholder);
 }
 
 .item-user_icon_image{
@@ -60,7 +60,7 @@
 
 .usertab-fila{
     cursor: pointer;
-    background-color: #e6e6e6;
+    background-color: var(--grey2);
     border-radius: 5px;
     height: 40px;
     margin: 5px;
@@ -93,7 +93,7 @@
     width: 100%;
     margin-top: 10px !important;
     cursor: pointer;
-    background-color: #e6e6e6;
+    background-color: var(--grey2);
     border-radius: 5px;
     height: 52px;
     margin: 5px;
@@ -110,7 +110,7 @@
 
 .estado-usertab-fila{
     cursor: pointer;
-    background-color: #e6e6e6;
+    background-color: var(--grey2);
     border-radius: 5px;
     height: 34px;
     margin: 5px;
@@ -122,7 +122,7 @@
 /* symptoms */
 .symptoms-usertab-fila{
     cursor: pointer;
-    background-color: #e6e6e6;
+    background-color: var(--grey2);
     border-radius: 5px;
     height: 43px;
     margin: 5px;
@@ -167,7 +167,7 @@
     margin-top: 0;
     margin-bottom: 0;
     margin-left: 5%;
-    background-color: #d1d1d1;
+    background-color: var(--grey3);
     padding-left: 5% ;
     padding-right: 5%;
     padding-top: 1%;

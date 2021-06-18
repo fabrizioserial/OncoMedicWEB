@@ -6,7 +6,7 @@
     width: 250px;
     height: 40px;
     border-style:none;
-    background-color: #BE99FD;
+    background-color: var(--primary-light);
     color: white;
     font-weight: 600;
     text-decoration: none;
@@ -22,7 +22,7 @@
     font-family: 'Montserrat', sans-serif;
 }
 .goBack-btn:hover{
-    background-color: #b991ff;
+    background-color: var(--primary-light);
 }
 .go-back-back a{
     text-decoration: none;

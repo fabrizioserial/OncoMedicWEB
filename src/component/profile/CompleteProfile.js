@@ -354,7 +354,7 @@ export const CompleteProfile = () => {
                 <ProfileTab id={id} handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
                {graph &&  <div className="profile-chart-cont">
                     {
-                     serie && <ReactApexChart options={options} series={serie} type="area" width={1100} height={450} />
+                     serie && <ReactApexChart options={options} series={serie} type="area" height={450} />
                      }
                 </div>}
                 <div className="two-squares-complete-profile">

@@ -6,7 +6,7 @@
 .refresh-btn{
     height: 40px;
     border-style:none;
-    background-color: #BE99FD;
+    background-color: var(--primary-light);
     color: white;
     font-weight: 600;
     text-decoration: none;
@@ -23,7 +23,7 @@
 
 }
 .refresh-btn:hover{
-    background-color: #b991ff;
+    background-color: var(--primary-light);
 }
 .button-refresh-icon{
     margin-right: 5px;

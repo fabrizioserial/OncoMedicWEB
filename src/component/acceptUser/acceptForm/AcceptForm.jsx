@@ -183,7 +183,8 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     }
 
     const handleEliminateBiom =(index)=>{
-        setBiomarkers(biomarkers.filter(x=>x.bio!==index))
+        const value = biomarkers.splice(index,1)
+        setBiomarkers(biomarkers.filter(x=>x!=value))
     }
 
     const handleAddBio = (bio,evaluation,index) => {
@@ -201,8 +202,9 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     }
 
 
-    const handleEliminateRec =(aDate,loc)=>{
-        setRecaidas(recaidas.filter(x=>x.date!=aDate))
+    const handleEliminateRec =(index)=>{
+        const value = recaidas.splice(index,1)
+        setRecaidas(recaidas.filter(x=>x!=value))
     }
 
 

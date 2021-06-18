@@ -1,5 +1,5 @@
 .filter-breadcrumb-background {
-    background-color: #BE99FD;
+    background-color: var(--primary-light);
     border-radius: 2vw;
     height: 43px;
     margin-top: 0;
@@ -31,5 +31,5 @@
     background-color: white;
     border-radius: 100%;
     cursor: pointer;
-    color: #BE99FD;
+    color: var(--primary-light);
 }

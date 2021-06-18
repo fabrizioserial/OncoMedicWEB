@@ -1,6 +1,6 @@
 .tabs-fila{
     cursor: pointer;
-    background-color: #e6e6e6;
+    background-color: var(--grey2);
     border-radius: 5px;
     height: 40px;
     margin: 5px;
@@ -15,7 +15,7 @@
     max-height: 353px;
     padding-left: 2%;
     padding-right: 4%;
-    background-color: #e6e6e6;
+    background-color: var(--grey2);
     border-radius: 5px;
     padding-top: 1%;
     padding-bottom: 1%;

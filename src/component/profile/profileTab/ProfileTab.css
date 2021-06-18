@@ -2,7 +2,7 @@
     padding: 15px;
     height: fit-content;
     text-align: start;
-    background-color: #F4F4F4;
+    background-color: var(--grey1);
     border-right: 30px solid var(--primary);
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -13,7 +13,7 @@
 .check-log-out{
     padding: 0 !important;
     min-width: 10px!important;
-    color: green;
+    color: var(--green);
 }
 
 .div-complete-profile {
@@ -41,19 +41,19 @@
 
 .id-complete-profile {
     font-size: 12px;
-    color: #3f3f3f;
+    color: var(--greydark);
     border: none;
 }
 .id-complete-profile-items{
     margin-top: -5px;
     font-size: 12px;
-    color: #3f3f3f;
+    color: var(--greydark);
     border: none;
 }
 .id-complete-profile-less{
     margin-top: -5px;
     font-size: 12px;
-    color: #3f3f3f;
+    color: var(--greydark);
     border: none;
     cursor: pointer;
 
@@ -61,13 +61,13 @@
 .id-complete-profile-more{
     margin-top: 45px;
     font-size: 12px;
-    color: #3f3f3f;
+    color: var(--greydark);
     border: none;
     cursor: pointer;
 
 }
 .id-complete-profile:disabled{
-    background-color: #F4F4F4;
+    background-color: var(--grey1);
 }
 
 .name-complete-profile {
@@ -96,7 +96,7 @@
     margin-bottom: 10px;
 }
 .name-complete-profile:disabled{
-    background-color: #F4F4F4;
+    background-color: var(--grey1);
 }
 .label-cont-input{
     display: flex;

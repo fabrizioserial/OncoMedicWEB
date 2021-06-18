@@ -50,7 +50,7 @@
 .agregar-eliminate-button{
     cursor: pointer;
     width: 87%;
-    background-color:#F63A39;
+    background-color:var(--red);
     height: 50px;
     margin-top: 30px;
     color: white;
@@ -62,7 +62,7 @@
     margin-bottom: 10px;
 }
 .modalopoovereliminate-error{
-    color: red;
+    color: var(--red);
     margin-top: 20px;
     display: flex;
     align-items: center;

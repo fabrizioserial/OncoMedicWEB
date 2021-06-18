@@ -4,7 +4,7 @@
 }
 
 .MuiOutlinedInput-notchedOutline2{
-    border-color: red !important;
+    border-color: var(--red) !important;
 }
 .accept-patient{
     margin-left: 0;
