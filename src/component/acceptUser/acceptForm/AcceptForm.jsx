@@ -57,7 +57,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     //Medic
     const [pdl,setPdl] = useState('')  
     const[biomarkers,setBiomarkers] = useState([{bio: '',evaluation: 'No evaluada'}])
-    const[recaidas,setRecaidas] = useState([{date: '',local: 'Local'}])
+    const[recaidas,setRecaidas] = useState([{date: '',local: 'L'}])
     const [t,setT] = useState('')  
     const [n,setN] = useState('')  
     const [m,setM] = useState('')  
@@ -116,7 +116,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
         user.N && setN(user.N)
         user.M && setM(user.M)
         user.estadio && setEstadio(user.estadio)
-        user.recaidas? setRecaidas(user.recaidas):setRecaidas([{date: null,local: 'Local'}])
+        user.recaidas? setRecaidas(user.recaidas):setRecaidas([{date: null,local: 'L'}])
         setStatus("Activo")
     },[user])
 
@@ -186,20 +186,29 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
         setBiomarkers(biomarkers.filter(x=>x.bio!==index))
     }
 
-
     const handleAddBio = (bio,evaluation,index) => {
         biomarkers[index]={bio: bio,evaluation: evaluation}
     }
 
     const handleRecaida = () =>{
         if (recaidas[recaidas.length-1].date){
-            setRecaidas([...recaidas,{date: null,local: 'Local'}])
+            setRecaidas([...recaidas,{date: null,local: 'L'}])
         }
     }
 
     const handleDateChange = (Adate,Alocal,index) => {
        recaidas[index]={date: Adate,local: Alocal}
     }
+
+
+    const handleEliminateRec =(aDate,loc)=>{
+        setRecaidas(recaidas.filter(x=>x.date!=aDate))
+    }
+
+
+    useEffect(()=>{
+        console.log(recaidas,'rec')
+    },[recaidas])
 
     const handleInputChange = (newValue) => {
         setMedInf(false)
@@ -216,6 +225,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     };
 
     const verifyInformation=()=>{
+        console.log(recaidas,'rec')
         if (!name || !surname || !email || !hist || !surname  || !pdl || !t || !n || !m || !estadio){
             setEnableErrors(true) 
         } else {
@@ -486,7 +496,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
             <TopForm icon={faStarOfLife} name="Recaída"/>
             <div className="form-container" style={{marginBottom:"40px"}}>
                 {recaidas.map((item,index)=>
-                    <Recaida handleChangeDate={handleDateChange} customDate={item.date} customLocal={item.local} index={index} />
+                    <Recaida handleElimIndex={handleEliminateRec} array={recaidas} handleChangeDate={handleDateChange} customDate={item.date} customLocal={item.local} index={index} />
                 )}
                 <div onClick={handleRecaida} className="ad-new-bio">
                         <p className="ad-new-bio-p">Añadir nueva recaida</p>
