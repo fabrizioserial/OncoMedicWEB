@@ -4,6 +4,8 @@ import 'fontsource-roboto';
 import {getFirestore} from '../../firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faEye,faEyeSlash,faTimes,faCheck } from '@fortawesome/free-solid-svg-icons'
+import * as bcrypt from 'bcryptjs'
+
 
 
 const ModalPopOverNewMedic = (props) => {
@@ -64,18 +66,21 @@ const ModalPopOverNewMedic = (props) => {
 
          promises.then(function(result){
             if(user == null){
-               db.collection("medic").add({
+               let hashPass = bcrypt.hash(password,8).then((response)=>{
+                  db.collection("medic").add({
                   name:name,
                   email:email,
-                  password:(password),
-               }).then(()=>{
-                  setDisabled("")  
-               }).catch((e)=>{
-                  setDisabled("")  
-               });
-               resetValues();
-               props.closeModal() 
-               props.handleOpensnackBar(); 
+                  password:response
+                  }).then(()=>{
+                     setDisabled("")  
+                  }).catch((e)=>{
+                     setDisabled("")  
+                  });
+                  resetValues();
+                  props.closeModal() 
+                  props.handleOpensnackBar();  
+               })
+              
             }else{
                setUniqueEmail(true)
                setDisabled("")
