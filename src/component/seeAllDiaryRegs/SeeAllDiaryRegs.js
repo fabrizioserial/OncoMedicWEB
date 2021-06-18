@@ -10,6 +10,7 @@ import ModalPopOverSeeDiaryReg from '../modals/ModalPopOverSeeDiaryReg';
 import { ButtonGoBack } from '../seeAllUsers/ButtonGoBack'
 import { ItemUser } from '../ItemUser/ItemUser'
 import { SearchTab } from '../seeAllUsers/searchTab/SearchTab'
+import { MySnackbar } from '../mySnackBar/MySnackbar'
 
 const SeeAllDiaryRegs = ({medicData}) =>{
     const {id} = useParams()
@@ -23,6 +24,11 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     const [regunique,setUnicReg] = useState([])
     const [color,setColor] = useState('')
     const [calendar,setCalendar] = useState(true)
+    const [openSnackBar,setOpenSnackBar] = useState(false)
+    const [severity,setSeverity] = useState("")
+    const [message,setMessage] = useState("")
+    const [reTitle,setRetitle] = useState(false)
+    const [refresh,setRefresh] = useState(false)
 
 
     useEffect(()=>{
@@ -104,6 +110,49 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     }
 
 
+
+    function handleSearch(e,hash){
+        
+        if(hash.length===0) { handleRefresh()} else {
+        setRetitle(!reTitle)
+        hash.map((selected)=>{
+            console.log('tit',selected.title,showedRegList)
+            switch (selected.selected){
+                case "FECHA":
+                    return setShowedRegList(showedRegList.filter((item=>
+                        formatedDate(item.date.toDate()) >= (formatedDate(selected.dateStart))
+                        && formatedDate(item.date.toDate()) <= (formatedDate(selected.dateEnd)))));
+                case "ANIMO":
+                    return setShowedRegList(showedRegList.filter((item=>item.mood==(selected.title))));  
+                case "DOLOR":
+                    return setShowedRegList(showedRegList.filter((item=>item.sad==(selected.title)))); 
+                default:
+                    return handleWarnBar() 
+            }
+         })} 
+    }
+    const handleRefresh=()=>{
+        setShowedRegList(regList)
+    }
+
+    const handleCloseSnackBar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSnackBar(false);
+    };
+
+
+    const handleWarnBar = () => {
+        setSeverity("error")
+        setMessage("Por favor seleccione una categoria")
+        setOpenSnackBar(!openSnackBar)
+    }
+
+    const handleElCat = (name) => {
+        setShowedRegList(regList)
+    }
+
     const handleClick = (eventInfo,item) => {
         if (eventInfo!=="no") {
             setModalDate(eventInfo.event.start)
@@ -145,7 +194,7 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                     eventClick={handleClick}
                 />:
                     <div className="userall-cont-cont">
-                        <SearchTab categories={["N PACIENTE","NOMBRE","TIPO DE CANCER","ACTIVOS","INACTIVOS"]} />
+                        <SearchTab  elCAt={handleElCat} warnBar={handleWarnBar} reTitle={reTitle} refresh={refresh}  handleClick={handleSearch} categories={["FECHA","ANIMO","DOLOR"]} />
                         <div className="userall-cont-info-allUsers">
                             <table class="userall-big-table">
                                 <thead>
@@ -173,6 +222,13 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                 displayModal={openModalDiario}
                 closeModal={handleCloseDiario}
             />
+
+            <MySnackbar
+                    severity={severity}
+                    message={message}
+                    openSnackBar={openSnackBar}
+                    handleCloseSnackBar={handleCloseSnackBar}
+                />
         </>
     );
 };

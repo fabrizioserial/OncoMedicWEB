@@ -64,6 +64,7 @@ export const Login = ({setMedicUserAction}) => {
      
     }
 
+
     const setError = (type) =>{
         type === "error" ? setEComplete(true):setEInvalid(true)
     }
@@ -118,7 +119,7 @@ export const Login = ({setMedicUserAction}) => {
                 <div className="cont-login-cont-ev">
                     <div className="login-text-cont">
                         <p className="text-login-login">Log In</p>
-                        <p className="text-login-punto">.</p>
+                        <p onClick={pushToDatabase} className="text-login-punto">.</p>
                     </div>
                     <form>
                         <div>

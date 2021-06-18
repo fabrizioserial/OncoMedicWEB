@@ -165,7 +165,7 @@ const PatientSymptoms = ({medicData}) =>{
                         formatedDate(item.date.toDate()) >= (formatedDate(selected.dateStart))
                         && formatedDate(item.date.toDate()) <= (formatedDate(selected.dateEnd)))));
                 case "PACIENTE":
-                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()) || item.surname.toUpperCase().includes(selected.title.toUpperCase()))));   
                 case "SINTOMA":
                     return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.symptoms.some(el=>el.symptom.toUpperCase().includes(selected.title.toUpperCase())))));  
                 default:

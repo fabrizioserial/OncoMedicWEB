@@ -98,7 +98,7 @@ const UserTabAllUsers = ({medicData}) => {
                     setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.id.toUpperCase().includes(selected.title.toUpperCase()))));
                     return
                 case "NOMBRE":
-                    setShowedUserList(showedUserList.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
+                    setShowedUserList(showedUserList.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()) || item.surname.toUpperCase().includes(selected.title.toUpperCase()))));   
                     setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
                     return
                 case "CANCER":

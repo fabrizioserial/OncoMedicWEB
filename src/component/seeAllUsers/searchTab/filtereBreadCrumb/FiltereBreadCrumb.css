@@ -1,7 +1,7 @@
 .filter-breadcrumb-background {
     background-color: #BE99FD;
     border-radius: 2vw;
-    height: 1.5vw;
+    height: 43px;
     margin-top: 0;
     width:fit-content;
     font: 400 13.3333px Arial;
@@ -17,7 +17,7 @@
     width: fit-content;
     margin-left: 10px;
     color: white;
-    font-size: 1vw;
+    font-size: 1.2rem;
     font-weight: bold;
 }
 .filter-breadcrumb-div-cross{
@@ -25,9 +25,9 @@
     align-items: center;
     justify-content: center;
     margin-left: 1vw;
-    width: 1.5vw;
-    height: 1.5vw;
-    font-size: 1vw;
+    width: 35px;
+    height:35px;
+    font-size: 1.5rem;
     background-color: white;
     border-radius: 100%;
     cursor: pointer;

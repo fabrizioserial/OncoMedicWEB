@@ -1,0 +1,46 @@
+.accept-user-background-cont{
+    width: auto;
+    height: 100%;
+    min-height: 100vh;
+    background-color: white;
+    margin-left: 200px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: row;
+}
+
+.accept-user-left{
+    flex: 0.2;
+    width: 100%;
+}
+.accept-user-right{
+    flex: 0.8;
+    width: fit-content;
+    height: auto;
+    margin-left: 100px;
+    min-height: 50px;
+    margin-right: 50px;
+}
+.accept-user-list{
+    background-color: #F2F2F2;
+    min-height: 50px;
+    padding: 10px;
+    padding-top: 0;
+    height: 94vh;
+    overflow-y: scroll;
+    border-radius: 10px;
+    position: absolute;
+}
+.accept-user-list.fixed{
+    top: 10px;
+    position: fixed;
+}
+.accept-form{
+    background-color: #F2F2F2;
+}
+.accept-user-btn{
+    flex: 0.1;
+}

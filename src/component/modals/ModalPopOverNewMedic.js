@@ -67,7 +67,7 @@ const ModalPopOverNewMedic = (props) => {
                db.collection("medic").add({
                   name:name,
                   email:email,
-                  password:password
+                  password:(password),
                }).then(()=>{
                   setDisabled("")  
                }).catch((e)=>{

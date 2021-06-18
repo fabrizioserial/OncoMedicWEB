@@ -213,13 +213,9 @@ export const CompleteProfile = () => {
         }.bind(this),500)
     }
 
-
-
-
-
     useEffect(()=>{
-        mood.length > 0 && setGraph(true)
-        console.log("el largo es ",mood)
+        mood.length === 0 && setGraph(false)
+        console.log(mood.length)
         setSerie( [{
               name: 'Humor',
               data:  mood.map(item=>item.y)
@@ -312,7 +308,7 @@ export const CompleteProfile = () => {
                 <div className="userall-head">
                     <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
                 </div>
-                <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
+                <ProfileTab id={id} handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
                {graph &&  <div className="profile-chart-cont">
                     {
                      serie && <ReactApexChart options={options} series={serie} type="area" width={1100} height={450} />

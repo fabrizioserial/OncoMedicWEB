@@ -1,0 +1,29 @@
+.aitem-background{
+    border-radius: 10px;
+    background-color: white;
+    padding: 8px 8px 8px 15px;
+    cursor: pointer;
+    width: 16vw;
+    margin-top: 15px;
+}
+.aitem-background.true{
+    border: 2px solid var(--primary);
+}
+.aitem-border-active{
+    border-color: #BE99FD;
+    border-width: 3px;
+    border-style: solid;
+}
+.aitem-name{
+    color: #3B3B3B;
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.aitem-id{
+    color: #8A8A8A;
+    font-weight: 500;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
