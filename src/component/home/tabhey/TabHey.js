@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import '../tabhey/TabHey.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBell } from '@fortawesome/free-solid-svg-icons'
+import { faBell,faCircle } from '@fortawesome/free-solid-svg-icons'
 import Menu from '@material-ui/core/Menu';
 import { CustomMenuItem } from '../../customMenuItem/CustomMenuItem'
 import {OptionsMenu} from '../../optionsMenu/OptionsMenu';
@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 
 
-export const TabHey = ({name,userlist,handleEl,handleAc,cancerList}) => {
+export const TabHey = ({name,userlist}) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -41,7 +41,12 @@ export const TabHey = ({name,userlist,handleEl,handleAc,cancerList}) => {
                     </div>
 
                     <Link style={{color: "black"}} to="/acceptUser" className="tabhey-btn-options">
-                        <FontAwesomeIcon icon={faBell}/>
+                        <div className="tabhey-btn">
+                            <FontAwesomeIcon icon={faBell}/>
+                            {
+                               userlist && userlist.length > 0 && <div className="tabhey-circle"/>
+                            }
+                        </div>
                     </Link>
                 </div>
             </div>
