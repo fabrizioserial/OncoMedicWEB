@@ -229,12 +229,12 @@ const UserTabAllUsers = ({medicData}) => {
                     <table class="userall-big-table">
                         <thead className="userall-thead-allUsers">
                             <tr>
-                            <th style={{width: '7vw'}} scope="col"></th>
-                            <th style={{width: '14vw'}} scope="col">N PACIENTE</th>
-                            <th style={{width: '28vw'}} scope="col">NOMBRE</th>
-                            <th style={{width: '20vw'}} scope="col">TIPO DE CANCER</th>
-                            <th scope="col">ESTADO</th>
-                            <th scope="col"></th>
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '7vw'}} scope="col"></th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '14vw'}} scope="col">N PACIENTE</th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0  && !loading) && <th style={{width: '28vw'}} scope="col">NOMBRE</th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '20vw'}} scope="col">TIPO DE CANCER</th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th scope="col">ESTADO</th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th scope="col"></th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -262,7 +262,16 @@ const UserTabAllUsers = ({medicData}) => {
                             {
                                 
                                 (inactiveShowedUserList.length > 0) && inactiveShowedUserList.map((item,key) => <ItemUser image={images.find(element =>element.id===item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
-                            }</>}
+                            }
+                            {
+                                (showedUserList.length ===0 && inactiveShowedUserList.length === 0) ?
+                                    <div style={{width: '100%',marginLeft: '30vw',marginTop: '20vh'}}>
+                                        <img className="patients-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                                        <p style={{fontSize: "1.3rem",marginRight: "10vw"}}>No se encontraron pacientes</p>
+                                    </div>
+                                :null
+                            }
+                            </>}
                             <Menu className="menu-see-all-users"
                                 id={id}
                                 open={open}

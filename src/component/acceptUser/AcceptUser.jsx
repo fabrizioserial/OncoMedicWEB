@@ -105,7 +105,9 @@ const AcceptUser = ({medicData}) => {
         <div className="accept-user-background-cont">
             <div className="accept-user-left">
                 <ButtonGoBack classNameProp="accept-user-btn" text="VOLVER AL INICIO" color="purple"/>
-                <div className={sticky ? "accept-user-list":"accept-user-list fixed"}>
+                <>
+                {(user || skeleton) ?
+                <div  className={sticky ? "accept-user-list":"accept-user-list fixed"}>
                     {skeleton ? 
                     <>
                         <Skeleton style={{marginTop: '5%',borderRadius: '10px'}} width={'16vw'} height={'6.1vh'}/>
@@ -127,6 +129,8 @@ const AcceptUser = ({medicData}) => {
                         {userList.length>0 ? userList.map((item,index)=>(<AcceptItemUser index={index} otherIndex={otherIndex} handleClick={handleChangeUser} user={item}/>)):null}
                     </>}
                 </div>
+                :null}
+                </>
             </div>
             <div className="accept-user-right">
                 {skeleton ? 
@@ -136,9 +140,11 @@ const AcceptUser = ({medicData}) => {
                 :
                 <>
                     {user ? <AcceptForm eliminateUser={eliminateUser} finish={handleFinish} id={user.docid} accept={true} user={user}/>
-                        :<div style={{width: '100%'}} className="sintoms-img-error-cont">
-                        <img className="sintoms-img-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
-                        <p>No se encontraron pacientes</p>
+                        :<div className="div-patients-error" >
+                            <div style={{width: '100%',marginLeft: '10vw'}}>
+                                <img className="patients-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                                <p style={{fontSize: "1.3rem",marginRight: "10vw"}}>No se encontraron pacientes</p>
+                            </div>
                         </div>}
                 </>}
             </div>

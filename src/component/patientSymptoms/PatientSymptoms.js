@@ -112,7 +112,7 @@ const PatientSymptoms = ({medicData}) =>{
         
         Promise.all(promises).then(function(results) {
             setSymptomsList2(lista)
-            lista.length > 0 && startTimer()
+            startTimer()
         })
 
     }
@@ -202,11 +202,11 @@ const PatientSymptoms = ({medicData}) =>{
                     <table class="userall-big-table">
                         <thead className="userall-thead-sympts">
                             <tr>
-                            <th className="patientsymptoms-th-empty" scope="col"></th>
-                            <th className="patientsymptoms-th-fecha" scope="col">FECHA</th>
-                            <th className="patientsymptoms-th-patient" scope="col">PACIENTE</th>
-                            <th className="patientsymptoms-th-symptom" scope="col">SINTOMAS</th>
-                            <th className="patientsymptoms-th-grade" scope="col">RESPUESTA</th>
+                            {!(showedSymptomsList2.length ===0 && showedSymptomsList2.length === 0 && !load) && <th className="patientsymptoms-th-empty" scope="col"></th>}
+                            {!(showedSymptomsList2.length ===0 && showedSymptomsList2.length === 0 && !load) && <th className="patientsymptoms-th-fecha" scope="col">FECHA</th>}
+                            {!(showedSymptomsList2.length ===0 && showedSymptomsList2.length === 0 && !load) && <th className="patientsymptoms-th-patient" scope="col">PACIENTE</th>}
+                            {!(showedSymptomsList2.length ===0 && showedSymptomsList2.length === 0 && !load) && <th className="patientsymptoms-th-symptom" scope="col">SINTOMAS</th>}
+                            {!(showedSymptomsList2.length ===0 && showedSymptomsList2.length === 0 && !load) && <th className="patientsymptoms-th-grade" scope="col">RESPUESTA</th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -230,7 +230,16 @@ const PatientSymptoms = ({medicData}) =>{
                             <>
                             {
                                 showedSymptomsList2.length > 0 && showedSymptomsList2.map((item,key) => <ItemUser  key={key} symptom={item} desc={sympInfo.find(element => element.label===item.symptom)} handleClick={handleCloseAndOpenModal}  type="seeSymptoms"/>)
+                            }
+                            {
+                                (showedSymptomsList2.length ===0) ?
+                                    <div style={{width: '100%',marginLeft: '30vw',marginTop: '20vh'}}>
+                                        <img className="patients-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                                        <p style={{fontSize: "1.3rem",marginRight: "10vw"}}>No se encontraron sintomas</p>
+                                    </div>
+                                :null
                             }</>
+
                             }
                         </tbody>
                     </table>
