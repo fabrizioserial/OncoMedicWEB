@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import "../profileTab/ProfileTab.css"
 import {OptionsMenu}  from '../../optionsMenu/OptionsMenu'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faAddressCard } from '@fortawesome/free-solid-svg-icons'
 import {getFirestore} from '../../../firebase'
 import { Link, useHistory } from 'react-router-dom';
 import '../profileTab/ProfileTab.css'
@@ -118,7 +118,7 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate,id}) {
             <div className='tabhey-cont-options'>
                 {
                     <Link style={{color: "black"}} to={`/editUser/${id}`} className="tabhey-btn-options">
-                        <FontAwesomeIcon icon={faSearch}/>
+                        <FontAwesomeIcon icon={faAddressCard}/>
                     </Link>
                 }
             </div>
