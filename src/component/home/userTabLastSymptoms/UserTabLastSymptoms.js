@@ -39,9 +39,10 @@ export const UserTabLastSymptoms=({symptomsList})=> {
         <table class="usertab-table">
             <thead className="usertab-thead">
                 <tr>
-                <th className="ultimos-sin-th-fecha" scope="col">FECHA</th>
-                <th className="ultimos-sin-th-paciente" scope="col">NOMBRE</th>
-                <th className="ultimos-sin-th-sintoma" scope="col">SINTOMA</th>
+                  <th className="ultimos-sin-th-fecha" scope="col">FECHA</th>
+                  <th className="ultimos-sin-th-paciente" scope="col">NOMBRE</th>
+                  <th className="ultimos-sin-th-sintoma" scope="col">SINTOMA</th>
+                  <th className="ultimos-sin-th-respuesta"> </th>
 
                 </tr>
             </thead>

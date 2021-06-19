@@ -11,8 +11,11 @@
 }
 .ultimos-sin-th-sintoma{
     width: 30%;
-    padding-left: 4%;
+    padding-left: 2%;
 }
 .ultimos-sin-th-paciente{
-    padding-left: 4%;
+    padding-left: 3.5%;
+}
+.ultimos-sin-th-respuesta{
+    width: 10%;
 }
