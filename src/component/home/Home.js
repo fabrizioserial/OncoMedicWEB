@@ -163,7 +163,7 @@ const Home = ({medicData}) =>{
                         </>
                         :
                         <>
-                            <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo").slice(0,6)} images={images} margin_left={{marginRight:"50px"}}/>
+                            <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo").slice(0,6)} images={images} margin_left={{marginRight:"40px"}}/>
                             <UserTabLastSymptoms className="usersympts-second" symptomsList={symptomsList2.slice(0,6)}/>
                         </>
                         }

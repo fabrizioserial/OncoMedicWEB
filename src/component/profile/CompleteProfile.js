@@ -322,7 +322,7 @@ export const CompleteProfile = () => {
                 },
                 itemMargin: {
                     horizontal: 5,
-                    vertical: 0
+                    vertical: 15
                 },
                 onItemClick: {
                     toggleDataSeries: true
@@ -330,6 +330,9 @@ export const CompleteProfile = () => {
                 onItemHover: {
                     highlightDataSeries: true
                 },
+            },
+            chart: {
+                width: '100%'
             }
             })
     },[mood,pain])

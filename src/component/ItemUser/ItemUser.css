@@ -66,6 +66,9 @@
     margin: 5px;
     padding-top: 10px;
 }
+.usertab-fila td{
+    font-size: 15px;
+}
 .usertab-fila::after{
     margin-top: 10px;
 }
