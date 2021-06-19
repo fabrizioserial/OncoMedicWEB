@@ -62,7 +62,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     const [n,setN] = useState('')  
     const [m,setM] = useState('')  
     const [estadio,setEstadio] = useState('')  
-    const [primTumor,setPrimTumor] = useState('Mama')  
+    const [primTumor,setPrimTumor] = useState('Mama')    
     const [histology,setHistology] = useState('Option 1')  
     const [tumorTreatment,setTumorTreatment] = useState('Si')  
     const [periTreatment,setPeriTreatment] = useState('Option 1')  
@@ -97,26 +97,26 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
         user.gender && setSex(user.gender)
         user.id ? setHist(user.id):setHist('')
 
-        user.smoke.smoke && setSmoke(user.smoke.smoke)
+        user.smoke.smoke ? setSmoke(user.smoke.smoke):setSmoke("")
 
-        user.dbt.dbt && setDiab(user.dbt.dbt)
+        user.dbt.dbt ? setDiab(user.dbt.dbt):setDiab("")
 
-        user.med.acv && setMedAcv(user.med.acv)
-        user.med.epoc && setMedEpoc(user.med.epoc)
-        user.med.hip && setMedHip(user.med.hip)
-        user.med.inf && setMedInf(user.med.inf)
+        user.med.acv ? setMedAcv(user.med.acv):setMedAcv("")
+        user.med.epoc ? setMedEpoc(user.med.epoc):setMedEpoc("")
+        user.med.hip ? setMedHip(user.med.hip):setMedHip("")
+        user.med.inf ? setMedInf(user.med.inf):setMedInf("")
 
         user.cancer ? setPrimTumor(user.cancer):setPrimTumor("Mama")
-        user.histogoly && setHistology(user.histology)
+        user.histogoly ? setHistology(user.histology):setHistology("")
         user.biomarkers ? setBiomarkers(user.biomarkers):setBiomarkers([{bio: '',evaluation: 'No evaluada'}])
-        user.PDL1 && setPdl(user.PDL1)
-        user.tumorTreatment && setTumorTreatment(user.tumorTreatment)
-        user.periTreatmen && setPeriTreatment(user.periTreatment)
-        user.T && setT(user.T)
-        user.N && setN(user.N)
-        user.M && setM(user.M)
-        user.estadio && setEstadio(user.estadio)
-        user.recaidas? setRecaidas(user.recaidas):setRecaidas([{date: null,local: 'L'}])
+        user.PDL1 ? setPdl(user.PDL1):setPdl("")
+        user.tumorTreatment ? setTumorTreatment(user.tumorTreatment):setTumorTreatment("")
+        user.periTreatmen ? setPeriTreatment(user.periTreatment):setPeriTreatment("")
+        user.T ? setT(user.T):setT("")
+        user.N ? setN(user.N):setN("")
+        user.M ? setM(user.M):setM("")
+        user.estadio ? setEstadio(user.estadio):setEstadio("")
+        user.recaidas ? setRecaidas(user.recaidas):setRecaidas([{date: null,local: 'L'}])
         setStatus("Activo")
     },[user])
 
@@ -431,7 +431,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                         <p className="af-input-text">Tumor Primario</p>
                         {(cancerList.length>0) &&
                             <Select id="standard-select"
-                                defaultValue={user.cancer ? {value: user.cancer,label: user.cancer}:{value: "Mama",label: "Mama"}}
+                                defaultValue={{value: primTumor, label: primTumor }}
                                 closeMenuOnSelect={true}
                                 components={{animatedComponents,DropdownIndicator}}
                                 options={cancerList}
