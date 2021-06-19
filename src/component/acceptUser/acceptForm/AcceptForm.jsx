@@ -522,7 +522,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
         </div>
         <div className={`div-final-btn-acceptform ${accept}`}>
             {accept && <button onClick={e=>setOpenModal(true)} className="final-btn-acceptform elim">Eliminar</button>}
-            <button onClick={verifyInformation} className="final-btn-acceptform guard" >{accept ? "Confirmar usuario":"Guardar"}</button>
+            <button onClick={verifyInformation} className="final-btn-acceptform guard" >{accept ? "Confirmar":"Guardar"}</button>
         </div>
 
         <ModalPopOverEliminate

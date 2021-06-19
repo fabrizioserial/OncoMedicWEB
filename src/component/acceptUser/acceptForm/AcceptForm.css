@@ -139,19 +139,20 @@ select:focus{
     border: none;
 }
 .div-final-btn-acceptform.true{
+    margin-top: 50px;
     display: flex;
     justify-content: space-between;
 }
 .div-final-btn-acceptform.false{
+    margin-top: 50px;
     display: flex;
     justify-content: flex-end;
 }
 .final-btn-acceptform.elim{
     background-color: rgb(255, 0, 0,0.5);
-    flex: 0.5 1;
+    flex: 0.3;
 }
 .final-btn-acceptform{
-    width: 30vw;
     height: 50px;
     margin-bottom: 3vw;
     background-color: var(--primary-light);
@@ -161,6 +162,9 @@ select:focus{
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
+}
+.final-btn-acceptform.guard{
+    flex: 0.5;
 }
 .MuiFormControl-root {
     width: 100%;
