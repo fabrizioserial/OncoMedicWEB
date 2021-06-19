@@ -183,12 +183,19 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     }
 
     const handleEliminateBiom =(index)=>{
-        const value = biomarkers.splice(index,1)
-        setBiomarkers(biomarkers.filter(x=>x!=value))
+        const values = [...biomarkers];
+        values.splice(index,1)
+        setBiomarkers(values)
     }
 
-    const handleAddBio = (bio,evaluation,index) => {
-        biomarkers[index]={bio: bio,evaluation: evaluation}
+    useEffect(()=>{
+        console.log('ba2',biomarkers)
+    },[biomarkers])
+
+    const handleChangeBio = (index,event) => {
+        const values = [...biomarkers]
+        values[index][event.target.name]=event.target.value
+        setBiomarkers(values)
     }
 
     const handleRecaida = () =>{
@@ -197,8 +204,14 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
         }
     }
 
-    const handleDateChange = (Adate,Alocal,index) => {
-       recaidas[index]={date: Adate,local: Alocal}
+    const handleChangeRecaida = (index,event,bool) => {
+        const values = [...recaidas]
+        if (bool){
+            values[index]['date']=event
+        } else {
+            values[index][event.target.name]=event.target.value
+            setRecaidas(values)
+        }
     }
 
 
@@ -437,7 +450,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                         </div>
                     </div>
                 </div>
-                {biomarkers.map((item,index)=><Biom array={biomarkers} handleElimIndex={handleEliminateBiom} handleAddBio={handleAddBio} propbio={item.bio} propeval={item.evaluation} index={index}/>)}
+                {biomarkers.map((item,index)=><Biom array={biomarkers} handleElimIndex={handleEliminateBiom} handleChangeBio={handleChangeBio} propbio={item.bio} propeval={item.evaluation} index={index}/>)}
 
                 <div onClick={handlebiomarkers} className="ad-new-bio">
                     <p className="ad-new-bio-p">Añadir nuevo biomarcador</p>
@@ -498,7 +511,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
             <TopForm icon={faStarOfLife} name="Recaída"/>
             <div className="form-container" style={{marginBottom:"40px"}}>
                 {recaidas.map((item,index)=>
-                    <Recaida handleElimIndex={handleEliminateRec} array={recaidas} handleChangeDate={handleDateChange} customDate={item.date} customLocal={item.local} index={index} />
+                    <Recaida handleElimIndex={handleEliminateRec} array={recaidas} handleChangeRecaida={handleChangeRecaida} customDate={item.date} customLocal={item.local} index={index} />
                 )}
                 <div onClick={handleRecaida} className="ad-new-bio">
                         <p className="ad-new-bio-p">Añadir nueva recaida</p>

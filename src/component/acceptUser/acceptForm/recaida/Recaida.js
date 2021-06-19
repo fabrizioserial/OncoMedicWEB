@@ -3,7 +3,7 @@ import MyDatePicker from '../../../datePicker/MyDatePicker'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
-export const Recaida = ({customDate,customLocal,index,handleChangeDate,array,handleElimIndex}) => {
+export const Recaida = ({customDate,customLocal,index,handleChangeRecaida,array,handleElimIndex}) => {
     const [date,setDate] = useState('')
     const [local,setLocal] = useState('')
 
@@ -16,31 +16,21 @@ export const Recaida = ({customDate,customLocal,index,handleChangeDate,array,han
         customLocal && setLocal(customLocal)
     },[customLocal])
 
-    
-    const handleDate = (aDate) =>{
-        setDate(aDate)
+    const handleDate = (date)=>{
+        handleChangeRecaida(index,date,true)
     }
 
-
-    const handleLocal = (aLocal) =>{
-        setLocal(aLocal)
-    }
-
-
-    useEffect(()=>{
-        handleChangeDate(date,local,index)
-     },[date,local])
 
     return (
         <div className="af-input-line">
                     <div style={{flex: '0.3 1'}} className="af-input-cont flex50" >
                             <p className="af-input-text">Fecha de recaida</p>
-                            <MyDatePicker customDate={date}  classname={"accept-patient"} className="af-input" handleDate={handleDate}></MyDatePicker>
+                            <MyDatePicker name="date" customDate={date}  classname={"accept-patient"} className="af-input" handleDate={handleDate}></MyDatePicker>
                     </div>
                     <div style={{flex: '0.7 1',marginLeft: '10px'}} className="af-input-cont flex50" >
                         <p className="af-input-text">Local o distancia</p>
                         <div style={{height: '40px'}} className="select">
-                            <select value={local}  onChange={e=>handleLocal(e.target.value)}>
+                            <select name="local" value={local}  onChange={e=>handleChangeRecaida(index,e)}>
                                 <option value={'L'}>Local</option>
                                 <option value={'D'}>Distancia</option>
                                 <option value={'LyD'}>Local y Distancia</option>
