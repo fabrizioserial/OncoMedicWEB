@@ -123,12 +123,12 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                 {  
                    symptom.date &&  <td className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> 
                 }
-                {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)}><div style={{display: 'flex',alignItems: 'center'}}>
+                {symptom.symptoms && <td onClick={(e)=>handleClick(e,symptom)}><div style={{display: 'flex',alignItems: 'center',paddingRight:"4%"}}>
                                             {`${symptom.symptoms[0].symptom} `}
                                             {symptom.symptoms.length>1 && `, ${symptom.symptoms[1].symptom} `}
                                             {symptom.symptoms.length>2 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-2}</p>}
                                             </div></td>}
-                <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faClipboard}/>}</td>
+                <td style={{width: '6%',paddingRight:"3%"}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faClipboard}/>}</td>
             </tr>:
         type==="regdiarioMood"?
             <tr className="item-user-fila-regdiario">
@@ -170,12 +170,12 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
         type==="sympts"?
                 <tr onClick={(e)=>handleClick(e,symptom)}  className="usertab-fila">
                     {symptom.date &&  <td  className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
-                    <td style={{paddingLeft: "4%"}}>{symptom.surname}, {symptom.name}</td>
-                    {symptom.symptoms && <td style={{paddingLeft: "4%"}}><div style={{display: 'flex',alignItems: 'center'}}>
+                    <td style={{paddingLeft: "3%"}}>{symptom.surname}, {symptom.name}</td>
+                    {symptom.symptoms && <td style={{paddingLeft: "2%"}}><div style={{display: 'flex',alignItems: 'center'}}>
                                             {symptom.symptoms[0].symptom.length>8 ? `${symptom.symptoms[0].symptom.slice(0,8)}...`:`${symptom.symptoms[0].symptom}`}
                                             {symptom.symptoms.length>1 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-1}</p>}
                                             </div></td>}
-                    <td style={{width: '5%'}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faClipboard}/>}</td>
+                    <td style={{width: '5%',paddingLeft: "4%"}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faClipboard}/>}</td>
                 </tr>:
         type==="seeSymptoms"?
         <tr  onClick={(e)=>handleClick(e,symptom)} className="usertab-fila">

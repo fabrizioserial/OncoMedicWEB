@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import './EditUser.css'
 import { ButtonGoBack } from './../seeAllUsers/ButtonGoBack';
 import { connect } from 'react-redux'
 import {getFirestore} from '../../firebase'
@@ -8,18 +7,20 @@ import { AcceptForm } from '../acceptUser/acceptForm/AcceptForm';
 import { AcceptItemUser } from '../acceptUser/acceptItemUser/AcceptItemUser';
 import {useParams} from 'react-router-dom'
 import { Link, useHistory } from 'react-router-dom'
+import './../acceptUser/AcceptUser.css';
 
 const EditUser = ({medicData}) => {
     const {id} = useParams()
-    window.onscroll = function() {myFunction()};
     const [userNotFound,setUserNotFound] = useState(false)
     const [sticky,setSicky] = useState(true)
     const[skeleton,setSkeleton] = useState(true)
     const[otherIndex,setIndex] = useState(0)
     const [user,setUser] = useState('')
+    window.onscroll = function() {myFunction()};
 
     function myFunction() {
         if (window.pageYOffset <= 83) {
+            console.log("HOLAAAA")
             setSicky(true)
         } else {
             setSicky(false)

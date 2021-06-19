@@ -22,6 +22,8 @@ const AcceptUser = ({medicData}) => {
 
     function myFunction() {
         if (window.pageYOffset <= 83) {
+                        console.log("HOLAAAA")
+
             setSicky(true)
         } else {
             setSicky(false)
@@ -129,7 +131,7 @@ const AcceptUser = ({medicData}) => {
             <div className="accept-user-right">
                 {skeleton ? 
                     <>
-                        <Skeleton style={{borderRadius: '10px'}} width={'63vw'} height={'100%'}/>
+                        <Skeleton style={{borderRadius: '10px'}} width={'61vw'} height={'100%'}/>
                     </>
                 :
                 <>
