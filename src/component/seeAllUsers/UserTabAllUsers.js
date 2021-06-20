@@ -12,6 +12,7 @@ import { MySnackbar } from '../mySnackBar/MySnackbar';
 import { connect } from 'react-redux'
 import { Skeleton } from '@material-ui/lab';
 
+
 const UserTabAllUsers = ({medicData}) => {
 
     const [medic,setMedic] = useState(medicData)
@@ -30,10 +31,8 @@ const UserTabAllUsers = ({medicData}) => {
     const [refresh,setRefresh] = useState(false)
     const [reTitle,setRetitle] = useState(false)
     const [loading,setLoading] = useState(true)
-
-
-
     const history = useHistory();
+
     const switchToProfle = () => history.push(`/profile/${user.id}`);
   
     const handleClick = (event,item,status) => {
@@ -98,7 +97,7 @@ const UserTabAllUsers = ({medicData}) => {
                     setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.id.toUpperCase().includes(selected.title.toUpperCase()))));
                     return
                 case "NOMBRE":
-                    setShowedUserList(showedUserList.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
+                    setShowedUserList(showedUserList.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()) || item.surname.toUpperCase().includes(selected.title.toUpperCase()))));   
                     setInactiveShowedUserList(inactiveShowedUserList.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
                     return
                 case "CANCER":
@@ -159,6 +158,9 @@ const UserTabAllUsers = ({medicData}) => {
     const id = open ? 'simple-popover' : undefined;
 
     useEffect(()=>{
+        if(medicData.id === ""){
+            history.push('/notfound/login')   
+        }
         const db = getFirestore()
         const usersActive = db.collection('users').where("status","==","Activo").where("medic","==",medicData.id)
         usersActive.get().then((querySnapshot)=>{
@@ -229,12 +231,12 @@ const UserTabAllUsers = ({medicData}) => {
                     <table class="userall-big-table">
                         <thead className="userall-thead-allUsers">
                             <tr>
-                            <th style={{width: '7vw'}} scope="col"></th>
-                            <th style={{width: '14vw'}} scope="col">N PACIENTE</th>
-                            <th style={{width: '28vw'}} scope="col">NOMBRE</th>
-                            <th style={{width: '20vw'}} scope="col">TIPO DE CANCER</th>
-                            <th scope="col">ESTADO</th>
-                            <th scope="col"></th>
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '7vw'}} scope="col"></th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '14vw'}} scope="col">N PACIENTE</th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0  && !loading) && <th style={{width: '28vw'}} scope="col">NOMBRE</th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '20vw'}} scope="col">TIPO DE CANCER</th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th scope="col">ESTADO</th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th scope="col"></th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -262,7 +264,16 @@ const UserTabAllUsers = ({medicData}) => {
                             {
                                 
                                 (inactiveShowedUserList.length > 0) && inactiveShowedUserList.map((item,key) => <ItemUser image={images.find(element =>element.id===item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
-                            }</>}
+                            }
+                            {
+                                (showedUserList.length ===0 && inactiveShowedUserList.length === 0) ?
+                                    <div className="patiens-error-cont">
+                                        <img className="patients-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                                        <p style={{fontSize: "1.3rem"}}>No se encontraron pacientes</p>
+                                    </div>
+                                :null
+                            }
+                            </>}
                             <Menu className="menu-see-all-users"
                                 id={id}
                                 open={open}
@@ -278,7 +289,7 @@ const UserTabAllUsers = ({medicData}) => {
                                 }}>
                                 <MenuItem onClick={()=>switchToProfle()}>VER PERFIL</MenuItem>
                                 <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
-                                <MenuItem onClick={handleClose}>VER REGISTRO DIARIO</MenuItem>
+                                <MenuItem onClick={handleClose}>VER REGISTROS DIARIOS</MenuItem>
                                 {bool && <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>}
                             </Menu>
                             <ModalPopOverEliminate

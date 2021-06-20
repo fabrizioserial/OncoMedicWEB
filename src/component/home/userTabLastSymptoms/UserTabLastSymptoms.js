@@ -39,10 +39,10 @@ export const UserTabLastSymptoms=({symptomsList})=> {
         <table class="usertab-table">
             <thead className="usertab-thead">
                 <tr>
-                <th className="ultimos-sin-th-fecha" scope="col">FECHA</th>
-                <th className="ultimos-sin-th-paciente" scope="col">N PACIENTE</th>
-                <th className="ultimos-sin-th-paciente" scope="col">NOMBRE</th>
-                <th className="ultimos-sin-th-sintoma" scope="col">SINTOMA</th>
+                  <th className="ultimos-sin-th-fecha" scope="col">FECHA</th>
+                  <th className="ultimos-sin-th-paciente" scope="col">NOMBRE</th>
+                  <th className="ultimos-sin-th-sintoma" scope="col">SINTOMA</th>
+                  <th className="ultimos-sin-th-respuesta"> </th>
 
                 </tr>
             </thead>
@@ -79,7 +79,7 @@ export const UserTabLastSymptoms=({symptomsList})=> {
       ):(
         <div className="sintoms-img-error-cont">
           <img className="sintoms-img-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
-          <p>No se encontraron pacientes</p>
+          <p  style={{fontSize: "1.3rem"}}>No se encontraron pacientes</p>
         </div>
       )}
     </div>       

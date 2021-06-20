@@ -10,6 +10,8 @@ import { MySnackbar } from '../mySnackBar/MySnackbar';
 import moment from 'moment';
 import ModalPopOverSymptom from '../modals/ModalPopOverSymptom';
 import { Skeleton } from '@material-ui/lab';
+import { useHistory } from 'react-router-dom';
+
 
 
 
@@ -30,6 +32,8 @@ const PatientSymptoms = ({medicData}) =>{
     const [reTitle,setRetitle] = useState(false)
     const [openModal, setOpenModal] = useState(false);
     const [symptom, setSymptom] = useState('');
+    const history = useHistory();
+
 
     const handleCloseModal = () => {
         setOpenModal(false);
@@ -41,6 +45,9 @@ const PatientSymptoms = ({medicData}) =>{
     }; 
 
     useEffect(()=>{
+        if(medicData.id === ""){
+            history.push('/notfound/login')   
+        }
 
         const db = getFirestore()
         const itemCollection = db.collection("users").where("medic","==",medicData.id)
@@ -112,7 +119,7 @@ const PatientSymptoms = ({medicData}) =>{
         
         Promise.all(promises).then(function(results) {
             setSymptomsList2(lista)
-            lista.length > 0 && startTimer()
+            startTimer()
         })
 
     }
@@ -165,7 +172,7 @@ const PatientSymptoms = ({medicData}) =>{
                         formatedDate(item.date.toDate()) >= (formatedDate(selected.dateStart))
                         && formatedDate(item.date.toDate()) <= (formatedDate(selected.dateEnd)))));
                 case "PACIENTE":
-                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()))));   
+                    return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.name.toUpperCase().includes(selected.title.toUpperCase()) || item.surname.toUpperCase().includes(selected.title.toUpperCase()))));   
                 case "SINTOMA":
                     return setShowedSymptomsList2(showedSymptomsList2.filter((item=>item.symptoms.some(el=>el.symptom.toUpperCase().includes(selected.title.toUpperCase())))));  
                 default:
@@ -202,11 +209,11 @@ const PatientSymptoms = ({medicData}) =>{
                     <table class="userall-big-table">
                         <thead className="userall-thead-sympts">
                             <tr>
-                            <th className="patientsymptoms-th-empty" scope="col"></th>
-                            <th className="patientsymptoms-th-fecha" scope="col">FECHA</th>
-                            <th className="patientsymptoms-th-patient" scope="col">PACIENTE</th>
-                            <th className="patientsymptoms-th-symptom" scope="col">SINTOMAS</th>
-                            <th className="patientsymptoms-th-grade" scope="col">RESPUESTA</th>
+                            {!(showedSymptomsList2.length ===0 && showedSymptomsList2.length === 0 && !load) && <th className="patientsymptoms-th-empty" scope="col"></th>}
+                            {!(showedSymptomsList2.length ===0 && showedSymptomsList2.length === 0 && !load) && <th className="patientsymptoms-th-fecha" scope="col">FECHA</th>}
+                            {!(showedSymptomsList2.length ===0 && showedSymptomsList2.length === 0 && !load) && <th className="patientsymptoms-th-patient" scope="col">PACIENTE</th>}
+                            {!(showedSymptomsList2.length ===0 && showedSymptomsList2.length === 0 && !load) && <th className="patientsymptoms-th-symptom" scope="col">SINTOMAS</th>}
+                            {!(showedSymptomsList2.length ===0 && showedSymptomsList2.length === 0 && !load) && <th className="patientsymptoms-th-grade" scope="col">RESPUESTA</th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -230,7 +237,16 @@ const PatientSymptoms = ({medicData}) =>{
                             <>
                             {
                                 showedSymptomsList2.length > 0 && showedSymptomsList2.map((item,key) => <ItemUser  key={key} symptom={item} desc={sympInfo.find(element => element.label===item.symptom)} handleClick={handleCloseAndOpenModal}  type="seeSymptoms"/>)
+                            }
+                            {
+                                (showedSymptomsList2.length ===0) ?
+                                    <div className="patiens-error-cont">
+                                        <img className="patients-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                                        <p style={{fontSize: "1.3rem"}}>No se encontraron sintomas</p>
+                                    </div>
+                                :null
                             }</>
+
                             }
                         </tbody>
                     </table>

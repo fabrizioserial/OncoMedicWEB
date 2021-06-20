@@ -2,9 +2,9 @@ import React,{useState,useEffect} from 'react'
 import "../profileTab/ProfileTab.css"
 import {OptionsMenu}  from '../../optionsMenu/OptionsMenu'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronUp,faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faAddressCard } from '@fortawesome/free-solid-svg-icons'
 import {getFirestore} from '../../../firebase'
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import '../profileTab/ProfileTab.css'
 import "../profileTab/ProfileTab.css"
 import ModalUpdateProfile from '../../modals/ModalUpdateProfile'
@@ -13,7 +13,7 @@ import { Skeleton } from '@material-ui/lab'
 import ImageFadeIn from "react-image-fade-in";
 import moment from 'moment'
 
-export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
+export default function ProfileTab({user,image,handleSnackBar,updateDate,id}) {
     const [seeMore, setSeeMore] = useState(false);
     const [name] = useState(user.name);
     const [cancer, setCancer] = useState(user.cancer);
@@ -79,8 +79,8 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
                 <div className='text-complete-profile'>
                     <p  className='id-complete-profile' type='text'>{user.id}</p>
                     <p className='name-complete-profile' > {`${user.surname} , ${user.name}`} </p>
-                    <p onChange={(e) => setCancer(e.target.value)} className='id-complete-profile-items'>Tipo de cancer: <input className='id-complete-profile' type='text' disabled={true} defaultValue={cancer}/></p>
-                { seeMore ?
+                    <p className='id-complete-profile-items'>Tipo de cancer: <input className='id-complete-profile' type='text' disabled={true} defaultValue={cancer}/></p>
+                {/* seeMore ?
                     <animated.div style={textProps}>
                         <p className='id-complete-profile-items'>Etnia: {user.etnia}</p>
                         <p className='id-complete-profile-items'>Fecha de nacimiento: {formatedDate(user.birth)}</p>
@@ -105,7 +105,7 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
                             <p onClick={()=>setSeeMore(!seeMore)} className='id-complete-profile-less' style={{marginTop:'20px'}}>VER MENOS  <FontAwesomeIcon icon={faChevronUp}/></p>
                     </animated.div>:
                             <p onClick={()=>setSeeMore(!seeMore)} className='id-complete-profile-more'>VER MAS  <FontAwesomeIcon icon={faChevronDown}/></p>
-                    }
+                    */}
                 </div>
             </div>
                         <ModalUpdateProfile 
@@ -117,10 +117,9 @@ export default function ProfileTab({user,image,handleSnackBar,updateDate}) {
 
             <div className='tabhey-cont-options'>
                 {
-                    <div >
-                       <OptionsMenu name={user.name} surname={user.surname} id={user.id} type='profile' handleEdit={handleEdit} handleEliminado={handleEliminado}/>
-                    </div>
-                
+                    <Link style={{color: "black"}} to={`/editUser/${id}`} className="tabhey-btn-options">
+                        <FontAwesomeIcon icon={faAddressCard}/>
+                    </Link>
                 }
             </div>
         </animated.div>

@@ -2,7 +2,7 @@ import React,{useEffect,useState,useLayoutEffect} from 'react'
 import './Home.css'
 import { ButtonHome } from './buttonsHome/ButtonHome'
 import ModalPopOverNewMedic from '../modals/ModalPopOverNewMedic'
-import  {UserTabHome}  from './usertabhome/UserTabHome'
+import { UserTabHome }  from './usertabhome/UserTabHome'
 import { TabHey } from './tabhey/TabHey';
 import {getFirestore} from '../../firebase'
 import { connect } from 'react-redux'
@@ -11,6 +11,8 @@ import { MySnackbar } from '../mySnackBar/MySnackbar'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Skeleton } from '@material-ui/lab';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+
 
 
 const Home = ({medicData}) =>{
@@ -25,6 +27,8 @@ const Home = ({medicData}) =>{
     const [loading,setLoad] = useState(false)
     const [skeleton,setSkeleton] = useState(true)
     const [cancerList,setCancerList] = useState([])
+    const history = useHistory();
+
 
     const selectModal = (info) => {
        setModal(!modal)
@@ -44,8 +48,12 @@ const Home = ({medicData}) =>{
         setOpenSnackBar(false);
     };
 
+    const handleNotFound = ()=>{
+        history.push('/notfound/login')   
+    }
 
     useEffect(()=>{
+        medicData && medicData.name === "" && handleNotFound()
         const db = getFirestore()
         const itemCollection = db.collection("users").where("medic","==",medicData.id)
         itemCollection.onSnapshot((querySnapshot) => {
@@ -163,7 +171,7 @@ const Home = ({medicData}) =>{
                         </>
                         :
                         <>
-                            <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo").slice(0,6)} images={images} margin_left={{marginRight:"50px"}}/>
+                            <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo").slice(0,6)} images={images} margin_left={{marginRight:"40px"}}/>
                             <UserTabLastSymptoms className="usersympts-second" symptomsList={symptomsList2.slice(0,6)}/>
                         </>
                         }

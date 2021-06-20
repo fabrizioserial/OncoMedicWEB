@@ -1,10 +1,11 @@
-import {SET_MEDIC_USER} from '../actions/loginAction.js'
+import {SET_MEDIC_USER, USER_LOGOUT} from '../actions/loginAction.js'
+
 
 const default_user ={
-    name:"Miguel Rizzo",
-    email:"aa@aa.com",
-    id:"123456",
-    admin:"true"
+    name:"",
+    email:"",
+    id:"",
+    admin:""
 }
 
 const user_data = (state=default_user , action) =>{
@@ -15,6 +16,14 @@ const user_data = (state=default_user , action) =>{
                 email: action.payload.email,
                 id: action.payload.id,
                 admin: action.payload.admin
+            }
+        }
+        case USER_LOGOUT:{
+            return{
+                    name:"",
+                    email:"",
+                    id:"",
+                    admin:""
             }
         }
         

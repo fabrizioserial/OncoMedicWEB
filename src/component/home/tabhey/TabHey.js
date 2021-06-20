@@ -1,14 +1,15 @@
 import React, {useEffect} from 'react'
 import '../tabhey/TabHey.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBell } from '@fortawesome/free-solid-svg-icons'
+import { faBell,faCircle } from '@fortawesome/free-solid-svg-icons'
 import Menu from '@material-ui/core/Menu';
 import { CustomMenuItem } from '../../customMenuItem/CustomMenuItem'
-import {OptionsMenu} from '../../optionsMenu/OptionsMenu';
+import OptionsMenu from '../../optionsMenu/OptionsMenu';
+import { Link } from 'react-router-dom';
 
 
 
-export const TabHey = ({name,userlist,handleEl,handleAc,cancerList}) => {
+export const TabHey = ({name,userlist}) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -38,35 +39,15 @@ export const TabHey = ({name,userlist,handleEl,handleAc,cancerList}) => {
                     <div >
                        <OptionsMenu type="home"/>
                     </div>
-                    
-                    <button aria-describedby={id} className="tabhey-btn-options" onClick={handleClick}>
-                        <FontAwesomeIcon icon={faBell}/>
-                    </button>
-                        <Menu className="menu-1"
-                            id={id}
-                            open={open}
-                            anchorEl={anchorEl}
-                            onClose={handleClose}
-                            anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                            }}
-                            transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                            }}
-                            PaperProps={{
-                            style: { width: '450px',marginTop: '2px' },
-                            }}
-                        >
-                        {
-                            (userlist.length>0) ? (
-                                userlist.map((item,index) => <CustomMenuItem handleAc={handleAc} medicHistory={item.id} cancerList={cancerList} handleEl={handleEl} surname={item.surname} name={item.name}  id={item.id}/>)
-                            ) : (
-                                <CustomMenuItem type="finished">No hay mas usuarios para aceptar</CustomMenuItem>
-                            )
-                        }
-                        </Menu>
+
+                    <Link style={{color: "black"}} to="/acceptUser" className="tabhey-btn-options">
+                        <div className="tabhey-btn">
+                            <FontAwesomeIcon icon={faBell}/>
+                            {
+                               userlist && userlist.length > 0 && <div className="tabhey-circle"/>
+                            }
+                        </div>
+                    </Link>
                 </div>
             </div>
     )

@@ -1,4 +1,5 @@
 export const SET_MEDIC_USER = "SET_MEDIC_USER";
+export const USER_LOGOUT = "USER_LOGOUT"
 
 export const setMedicUserAction = (userData) =>{
     return{
@@ -7,4 +8,9 @@ export const setMedicUserAction = (userData) =>{
     }
 }
 
+export const setLogout = () =>{
+    return{
+        type: USER_LOGOUT
+    }
+}
 

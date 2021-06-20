@@ -11,6 +11,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import { Skeleton } from '@material-ui/lab'
 import ReactApexChart from '../../../node_modules/react-apexcharts'
+import { useHistory } from 'react-router-dom';
+
 
 const useStyles = makeStyles(theme => ({
     btn: {
@@ -55,6 +57,8 @@ export const CompleteProfile = () => {
     const [serie,setSerie] = useState({})
     const [options,setOptions] = useState({})
     const [graph,setGraph] = useState(false)
+    const history = useHistory();
+
   
     const handleOpensnackBar = (sev,mes) =>{
         setSeverity(sev)
@@ -196,11 +200,7 @@ export const CompleteProfile = () => {
                         )
                     }
                 )
-            setSympInfo(sympList)
-
-
-
-            
+            setSympInfo(sympList)    
         })
 
         }
@@ -213,10 +213,6 @@ export const CompleteProfile = () => {
         }.bind(this),500)
     }
 
-
-
-
-
     useEffect(()=>{
         mood.length > 0 && setGraph(true)
         console.log("el largo es ",mood)
@@ -227,6 +223,7 @@ export const CompleteProfile = () => {
               name: 'Dolor',
               data: pain.map(item=>item.y)
             }])
+
         setOptions({
               chart: {
                 height: 460,
@@ -288,6 +285,55 @@ export const CompleteProfile = () => {
                   format: 'dd/MM/yy'
                 },
               },
+              legend: {
+                show: true,
+                showForSingleSeries: false,
+                showForNullSeries: true,
+                showForZeroSeries: true,
+                position: 'bottom',
+                horizontalAlign: 'center', 
+                floating: false,
+                fontSize: '14px',
+                fontFamily: 'Helvetica, Arial',
+                fontWeight: 400,
+                formatter: undefined,
+                inverseOrder: false,
+                width: undefined,
+                height: undefined,
+                tooltipHoverFormatter: undefined,
+                customLegendItems: [],
+                offsetX: 0,
+                offsetY: 0,
+                labels: {
+                    colors: undefined,
+                    useSeriesColors: false
+                },
+                markers: {
+                    width: 12,
+                    height: 12,
+                    strokeWidth: 0,
+                    strokeColor: '#fff',
+                    fillColors: ['#008FFB','#9357F7'],
+                    radius: 12,
+                    customHTML: undefined,
+                    onClick: undefined,
+                    offsetX: 0,
+                    offsetY: 0
+                },
+                itemMargin: {
+                    horizontal: 5,
+                    vertical: 15
+                },
+                onItemClick: {
+                    toggleDataSeries: true
+                },
+                onItemHover: {
+                    highlightDataSeries: true
+                },
+            },
+            chart: {
+                width: '100%'
+            }
             })
     },[mood,pain])
  
@@ -312,7 +358,7 @@ export const CompleteProfile = () => {
                 <div className="userall-head">
                     <ButtonGoBack text="VOLVER AL INICIO" color="purple"></ButtonGoBack>
                 </div>
-                <ProfileTab handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
+                <ProfileTab id={id} handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
                {graph &&  <div className="profile-chart-cont">
                     {
                      serie && <ReactApexChart options={options} series={serie} type="area" height={450} />
@@ -328,13 +374,7 @@ export const CompleteProfile = () => {
                 </div>
             </div>
             : 
-            userNotFound ?
-            <div className="profile-cont-background">
-                <div className="profile-not-found">
-                    <img alt="" className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
-                    <p>No se encontró al usuario que buscabas</p>
-                </div>
-            </div>:null
+            userNotFound && history.push('/notfound/user')
             }
             <MySnackbar
                 severity={severity}

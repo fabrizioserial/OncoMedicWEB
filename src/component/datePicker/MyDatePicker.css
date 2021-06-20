@@ -6,4 +6,10 @@
 .MuiOutlinedInput-notchedOutline2{
     border-color: var(--red) !important;
 }
-
+.accept-patient{
+    margin-left: 0;
+    background: white;
+    border: 2px solid #dddddd;
+    border-radius: 5px;
+    height: 40px;
+}

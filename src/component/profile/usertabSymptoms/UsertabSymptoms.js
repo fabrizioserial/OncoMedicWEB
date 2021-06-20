@@ -39,7 +39,8 @@ export const UsertabSymptoms=({sympstoms,descs,id})=> {
                     <thead className="sintoms-usertab-thead">
                         <tr>
                         <th className="sintoms-th-fecha" scope="col">FECHA</th>
-                        <th scope="col">SINTOMA</th>
+                        <th scope="col" style={{paddingRight:"3%"}}>SINTOMA</th>
+                        <th scope="col" ></th>
                         </tr>
                     </thead>
                     <tbody>

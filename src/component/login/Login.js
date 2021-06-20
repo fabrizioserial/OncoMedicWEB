@@ -1,18 +1,19 @@
 import React,{useState,useEffect} from 'react'
 import '../login/Login.css'
 import medical_ilustrator from '../../img/medical_ilustration.png'
-import {getFirestore} from '../../firebase'
+import { getFirestore } from '../../firebase'
 import { useHistory } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button';
-import {setMedicUserAction} from '../../reduxStore/actions/loginAction'
-import {faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { setMedicUserAction } from '../../reduxStore/actions/loginAction'
+import { faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as bcrypt from 'bcryptjs'
 
-export const Login = ({setMedicUserAction}) => {
+export const Login = ({setMedicUserAction,medicData}) => {
 
+    const [medicS,setMedic] = useState(medicData)
     const [email,setEmail] = useState("")
     const [password,setPassword] =useState("")
     const [medic] = useState({})
@@ -71,6 +72,7 @@ export const Login = ({setMedicUserAction}) => {
      
     }
 
+
     const setError = (type) =>{
         type === "error" ? setEComplete(true):setEInvalid(true)
     }
@@ -78,6 +80,9 @@ export const Login = ({setMedicUserAction}) => {
         setPasswordShown(passwordShown ? false : true);
     };
     
+    useEffect(()=>{
+        medicS && medicS.id !== "" && history.push('/home')   
+    },[medicS])
 
 
     return(
@@ -91,7 +96,7 @@ export const Login = ({setMedicUserAction}) => {
                 <div className="cont-login-cont-ev">
                     <div className="login-text-cont">
                         <p className="text-login-login">Log In</p>
-                        <p className="text-login-punto">.</p>
+                        <p /*onClick={pushToDatabase}*/ className="text-login-punto">.</p>
                     </div>
                     <form>
                         <div>
@@ -128,5 +133,10 @@ export const Login = ({setMedicUserAction}) => {
 const mapDispatchToProps = {
     setMedicUserAction
 }
+const mapStateToProps = (state) => {
+    return {
+        medicData: state.user_data
+    }
+}
 
-export default connect(null,mapDispatchToProps)(Login)
+export default connect(mapStateToProps,mapDispatchToProps)(Login)
