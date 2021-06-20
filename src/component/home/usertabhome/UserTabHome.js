@@ -165,7 +165,7 @@ export const UserTabHome=({margin_left,userlist,images,handleEl,handleLoad})=> {
       ):(
         <div className="sintoms-img-error-cont">
           <img className="sintoms-img-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
-          <p>No se encontraron pacientes</p>
+          <p  style={{fontSize: "1.3rem"}}>No se encontraron pacientes</p>
         </div>
       )}
     </div>   

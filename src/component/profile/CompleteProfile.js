@@ -11,6 +11,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import { Skeleton } from '@material-ui/lab'
 import ReactApexChart from '../../../node_modules/react-apexcharts'
+import { useHistory } from 'react-router-dom';
+
 
 const useStyles = makeStyles(theme => ({
     btn: {
@@ -55,6 +57,8 @@ export const CompleteProfile = () => {
     const [serie,setSerie] = useState({})
     const [options,setOptions] = useState({})
     const [graph,setGraph] = useState(false)
+    const history = useHistory();
+
   
     const handleOpensnackBar = (sev,mes) =>{
         setSeverity(sev)
@@ -370,13 +374,7 @@ export const CompleteProfile = () => {
                 </div>
             </div>
             : 
-            userNotFound ?
-            <div className="profile-cont-background">
-                <div className="profile-not-found">
-                    <img alt="" className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
-                    <p>No se encontró al usuario que buscabas</p>
-                </div>
-            </div>:null
+            userNotFound && history.push('/notfound/user')
             }
             <MySnackbar
                 severity={severity}

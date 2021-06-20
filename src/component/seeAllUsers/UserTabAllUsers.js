@@ -12,6 +12,7 @@ import { MySnackbar } from '../mySnackBar/MySnackbar';
 import { connect } from 'react-redux'
 import { Skeleton } from '@material-ui/lab';
 
+
 const UserTabAllUsers = ({medicData}) => {
 
     const [medic,setMedic] = useState(medicData)
@@ -30,10 +31,8 @@ const UserTabAllUsers = ({medicData}) => {
     const [refresh,setRefresh] = useState(false)
     const [reTitle,setRetitle] = useState(false)
     const [loading,setLoading] = useState(true)
-
-
-
     const history = useHistory();
+
     const switchToProfle = () => history.push(`/profile/${user.id}`);
   
     const handleClick = (event,item,status) => {
@@ -159,6 +158,9 @@ const UserTabAllUsers = ({medicData}) => {
     const id = open ? 'simple-popover' : undefined;
 
     useEffect(()=>{
+        if(medicData.id === ""){
+            history.push('/notfound/login')   
+        }
         const db = getFirestore()
         const usersActive = db.collection('users').where("status","==","Activo").where("medic","==",medicData.id)
         usersActive.get().then((querySnapshot)=>{
@@ -265,9 +267,9 @@ const UserTabAllUsers = ({medicData}) => {
                             }
                             {
                                 (showedUserList.length ===0 && inactiveShowedUserList.length === 0) ?
-                                    <div style={{width: '100%',marginLeft: '30vw',marginTop: '20vh'}}>
+                                    <div className="patiens-error-cont">
                                         <img className="patients-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
-                                        <p style={{fontSize: "1.3rem",marginRight: "10vw"}}>No se encontraron pacientes</p>
+                                        <p style={{fontSize: "1.3rem"}}>No se encontraron pacientes</p>
                                     </div>
                                 :null
                             }

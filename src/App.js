@@ -53,7 +53,7 @@ const App = () => {
                     </Route> 
                     <HashRouter>
                       <TimeStatus/>
-                      <Route exact path="/notfound">
+                      <Route path="/notfound/:type">
                         <NotFound/>
                       </Route>
                       <Route exact path="/home">

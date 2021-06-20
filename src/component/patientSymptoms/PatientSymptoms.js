@@ -10,6 +10,8 @@ import { MySnackbar } from '../mySnackBar/MySnackbar';
 import moment from 'moment';
 import ModalPopOverSymptom from '../modals/ModalPopOverSymptom';
 import { Skeleton } from '@material-ui/lab';
+import { useHistory } from 'react-router-dom';
+
 
 
 
@@ -30,6 +32,8 @@ const PatientSymptoms = ({medicData}) =>{
     const [reTitle,setRetitle] = useState(false)
     const [openModal, setOpenModal] = useState(false);
     const [symptom, setSymptom] = useState('');
+    const history = useHistory();
+
 
     const handleCloseModal = () => {
         setOpenModal(false);
@@ -41,6 +45,9 @@ const PatientSymptoms = ({medicData}) =>{
     }; 
 
     useEffect(()=>{
+        if(medicData.id === ""){
+            history.push('/notfound/login')   
+        }
 
         const db = getFirestore()
         const itemCollection = db.collection("users").where("medic","==",medicData.id)
@@ -233,9 +240,9 @@ const PatientSymptoms = ({medicData}) =>{
                             }
                             {
                                 (showedSymptomsList2.length ===0) ?
-                                    <div style={{width: '100%',marginLeft: '30vw',marginTop: '20vh'}}>
+                                    <div className="patiens-error-cont">
                                         <img className="patients-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
-                                        <p style={{fontSize: "1.3rem",marginRight: "10vw"}}>No se encontraron sintomas</p>
+                                        <p style={{fontSize: "1.3rem"}}>No se encontraron sintomas</p>
                                     </div>
                                 :null
                             }</>

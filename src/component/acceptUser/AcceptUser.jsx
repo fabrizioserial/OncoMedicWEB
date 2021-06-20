@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import {getFirestore} from '../../firebase'
 import { Skeleton } from '@material-ui/lab';
 import { MySnackbar } from '../mySnackBar/MySnackbar';
+import { useHistory } from 'react-router-dom';
+
 
 const AcceptUser = ({medicData}) => {
     window.onscroll = function() {myFunction()};
@@ -18,6 +20,9 @@ const AcceptUser = ({medicData}) => {
     const [openSnackBar,setOpenSnackBar] = useState(false)
     const [severity,setSeverity] = useState("")
     const [message,setMessage] = useState("")
+    const [empty,setEmpty] = useState(false)
+    const history = useHistory();
+
 
 
     function myFunction() {
@@ -31,6 +36,9 @@ const AcceptUser = ({medicData}) => {
     }
 
     useEffect(()=>{
+        if(medicData.id === ""){
+            history.push('/notfound/login')   
+        }
         const db = getFirestore()
         const itemCollection = db.collection("users").where("medic","==",medicData.id)
         itemCollection.onSnapshot((querySnapshot) => {
@@ -66,6 +74,7 @@ const AcceptUser = ({medicData}) => {
     }
 
     useEffect(()=>{
+        userList && userList.lengt == 0 && setEmpty(true)
         setUser(userList[0])
     },[userList])
 
@@ -99,15 +108,18 @@ const AcceptUser = ({medicData}) => {
         }
         setOpenSnackBar(false);
     };
+    useEffect(()=>{
+
+    },[empty])
 
 
     return (
         <div className="accept-user-background-cont">
-            <div className="accept-user-left">
+            <div className={"accept-user-left"}>
                 <ButtonGoBack classNameProp="accept-user-btn" text="VOLVER AL INICIO" color="purple"/>
                 <>
                 {(user || skeleton) ?
-                <div  className={sticky ? "accept-user-list":"accept-user-list fixed"}>
+                <div className={sticky ? "accept-user-list":"accept-user-list fixed"}>
                     {skeleton ? 
                     <>
                         <Skeleton style={{marginTop: '5%',borderRadius: '10px'}} width={'16vw'} height={'6.1vh'}/>
@@ -140,14 +152,19 @@ const AcceptUser = ({medicData}) => {
                 :
                 <>
                     {user ? <AcceptForm eliminateUser={eliminateUser} finish={handleFinish} id={user.docid} accept={true} user={user}/>
-                        :<div className="div-patients-error" >
-                            <div style={{width: '100%',marginLeft: '10vw'}}>
-                                <img className="patients-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
-                                <p style={{fontSize: "1.3rem",marginRight: "10vw"}}>No se encontraron pacientes</p>
-                            </div>
-                        </div>}
+                        :
+                        null}
                 </>}
             </div>
+            {
+                !user && !skeleton &&
+                    <div className="div-patients-error absolute" >
+                        <div className="patiens-error-cont au">
+                            <img className="patients-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                            <p style={{fontSize: "1.3rem"}}>No se encontraron pacientes</p>
+                        </div>
+                    </div>
+            }
             <MySnackbar
                 severity={severity}
                 message={message}

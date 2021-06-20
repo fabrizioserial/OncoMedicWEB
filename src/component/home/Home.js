@@ -2,7 +2,7 @@ import React,{useEffect,useState,useLayoutEffect} from 'react'
 import './Home.css'
 import { ButtonHome } from './buttonsHome/ButtonHome'
 import ModalPopOverNewMedic from '../modals/ModalPopOverNewMedic'
-import  {UserTabHome}  from './usertabhome/UserTabHome'
+import { UserTabHome }  from './usertabhome/UserTabHome'
 import { TabHey } from './tabhey/TabHey';
 import {getFirestore} from '../../firebase'
 import { connect } from 'react-redux'
@@ -49,7 +49,7 @@ const Home = ({medicData}) =>{
     };
 
     const handleNotFound = ()=>{
-        history.push('/notfound')   
+        history.push('/notfound/login')   
     }
 
     useEffect(()=>{
