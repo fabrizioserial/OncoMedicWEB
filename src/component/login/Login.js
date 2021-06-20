@@ -1,19 +1,18 @@
 import React,{useState,useEffect} from 'react'
 import '../login/Login.css'
 import medical_ilustrator from '../../img/medical_ilustration.png'
-import { getFirestore } from '../../firebase'
+import {getFirestore} from '../../firebase'
 import { useHistory } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button';
-import { setMedicUserAction } from '../../reduxStore/actions/loginAction'
-import { faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import {setMedicUserAction} from '../../reduxStore/actions/loginAction'
+import {faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as bcrypt from 'bcryptjs'
 
-export const Login = ({setMedicUserAction,medicData}) => {
+export const Login = ({setMedicUserAction}) => {
 
-    const [medicS,setMedic] = useState(medicData)
     const [email,setEmail] = useState("")
     const [password,setPassword] =useState("")
     const [medic] = useState({})
@@ -21,6 +20,41 @@ export const Login = ({setMedicUserAction,medicData}) => {
     const [errorComplete,setEComplete] = useState(false)
     const [errorInvalid,setEInvalid] = useState(false)
     const [passwordShown, setPasswordShown] = useState(false);
+    const cancers = ["Ano",
+        "Cervix",
+        "Colon",
+        "Esófago",
+        "Faringe",
+        "Gástrico",
+        "Germinal",
+        "Germinal no seminomatoso",
+        "Germinal seminomatoso",
+        "GIST",
+        "Glioblastoma",
+        "Hígado",
+        "Laringe",
+        "Lengua",
+        "Mama",
+        "Melanoma",
+        "Mesotelioma",
+        "Nasofaringe",
+        'Tumor óseo',
+        "Ovario",
+        "Páncreas",
+        "Primario desconocido",
+        "Próstata",
+        "Pulmón",
+        "Recto",
+        "Renal",
+        "Retroperitoneal",
+        "Sarcoma de partes blandas",
+        "Sistema nervioso central",
+        "Submaxilar",
+        "Tumor Neuroendocrino",
+        "Útero",
+        "Vejiga",
+        "Vía Biliar",
+        ]
 
     const history = useHistory();
    
@@ -80,9 +114,16 @@ export const Login = ({setMedicUserAction,medicData}) => {
         setPasswordShown(passwordShown ? false : true);
     };
     
-    useEffect(()=>{
-        medicS && medicS.id !== "" && history.push('/home')   
-    },[medicS])
+    const pushToDatabase = () => {
+        const db = getFirestore()
+        const itemCollection = db.collection("cancer")
+
+        cancers.map((item)=>{
+            itemCollection.add({
+                name: item
+            })
+        })
+    }
 
 
     return(
@@ -96,7 +137,7 @@ export const Login = ({setMedicUserAction,medicData}) => {
                 <div className="cont-login-cont-ev">
                     <div className="login-text-cont">
                         <p className="text-login-login">Log In</p>
-                        <p /*onClick={pushToDatabase}*/ className="text-login-punto">.</p>
+                        <p onClick={pushToDatabase} className="text-login-punto">.</p>
                     </div>
                     <form>
                         <div>
@@ -133,10 +174,5 @@ export const Login = ({setMedicUserAction,medicData}) => {
 const mapDispatchToProps = {
     setMedicUserAction
 }
-const mapStateToProps = (state) => {
-    return {
-        medicData: state.user_data
-    }
-}
 
-export default connect(mapStateToProps,mapDispatchToProps)(Login)
+export default connect(null,mapDispatchToProps)(Login)

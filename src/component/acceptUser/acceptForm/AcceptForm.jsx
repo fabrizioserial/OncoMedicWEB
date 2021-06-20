@@ -62,7 +62,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     const [n,setN] = useState('')  
     const [m,setM] = useState('')  
     const [estadio,setEstadio] = useState('')  
-    const [primTumor,setPrimTumor] = useState('Mama')    
+    const [primTumor,setPrimTumor] = useState('Ano')    
     const [histology,setHistology] = useState('Option 1')  
     const [tumorTreatment,setTumorTreatment] = useState('Si')  
     const [periTreatment,setPeriTreatment] = useState('Option 1')  
@@ -83,7 +83,16 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                         )
                     }
                 )
-            setCancerList(canerList)
+            setCancerList(canerList.sort(function (a, b) {
+                if (b.value > a.value) {
+                    return -1;
+                }
+                if (b.value < a.value) {
+                    return 1;
+                }
+                // a must be equal to b
+                return 0;
+                }))
         })
     },[])
     
@@ -106,7 +115,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
         user.med.hip ? setMedHip(user.med.hip):setMedHip("")
         user.med.inf ? setMedInf(user.med.inf):setMedInf("")
 
-        user.cancer ? setPrimTumor(user.cancer):setPrimTumor("Mama")
+        user.cancer ? setPrimTumor(user.cancer):setPrimTumor("Ano")
         user.histogoly ? setHistology(user.histology):setHistology("")
         user.biomarkers ? setBiomarkers(user.biomarkers):setBiomarkers([{bio: '',evaluation: 'No evaluada'}])
         user.PDL1 ? setPdl(user.PDL1):setPdl("")
