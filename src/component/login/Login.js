@@ -1,13 +1,13 @@
 import React,{useState,useEffect} from 'react'
 import '../login/Login.css'
 import medical_ilustrator from '../../img/medical_ilustration.png'
-import {getFirestore} from '../../firebase'
+import { getFirestore } from '../../firebase'
 import { useHistory } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button';
-import {setMedicUserAction} from '../../reduxStore/actions/loginAction'
-import {faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { setMedicUserAction } from '../../reduxStore/actions/loginAction'
+import { faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as bcrypt from 'bcryptjs'
 

@@ -5,11 +5,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import '../optionsMenu/OptionsMenu.css'
 import ModalPopOverEliminate from '../modals/ModalPopOverEliminate'
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { setLogout } from '../../reduxStore/actions/loginAction'
 
 
-export const OptionsMenu = (props) => {
+
+
+const OptionsMenu = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [openModal, setOpenModal] = useState(false);
+
+    const history = useHistory();
+
 
     // Menu
 
@@ -47,6 +55,12 @@ export const OptionsMenu = (props) => {
         props.handleEliminado()
     }
 
+    // LOG OUT
+    const handleLogOut = () =>{
+        props.setLogout()
+        history.push('/')   
+    }
+
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
@@ -71,7 +85,7 @@ export const OptionsMenu = (props) => {
                         }}>
                         
                         {props.type==="home"? (
-                            <Link  className="tuerquita-link-to-home" to="/">
+                            <Link  className="tuerquita-link-to-home" onClick={handleLogOut}>
                                 <MenuItem >Log out</MenuItem>
                             </Link>
                         ) : (
@@ -92,3 +106,9 @@ export const OptionsMenu = (props) => {
         </div>
     )
 }
+
+const mapDispatchToProps = {
+    setLogout
+}
+
+export default connect(null,mapDispatchToProps)(OptionsMenu)

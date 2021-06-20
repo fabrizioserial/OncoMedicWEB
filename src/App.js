@@ -20,6 +20,7 @@ import sorry from './img/working.png'
 import AcceptUser from './component/acceptUser/AcceptUser';
 import EditUser from './component/editUser/EditUser'
 import {PersistGate} from 'redux-persist/integration/react'
+import { NotFound } from './component/notFound/NotFound';
 
 const App = () => {
 
@@ -52,6 +53,9 @@ const App = () => {
                     </Route> 
                     <HashRouter>
                       <TimeStatus/>
+                      <Route exact path="/notfound">
+                        <NotFound/>
+                      </Route>
                       <Route exact path="/home">
                         <Home/>
                       </Route>
