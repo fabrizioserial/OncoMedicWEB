@@ -22,7 +22,7 @@
     font-family: 'Montserrat', sans-serif;
 }
 .goBack-btn:hover{
-    background-color: var(--primary-light);
+    background-color: var(--primary-light-hover);
 }
 .go-back-back a{
     text-decoration: none;

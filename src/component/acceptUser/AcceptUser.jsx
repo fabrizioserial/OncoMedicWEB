@@ -150,11 +150,10 @@ const AcceptUser = ({medicData}) => {
                         <Skeleton style={{borderRadius: '10px'}} width={'61vw'} height={'100%'}/>
                     </>
                 :
-                <>
-                    {user ? <AcceptForm eliminateUser={eliminateUser} finish={handleFinish} id={user.docid} accept={true} user={user}/>
-                        :
-                        null}
-                </>}
+                    <>
+                        {user && <AcceptForm eliminateUser={eliminateUser} finish={handleFinish} id={user.docid} accept={true} user={user}/>}
+                    </>
+                }
             </div>
             {
                 !user && !skeleton &&

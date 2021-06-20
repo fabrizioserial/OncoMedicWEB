@@ -6,6 +6,9 @@
     width: 16vw;
     margin-top: 15px;
 }
+.aitem-background:hover{
+    background-color: #fafafa;
+}
 .aitem-background.true{
     border: 2px solid var(--primary);
 }

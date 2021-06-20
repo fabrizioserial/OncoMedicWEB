@@ -149,8 +149,11 @@ select:focus{
     justify-content: flex-end;
 }
 .final-btn-acceptform.elim{
-    background-color: rgb(255, 0, 0,0.5);
+    background-color: var(--red2);
     flex: 0.3;
+}
+.final-btn-acceptform.elim:hover{
+    background-color: var(--red2-hover);
 }
 .final-btn-acceptform{
     height: 50px;
@@ -165,6 +168,9 @@ select:focus{
 }
 .final-btn-acceptform.guard{
     flex: 0.5;
+}
+.final-btn-acceptform.guard:hover{
+    background-color: var(--primary-light-hover);
 }
 .MuiFormControl-root {
     width: 100%;
