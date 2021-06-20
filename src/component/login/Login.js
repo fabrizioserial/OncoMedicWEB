@@ -11,8 +11,9 @@ import { faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as bcrypt from 'bcryptjs'
 
-export const Login = ({setMedicUserAction}) => {
+export const Login = ({setMedicUserAction,medicData}) => {
 
+    const [medicS,setMedic] = useState(medicData)
     const [email,setEmail] = useState("")
     const [password,setPassword] =useState("")
     const [medic] = useState({})
@@ -79,6 +80,9 @@ export const Login = ({setMedicUserAction}) => {
         setPasswordShown(passwordShown ? false : true);
     };
     
+    useEffect(()=>{
+        medicS && medicS.id !== "" && history.push('/home')   
+    },[medicS])
 
 
     return(
@@ -129,5 +133,10 @@ export const Login = ({setMedicUserAction}) => {
 const mapDispatchToProps = {
     setMedicUserAction
 }
+const mapStateToProps = (state) => {
+    return {
+        medicData: state.user_data
+    }
+}
 
-export default connect(null,mapDispatchToProps)(Login)
+export default connect(mapStateToProps,mapDispatchToProps)(Login)
