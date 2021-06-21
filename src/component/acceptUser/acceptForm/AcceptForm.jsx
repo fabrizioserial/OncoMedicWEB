@@ -83,7 +83,16 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                         )
                     }
                 )
-            setCancerList(canerList)
+            setCancerList(canerList.sort(function (a, b) {
+                if (b.value > a.value) {
+                    return -1;
+                }
+                if (b.value < a.value) {
+                    return 1;
+                }
+                // a must be equal to b
+                return 0;
+                }))
         })
     },[])
     
