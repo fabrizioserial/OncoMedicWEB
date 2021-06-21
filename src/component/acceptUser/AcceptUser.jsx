@@ -159,7 +159,7 @@ const AcceptUser = ({medicData}) => {
                 !user && !skeleton &&
                     <div className="div-patients-error absolute" >
                         <div className="patiens-error-cont au">
-                            <img className="patients-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                            <img className="patients-error" alt="" src="https://firebasestorage.googleapis.com/v0/b/oncoback.appspot.com/o/images%2FdataNotFound.png?alt=media&token=6678405a-2133-4f49-8bd9-bd2f348b1962"/>
                             <p style={{fontSize: "1.3rem"}}>No se encontraron pacientes</p>
                         </div>
                     </div>
