@@ -144,19 +144,6 @@ export const CompleteProfile = () => {
             }).catch((error) => {
                 console.log("Error getting user:", error);
             });
-
-            db.collection("diaryReg").where("id","==",id).limit(6)
-            .onSnapshot((querySnapshot) => {
-                
-                let regList = querySnapshot.docs.map(doc => {
-                        return(
-                            {id:doc.id,...doc.data()}
-                            )
-                        }
-                    )
-                setRegDiario(regList)
-            })
-
         }
     },[id,update])
 
@@ -165,10 +152,24 @@ export const CompleteProfile = () => {
     },[regDiarios])
 
     useEffect(()=>{
-        
-        if(id && user.avatar){
+        console.log(user)
+        if(user && user.avatar){
             
             const db = getFirestore()
+
+            db.collection("diaryReg").where("id","==",user.id).limit(6)
+            .onSnapshot((querySnapshot) => {
+                
+                let regList = querySnapshot.docs.map(doc => {
+                        return(
+                            {id:doc.id,...doc.data()}
+                            )
+                        }
+                    )
+                    console.log("hola  ",regList)
+                setRegDiario(regList)
+            })
+
             let stringAvatar = user.avatar
             const itemCollection = db.collection("avatars").doc(stringAvatar.toString())
             itemCollection.get().then((querySnapshot) => {

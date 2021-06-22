@@ -239,14 +239,12 @@ const PatientSymptoms = ({medicData}) =>{
                                 showedSymptomsList2.length > 0 && showedSymptomsList2.map((item,key) => <ItemUser  key={key} symptom={item} desc={sympInfo.find(element => element.label===item.symptom)} handleClick={handleCloseAndOpenModal}  type="seeSymptoms"/>)
                             }
                             {
-                                (showedSymptomsList2.length ===0) ?
+                                (showedSymptomsList2.length === 0) &&
                                     <div className="patiens-error-cont">
-                                        <img className="patients-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                                        <img className="patients-error" alt="" src="https://firebasestorage.googleapis.com/v0/b/oncoback.appspot.com/o/images%2FdataNotFound.png?alt=media&token=6678405a-2133-4f49-8bd9-bd2f348b1962"/>
                                         <p style={{fontSize: "1.3rem"}}>No se encontraron sintomas</p>
-                                    </div>
-                                :null
+                                    </div> 
                             }</>
-
                             }
                         </tbody>
                     </table>

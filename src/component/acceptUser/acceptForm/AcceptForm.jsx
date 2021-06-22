@@ -22,9 +22,17 @@ const DropdownIndicator = (
     );
 };
 
+const SelectContainer = ({ children, ...props }) => {
+    return (
+        <components.SelectContainer {...props}>
+          {children}
+        </components.SelectContainer>
+    );
+  };
+
 export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     const [openModal, setOpenModal] = React.useState(false);
-    const [cancerList,setCancerList] = useState([{}])
+    const [cancerList,setCancerList] = useState([])
     const [registerDate,setRegisterDate] = useState(new Date())
     const [lastConnection,setLastConnection] = useState(new Date())
     const [name,setName] = useState("")
@@ -62,7 +70,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     const [n,setN] = useState('')  
     const [m,setM] = useState('')  
     const [estadio,setEstadio] = useState('')  
-    const [primTumor,setPrimTumor] = useState('Mama')    
+    const [primTumor,setPrimTumor] = useState('')    
     const [histology,setHistology] = useState('Option 1')  
     const [tumorTreatment,setTumorTreatment] = useState('Si')  
     const [periTreatment,setPeriTreatment] = useState('Option 1')  
@@ -95,6 +103,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                 }))
         })
     },[])
+
     
     useEffect(()=>{ 
         setDefaultMeds()
@@ -115,7 +124,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
         user.med.hip ? setMedHip(user.med.hip):setMedHip("")
         user.med.inf ? setMedInf(user.med.inf):setMedInf("")
 
-        user.cancer ? setPrimTumor(user.cancer):setPrimTumor("Mama")
+        user.cancer ? setPrimTumor(user.cancer):setPrimTumor("")
         user.histogoly ? setHistology(user.histology):setHistology("")
         user.biomarkers ? setBiomarkers(user.biomarkers):setBiomarkers([{bio: '',evaluation: 'No evaluada'}])
         user.PDL1 ? setPdl(user.PDL1):setPdl("")
@@ -137,7 +146,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     },[user])
 
     useEffect(()=>{
-        if(smoke!==0) {
+        if(smoke!=0) {
             setSmokeEnabled(true)
             setSmokeQuant(user.smoke.qnt)
             setSmokeTime(user.smoke.time)
@@ -167,14 +176,25 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     }
 
     const smokeToWord =()=>{
-        if(smoke===0) { return "No"}
-        if(smoke===1) { return "Fumo"}
-        if(smoke===2) { return "Fumaba"}
+        if(smoke==0) { return "No"}
+        if(smoke==1) { return "Fumo"}
+        if(smoke==2) { return "Fumaba"}
     }
 
     const handleDiabChanger =(diab)=>{
         diab==="No" && setDiab(0)
         diab==="Si" && setDiab(1)
+    }
+
+    const handleSex =(sex)=>{
+        sex==="Masculino" && setSex(0)
+        sex==="Femenino" && setSex(1)
+    }
+
+    const handleSexToWord =()=>{
+        console.log('sex',sex)
+        if(sex==0) { return "Masculino"}
+        if(sex==1) { return "Femenino"}
     }
 
     const handleSetPdl =(pdl)=>{
@@ -250,7 +270,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
 
     const verifyInformation=()=>{
         console.log(recaidas,'rec')
-        if (!name || !surname || !email || !hist || !surname  || !pdl || !t || !n || !m || !estadio){
+        if (!name || !surname || !email || !hist || !surname  || !pdl || !t || !n || !m || !estadio || (primTumor==="")){
             setEnableErrors(true) 
         } else {
             pushToDatabase()
@@ -335,17 +355,17 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                 <div className="af-input-line">
                     <div className="af-input-cont flex50">
                         <p className="af-input-text">Nombre</p>
-                        <input value={name} onChange={event=>setName(event.target.value)} className={`af-input`}/>
+                        <input value={name} placeHolder="Ingrese nombre" onChange={event=>setName(event.target.value)} className={`af-input`}/>
                     </div>
                     <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
                         <p className="af-input-text">Apellido</p>
-                        <input value={surname} onChange={event=>setSurname(event.target.value)}  className={`af-input ${(enableErrors && !surname)}`}/>
+                        <input value={surname} placeHolder="Ingrese apellido" onChange={event=>setSurname(event.target.value)}  className={`af-input ${(enableErrors && !surname)}`}/>
                     </div>
                 </div>
                 <div className="af-input-line">
                     <div className="af-input-cont">
                         <p className="af-input-text">Email</p>
-                        <input type="email" value={email} onChange={event=>setEmail(event.target.value)}  className={`af-input ${(enableErrors && !email)}`}/>
+                        <input type="email" placeHolder="Ingrese email" value={email} onChange={event=>setEmail(event.target.value)}  className={`af-input ${(enableErrors && !email)}`}/>
                     </div>
                 </div>
 
@@ -353,7 +373,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                     <div className="af-input-cont flex50">
                         <p className="af-input-text">Sexo (como figura en el DNI)</p>
                         <div className="select">
-                            <select value={sex} onChange={event=>setSex(event.target.value)} id="standard-select">
+                            <select value={handleSexToWord()} onChange={event=>handleSex(event.target.value)} id="standard-select">
                                 <option value="Masculino">Masculino</option>
                                 <option value="Femenino">Femenino</option>
                                 <option value="Otros">Otros</option>
@@ -362,7 +382,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                     </div>
                     <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
                         <p className="af-input-text">Numero del historial médico</p>
-                        <input type='number' value={hist} onChange={event=>setHist(event.target.value)} className={`af-input ${(enableErrors && !hist)}`}/>
+                        <input type='number' placeHolder="Ingrese historial médico" value={hist} onChange={event=>setHist(event.target.value)} className={`af-input ${(enableErrors && !hist)}`}/>
                     </div>
                 </div>
             </div>
@@ -440,9 +460,18 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                         <p className="af-input-text">Tumor Primario</p>
                         {(cancerList.length>0) &&
                             <Select id="standard-select"
-                                defaultValue={{value: primTumor, label: primTumor }}
+                                defaultValue={primTumor && {value: primTumor, label: primTumor }}
                                 closeMenuOnSelect={true}
-                                components={{animatedComponents,DropdownIndicator}}
+                                placeholder= "--Seleccione un cancer--"
+                                components={{animatedComponents,DropdownIndicator,SelectContainer}}
+                                styles={(enableErrors && (primTumor==="")) && {
+                                    container: base => ({
+                                    ...base,
+                                    backgroundColor: 'red',
+                                    borderRadius: '5px',
+                                    padding: 3,
+                                }),
+                                }}
                                 options={cancerList}
                                 onChange={e=>setPrimTumor(e.value)} 
                         />}
@@ -500,19 +529,19 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                 <div className="af-input-line">
                     <div style={{flex: '0.2 1'}} className="af-input-cont flex50" >
                         <p style={{marginLeft: '7px'}} className="af-input-text">T</p>
-                        <input value={t} onChange={e=>setT(e.target.value)} className={`af-input ${(enableErrors && !t)}`}/>
+                        <input value={t} placeHolder="Ingrese tumor" onChange={e=>setT(e.target.value)} className={`af-input ${(enableErrors && !t)}`}/>
                     </div>
                     <div style={{flex: '0.2 1',marginLeft: '10px'}} className="af-input-cont flex50" >
                         <p style={{marginLeft: '7px'}} className="af-input-text">N</p>
-                        <input value={n} onChange={e=>setN(e.target.value)} className={`af-input ${(enableErrors && !n)}`}/>
+                        <input value={n} placeHolder="Ingrese ganglio" onChange={e=>setN(e.target.value)} className={`af-input ${(enableErrors && !n)}`}/>
                     </div>
                     <div style={{flex: '0.2 1',marginLeft: '10px'}} className="af-input-cont flex50" >
                         <p style={{marginLeft: '7px'}} className="af-input-text">M</p>
-                        <input value={m} onChange={e=>setM(e.target.value)} className={`af-input ${(enableErrors && !m)}`}/>
+                        <input value={m} placeHolder="Ingrese metastasis" onChange={e=>setM(e.target.value)} className={`af-input ${(enableErrors && !m)}`}/>
                     </div>
                     <div style={{flex: '0.4 1',marginLeft: '10px'}} className="af-input-cont flex50" >
                         <p className="af-input-text">Estadio</p>
-                        <input value={estadio} onChange={e=>setEstadio(e.target.value)} className={`af-input ${(enableErrors && !estadio)}`}/>
+                        <input value={estadio} placeHolder="Ingrese estadio" onChange={e=>setEstadio(e.target.value)} className={`af-input ${(enableErrors && !estadio)}`}/>
                     </div>
                 </div>
             </div>
