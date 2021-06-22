@@ -355,17 +355,17 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                 <div className="af-input-line">
                     <div className="af-input-cont flex50">
                         <p className="af-input-text">Nombre</p>
-                        <input value={name} onChange={event=>setName(event.target.value)} className={`af-input`}/>
+                        <input value={name} placeHolder="Ingrese nombre" onChange={event=>setName(event.target.value)} className={`af-input`}/>
                     </div>
                     <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
                         <p className="af-input-text">Apellido</p>
-                        <input value={surname} onChange={event=>setSurname(event.target.value)}  className={`af-input ${(enableErrors && !surname)}`}/>
+                        <input value={surname} placeHolder="Ingrese apellido" onChange={event=>setSurname(event.target.value)}  className={`af-input ${(enableErrors && !surname)}`}/>
                     </div>
                 </div>
                 <div className="af-input-line">
                     <div className="af-input-cont">
                         <p className="af-input-text">Email</p>
-                        <input type="email" value={email} onChange={event=>setEmail(event.target.value)}  className={`af-input ${(enableErrors && !email)}`}/>
+                        <input type="email" placeHolder="Ingrese email" value={email} onChange={event=>setEmail(event.target.value)}  className={`af-input ${(enableErrors && !email)}`}/>
                     </div>
                 </div>
 
@@ -382,7 +382,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                     </div>
                     <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>
                         <p className="af-input-text">Numero del historial médico</p>
-                        <input type='number' value={hist} onChange={event=>setHist(event.target.value)} className={`af-input ${(enableErrors && !hist)}`}/>
+                        <input type='number' placeHolder="Ingrese historial médico" value={hist} onChange={event=>setHist(event.target.value)} className={`af-input ${(enableErrors && !hist)}`}/>
                     </div>
                 </div>
             </div>
@@ -528,19 +528,19 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                 <div className="af-input-line">
                     <div style={{flex: '0.2 1'}} className="af-input-cont flex50" >
                         <p style={{marginLeft: '7px'}} className="af-input-text">T</p>
-                        <input value={t} onChange={e=>setT(e.target.value)} className={`af-input ${(enableErrors && !t)}`}/>
+                        <input value={t} placeHolder="Ingrese tumor" onChange={e=>setT(e.target.value)} className={`af-input ${(enableErrors && !t)}`}/>
                     </div>
                     <div style={{flex: '0.2 1',marginLeft: '10px'}} className="af-input-cont flex50" >
                         <p style={{marginLeft: '7px'}} className="af-input-text">N</p>
-                        <input value={n} onChange={e=>setN(e.target.value)} className={`af-input ${(enableErrors && !n)}`}/>
+                        <input value={n} placeHolder="Ingrese ganglio" onChange={e=>setN(e.target.value)} className={`af-input ${(enableErrors && !n)}`}/>
                     </div>
                     <div style={{flex: '0.2 1',marginLeft: '10px'}} className="af-input-cont flex50" >
                         <p style={{marginLeft: '7px'}} className="af-input-text">M</p>
-                        <input value={m} onChange={e=>setM(e.target.value)} className={`af-input ${(enableErrors && !m)}`}/>
+                        <input value={m} placeHolder="Ingrese metastasis" onChange={e=>setM(e.target.value)} className={`af-input ${(enableErrors && !m)}`}/>
                     </div>
                     <div style={{flex: '0.4 1',marginLeft: '10px'}} className="af-input-cont flex50" >
                         <p className="af-input-text">Estadio</p>
-                        <input value={estadio} onChange={e=>setEstadio(e.target.value)} className={`af-input ${(enableErrors && !estadio)}`}/>
+                        <input value={estadio} placeHolder="Ingrese estadio" onChange={e=>setEstadio(e.target.value)} className={`af-input ${(enableErrors && !estadio)}`}/>
                     </div>
                 </div>
             </div>
