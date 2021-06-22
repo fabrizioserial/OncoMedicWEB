@@ -32,7 +32,7 @@ const SelectContainer = ({ children, ...props }) => {
 
 export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     const [openModal, setOpenModal] = React.useState(false);
-    const [cancerList,setCancerList] = useState([{ value: 0, label: '--Seleccione un cancer--' }])
+    const [cancerList,setCancerList] = useState([])
     const [registerDate,setRegisterDate] = useState(new Date())
     const [lastConnection,setLastConnection] = useState(new Date())
     const [name,setName] = useState("")
@@ -70,7 +70,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     const [n,setN] = useState('')  
     const [m,setM] = useState('')  
     const [estadio,setEstadio] = useState('')  
-    const [primTumor,setPrimTumor] = useState('--Seleccione un cancer--')    
+    const [primTumor,setPrimTumor] = useState('')    
     const [histology,setHistology] = useState('Option 1')  
     const [tumorTreatment,setTumorTreatment] = useState('Si')  
     const [periTreatment,setPeriTreatment] = useState('Option 1')  
@@ -124,7 +124,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
         user.med.hip ? setMedHip(user.med.hip):setMedHip("")
         user.med.inf ? setMedInf(user.med.inf):setMedInf("")
 
-        user.cancer ? setPrimTumor(user.cancer):setPrimTumor("--Seleccione un cancer--")
+        user.cancer ? setPrimTumor(user.cancer):setPrimTumor("")
         user.histogoly ? setHistology(user.histology):setHistology("")
         user.biomarkers ? setBiomarkers(user.biomarkers):setBiomarkers([{bio: '',evaluation: 'No evaluada'}])
         user.PDL1 ? setPdl(user.PDL1):setPdl("")
@@ -270,7 +270,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
 
     const verifyInformation=()=>{
         console.log(recaidas,'rec')
-        if (!name || !surname || !email || !hist || !surname  || !pdl || !t || !n || !m || !estadio || (primTumor==="--Seleccione un cancer--")){
+        if (!name || !surname || !email || !hist || !surname  || !pdl || !t || !n || !m || !estadio || (primTumor==="")){
             setEnableErrors(true) 
         } else {
             pushToDatabase()
@@ -460,10 +460,11 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                         <p className="af-input-text">Tumor Primario</p>
                         {(cancerList.length>0) &&
                             <Select id="standard-select"
-                                defaultValue={{value: primTumor, label: primTumor }}
+                                defaultValue={primTumor && {value: primTumor, label: primTumor }}
                                 closeMenuOnSelect={true}
+                                placeholder= "--Seleccione un cancer--"
                                 components={{animatedComponents,DropdownIndicator,SelectContainer}}
-                                styles={(enableErrors && (primTumor==="--Seleccione un cancer--")) && {
+                                styles={(enableErrors && (primTumor==="")) && {
                                     container: base => ({
                                     ...base,
                                     backgroundColor: 'red',
