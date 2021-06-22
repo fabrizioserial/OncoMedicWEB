@@ -266,9 +266,9 @@ const UserTabAllUsers = ({medicData}) => {
                                 (inactiveShowedUserList.length > 0) && inactiveShowedUserList.map((item,key) => <ItemUser image={images.find(element =>element.id===item.avatar)} key={key} user={item} type="seeAllUsers" handleClick={handleClick} />)
                             }
                             {
-                                (showedUserList.length ===0 && inactiveShowedUserList.length === 0) ?
+                                (loading === false && showedUserList.length === 0 && inactiveShowedUserList.length === 0) ?
                                     <div className="patiens-error-cont">
-                                        <img className="patients-error" alt="" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                                        <img className="patients-error" alt="" src="https://firebasestorage.googleapis.com/v0/b/oncoback.appspot.com/o/images%2FdataNotFound.png?alt=media&token=6678405a-2133-4f49-8bd9-bd2f348b1962"/>
                                         <p style={{fontSize: "1.3rem"}}>No se encontraron pacientes</p>
                                     </div>
                                 :null

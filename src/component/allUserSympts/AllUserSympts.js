@@ -157,7 +157,7 @@ const AllUserSympts = ({medicData}) =>{
                             }
                         </tbody>
                     </table>
-                    {showedSymptomsList && <button className="userall-btn-load-more">Cargar mas</button>}
+                    {showedSymptomsList && showedSymptomsList.length > 0 && <button className="userall-btn-load-more">Cargar mas</button>}
                 </div>
                 <MySnackbar
                         severity={severity}
