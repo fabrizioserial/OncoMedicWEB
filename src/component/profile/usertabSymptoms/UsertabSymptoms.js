@@ -60,7 +60,7 @@ export const UsertabSymptoms=({sympstoms,descs,id})=> {
                 )
                 :
                 <div className="sintoms-img-error-cont">
-                  <img alt="" className="sintoms-img-error" src="https://www.clicktoko.com/assets/images/nodata.png"/>
+                  <img alt="" className="sintoms-img-error" src="https://firebasestorage.googleapis.com/v0/b/oncoback.appspot.com/o/images%2FdataNotFound.png?alt=media&token=6678405a-2133-4f49-8bd9-bd2f348b1962"/>
                   <p>No se encontró registro de sintomas</p>
                 </div>
                 }

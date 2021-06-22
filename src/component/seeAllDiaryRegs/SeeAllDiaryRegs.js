@@ -196,21 +196,29 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                     <div className="userall-cont-cont">
                         <SearchTab  elCAt={handleElCat} warnBar={handleWarnBar} reTitle={reTitle} refresh={refresh}  handleClick={handleSearch} categories={["FECHA","ANIMO","DOLOR"]} />
                         <div className="userall-cont-info-allUsers">
-                            <table class="userall-big-table">
-                                <thead>
-                                <tr>
-                                    <th style={{paddingLeft: "5%"}} className="alldiarys-th" scope="col">FECHA</th>
-                                    <th className="alldiarys-th" scope="col">ANIMO</th>
-                                    <th className="alldiarys-th" scope="col">DOLOR</th>
-                                    <th className="alldiarys-th" scope="col">HAMBRE</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    (showedRegList.length > 0) && showedRegList.map((item,key) => <ItemUser handleClick={handleClick} key={key} type="allRegs" daily={item}/>)
-                                }
-                                </tbody>
-                            </table>
+                            {
+                            regList && regList.length > 0 ?
+                                <table class="userall-big-table">
+                                    <thead>
+                                    <tr>
+                                        <th style={{paddingLeft: "5%"}} className="alldiarys-th" scope="col">FECHA</th>
+                                        <th className="alldiarys-th" scope="col">ANIMO</th>
+                                        <th className="alldiarys-th" scope="col">DOLOR</th>
+                                        <th className="alldiarys-th" scope="col">HAMBRE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {
+                                        (showedRegList.length > 0) && showedRegList.map((item,key) => <ItemUser handleClick={handleClick} key={key} type="allRegs" daily={item}/>)
+                                    }
+                                    </tbody>
+                                </table>
+                            :
+                            <div className="patiens-error-cont">
+                                <img className="patients-error" alt="" src="https://firebasestorage.googleapis.com/v0/b/oncoback.appspot.com/o/images%2FdataNotFound.png?alt=media&token=6678405a-2133-4f49-8bd9-bd2f348b1962"/>
+                                <p style={{fontSize: "1.3rem"}}>No se encontraron sintomas</p>
+                            </div>
+                            }
                         </div>
 
                     </div>
