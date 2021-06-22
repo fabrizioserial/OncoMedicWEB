@@ -9,6 +9,7 @@ import { SearchTab } from '../seeAllUsers/searchTab/SearchTab';
 import { connect } from 'react-redux';
 import { MySnackbar } from '../mySnackBar/MySnackbar';
 import moment from 'moment';
+import { Skeleton } from '@material-ui/lab';
 
 
 
@@ -41,7 +42,7 @@ const AllUserSympts = ({medicData}) =>{
                                 console.log("El usuario encontrado es: ",userFound)
 
                 setUser(userFound)
-                setLoad(false)
+                startTimer()
                 if(userFound.name===null){
                     setUserNotFound(true)
                 }
@@ -74,6 +75,12 @@ const AllUserSympts = ({medicData}) =>{
             setSympInfo(sympList)})
         }
     },[id,update])
+
+    const startTimer = () =>{
+        setTimeout(function(){
+            setLoad(false)
+        }.bind(this),1500)
+    }
 
     const handleElCat = (name) => {
         setShowedSymptomsList(symptomsList)
@@ -143,17 +150,38 @@ const AllUserSympts = ({medicData}) =>{
                     <table class="userall-big-table">
                         <thead className="userall-thead-sympts">
                             <tr>
-                            <th className="patientsymptoms-th-empty" scope="col"></th>
-                            <th className="patientsymptoms-th-fecha" scope="col">FECHA</th>
-                            <th className="patientsymptoms-th-symptom" scope="col">SINTOMA</th>
-                            <th className="patientsymptoms-th-grade" scope="col">GRADO</th>
-                            <th className="patientsymptoms-th-grade" scope="col">RESPUESTA</th>
-                            <th className="patientsymptoms-th-empty" scope="col"></th>
+                            {!(showedSymptomsList.length ===0 && showedSymptomsList.length === 0 && !load) && <th className="patientsymptoms-th-empty" scope="col"></th>}
+                            {!(showedSymptomsList.length ===0 && showedSymptomsList.length === 0 && !load) && <th className="patientsymptoms-th-fecha" scope="col">FECHA</th>}
+                            {!(showedSymptomsList.length ===0 && showedSymptomsList.length === 0 && !load) && <th className="patientsymptoms-th-symptom" scope="col">SINTOMA</th>}
+                            {!(showedSymptomsList.length ===0 && showedSymptomsList.length === 0 && !load) && <th className="patientsymptoms-th-grade" scope="col">GRADO</th>}
+                            {!(showedSymptomsList.length ===0 && showedSymptomsList.length === 0 && !load) && <th className="patientsymptoms-th-grade" scope="col">RESPUESTA</th>}
+                            {!(showedSymptomsList.length ===0 && showedSymptomsList.length === 0 && !load) && <th className="patientsymptoms-th-empty" scope="col"></th>}
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                                showedSymptomsList.length > 0 && showedSymptomsList.map((item,key) => <ItemUser key={key} symptom={item} desc={sympInfo.find(element => element.label===item.symptom)}   type="seeUserSymptoms"/>)
+                            { load ? 
+                                <>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2450%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2450%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2450%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2450%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2450%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2450%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2450%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2450%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2450%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2450%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2450%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2450%"} height={"41px"}></Skeleton>
+                                <Skeleton style={{marginBottom: '18%'}} variant="rect" animation="wave" width={"2450%"} height={"41px"}></Skeleton>
+                            </>
+                            :
+                                showedSymptomsList.length > 0 ? showedSymptomsList.map((item,key) => <ItemUser key={key} symptom={item} desc={sympInfo.find(element => element.label===item.symptom)}   type="seeUserSymptoms"/>)
+                                : 
+                                <div className="patiens-error-cont">
+                                        <img className="patients-error" alt="" src="https://firebasestorage.googleapis.com/v0/b/oncoback.appspot.com/o/images%2FdataNotFound.png?alt=media&token=6678405a-2133-4f49-8bd9-bd2f348b1962"/>
+                                        <p style={{fontSize: "1.3rem"}}>No se encontraron sintomas</p>
+                                </div> 
                             }
                         </tbody>
                     </table>

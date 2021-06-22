@@ -11,6 +11,7 @@ import { ButtonGoBack } from '../seeAllUsers/ButtonGoBack'
 import { ItemUser } from '../ItemUser/ItemUser'
 import { SearchTab } from '../seeAllUsers/searchTab/SearchTab'
 import { MySnackbar } from '../mySnackBar/MySnackbar'
+import { Skeleton } from '@material-ui/lab';
 
 const SeeAllDiaryRegs = ({medicData}) =>{
     const {id} = useParams()
@@ -29,6 +30,7 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     const [message,setMessage] = useState("")
     const [reTitle,setRetitle] = useState(false)
     const [refresh,setRefresh] = useState(false)
+    const [load,setLoad] = useState(true)
 
 
     useEffect(()=>{
@@ -55,8 +57,10 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                     let userFound ={id:doc.id,...doc.data()}
                     console.log("El usuario encontrado es: ",userFound)
                     setUser(userFound)
+                    startTimer()
                 } else {
                     setUserNotFound(true)
+                    startTimer()
                 }
             }).catch((error) => {
                 console.log("Error getting user:", error);
@@ -64,6 +68,12 @@ const SeeAllDiaryRegs = ({medicData}) =>{
 
         }
     },[id])
+
+    const startTimer = () =>{
+        setTimeout(function(){
+            setLoad(false)
+        }.bind(this),2000)
+    }
 
     useEffect(()=>{
         setRegsList(regList.sort(function (a, b) {
@@ -171,6 +181,12 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     function handleCloseDiario(){
         setOpenModalDiario(false);
     }
+
+    useEffect(()=>{
+        console.log('load')
+        setLoad(true)
+        startTimer()
+    },[calendar])
       
     return (
         <>
@@ -197,7 +213,7 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                         <SearchTab  elCAt={handleElCat} warnBar={handleWarnBar} reTitle={reTitle} refresh={refresh}  handleClick={handleSearch} categories={["FECHA","ANIMO","DOLOR"]} />
                         <div className="userall-cont-info-allUsers">
                             {
-                            regList && regList.length > 0 ?
+                            (regList.length > 0 || load )?
                                 <table class="userall-big-table">
                                     <thead>
                                     <tr>
@@ -208,7 +224,26 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {
+                                    { load ? 
+                                        <>
+                                            <Skeleton style={{marginBottom: '2%',marginTop: '2%'}}  variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                            <Skeleton style={{marginBottom: '2%'}} variant="rect" animation="wave" width={"400%"} height={"41px"}></Skeleton>
+                                        </>
+                                    :
                                         (showedRegList.length > 0) && showedRegList.map((item,key) => <ItemUser handleClick={handleClick} key={key} type="allRegs" daily={item}/>)
                                     }
                                     </tbody>
@@ -216,7 +251,7 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                             :
                             <div className="patiens-error-cont">
                                 <img className="patients-error" alt="" src="https://firebasestorage.googleapis.com/v0/b/oncoback.appspot.com/o/images%2FdataNotFound.png?alt=media&token=6678405a-2133-4f49-8bd9-bd2f348b1962"/>
-                                <p style={{fontSize: "1.3rem"}}>No se encontraron sintomas</p>
+                                <p style={{fontSize: "1.3rem"}}>No se encontraron registros diarios</p>
                             </div>
                             }
                         </div>
