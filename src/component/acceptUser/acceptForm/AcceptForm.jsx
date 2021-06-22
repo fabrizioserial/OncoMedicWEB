@@ -137,7 +137,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     },[user])
 
     useEffect(()=>{
-        if(smoke!==0) {
+        if(smoke!=0) {
             setSmokeEnabled(true)
             setSmokeQuant(user.smoke.qnt)
             setSmokeTime(user.smoke.time)
@@ -167,9 +167,9 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     }
 
     const smokeToWord =()=>{
-        if(smoke===0) { return "No"}
-        if(smoke===1) { return "Fumo"}
-        if(smoke===2) { return "Fumaba"}
+        if(smoke==0) { return "No"}
+        if(smoke==1) { return "Fumo"}
+        if(smoke==2) { return "Fumaba"}
     }
 
     const handleDiabChanger =(diab)=>{
