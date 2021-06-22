@@ -12,6 +12,8 @@ import { ItemUser } from '../ItemUser/ItemUser'
 import { SearchTab } from '../seeAllUsers/searchTab/SearchTab'
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import { Skeleton } from '@material-ui/lab';
+import { useHistory } from 'react-router-dom';
+
 
 const SeeAllDiaryRegs = ({medicData}) =>{
     const {id} = useParams()
@@ -31,28 +33,25 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     const [reTitle,setRetitle] = useState(false)
     const [refresh,setRefresh] = useState(false)
     const [load,setLoad] = useState(true)
+    const history = useHistory();
 
+
+    const handleNotFound = ()=>{
+        history.push('/notfound/login')   
+    }
 
     useEffect(()=>{
+        medicData && medicData.name === "" && handleNotFound()
         if(id){
             setUserNotFound(false)
             const db = getFirestore()
             const itemCollection = db.collection("diaryReg")
                         
-            itemCollection.onSnapshot((querySnapshot) => {
-            
-                let regList = querySnapshot.docs.map(doc => {
-                        return(
-                                doc.data().id === id && doc.data()
-                            )
-                        }
-                    )
-                setRegsList(regList.filter(item => item !== false))
-            })
+
 
             db.collection("users").doc(id)
             
-            itemCollection.get().then((doc) => {
+            db.collection("users").doc(id).get().then((doc) => {
                 if (doc.exists) {
                     let userFound ={id:doc.id,...doc.data()}
                     console.log("El usuario encontrado es: ",userFound)
@@ -68,6 +67,23 @@ const SeeAllDiaryRegs = ({medicData}) =>{
 
         }
     },[id])
+
+    useEffect(()=>{
+        if(user){
+            const db = getFirestore()
+            const itemCollection = db.collection("diaryReg")
+            itemCollection.onSnapshot((querySnapshot) => {
+            
+            let regList = querySnapshot.docs.map(doc => {
+                    return(
+                            doc.data().id === user.id && doc.data()
+                        )
+                    }
+                )
+            setRegsList(regList.filter(item => item !== false))
+            })
+        }
+    },[user])
 
     const startTimer = () =>{
         setTimeout(function(){
