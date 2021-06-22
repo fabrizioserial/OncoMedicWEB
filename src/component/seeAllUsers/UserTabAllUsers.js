@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState,useLayoutEffect} from 'react'
 import { useHistory } from 'react-router-dom';
 import './UserTabAllUsers.css'
 import { ButtonGoBack } from './ButtonGoBack'
@@ -32,6 +32,20 @@ const UserTabAllUsers = ({medicData}) => {
     const [reTitle,setRetitle] = useState(false)
     const [loading,setLoading] = useState(true)
     const history = useHistory();
+    const [width] = useWindowSize();
+
+    function useWindowSize() {
+        const [size, setSize] = useState([0, 0]);
+        useLayoutEffect(() => {
+            function updateSize() {
+            setSize([window.innerWidth, window.innerHeight]);
+            }
+            window.addEventListener('resize', updateSize);
+            updateSize();
+            return () => window.removeEventListener('resize', updateSize);
+        }, []);
+        return size;
+    }
 
     const switchToProfle = () => history.push(`/profile/${user.id}`);
   
@@ -214,7 +228,7 @@ const UserTabAllUsers = ({medicData}) => {
         setMedic(medicData)
       },[medicData, setMedic])
 
-    return(
+      return(
         <div className="userall-cont-background">
 
             <div className="userall-head">
@@ -224,37 +238,101 @@ const UserTabAllUsers = ({medicData}) => {
 
             <div className="userall-cont-cont">
                 <SearchTab elCAt={handleElCat} warnBar={handleWarnBar} reTitle={reTitle} refresh={refresh} categories={["N PACIENTE","NOMBRE","CANCER","ACTIVOS","INACTIVOS"]} handleClick={handleSearch}/>
-
-
-
                 <div className="userall-cont-info-allUsers">
                     <table class="userall-big-table">
-                        <thead className="userall-thead-allUsers">
+                        <thead className="userall-thead-sympts">
                             <tr>
-                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '7vw'}} scope="col"></th>}
                             {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '14vw'}} scope="col">N PACIENTE</th>}
                             {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0  && !loading) && <th style={{width: '28vw'}} scope="col">NOMBRE</th>}
                             {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '20vw'}} scope="col">TIPO DE CANCER</th>}
                             {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th scope="col">ESTADO</th>}
-                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th scope="col"></th>}
                             </tr>
                         </thead>
                         <tbody>
-                        {loading ?
-                            <>
-                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
-                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
-                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
-                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
-                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
-                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
-                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
-                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
-                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
-                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
-                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
-                                <Skeleton style={{marginBottom: '9%'}} variant="rect" animation="wave" width={"1147%"} height={"43px"}></Skeleton>
-                            </>
+                        {!refresh ?
+                        <>
+                            <tr style={{width: '100%'}}>
+                                <td><Skeleton  variant="rect" animation="wave" width={'101%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.4%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.3%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100%'} height={"41px"}></Skeleton></td>
+           
+                            </tr>
+                            <tr style={{width: '100%'}}>
+                                <td><Skeleton  variant="rect" animation="wave" width={'101%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.4%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.3%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100%'} height={"41px"}></Skeleton></td>
+                            </tr>
+                            <tr style={{width: '100%'}}>
+                                <td><Skeleton  variant="rect" animation="wave" width={'101%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.4%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.3%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100%'} height={"41px"}></Skeleton></td>
+                            </tr>
+                            <tr style={{width: '100%'}}>
+                                <td><Skeleton  variant="rect" animation="wave" width={'101%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.4%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.3%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100%'} height={"41px"}></Skeleton></td>
+                            </tr>
+                            <tr style={{width: '100%'}}>
+                                <td><Skeleton  variant="rect" animation="wave" width={'101%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.4%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.3%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100%'} height={"41px"}></Skeleton></td>
+                            </tr>
+                            <tr style={{width: '100%'}}>
+                                <td><Skeleton  variant="rect" animation="wave" width={'101%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.4%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.3%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100%'} height={"41px"}></Skeleton></td>
+                            </tr>
+                            <tr style={{width: '100%'}}>
+                                <td><Skeleton  variant="rect" animation="wave" width={'101%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.4%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.3%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100%'} height={"41px"}></Skeleton></td>
+                            </tr>
+                            <tr style={{width: '100%'}}>
+                                <td><Skeleton  variant="rect" animation="wave" width={'101%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.4%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.3%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100%'} height={"41px"}></Skeleton></td>
+                            </tr>
+                            <tr style={{width: '100%'}}>
+                                <td><Skeleton  variant="rect" animation="wave" width={'101%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.4%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.3%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100%'} height={"41px"}></Skeleton></td>
+                            </tr>
+                            <tr style={{width: '100%'}}>
+                                <td><Skeleton  variant="rect" animation="wave" width={'101%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.4%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.3%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100%'} height={"41px"}></Skeleton></td>
+                            </tr>
+                            <tr style={{width: '100%'}}>
+                                <td><Skeleton  variant="rect" animation="wave" width={'101%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.4%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.3%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100%'} height={"41px"}></Skeleton></td>
+                            </tr>
+                            <tr style={{width: '100%'}}>
+                                <td><Skeleton  variant="rect" animation="wave" width={'101%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.4%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.3%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100%'} height={"41px"}></Skeleton></td>
+                            </tr>
+                            <tr style={{width: '100%'}}>
+                                <td><Skeleton  variant="rect" animation="wave" width={'101%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.4%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100.3%'} height={"41px"}></Skeleton></td>
+                                <td><Skeleton  variant="rect" animation="wave" width={'100%'} height={"41px"}></Skeleton></td>
+                            </tr>
+                            
+                            
+                        </>
                             :
                             <>
                             {
@@ -274,6 +352,10 @@ const UserTabAllUsers = ({medicData}) => {
                                 :null
                             }
                             </>}
+
+                        </tbody>
+                    </table>
+                </div>
                             <Menu className="menu-see-all-users"
                                 id={id}
                                 open={open}
@@ -298,10 +380,6 @@ const UserTabAllUsers = ({medicData}) => {
                                 closeModal={handleCloseModal}
                                 handleEliminate={handleEliminate}
                             />     
-
-                        </tbody>
-                    </table>
-                </div>
                 <MySnackbar
                         severity={severity}
                         message={message}

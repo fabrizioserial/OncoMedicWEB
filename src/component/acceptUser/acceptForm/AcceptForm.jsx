@@ -22,9 +22,17 @@ const DropdownIndicator = (
     );
 };
 
+const SelectContainer = ({ children, ...props }) => {
+    return (
+        <components.SelectContainer {...props}>
+          {children}
+        </components.SelectContainer>
+    );
+  };
+
 export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     const [openModal, setOpenModal] = React.useState(false);
-    const [cancerList,setCancerList] = useState([{}])
+    const [cancerList,setCancerList] = useState([{ value: 0, label: '--Seleccione un cancer--' }])
     const [registerDate,setRegisterDate] = useState(new Date())
     const [lastConnection,setLastConnection] = useState(new Date())
     const [name,setName] = useState("")
@@ -62,7 +70,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     const [n,setN] = useState('')  
     const [m,setM] = useState('')  
     const [estadio,setEstadio] = useState('')  
-    const [primTumor,setPrimTumor] = useState('Ano')    
+    const [primTumor,setPrimTumor] = useState('--Seleccione un cancer--')    
     const [histology,setHistology] = useState('Option 1')  
     const [tumorTreatment,setTumorTreatment] = useState('Si')  
     const [periTreatment,setPeriTreatment] = useState('Option 1')  
@@ -95,6 +103,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                 }))
         })
     },[])
+
     
     useEffect(()=>{ 
         setDefaultMeds()
@@ -115,7 +124,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
         user.med.hip ? setMedHip(user.med.hip):setMedHip("")
         user.med.inf ? setMedInf(user.med.inf):setMedInf("")
 
-        user.cancer ? setPrimTumor(user.cancer):setPrimTumor("Ano")
+        user.cancer ? setPrimTumor(user.cancer):setPrimTumor("--Seleccione un cancer--")
         user.histogoly ? setHistology(user.histology):setHistology("")
         user.biomarkers ? setBiomarkers(user.biomarkers):setBiomarkers([{bio: '',evaluation: 'No evaluada'}])
         user.PDL1 ? setPdl(user.PDL1):setPdl("")
@@ -175,6 +184,17 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     const handleDiabChanger =(diab)=>{
         diab==="No" && setDiab(0)
         diab==="Si" && setDiab(1)
+    }
+
+    const handleSex =(sex)=>{
+        sex==="Masculino" && setSex(0)
+        sex==="Femenino" && setSex(1)
+    }
+
+    const handleSexToWord =()=>{
+        console.log('sex',sex)
+        if(sex==0) { return "Masculino"}
+        if(sex==1) { return "Femenino"}
     }
 
     const handleSetPdl =(pdl)=>{
@@ -250,7 +270,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
 
     const verifyInformation=()=>{
         console.log(recaidas,'rec')
-        if (!name || !surname || !email || !hist || !surname  || !pdl || !t || !n || !m || !estadio){
+        if (!name || !surname || !email || !hist || !surname  || !pdl || !t || !n || !m || !estadio || (primTumor==="--Seleccione un cancer--")){
             setEnableErrors(true) 
         } else {
             pushToDatabase()
@@ -353,7 +373,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                     <div className="af-input-cont flex50">
                         <p className="af-input-text">Sexo (como figura en el DNI)</p>
                         <div className="select">
-                            <select value={sex} onChange={event=>setSex(event.target.value)} id="standard-select">
+                            <select value={handleSexToWord()} onChange={event=>handleSex(event.target.value)} id="standard-select">
                                 <option value="Masculino">Masculino</option>
                                 <option value="Femenino">Femenino</option>
                                 <option value="Otros">Otros</option>
@@ -442,7 +462,15 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                             <Select id="standard-select"
                                 defaultValue={{value: primTumor, label: primTumor }}
                                 closeMenuOnSelect={true}
-                                components={{animatedComponents,DropdownIndicator}}
+                                components={{animatedComponents,DropdownIndicator,SelectContainer}}
+                                styles={(enableErrors && (primTumor==="--Seleccione un cancer--")) && {
+                                    container: base => ({
+                                    ...base,
+                                    backgroundColor: 'red',
+                                    borderRadius: '5px',
+                                    padding: 3,
+                                }),
+                                }}
                                 options={cancerList}
                                 onChange={e=>setPrimTumor(e.value)} 
                         />}
