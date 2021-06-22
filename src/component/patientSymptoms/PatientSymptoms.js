@@ -245,7 +245,6 @@ const PatientSymptoms = ({medicData}) =>{
                                         <p style={{fontSize: "1.3rem"}}>No se encontraron sintomas</p>
                                     </div> 
                             }</>
-
                             }
                         </tbody>
                     </table>
