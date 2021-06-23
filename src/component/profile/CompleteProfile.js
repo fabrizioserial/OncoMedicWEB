@@ -144,9 +144,14 @@ export const CompleteProfile = () => {
             }).catch((error) => {
                 console.log("Error getting user:", error);
             });
+        }
+    },[id,update])
 
-            db.collection("diaryReg").where("id","==",id).limit(6)
-            .onSnapshot((querySnapshot) => {
+    useEffect(()=>{
+        if (user.id){
+            const db = getFirestore()
+            const itemCollection = db.collection("diaryReg").where("id","==",user.id).limit(6)
+            itemCollection.onSnapshot((querySnapshot) => {
                 
                 let regList = querySnapshot.docs.map(doc => {
                         return(
@@ -156,12 +161,11 @@ export const CompleteProfile = () => {
                     )
                 setRegDiario(regList)
             })
-
         }
-    },[id,update])
+    },[user])
 
     useEffect(()=>{
-            listEvents()
+        listEvents()
     },[regDiarios])
 
     useEffect(()=>{

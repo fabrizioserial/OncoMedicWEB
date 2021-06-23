@@ -35,23 +35,9 @@ const SeeAllDiaryRegs = ({medicData}) =>{
 
     useEffect(()=>{
         if(id){
-            setUserNotFound(false)
             const db = getFirestore()
-            const itemCollection = db.collection("diaryReg")
-                        
-            itemCollection.onSnapshot((querySnapshot) => {
-            
-                let regList = querySnapshot.docs.map(doc => {
-                        return(
-                                doc.data().id === id && doc.data()
-                            )
-                        }
-                    )
-                setRegsList(regList.filter(item => item !== false))
-            })
-
-            db.collection("users").doc(id)
-            
+            const itemCollection =  db.collection("users").doc(id)
+            setUserNotFound(false)
             itemCollection.get().then((doc) => {
                 if (doc.exists) {
                     let userFound ={id:doc.id,...doc.data()}
@@ -68,6 +54,24 @@ const SeeAllDiaryRegs = ({medicData}) =>{
 
         }
     },[id])
+
+    useEffect(()=>{
+        console.log('us',user)
+        const db = getFirestore()
+        const itemCollection = db.collection("diaryReg")
+                    
+        itemCollection.onSnapshot((querySnapshot) => {
+        
+            let regList = querySnapshot.docs.map(doc => {
+                    return(
+                            doc.data().id === user.id && doc.data()
+                        )
+                    }
+                )
+            setRegsList(regList.filter(item => item !== false))
+        })
+
+    },[user])
 
     const startTimer = () =>{
         setTimeout(function(){
