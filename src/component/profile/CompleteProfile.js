@@ -159,6 +159,7 @@ export const CompleteProfile = () => {
                             )
                         }
                     )
+                    console.log("hola  ",regList)
                 setRegDiario(regList)
             })
         }

@@ -12,6 +12,8 @@ import { ItemUser } from '../ItemUser/ItemUser'
 import { SearchTab } from '../seeAllUsers/searchTab/SearchTab'
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import { Skeleton } from '@material-ui/lab';
+import { useHistory } from 'react-router-dom';
+
 
 const SeeAllDiaryRegs = ({medicData}) =>{
     const {id} = useParams()
@@ -31,9 +33,15 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     const [reTitle,setRetitle] = useState(false)
     const [refresh,setRefresh] = useState(false)
     const [load,setLoad] = useState(true)
+    const history = useHistory();
 
+
+    const handleNotFound = ()=>{
+        history.push('/notfound/login')   
+    }
 
     useEffect(()=>{
+        medicData && medicData.name === "" && handleNotFound()
         if(id){
             const db = getFirestore()
             const itemCollection =  db.collection("users").doc(id)
