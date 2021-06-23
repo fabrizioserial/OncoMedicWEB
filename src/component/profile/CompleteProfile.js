@@ -233,6 +233,7 @@ export const CompleteProfile = () => {
               chart: {
                 height: 460,
                 type: 'area',
+                width: '80vw',
                 defaultLocale:'es',
                 locales: [{
                     name: 'es',
@@ -254,6 +255,7 @@ export const CompleteProfile = () => {
                 }]
               },
               fill: {
+                width: '80vw',
                 type: "gradient",
                 gradient: {
                 shadeIntensity: 1,
@@ -366,7 +368,7 @@ export const CompleteProfile = () => {
                 <ProfileTab id={id} handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
                {graph &&  <div className="profile-chart-cont">
                     {
-                     serie && <ReactApexChart options={options} series={serie} type="area" height={450} />
+                     serie && <ReactApexChart options={options} series={serie} width={'350%'} type="area" height={450} />
                      }
                 </div>}
                 <div className="two-squares-complete-profile">
