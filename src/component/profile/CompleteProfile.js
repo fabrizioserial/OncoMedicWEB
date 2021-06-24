@@ -10,7 +10,7 @@ import moment from 'moment'
 import { makeStyles } from "@material-ui/core/styles";
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import { Skeleton } from '@material-ui/lab'
-import ReactApexChart from '../../../node_modules/react-apexcharts'
+import Chart from 'react-apexcharts'
 import { useHistory } from 'react-router-dom';
 
 
@@ -233,7 +233,6 @@ export const CompleteProfile = () => {
               chart: {
                 height: 460,
                 type: 'area',
-                width: '80vw',
                 defaultLocale:'es',
                 locales: [{
                     name: 'es',
@@ -255,7 +254,6 @@ export const CompleteProfile = () => {
                 }]
               },
               fill: {
-                width: '80vw',
                 type: "gradient",
                 gradient: {
                 shadeIntensity: 1,
@@ -368,8 +366,8 @@ export const CompleteProfile = () => {
                 <ProfileTab id={id} handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
                {graph &&  <div className="profile-chart-cont">
                     {
-                     serie && <ReactApexChart options={options} series={serie} width={'350%'} type="area" height={450} />
-                     }
+                        serie && <Chart options={options} series={serie} width={'100%'} type="area" height={450} />
+                    }
                 </div>}
                 <div className="two-squares-complete-profile">
                     <div className="estado-usertab-cont-background">
