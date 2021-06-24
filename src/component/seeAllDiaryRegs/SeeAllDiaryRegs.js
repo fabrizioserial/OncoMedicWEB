@@ -43,15 +43,10 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     useEffect(()=>{
         medicData && medicData.name === "" && handleNotFound()
         if(id){
-            setUserNotFound(false)
             const db = getFirestore()
-            const itemCollection = db.collection("diaryReg")
-                        
-
-
-            db.collection("users").doc(id)
-            
-            db.collection("users").doc(id).get().then((doc) => {
+            const itemCollection =  db.collection("users").doc(id)
+            setUserNotFound(false)
+            itemCollection.get().then((doc) => {
                 if (doc.exists) {
                     let userFound ={id:doc.id,...doc.data()}
                     console.log("El usuario encontrado es: ",userFound)
@@ -69,11 +64,12 @@ const SeeAllDiaryRegs = ({medicData}) =>{
     },[id])
 
     useEffect(()=>{
-        if(user){
-            const db = getFirestore()
-            const itemCollection = db.collection("diaryReg")
-            itemCollection.onSnapshot((querySnapshot) => {
-            
+        console.log('us',user)
+        const db = getFirestore()
+        const itemCollection = db.collection("diaryReg")
+                    
+        itemCollection.onSnapshot((querySnapshot) => {
+        
             let regList = querySnapshot.docs.map(doc => {
                     return(
                             doc.data().id === user.id && doc.data()
@@ -81,8 +77,8 @@ const SeeAllDiaryRegs = ({medicData}) =>{
                     }
                 )
             setRegsList(regList.filter(item => item !== false))
-            })
-        }
+        })
+
     },[user])
 
     const startTimer = () =>{

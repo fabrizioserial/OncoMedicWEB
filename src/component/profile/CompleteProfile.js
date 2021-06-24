@@ -10,7 +10,7 @@ import moment from 'moment'
 import { makeStyles } from "@material-ui/core/styles";
 import { MySnackbar } from '../mySnackBar/MySnackbar'
 import { Skeleton } from '@material-ui/lab'
-import ReactApexChart from '../../../node_modules/react-apexcharts'
+import Chart from 'react-apexcharts'
 import { useHistory } from 'react-router-dom';
 
 
@@ -148,17 +148,10 @@ export const CompleteProfile = () => {
     },[id,update])
 
     useEffect(()=>{
-            listEvents()
-    },[regDiarios])
-
-    useEffect(()=>{
-        console.log(user)
-        if(user && user.avatar){
-            
+        if (user.id){
             const db = getFirestore()
-
-            db.collection("diaryReg").where("id","==",user.id).limit(6)
-            .onSnapshot((querySnapshot) => {
+            const itemCollection = db.collection("diaryReg").where("id","==",user.id).limit(6)
+            itemCollection.onSnapshot((querySnapshot) => {
                 
                 let regList = querySnapshot.docs.map(doc => {
                         return(
@@ -169,7 +162,18 @@ export const CompleteProfile = () => {
                     console.log("hola  ",regList)
                 setRegDiario(regList)
             })
+        }
+    },[user])
 
+    useEffect(()=>{
+        listEvents()
+    },[regDiarios])
+
+    useEffect(()=>{
+        
+        if(id && user.avatar){
+            
+            const db = getFirestore()
             let stringAvatar = user.avatar
             const itemCollection = db.collection("avatars").doc(stringAvatar.toString())
             itemCollection.get().then((querySnapshot) => {
@@ -362,8 +366,8 @@ export const CompleteProfile = () => {
                 <ProfileTab id={id} handleSnackBar={handleOpensnackBar} updateDate={updateDate} image={image} user={user}/>
                {graph &&  <div className="profile-chart-cont">
                     {
-                     serie && <ReactApexChart options={options} series={serie} type="area" height={450} />
-                     }
+                        serie && <Chart options={options} series={serie} width={'100%'} type="area" height={450} />
+                    }
                 </div>}
                 <div className="two-squares-complete-profile">
                     <div className="estado-usertab-cont-background">

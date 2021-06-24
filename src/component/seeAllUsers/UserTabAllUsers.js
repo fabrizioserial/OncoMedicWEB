@@ -47,7 +47,9 @@ const UserTabAllUsers = ({medicData}) => {
         return size;
     }
 
-    const switchToProfle = () => history.push(`/profile/${user.id}`);
+    const switchToProfle = () => {
+        history.push(`/profile/${user.docid}`);
+    };
   
     const handleClick = (event,item,status) => {
         status==="Activo" ? setBool(true):setBool(false)
