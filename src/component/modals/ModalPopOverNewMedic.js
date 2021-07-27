@@ -141,7 +141,7 @@ const ModalPopOverNewMedic = (props) => {
                 <p>Nombre y apellido</p>
             </div> 
             <div className="modal-add-input-cont">
-            <input className={errorName ? "numero-del-paciente error" :"numero-del-paciente"}
+            <input className={errorName ? "input-new-medic error" :"input-new-medic"}
                   value={name}
                   id="nameDoctor"
                   placeholder="Introduzca nombre y apellido"
@@ -154,7 +154,7 @@ const ModalPopOverNewMedic = (props) => {
                 <p>Email</p>
             </div> 
             <div className="modal-add-input-cont">
-               <input className={errorEmail ? "numero-del-paciente error" :"numero-del-paciente"} 
+               <input className={errorEmail ? "input-new-medic error" :"input-new-medic"} 
                   value={email}
                   id="mailDoctor"
                   placeholder="Introduzca email" 
@@ -167,8 +167,8 @@ const ModalPopOverNewMedic = (props) => {
                 <p>Contraseña</p>
             </div> 
             <div className="modal-add-input-cont">
-               <div className={errorPass ? "numero-del-paciente error" :"numero-del-paciente"} >
-                  <input style={{border: "none",width: "90%"}} className="input-new-medic" type={passwordShown ? "text" : "password"} 
+               <div className={errorPass ? "input-new-medic error" :"input-new-medic"} >
+                  <input style={{border: "none",width: "90%"}} className="input-new-medic-pass" type={passwordShown ? "text" : "password"} 
                      value={password}
                      id="passDoctor"
                      placeholder="Al menos 8 carateres"

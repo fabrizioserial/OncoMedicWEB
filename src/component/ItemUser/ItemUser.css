@@ -42,16 +42,17 @@
 }
 .item-user-options{
     height: 32px;
+    width: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-style: none;
     background-color: var(--grey2);
-    border-radius: 50px;
+    border-radius: 50%;
     cursor: pointer;
 }
 .item-user-options:hover{
-    background-color: var(--greyholder);
+    background-color: var(--greyholder2);
 }
 
 .item-user_icon_image{
@@ -65,7 +66,8 @@
     cursor: pointer;
     background-color: var(--grey2);
     border-radius: 5px;
-    height: 40px;
+    height: 43px;
+    box-sizing: border-box;
     margin: 5px;
     padding-top: 10px;
 }
@@ -121,8 +123,9 @@
     cursor: pointer;
     background-color: var(--grey2);
     border-radius: 5px;
-    height: 34px;
+    height: 43px;
     margin: 5px;
+    box-sizing: border-box;
     padding-top: 10px;
 }
 .estado-usertab-fila:hover{
@@ -138,6 +141,7 @@
     border-radius: 5px;
     height: 43px;
     margin: 5px;
+    box-sizing: border-box;
     padding-top: 10px;
 }
 .symptoms-fila-fecha{

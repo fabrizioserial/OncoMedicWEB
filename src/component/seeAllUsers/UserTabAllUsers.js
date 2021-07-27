@@ -50,6 +50,9 @@ const UserTabAllUsers = ({medicData}) => {
     const switchToProfle = () => {
         history.push(`/profile/${user.docid}`);
     };
+    const switchTo = (type) => {
+        type === "sympt" ? history.push(`/userSympts/${user.docid}`) :history.push(`/seeAllDiaryRegs/${user.docid}`)
+    }
   
     const handleClick = (event,item,status) => {
         status==="Activo" ? setBool(true):setBool(false)
@@ -244,12 +247,13 @@ const UserTabAllUsers = ({medicData}) => {
                     <table class="userall-big-table">
                         <thead className="userall-thead-sympts">
                             <tr>
-                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '10vw'}} scope="col"></th>}
-                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '14vw'}} scope="col">N PACIENTE</th>}
-                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0  && !loading) && <th style={{width: '28vw'}} scope="col">NOMBRE</th>}
-                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '20vw'}} scope="col">TIPO DE CANCER</th>}
-                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '20vw'}} scope="col">ACTIVO</th>}
-                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '10vw'}} scope="col"></th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '8%'}} scope="col"></th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '12%'}} scope="col">N PACIENTE</th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0  && !loading) && <th style={{width: '30%'}} scope="col">NOMBRE</th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '15%'}} scope="col">TIPO DE CANCER</th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '24%'}} scope="col"></th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '6%'}} scope="col">ACTIVO</th>}
+                            {!(showedUserList.length ===0 && inactiveShowedUserList.length === 0 && !loading) && <th style={{width: '5%'}} scope="col"></th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -400,8 +404,8 @@ const UserTabAllUsers = ({medicData}) => {
                                 horizontal: 'left',
                                 }}>
                                 <MenuItem onClick={()=>switchToProfle()}>VER PERFIL</MenuItem>
-                                <MenuItem onClick={handleClose}>VER SINTOMAS</MenuItem>
-                                <MenuItem onClick={handleClose}>VER REGISTROS DIARIOS</MenuItem>
+                                <MenuItem onClick={()=>switchTo("sympt")}>VER SINTOMAS</MenuItem>
+                                <MenuItem onClick={()=>switchTo("register")}>VER REGISTROS DIARIOS</MenuItem>
                                 {bool && <MenuItem className="menu-item-eliminar-profile" onClick={handleCloseAndOpenModal} >ELIMINAR</MenuItem>}
                             </Menu>
                             <ModalPopOverEliminate

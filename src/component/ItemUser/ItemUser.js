@@ -79,6 +79,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                 <td onClick={()=>switchToProfle()}>{user.id}</td> 
                 <td onClick={()=>switchToProfle()}>{user.surname}, {user.name}</td>
                 <td onClick={()=>switchToProfle()}>{user.cancer}</td>
+                <td onClick={()=>switchToProfle()}></td>
                 <td onClick={()=>switchToProfle()}>{user.status=== "Activo" ? <FontAwesomeIcon icon={faCircle} className="item-status-active" size="lg"/> : <FontAwesomeIcon icon={faCircle} className="item-status-inactive" size="lg"/>}</td>
                 <td className="item-user-config"><button className="item-user-options" onClick={(e)=>handleClick(e,user,user.status)}><img alt="" className="usertab_icon_image" src={optionIcon}/></button></td>
             </tr>: 
@@ -102,7 +103,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                     <th onClick={()=>switchToProfle()} scope="row" className="usertab-user-image-table"><img alt="" className="usertab-user-image" src={imgs&&imgs.url} /></th>
                     <td onClick={()=>switchToProfle()}>{user.id}</td>
                     <td onClick={()=>switchToProfle()}>{user.surname}, {user.name}</td>
-                    <td  className="item-user-config"><Button className="item-user-options" onClick={(e)=>handleClick(e,user)}><img alt="" className="usertab_icon_image" src={optionIcon} /></Button></td>
+                    <td  className="item-user-config"><button className="item-user-options" onClick={(e)=>handleClick(e,user)}><img alt="" className="usertab_icon_image" src={optionIcon} /></button></td>
                 </tr>
 
             : 
@@ -116,7 +117,7 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                     regdiario && <td onClick={(e)=>handletotalClick(e,regdiario)} >{returnEmote(regdiario.mood)}</td>
                 }
 
-                <td><Button className="item-user-options" onClick={(e)=>handleClick(e,regdiario)}><img alt="" className="usertab_icon_image" src={optionIcon} /></Button></td>
+                <td><button className="item-user-options" onClick={(e)=>handleClick(e,regdiario)}><img alt="" className="usertab_icon_image" src={optionIcon} /></button></td>
             </tr>:
         type==="symptoms"?
             <tr onClick={(e)=>handleClick(e,symptom)}  className="usertab-fila">
