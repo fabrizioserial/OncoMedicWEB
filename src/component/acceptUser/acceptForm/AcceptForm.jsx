@@ -53,7 +53,8 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     const [dbtEnabled,setDbtEnabled] = useState(false)  
     const [defaultMeds,setDefaultMeds] = useState([])  
     const animatedComponents = makeAnimated();
-    const defOptions = []
+    const [defOptions,setDefOptions] = useState([])
+    const [newOptions,setNewOptions] = useState([])
     const theOptions = [
         { value: 'Hipertension', label: 'Hipertension' },
         { value: 'EPOC', label: 'EPOC' },
@@ -106,6 +107,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
 
     
     useEffect(()=>{ 
+        initializeOptions()
         setDefaultMeds()
         user.name && setName(user.name)
         user.registerDate && setRegisterDate(user.registerDate.toDate())
@@ -124,7 +126,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
         user.med.hip ? setMedHip(user.med.hip):setMedHip("")
         user.med.inf ? setMedInf(user.med.inf):setMedInf("")
 
-        user.cancer ? setPrimTumor(user.cancer):setPrimTumor("")
+        user.cancer ? setPrimTumor({label: user.cancer,value: user.cancer}):setPrimTumor(null)
         user.histogoly ? setHistology(user.histology):setHistology("")
         user.biomarkers ? setBiomarkers(user.biomarkers):setBiomarkers([{bio: '',evaluation: 'No evaluada'}])
         user.PDL1 ? setPdl(user.PDL1):setPdl("")
@@ -138,12 +140,23 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
         setStatus("Activo")
     },[user])
 
+    const initializeOptions = () => {
+        setDefOptions([])
+        setNewOptions([
+            user.med.acv && { value: 'ACV', label: 'ACV' },
+            user.med.epoc && { value: 'EPOC', label: 'EPOC' },
+            user.med.hip && { value: 'Hipertension', label: 'Hipertension' },
+            user.med.inf && { value: 'Infarto', label: 'Infarto' }
+        ])
+    }
+
+    const updateOptions = (newValue) => {
+        setDefOptions(newValue)
+    }
+
     useEffect(()=>{
-        user.med.acv && defOptions.push({ value: 'ACV', label: 'ACV' })
-        user.med.epoc && defOptions.push({ value: 'EPOC', label: 'EPOC' })
-        user.med.hip && defOptions.push({ value: 'Hipertension', label: 'Hipertension' })
-        user.med.inf && defOptions.push({ value: 'Infarto', label: 'Infarto' })
-    },[user])
+        setDefOptions(newOptions.filter(item=>item!=false))
+    },[newOptions])
 
     useEffect(()=>{
         if(smoke!=0) {
@@ -192,7 +205,6 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
     }
 
     const handleSexToWord =()=>{
-        console.log('sex',sex)
         if(sex==0) { return "Masculino"}
         if(sex==1) { return "Femenino"}
     }
@@ -249,28 +261,18 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
         setRecaidas(recaidas.filter(x=>x!=value))
     }
 
-
-    useEffect(()=>{
-        console.log(recaidas,'rec')
-    },[recaidas])
-
     const handleInputChange = (newValue) => {
-        setMedInf(false)
-        setMedHip(false)
-        setMedEpoc(false)
-        setMedAcv(false)
         newValue.map((item)=>{
             item.label=="Infarto" && setMedInf(true)
             item.label=="Hipertension" && setMedHip(true)
             item.label=="EPOC" && setMedEpoc(true)
             item.label=="ACV" && setMedAcv(true)
-            
         })
+        updateOptions(newValue)
     };
 
     const verifyInformation=()=>{
-        console.log(recaidas,'rec')
-        if (!name || !surname || !email || !hist || !surname  || !pdl || !t || !n || !m || !estadio || (primTumor==="")){
+        if (!name || !surname || !email || !hist || !surname  || !pdl || !t || !n || !m || !estadio || !primTumor){
             setEnableErrors(true) 
         } else {
             pushToDatabase()
@@ -280,7 +282,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
 
     const pushToDatabase = () => {
         let obj = {
-            cancer: primTumor,
+            cancer: primTumor.value,
             dbt: {
                 dbt: diab,
                 med: diabMed
@@ -447,7 +449,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                                 placeholder= "Ninguno"
                                 closeMenuOnSelect={false}
                                 components={{animatedComponents,DropdownIndicator}}
-                                defaultValue={defOptions}
+                                value={defOptions}
                                 isMulti
                                 options={theOptions}
                                 onChange={e=>handleInputChange(e)}
@@ -460,8 +462,8 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                         <p className="af-input-text">Tumor Primario</p>
                         {(cancerList.length>0) &&
                             <Select id="standard-select"
-                                defaultValue={primTumor && {value: primTumor, label: primTumor }}
                                 closeMenuOnSelect={true}
+                                value={primTumor}
                                 placeholder= "--Seleccione un cancer--"
                                 components={{animatedComponents,DropdownIndicator,SelectContainer}}
                                 styles={(enableErrors && (primTumor==="")) && {
@@ -473,7 +475,7 @@ export const AcceptForm = ({user,accept,id,finish,eliminateUser}) => {
                                 }),
                                 }}
                                 options={cancerList}
-                                onChange={e=>setPrimTumor(e.value)} 
+                                onChange={e=>setPrimTumor({label:e.value,value:e.value})} 
                         />}
                     </div>
                     <div className="af-input-cont flex50" style={{marginLeft:"40px"}}>

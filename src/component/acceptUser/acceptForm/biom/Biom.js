@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import { counter } from '@fortawesome/fontawesome-svg-core';
+import UseAnimations from 'react-useanimations';
+import trash2 from 'react-useanimations/lib/trash2'
 
 export const Biom = ({index,handleElimIndex,handleChangeBio,propbio,propeval,array}) => {
     const [bio,setBio] = useState(propbio)
@@ -43,7 +42,7 @@ export const Biom = ({index,handleElimIndex,handleChangeBio,propbio,propeval,arr
                     {array.length>1 ?
                     <div onClick={()=>handleElimIndex(index)} style={{flex: '0 1',marginLeft: '20px',cursor: 'pointer'}} className="af-input-cont flex50" >
                             <div className="af-input theper">
-                                <FontAwesomeIcon color='red' icon={faTrash}/>
+                                <UseAnimations animation={trash2} size={26} strokeColor='red' />
                             </div>
                     </div>:null}
         </div>
