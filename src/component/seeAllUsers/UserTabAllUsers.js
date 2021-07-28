@@ -99,6 +99,7 @@ const UserTabAllUsers = ({medicData}) => {
     const handleSearch = (e,hash) => {
         if(hash.length===0) { handleRefresh()} else {
         setRetitle(!reTitle)
+        console.log('s',hash,showedUserList)
         
         hash.map((selected)=>{
             switch (selected.selected){
