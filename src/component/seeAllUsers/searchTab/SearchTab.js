@@ -17,9 +17,6 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle,warnBar,elCAt}
     const [dateEnd,setDateEnd] = useState(new Date())
     const [hash,setHash] = useState([])
     const [dateIsActive,setDateIsActive] = useState(false)
-    const [boolean,setBoolean] = useState(false)
-
-
 
     const handlePickClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -52,6 +49,7 @@ export const SearchTab = ({handleClick,categories,refresh,reTitle,warnBar,elCAt}
     const handleCross = (name) => {
         name==="FECHA" && setDateIsActive(false)
         name!=="FECHA" && setDateIsActive(true)
+        setSelected()
         elCAt()
         setHash(hash.filter(x => x.selected!==name))
     }
