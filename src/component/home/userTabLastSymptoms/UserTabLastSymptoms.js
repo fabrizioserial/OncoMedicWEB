@@ -34,7 +34,7 @@ export const UserTabLastSymptoms=({symptomsList})=> {
 
   return (
       <div className="usertab-cont-info second" >
-        {symptomsList.length > 0 ? (
+        { (symptomsList && symptomsList.length) > 0 ? (
         <>
         <table class="usertab-table">
             <thead className="usertab-thead">

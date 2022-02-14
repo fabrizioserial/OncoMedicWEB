@@ -119,7 +119,7 @@ const Home = ({medicData}) =>{
                         )
                     }
                 )
-            setSymptomsList2(lista.sort(function (a, b) {
+            setSymptomsList2( lista.length && lista.sort(function (a, b) {
                                             if (b.date > a.date) {
                                                 return 1;
                                             }
@@ -172,7 +172,7 @@ const Home = ({medicData}) =>{
                         :
                         <>
                             <UserTabHome handleLoad={handleLoad} handleEl={()=>handleOpensnackBar("Usuario eliminado con exito!")} userlist={userList.filter(item=>item.status==="Activo").slice(0,6)} images={images} margin_left={{marginRight:"40px"}}/>
-                            <UserTabLastSymptoms className="usersympts-second" symptomsList={symptomsList2.slice(0,6)}/>
+                            <UserTabLastSymptoms className="usersympts-second" symptomsList={symptomsList2.length && symptomsList2.slice(0,6)}/>
                         </>
                         }
                     </div>

@@ -168,14 +168,14 @@ export const ItemUser = ({handleClick,type,user,image,symptom,desc,daily,mood,sa
                 <td>Hidratación</td>
                 <td  className="value-regdiario">{hid}</td>
             </tr> : 
-        type==="sympts"?
+        (type==="sympts")?
                 <tr onClick={(e)=>handleClick(e,symptom)}  className="usertab-fila">
                     {symptom.date &&  <td  className="symptoms-fila-fecha">{Intl.DateTimeFormat('en-GB', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(symptom.date.toDate())}</td> }
                     <td style={{paddingLeft: "3%"}}>{symptom.surname}, {symptom.name}</td>
-                    {symptom.symptoms && <td style={{paddingLeft: "2%"}}><div style={{display: 'flex',alignItems: 'center'}}>
+                    {symptom && symptom.symptoms.length &&( <td style={{paddingLeft: "2%"}}><div style={{display: 'flex',alignItems: 'center'}}>
                                             {symptom.symptoms[0].symptom.length>8 ? `${symptom.symptoms[0].symptom.slice(0,8)}...`:`${symptom.symptoms[0].symptom}`}
                                             {symptom.symptoms.length>1 && <p className="p-itemuser-symptoms">+{symptom.symptoms.length-1}</p>}
-                                            </div></td>}
+                                            </div></td>)}
                     <td style={{width: '5%',paddingLeft: "4%"}}>{symptom.symptoms.some(el => el.grade > 5) && <FontAwesomeIcon color='red' icon={faExclamationCircle}/>}</td>
                 </tr>:
         type==="seeSymptoms"?
